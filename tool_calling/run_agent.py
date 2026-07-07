@@ -16,7 +16,7 @@ Available skills — call load_skill("<name>") to get detailed instructions:
 {skills_list}
 
 Available tools:
-  {tools_list}
+{tools_list}
 
 All output files are written to the current working directory.
 Do not ask for user input. Operate autonomously."""

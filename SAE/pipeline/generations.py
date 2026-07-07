@@ -1,0 +1,76 @@
+"""
+Generate Llama-3-8B-Instruct responses for every prompt in SAE/datasets.
+Writes one JSONL file per dataset to SAE/datasets/generations/.
+"""
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from utils import datasets, inference
+from utils.model import DEFAULT_MODEL, cleanup, load_model_and_tokenizer
+
+DEFAULT_OUTPUT_DIR = Path(__file__).resolve().parents[1] / "results" / "generations"
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
+    parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--max-new-tokens", type=int, default=512)
+    parser.add_argument("--temperature", type=float, default=0.7)
+    parser.add_argument("--top-p", type=float, default=0.9)
+    parser.add_argument("--limit", type=int, default=None, help="Cap prompts per dataset (for smoke testing)")
+    args = parser.parse_args()
+
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"Loading model {args.model} ...")
+    model, tokenizer = load_model_and_tokenizer(args.model)
+
+    for filename in datasets.list_dataset_files():
+        dataset_name = Path(filename).stem
+        records = list(datasets.iter_prompts(filename))
+        if args.limit:
+            records = records[: args.limit]
+        print(f"{filename}: generating {len(records)} responses")
+
+        out_path = output_dir / f"{dataset_name}.jsonl"
+        with open(out_path, "w", encoding="utf-8") as f:
+            for batch in inference.iter_batches(records, args.batch_size):
+                responses = inference.generate_batch(
+                    model,
+                    tokenizer,
+                    [r["text"] for r in batch],
+                    max_new_tokens=args.max_new_tokens,
+                    temperature=args.temperature,
+                    top_p=args.top_p,
+                )
+                for record, response in zip(batch, responses):
+                    f.write(
+                        json.dumps(
+                            {
+                                "dataset": record["dataset"],
+                                "row_id": record["row_id"],
+                                "prompt_col": record["prompt_col"],
+                                "prompt": record["text"],
+                                "response": response,
+                                "model": args.model,
+                            }
+                        )
+                        + "\n"
+                    )
+        print(f"Wrote {out_path}")
+
+    cleanup(model, tokenizer)
+
+
+if __name__ == "__main__":
+    main()
