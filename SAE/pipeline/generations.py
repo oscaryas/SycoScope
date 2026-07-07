@@ -27,6 +27,10 @@ def main():
     parser.add_argument("--temperature", type=float, default=0.7)
     parser.add_argument("--top-p", type=float, default=0.9)
     parser.add_argument("--limit", type=int, default=None, help="Cap prompts per dataset (for smoke testing)")
+    parser.add_argument(
+        "--n-samples", type=int, default=1,
+        help="Sampled generations per prompt (uses sampling; each gets a distinct sample_idx)",
+    )
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir)
@@ -40,7 +44,12 @@ def main():
         records = list(datasets.iter_prompts(filename))
         if args.limit:
             records = records[: args.limit]
-        print(f"{filename}: generating {len(records)} responses")
+        records = [
+            {**record, "sample_idx": i}
+            for record in records
+            for i in range(args.n_samples)
+        ]
+        print(f"{filename}: generating {len(records)} responses ({args.n_samples} sample(s)/prompt)")
 
         out_path = output_dir / f"{dataset_name}.jsonl"
         with open(out_path, "w", encoding="utf-8") as f:
@@ -61,6 +70,7 @@ def main():
                                 "row_id": record["row_id"],
                                 "prompt_col": record["prompt_col"],
                                 "prompt": record["text"],
+                                "sample_idx": record["sample_idx"],
                                 "response": response,
                                 "model": args.model,
                             }
