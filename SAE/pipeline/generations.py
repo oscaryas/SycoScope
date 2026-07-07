@@ -8,6 +8,8 @@ import json
 import sys
 from pathlib import Path
 
+from tqdm import tqdm
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
@@ -52,7 +54,9 @@ def main():
         print(f"{filename}: generating {len(records)} responses ({args.n_samples} sample(s)/prompt)")
 
         out_path = output_dir / f"{dataset_name}.jsonl"
-        with open(out_path, "w", encoding="utf-8") as f:
+        with open(out_path, "w", encoding="utf-8") as f, tqdm(
+            total=len(records), desc=dataset_name, unit="response"
+        ) as progress:
             for batch in inference.iter_batches(records, args.batch_size):
                 responses = inference.generate_batch(
                     model,
@@ -77,6 +81,7 @@ def main():
                         )
                         + "\n"
                     )
+                progress.update(len(batch))
         print(f"Wrote {out_path}")
 
     cleanup(model, tokenizer)

@@ -8,5 +8,6 @@ dependencies = [
     "accelerate>=1.14.0",
     "pandas>=3.0.3",
     "torch>=2.12.1",
+    "tqdm>=4.68.3",
     "transformers>=5.13.0",
 ]
