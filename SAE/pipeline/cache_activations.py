@@ -50,6 +50,17 @@ def build_full_text(tokenizer, prompt: str, response: str) -> tuple[str, str]:
 
 
 def char_span_to_token_span(offsets, char_start: int, char_end: int) -> tuple[int, int] | None:
+    # Overlap test: a token belongs to this span if any part of it falls
+    # inside [char_start, char_end). This is deliberately permissive rather
+    # than start-position-only, because some tokenizers (SentencePiece-style)
+    # fold a word's leading space into that word's own token, so the token's
+    # reported start can sit one character *before* char_start even though
+    # the token is unambiguously "this sentence's first word". Callers are
+    # responsible for passing content-only (whitespace-stripped) char_start/
+    # char_end -- see build_sentence_table -- so that a token whose *only*
+    # overlap with this span is trailing punctuation/whitespace glued onto
+    # the previous sentence (e.g. ".\n" or "!\n\n" as one BPE token) doesn't
+    # get wrongly attributed here.
     tok_start = None
     tok_end = None
     for i, (start, end) in enumerate(offsets):
@@ -190,12 +201,22 @@ def build_sentence_table(records, tokenizer, nlp, max_length: int, skip_log: lis
 
         sent_rows = []
         for sent in doc.sents: # for every sentence in doc
-            text = sent.text
-            if not text.strip(): #blank string
+            raw_text = sent.text
+            text = raw_text.strip()
+            if not text: #blank string
                 skip_log.append({"response_id": p["response_id"], "reason": "blank_sentence"})
                 continue
-            char_start, char_end = sent.start_char, sent.end_char
-            # turn char-span into token start - end spans. tokenizer provides token spans. also offset based on input
+            # spaCy sometimes folds a leading/trailing multi-newline run into
+            # the sentence span (e.g. text == "\n\nWhile ..."). Trim char_start/
+            # char_end to the actual content so a tokenizer's straddling
+            # punctuation+whitespace token (".\n", "!\n\n") -- which ends
+            # exactly at that whitespace-inclusive boundary -- fails the
+            # overlap test in char_span_to_token_span instead of being
+            # wrongly attributed to this sentence.
+            leading_ws = len(raw_text) - len(raw_text.lstrip())
+            trailing_ws = len(raw_text) - len(raw_text.rstrip())
+            char_start = sent.start_char + leading_ws
+            char_end = sent.end_char - trailing_ws
             span = char_span_to_token_span(offsets, chat_prefix_len + char_start, chat_prefix_len + char_end)
             if span is None:
                 skip_log.append(
