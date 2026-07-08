@@ -35,7 +35,7 @@ def main():
     )
     args = parser.parse_args()
 
-    output_dir = Path(args.output_dir)
+    output_dir = Path(args.output_dir) 
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"Loading model {args.model} ...")
@@ -50,7 +50,7 @@ def main():
             {**record, "sample_idx": i}
             for record in records
             for i in range(args.n_samples)
-        ]
+        ] # dupe records n_samples times
         print(f"{filename}: generating {len(records)} responses ({args.n_samples} sample(s)/prompt)")
 
         out_path = output_dir / f"{dataset_name}.jsonl"
