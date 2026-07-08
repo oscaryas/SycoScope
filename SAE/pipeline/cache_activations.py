@@ -129,6 +129,18 @@ def load_response_texts(input_dir: Path) -> dict[str, tuple[str, str]]:
     return texts
 
 
+def hash_this_script() -> str:
+    # Hash of this file's own source, distinct from get_code_version()'s git
+    # SHA: a git commit hash is a poor cache-validity signal here because
+    # `git diff --quiet` treats the whole working tree as dirty for *any*
+    # uncommitted change, not just edits to segmentation logic, and because
+    # local fixes are often iterated on before ever being committed. Comparing
+    # this hash in the manifest ensures a fix to build_sentence_table /
+    # char_span_to_token_span forces Phase 1 to rebuild instead of silently
+    # reusing a sentence table frozen by the pre-fix code.
+    return hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+
+
 def hash_input_files(input_dir: Path) -> str:
     hasher = hashlib.sha256()
     for path in sorted(input_dir.glob("*.jsonl")):
@@ -306,10 +318,12 @@ def load_or_build_sentence_table(args, output_dir: Path, tokenizer, nlp):
             or manifest["model"] != args.model
             or manifest["max_length"] != args.max_length
             or manifest["limit"] != args.limit
+            or manifest.get("code_hash") != hash_this_script()
         ):
             raise RuntimeError(
-                f"Existing artifact at {output_dir} was built with a different input/model/max_length/limit. "
-                "Re-run with --force to discard it and rebuild."
+                f"Existing artifact at {output_dir} was built with a different input/model/max_length/limit, "
+                "or with a different version of this script (e.g. a segmentation-logic fix since the sentence "
+                "table was frozen). Re-run with --force to discard it and rebuild."
             )
         print("Phase 1: sentence table already frozen, reusing.")
         return (
@@ -341,6 +355,7 @@ def load_or_build_sentence_table(args, output_dir: Path, tokenizer, nlp):
         "model": args.model,
         "max_length": args.max_length,
         "limit": args.limit,
+        "code_hash": hash_this_script(),
         "n_sentences": len(sentences_df),
         "n_responses": len(responses_df),
         "n_skip_events": len(skip_log),
