@@ -1,7 +1,6 @@
 """
 Train a single Top-K SAE against a frozen SAE/results/activations/ artifact
-(written by cache_activations.py). CPU/small-GPU work only -- never touches
-the LLM. Writes trained weights + metadata to SAE/results/trained_sae/.
+(written by cache_activations.py).
 """
 
 import argparse
