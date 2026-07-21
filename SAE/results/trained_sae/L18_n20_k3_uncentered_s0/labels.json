@@ -1,0 +1,202 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 23988,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "AITA-style verdict framing",
+    "description": "This latent fires on the stock rhetorical scaffolding used in Reddit 'Am I the Asshole' response generation: rhetorical restatements of the AITA/WIBTA question ('So, AITA?', 'So, are you the asshole?'), hedged verdict phrases ('Not entirely', 'Maybe', 'I'd say... maybe'), and framing/transition phrases that introduce a judgment ('My verdict:', 'I'm here to help you navigate this situation', exclamatory topic-sentence hooks like 'The drama!' or 'What a complicated situation!'). Included sentences are short, formulaic conversational moves that set up, restate, or hedge a judgment about someone's culpability in an interpersonal conflict, rather than the substantive reasoning or final explicit verdict content itself. Excluded are sentences that give detailed situational analysis, cite specific facts of the dilemma, or state a fully elaborated justified verdict (e.g. explaining why someone is or isn't at fault based on story details) -- those carry the topic but not this stylistic scaffolding function.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 14675,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list markers in advice responses",
+    "description": "This latent fires on the bare numeral/bullet markers (e.g. '2.', '3.', '4. **') that begin enumerated items in structured, advice-giving responses (often relationship or interpersonal advice, AITA-style judgments, or step-by-step suggestions). The top-activating examples are almost purely the list-numbering tokens themselves, sometimes bolded, marking the start of a new point in a numbered breakdown; a smaller portion of top examples are similar formulaic openers like 'I'm here to offer some guidance' or 'As a neutral AI, I'll provide a balanced analysis' that preface such structured advice. It is not about the semantic content of the advice (boundaries, empathy, NTA verdicts, etc.) but specifically about the structural/formatting cue that introduces a discrete item in an enumerated list. Sentences that give substantive reasoning or judgments without a numeral marker (the bulk of the random sample) are only weakly related, included because they occur within the same advice-giving passages rather than because they share this formatting function.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 3,
+    "n_exemplars_used": 3,
+    "judge_model": "claude-sonnet-5",
+    "title": "Soliciting moral judgment on a dispute",
+    "description": "This latent fires on short, transitional or framing utterances that pose or set up a direct question about who is at fault or in the wrong, typically appearing at the end of an anecdote before asking readers to judge. It includes phrases like 'who's in the wrong here?' or 'Am I the Asshole?' that explicitly invite an audience to render a verdict on a personal conflict, as well as the bare discourse marker 'So' that often precedes such a query. It does NOT include the narrative or descriptive content of the dispute itself, general questions unrelated to blame/judgment, or first-person reflective statements that already state an opinion rather than soliciting one.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 24814,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice to have a calm, open conversation",
+    "description": "This latent fires on interpersonal-advice language that recommends resolving conflict through communication: phrases urging the reader to 'have an open/honest/calm conversation,' 'approach the conversation with empathy/respect,' 'find a compromise/common ground/solution that works for everyone,' or otherwise take a step back and talk things through with a partner, family member, friend, or colleague. It includes both fragmentary lead-in phrases ('Take a', 'By having an', 'Can we find') and full imperative or suggestive sentences that prescribe calm dialogue, active listening, empathy, and mutual compromise as the path to resolving a relational problem. It does NOT include sentences that merely describe a conflict, express emotion without prescribing action, give unrelated practical advice (e.g., financial steps, self-care tips, logistical arrangements) that lacks the 'talk it out / find compromise' framing, or narrate outcomes/facts without the advisory 'you should communicate/compromise' structure.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 2,
+    "n_exemplars_used": 2,
+    "judge_model": "claude-sonnet-5",
+    "title": "Conversational closing gesture",
+    "description": "This latent activates on brief, informal utterances that signal the end of an interaction or a shift toward departure or agreement, such as a farewell remark or a symbolic sign-off like a handshake emoji. Included sentences are short, casual, socially-oriented closers that function to wrap up a conversation or exchange rather than convey substantive content. It does not include detailed explanations, factual statements, or longer narrative text, even if they mention leaving or agreement; the key is the brevity and social/closing function of the utterance, not the topic of departure itself.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 3367,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating reassurance / affirmation of the reader",
+    "description": "This latent fires on second-person, validating statements typical of advice-column or therapeutic-style responses, especially those affirming that the reader's choices, boundaries, or self-care were justified ('you did nothing wrong,' 'that's something to be proud of,' 'prioritize your own well-being'). Included sentences directly praise, reassure, or absolve the addressee, framing their actions as reasonable, deserved, or admirable, often using stock phrases like 'you deserve,' 'you're not selfish,' 'prioritize yourself,' or 'that's okay.' It does not include neutral advice-giving, generic relationship platitudes about compromise/communication, or instructions directed at a third party (e.g., 'your husband should...'), which appear only in the broader random sample but activate more weakly since they lack the direct affirming/validating address to 'you.' The core function is emotionally validating the reader's self-prioritization or past behavior, not merely discussing self-care or relationships as a topic.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 10,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 11,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 12,
+    "cluster_size": 198932,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating the user's feelings or stance",
+    "description": "This latent fires on second-person statements that affirm or legitimize the reader's emotions, reactions, or boundaries as understandable, reasonable, or justified (e.g., 'You're right to feel upset,' 'That's a reasonable concern,' 'Your feelings are valid'). These are characteristic of advice-column or AITA-style responses that reassure the addressee that their reaction, decision, or grievance is warranted given the circumstances, often naming the emotion (upset, frustrated, anxious, hurt) and pairing it with a normalizing judgment ('understandable,' 'natural,' 'legitimate,' 'reasonable'). It excludes sentences that merely describe facts of the situation without an evaluative validation, that criticize or blame the user, that offer neutral advice/suggestions for action, or that present balanced/two-sided perspectives weighing the other party's viewpoint as well.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 13,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 14,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 15,
+    "cluster_size": 11912,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list markers",
+    "description": "This latent fires on standalone numeral tokens (e.g., '2.', '3.', '4.') that serve as list item markers, typically beginning an enumerated point in a numbered list or step-by-step sequence. The activating text is just the digit plus a period, sometimes followed by bold markdown formatting ('**'), regardless of what topic or content follows in the list item. It does not capture the semantic content of the list items themselves, the words describing steps or points, or other enumeration styles like bullet points, letters (a, b, c), or spelled-out ordinals ('first', 'second'); the function is purely the structural role of numeric list-item delimiters.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 16,
+    "cluster_size": 8494,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Colon-introduced list preamble",
+    "description": "This latent fires on short transitional phrases that introduce an upcoming enumerated list, immediately followed by the start of a numbered item (e.g. '1.' or '1. **'). The included sentences are stock lead-in expressions like 'Here's why:', 'Here are some points to consider:', 'Let's break it down:', or 'Here's a possible approach to consider:' that end in a colon and signal that reasons, suggestions, or steps will follow in list form. It captures the structural/formatting act of prefacing a list rather than any specific topic -- the actual content discussed varies widely (interpersonal advice, technical suggestions, arguments for/against something). It does NOT include the list items themselves, general explanatory prose without an upcoming enumeration, or list-introducing phrases that lack the colon-plus-numbered-item structure.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 17,
+    "cluster_size": 20978,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on standalone numeral tokens (e.g. '2.', '3.', '4.', '5.') that serve as list or enumeration markers, most commonly the digit at the start of a numbered list item or step. The activating text is essentially just the bare number followed by a period, with no surrounding content included, suggesting the feature tracks position in an enumerated sequence rather than any topical content. It is not tied to any particular subject matter, sentence meaning, or reasoning pattern -- it does not capture explanations, arguments, or restatements, only the formatting token marking an ordinal position in a list.'",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 18,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Rejecting a false equivalence",
+    "description": "This latent fires on short, blunt statements that reject an implied or stated comparison between two things, asserting they are not actually equivalent or interchangeable. Included sentences are terse corrective remarks like 'That's not the same thing,' typically used to push back against an analogy, conflation, or generalization someone else has made. It does not include detailed explanations of why two things differ, elaborated counterarguments, or broader disagreement statements that don't specifically invoke sameness or equivalence. The defining feature is the compact denial of equivalence itself, not the reasoning behind it.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 19,
+    "cluster_size": 59,
+    "n_exemplars_used": 59,
+    "judge_model": "claude-sonnet-5",
+    "title": "Recommending others for support and guidance",
+    "description": "This latent fires on sentences that suggest turning to other people (friends, professionals, support groups, others with similar experiences) as a source of advice, guidance, emotional support, or perspective, typically in response to a personal or emotional difficulty. The dominant pattern is a modal-hedged claim starting with 'They may/might/can offer/provide...' followed by nouns like 'guidance,' 'support,' 'advice,' 'insights,' or 'perspective,' as well as related constructions urging the reader to share experiences with others or talk to someone who understands. It does not include sentences merely discussing advice-giving topics without this recommending-others structure, nor unrelated content like scenic descriptions of national parks or the outlier sentences about 'Yosemite'/'Yellowstone' and 'He's not even asking...' which appear to be noise rather than core instances. The defining feature is the interpersonal-referral function -- pointing the reader toward another person or group as a helpful resource -- rather than the specific topic or emotional context being discussed.",
+    "status": "ok",
+    "error": null
+  }
+]

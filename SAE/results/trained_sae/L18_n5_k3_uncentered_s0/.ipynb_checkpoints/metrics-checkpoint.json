@@ -1,0 +1,15 @@
+{
+  "final_recon_loss": 0.0024470549542456865,
+  "explained_variance": 0.3842371702194214,
+  "firing_rate": [
+    0.239901602268219,
+    0.0,
+    0.01764790527522564,
+    0.35106682777404785,
+    7.200288109743269e-06
+  ],
+  "dead_latent_count": 0,
+  "mean_l0": 0.6086235642433167,
+  "n_epochs_trained": 21,
+  "early_stopped": true
+}

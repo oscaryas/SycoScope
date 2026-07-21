@@ -1,0 +1,52 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 30318,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on standalone numeral tokens (typically 2-5, occasionally higher like 7) that mark the start of an item in an enumerated or ordered list, often followed by a period and sometimes bolding markers. The activating tokens are almost entirely the digit itself plus punctuation, not the content of the list item that follows. It captures the structural/formatting role of list numbering rather than any topical content, appearing across whatever domain the list happens to enumerate. It does NOT include the actual text content of list items, non-numeric bullet markers (like dashes or letters), or numbers used in other contexts such as arithmetic, dates, or quantities embedded in prose.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 14676,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered-list markers in advice responses",
+    "description": "This latent fires primarily on the bare list-item markers (e.g. '2.', '3. **', '4.') that begin enumerated points in advice-style AI responses, typically in relationship or interpersonal-advice contexts (e.g. Reddit-style AITA or advice-seeking posts). It also captures the stock opening phrases that frame such advice (e.g. 'I'm here to help/offer guidance', 'As a neutral AI, I'll provide...', 'What a complex and sensitive situation!'), which function as a rhetorical preamble before a structured, numbered breakdown of suggestions or considerations. It is not about the topical content of the advice itself (e.g. specific claims about boundaries, feelings, or family dynamics), but about the formatting scaffolding and stock framing language that introduces or organizes such advice. Full substantive advice sentences without list markers or these framing phrases (the bulk of the random sample) activate far less strongly and are only weakly represented.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 262225,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Communication-leads-to-resolution advice framing",
+    "description": "This latent fires on sentences that state the advice-column formula linking an interpersonal communication behavior to a positive relational outcome, most often in the syntactic pattern 'By [communicating/being open/setting boundaries/etc.], you can/will [maintain/strengthen/find a solution/resolve the conflict]'. It also captures closely related validating summary statements like 'You're expressing your needs/setting boundaries' or 'It's about acknowledging your feelings', which reframe the advice-seeker's actions in positive, communication-centric terms. The cluster is specific to this concluding, prescriptive rhetorical move in relationship/conflict-resolution advice (e.g., AITA or advice-column responses), not merely any mention of communication, honesty, or relationships. It excludes surrounding advice-text elements such as situational description, moral judgment ('you're not the asshole'), enumerated suggestion lists, or general commentary that doesn't tie a communicative action to an explicit positive relational payoff.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  }
+]
