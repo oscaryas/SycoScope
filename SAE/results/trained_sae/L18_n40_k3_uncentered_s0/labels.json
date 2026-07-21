@@ -1,0 +1,402 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "error",
+    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Attributing known financial resources to a third party\", \"description\": \"This latent fires on sentences that assert the listener/reader already knows a specific person has access to money or financial means, often via a family or relational connection, despite some limiting circumstance (like being unable to work). Included sentences frame this as background knowledge being reminded to the reader (\\'you\\'re aware that...\\', \\'you know she has...\\') rather than new information being introduced. It is not simply about wealth or family topics in general, nor about direct requests for money or generic descriptions of someone\\'s job/income; the defining feature is the explicit framing of shared/assumed knowledge about a third party\\'s financial access despite a stated constraint on their own earning ability.'"
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 10,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 11,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 12,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 13,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 14,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 15,
+    "cluster_size": 71766,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "AITA-style verdict framing openers",
+    "description": "This latent fires on the stock introductory and transitional phrases an AI assistant uses when responding to 'Am I the Asshole'-type relationship/dilemma posts, especially the rhetorical restating of the question ('So, AITA?', 'are you the asshole?') and formulaic hedging preambles announcing that a balanced/neutral/nuanced take is coming ('I'll try to provide a balanced perspective', 'Let's dive into this', 'I'm here to help you navigate this situation'). The highest-activating examples are these short, near-templated framing lines that occur before or as the actual judgment is delivered, including terse mid-verdict hedges like 'Not really,' 'Not entirely,' and 'I'd say... maybe.' It is not simply about AITA topic content in general -- the substantive analysis of the situation, evidence-based reasoning about who is at fault, or fully spelled-out verdicts and justifications (e.g., 'You are absolutely the asshole because...', detailed point-by-point reasoning) activate much more weakly or fall outside the top cluster, since the latent tracks the formulaic framing/preamble language rather than the actual content of the judgment.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 16,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 17,
+    "cluster_size": 3,
+    "n_exemplars_used": 3,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating grievance against intrusive request",
+    "description": "This latent fires on sentences that validate a person's feeling of being wronged by characterizing a request (typically from an authority figure like a manager) as intrusive, insensitive, or a privacy violation, especially in an emotionally sensitive context like grief or loss. Included sentences use evaluative language such as 'invasion of privacy,' 'intrusive,' or 'insensitive' to frame the other party's behavior as inappropriate and side with the wronged individual. It is not merely describing a request or documentation requirement neutrally, nor is it giving generic advice or procedural information; the defining feature is the moralized judgment that the request itself was overstepping a boundary, particularly one tied to a difficult personal circumstance.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 18,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 19,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 20,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 21,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 22,
+    "cluster_size": 85976,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list markers in advice sequences",
+    "description": "This latent fires on the numeric markers (e.g., '2.', '3.', '4.', '5.', or bolded list-item numbers like '2. **') that begin enumerated steps or suggestions, primarily in advice-giving text about interpersonal or relationship conflicts. The top-activating examples are almost purely the bare digit-plus-period tokens themselves, marking the start of a new item in a numbered list of recommendations ('Here are some suggestions: 1. ... 2. ... 3. ...'). The lower-activating cluster members are the actual advice sentences that follow such markers (empathy, communication, compromise suggestions), but the latent's core trigger is the structural list-numbering token, not the semantic content of the advice. It does not activate on prose sentences lacking an explicit ordinal/list-number marker, nor on advice phrased without enumeration.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 23,
+    "cluster_size": 566948,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-chatbot validation and interpersonal coaching",
+    "description": "This latent fires on an AI assistant's supportive, therapy-style response pattern in relationship/interpersonal-advice contexts: affirming the user's feelings or situation ('That's a great point/skill/step!', 'It sounds like...', 'That's wonderful/so sweet'), validating their experience, and then offering gentle coaching advice or follow-up questions ('Can you tell me more about...', numbered tips like 'Listen actively', 'Be genuine and authentic', 'Use I statements'). It also captures the numbered-list scaffolding (bare '2. **', '3.', bolded step headers) that structures these advice responses, as well as scripted dialogue examples for handling social situations (e.g., talking to a neighbor). It does NOT include purely factual/logistical advice unrelated to emotional validation (e.g., exercise recommendations, financial/legal facts, decluttering tips), nor does it include blunt judgmental statements like 'You are not the asshole' or critical/neutral analysis of someone else's behavior without the affirming, empathetic coaching tone.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 24,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 25,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 26,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 27,
+    "cluster_size": 80661,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating self-care and boundary-setting reassurance",
+    "description": "This latent fires on formulaic, therapeutic-style reassurance phrases that affirm the reader's right to prioritize their own needs, feelings, well-being, or boundaries -- typically framed with 'Remember,' 'You deserve,' 'It's okay to,' or 'You're taking care of yourself.' The highest-activating examples are short, direct, second-person affirmations telling the reader they deserve respect, happiness, or self-care and that setting boundaries is valid and necessary. The lower-activating random sample still touches on boundaries, relationships, and self-worth but shifts toward more discursive, situational advice-giving (analyzing a specific interpersonal conflict, weighing pros/cons, or explaining someone else's likely motives) rather than the direct, formulaic reassurance/permission-giving statement itself. What is excluded is analytical or empathetic commentary that doesn't explicitly grant permission or affirm deservingness (e.g., describing feelings, explaining others' perspectives, or offering situational judgments without the 'you deserve/it's okay to prioritize yourself' framing).",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 28,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 29,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 30,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 31,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 32,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 33,
+    "cluster_size": 27939,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the standalone numeral (with trailing period, e.g. '2.', '3.', '4.') that begins an item in an enumerated list, largely independent of the list's actual content or topic. The top-activating examples are almost entirely bare list markers stripped of their text, sometimes with bold formatting markers ('**') attached, indicating the latent tracks list structure/position rather than semantic meaning. It is NOT capturing the substantive content of sentences (such as empathetic statements, validations, or explanations) that occasionally appear in the broader cluster sample but are not the actual trigger -- those appear only as noise from being near list-adjacent text, not as instances of the core pattern.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 34,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 35,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 36,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 37,
+    "cluster_size": 2,
+    "n_exemplars_used": 2,
+    "judge_model": "claude-sonnet-5",
+    "title": "Unintended negative consequences of one's actions",
+    "description": "This latent fires on sentences that describe how a person's behavior, even without harmful intent, produced negative downstream effects (problems, worry, disruption) for others or a group. Included sentences frame an action or omission as the cause of some negative outcome, often explicitly noting that the harm was unintentional or a byproduct of failing to follow expected norms or procedures. It is not simply about wrongdoing or blame in general, nor about describing negative events with no causal link to an actor's conduct -- the key element is a causal statement connecting someone's action/inaction to an unintended negative impact on others.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 38,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 39,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  }
+]

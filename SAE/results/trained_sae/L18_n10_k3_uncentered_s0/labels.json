@@ -1,0 +1,102 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 62555,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Relationship-advice list items",
+    "description": "This latent fires on numbered-list markers and stock advice phrasing found in interpersonal/relationship-advice responses (e.g., 'have an open and honest conversation', 'work together to find a compromise', 'By communicating openly'). The top-activating examples are mostly bare list numerals (2., 3., 4., 5.) or sentence fragments beginning a bulleted recommendation ('By communicating', 'By being more', 'Try to...'), reflecting the latent's strongest response to the structural scaffolding of enumerated advice rather than full semantic content. The broader random sample shows the same list-item/advice-template function fleshed out into complete sentences urging communication, compromise, empathy, and conflict resolution in personal relationships. It does NOT capture general numbers or lists on unrelated topics, nor does it activate on narrative, factual, or descriptive prose that lacks this advice-giving, second-person 'here's what you should do' structure.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 14680,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list markers in advice responses",
+    "description": "This latent fires on the numeric/bullet markers (e.g. '2.', '3. **', '4.', '5.') that begin enumerated list items in structured advice-style responses, typically in an AI assistant's step-by-step breakdown of suggestions or reasons (often in relationship or advice-column contexts like AITA/relationship advice). It also picks up on stock framing phrases that introduce or transition into such advice ('I'm here to help...', 'As a neutral AI, I'll...', 'What a complex and sensitive situation!', 'After reading your lengthy post...'), which serve as preambles to a structured, itemized response. It does NOT activate on the substantive advice content itself (the full sentences explaining reasoning, validating feelings, or recommending actions), nor on narrative or descriptive sentences that lack this list-structuring or preamble function -- the highest activations are specifically the bare list-number tokens themselves, not the surrounding prose.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 200748,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating judgment statements (advice-column verdicts)",
+    "description": "This latent fires on short, formulaic evaluative verdicts in an advice-giving context, where a third party's or the reader's behavior/reaction is explicitly judged as acceptable/unacceptable, reasonable/unreasonable, or valid/understandable -- typically in a 'Possessive noun + behavior/reaction word + evaluative adjective' template (e.g. 'Your dad's behavior was inappropriate', 'Your reaction is understandable', 'X's reaction was unacceptable'). The highest-activating examples are terse, standalone summary judgments naming a person (mom, boss, tutor, parents) and rating their conduct or validating the reader's feelings. It does NOT include the surrounding advice, explanations, hedged reasoning, pros/cons lists, suggested actions, or narrative context that often accompanies these verdicts in longer advice responses -- those elaborative or descriptive sentences (e.g. explaining why something happened, offering suggestions, or providing background) fall outside the core pattern even though they appear in the same texts.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 29239,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral tokens (and surrounding markup like bold asterisks or a period) that begin items in an enumerated or numbered list, such as '2.', '3.', or '4. **'. The activating token is essentially just the list marker itself, detached from the substantive content that follows it, regardless of the topic of the list (advice, suggestions, steps, reasons, etc.). It captures the structural/formatting role of introducing a new list entry rather than any semantic content -- it does not activate on the explanatory text within each list item, on bullet points using dashes or letters, or on numbers used in non-list contexts like dates, quantities, or equations.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 3,
+    "n_exemplars_used": 3,
+    "judge_model": "claude-sonnet-5",
+    "title": "Restating interpersonal context or plans",
+    "description": "This latent fires on sentences that recap or state a shared situation, decision, or plan involving specific people (e.g., a spouse's obligations, a group's purchase decision) as a lead-in or summary before further discussion or action. Included sentences use second-person or first-person framing to establish 'here is the situation/plan we're dealing with' before moving forward, often functioning as a transitional or context-setting statement in a conversation. It also captures brief personal-intent statements that serve a similar transitional/closing role in dialogue (e.g., signaling the end of a conversational turn). It does NOT include general narrative description, factual claims unrelated to interpersonal arrangements, or sentences that provide advice or analysis rather than simply restating or announcing a situation/plan.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  }
+]

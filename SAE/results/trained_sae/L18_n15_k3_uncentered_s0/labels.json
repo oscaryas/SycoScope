@@ -1,0 +1,152 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 3,
+    "n_exemplars_used": 3,
+    "judge_model": "claude-sonnet-5",
+    "title": "Single-word 'What' exclamation",
+    "description": "This latent fires on the isolated single-word utterance 'What.' used as a standalone reaction, typically expressing surprise, disbelief, or confusion, rather than as part of a longer question. The cluster consists exclusively of this exact token pattern appearing as a complete, minimal sentence. It does not include 'What' when embedded in longer questions (e.g., 'What is happening?'), other short interjections like 'Why.' or 'How.', or 'What' used as a relative pronoun within a clause.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 3,
+    "n_exemplars_used": 3,
+    "judge_model": "claude-sonnet-5",
+    "title": "Enthusiastic short affirmation",
+    "description": "This latent fires on brief, exclamatory expressions of positive enthusiasm or approval, typically standalone phrases like 'That's great!' or 'That's fantastic!' rather than sentences embedded in longer explanatory or argumentative context. The cluster captures short, high-energy affirmations that function as a conversational reaction to good news or a positive statement, marked by an exclamation point and minimal additional content. It does not include longer sentences that merely express positive sentiment as part of a larger argument, mild or neutral acknowledgments (e.g., 'okay' or 'that sounds fine'), or positive statements that provide reasons or elaboration rather than a pure exclamatory reaction.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 25875,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on standalone numeral tokens (e.g., '2.', '3.', '4.') that serve as enumeration markers, typically at the start of a list item or step in a sequence such as instructions, ranked lists, or multi-step reasoning. The included examples are almost purely the bare digit plus a period (or occasionally an asterisk marker), with no surrounding topical content captured in the activation itself. It does not include full list items with their content, ordinal words like 'second' or 'third', or numbers used in other contexts such as quantities, dates, or arithmetic results -- the activation is specifically tied to the numeral-as-list-marker token pattern, not to the semantic content of what follows it.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 776401,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Relationship-advice validation and boundary-setting language",
+    "description": "This latent fires on advice-column style sentences that validate the reader's feelings/actions and frame communication, boundary-setting, and compromise as the correct path forward (e.g., 'You're being honest about your needs,' 'By communicating openly...,' 'Respect her boundaries'). It especially activates on formulaic openers like 'By [gerund]...' that introduce a recommended relational strategy, and on affirming judgments ('Your concerns are valid,' 'That's a healthy boundary') common in interpersonal-conflict or relationship-advice contexts (friends, family, partners, roommates, coworkers). It is not simply about the topic of relationships or advice in general -- it specifically targets the validating/prescriptive rhetorical move of endorsing someone's feelings or actions and prescribing communication/boundary-setting as resolution, rather than neutral description of events, questions, factual information, or advice about unrelated practical/logistical matters (e.g., legal info, scheduling, self-care tips) that lack this validating-and-prescribing structure.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 10,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 11,
+    "cluster_size": 17641,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "AITA-style verdict framing",
+    "description": "This latent fires on the discourse markers an AI assistant uses when opening, transitioning into, or rendering judgment within a Reddit-style 'Am I The Asshole' advice response. Included are stock exclamatory framings ('What a tricky situation!', 'The age-old dilemma of X!'), transition phrases into analysis ('Let's break this down', 'Now, let's dive into the situation'), empathetic helper openers ('I'm here to help you navigate this...'), and the verdict vocabulary itself (WIBTA, AITA, NTA, 'not the asshole', 'I'd say no/absolutely'). It captures the rhetorical scaffolding of this advice-column genre rather than any particular topic (chores, tipping, in-laws, etc. all appear). It does NOT include the actual substantive reasoning or factual content of the advice (e.g., specific arguments about why someone is or isn't wrong), nor unrelated conversational openers outside this judgment/advice-giving context.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 12,
+    "cluster_size": 13377,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic-advice-response framing",
+    "description": "This latent fires on the structural scaffolding of AI-generated advice/support responses, especially in relationship or interpersonal-conflict (e.g. AITA/advice-column style) contexts: numbered/bulleted list markers (\"3. **\", \"2.\", \"4.\"), stock empathetic openers acknowledging the situation's difficulty (\"What a complex and sensitive situation!\", \"I'm here to help you process your feelings\"), and framing phrases that signal the assistant is about to offer neutral, balanced, or supportive guidance (\"I'll try to provide a neutral and empathetic perspective\", \"As a neutral AI...\"). Included sentences are the meta-level framing, transition, and list-enumeration tokens that introduce or structure advice content, not the substantive advice itself. Explicitly NOT included are the actual content-bearing analytical statements about a specific situation (e.g. judgments like \"You are not the asshole\" or concrete reasoning about who did what), which belong to the surrounding random-sample context but do not drive this latent's activation as strongly as the formulaic framing/list markers do.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 13,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 14,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  }
+]

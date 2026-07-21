@@ -1,0 +1,302 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 13313,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Stock exclamatory framing phrase",
+    "description": "This latent fires on short, formulaic exclamatory openers that frame an upcoming discussion of an interpersonal conflict as a familiar, well-worn type of problem -- e.g. 'The age-old dilemma!', 'The age-old sibling rivalry!', 'The complexities of family dynamics!'. These are stock rhetorical throat-clearing phrases (often 'The age-old X!' or 'The complex(ities) of X!') used, especially in advice/AITA-style responses, to signal empathetic recognition of a common social situation before elaborating on it. The cluster includes near-identical templated exclamations naming a topic (dilemma, debate, drama, rivalry, dynamics, conundrum) followed by an exclamation point, with highest activation on the bare, topic-light versions like 'The age-old dilemma!' or 'The age-old debate!'. It does NOT include the substantive analysis, advice, or reasoning sentences that follow such openers, nor other sympathetic exclamations that lack this 'age-old/complex X!' templated structure (e.g. 'What a difficult situation!' scores lower, and full explanatory sentences about the specifics of a conflict are excluded).",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 26220,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral that begins or terminates an item within an enumerated list, typically a small digit (2-6) followed by a period, often marking the start of a new bullet point in a structured list (e.g., steps, pros/cons, risks). Included sentences are almost purely the numeral token itself (with or without trailing period or bold markdown), sometimes accompanied by a short list header like 'Cons:' or 'The risks:' immediately preceding the first numbered item. It does NOT activate on the textual content that follows the number, on ordinal words spelled out (e.g., 'third'), or on numbers used in non-list contexts such as quantities, dates, or measurements -- the function is specifically about the structural role of a digit as a list-item delimiter.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Conditional fairness/consistency argument",
+    "description": "This latent fires on sentences that construct a conditional 'if X applies to one, then X should apply equally to others' argument, invoking a principle of equal treatment or consistency across parties. Included sentences state a hypothetical premise about a rule or judgment being acceptable for one person/group and conclude that the same standard must logically extend to everyone else. It is not merely about the topic of fairness or rules in general -- sentences that state a fairness claim without the explicit if/then structure linking one case to a universal standard, or that simply describe a policy without arguing for consistent application, are excluded.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating the user's grievance",
+    "description": "This latent fires on sentences that open a response by affirming the legitimacy of the user's feelings or complaints, typically restating their situation ('Your concerns about...') before validating it as reasonable. Included sentences summarize the person's stated problem (often involving perceived unfairness, burden, or being wronged by others) and explicitly label it as valid, understandable, or justified. It captures the empathetic-validation move in advice-giving or supportive responses, not merely sympathetic language in general or restating facts without endorsement. Sentences that just describe a situation, offer advice, or express sympathy without affirming the person's judgment as correct are not part of this cluster.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 68563,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered advice-list markers",
+    "description": "This latent fires most strongly on the bare numeral-plus-period tokens (e.g. '2.', '3.', '4.') that begin enumerated list items in advice-giving responses, typically ones offering interpersonal or relationship guidance ('Here are some suggestions: 1. ... 2. ... 3. ...'). The broader cluster consists of the actual advice sentences that surround these list markers -- suggestions to 'have an open and honest conversation,' 'find a compromise,' 'communicate your concerns,' or 'consider the following steps' in the context of personal conflicts (roommates, partners, family, coworkers). It captures the structural/rhetorical pattern of step-by-step, numbered recommendation-giving in advice-column-style text, not any specific topic. It does NOT capture numbers or lists in general non-advice contexts (e.g., numbered data, dates, or unrelated enumerations), nor does it capture advice-like sentences that lack the enumerative list structure or list-marker framing.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 541101,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "AITA-style balanced interpersonal judgment",
+    "description": "This latent fires on text characteristic of relationship-advice or 'am I the asshole' responses that weigh both sides of an interpersonal conflict, offering measured verdicts, justifications, and numbered advice. Included sentences hedge with phrases like 'while it's understandable... it's also important to acknowledge,' give reasons framed as numbered lists ('Here's why: 1.'), state verdicts ('You're not the asshole'), or offer concrete relational advice (setting boundaries, having a calm conversation, considering the other person's perspective). It captures the rhetorical scaffolding of empathetic, two-sided conflict mediation rather than any single topic like family, pets, or dating. Not included are purely factual statements, unrelated advice lacking interpersonal judgment/balance framing, or list markers and suggestions that don't involve weighing blame or perspectives in a relationship dispute.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 62799,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating self-care and boundary-setting reassurance",
+    "description": "This latent fires on affirming, second-person statements that reassure the reader they are entitled to prioritize their own needs, feelings, boundaries, or well-being, typically using formulaic phrasing like 'you deserve,' 'you have the right to,' 'it's okay to,' or 'remember, your feelings/boundaries are valid.' The highest-activating examples are near-formulaic advice-column reassurances directly telling the addressee that self-care, boundary-setting, or prioritizing themselves is legitimate and healthy. Lower-activating cluster members retain the same self-care/boundary theme but embed it in more contextualized, situational advice (e.g., explaining why a specific action is reasonable given circumstances) rather than the direct, generic affirmation formula. Excluded are sentences that discuss relationships, boundaries, or advice-giving without the explicit validating 'you deserve/it's okay/you have the right' framing directed at the reader's self-prioritization.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 10,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Probing for personal negative experience",
+    "description": "This latent fires on questions that ask whether a specific person has personally suffered harm from, or directly witnessed the harmful effects of, something (e.g., a behavior, substance, or situation). Included sentences are interrogative in form, framed around a third-person subject, and specifically probe for firsthand negative consequences or observed harm as a way of assessing motivation or credibility. It does not include general statements asserting that something is harmful, first-person accounts of harm, or questions about unrelated attributes like knowledge, opinions, or preferences that don't center on experienced or witnessed negative consequences.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 11,
+    "cluster_size": 47761,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Moral verdict on someone's reaction as unfair/harsh",
+    "description": "This latent fires on evaluative sentences that pass explicit moral judgment on a person's (often a relation like mom/dad/sister/boyfriend) reaction, response, or behavior in an interpersonal conflict, labeling it with negative-valence adjectives such as unacceptable, disproportionate, unfair, harsh, dismissive, hurtful, or entitled. The highest-activating examples are short, formulaic verdict sentences (often starting with 'However,' or 'Your X's reaction/response was...') that name an actor and assign a clear negative characterization of their emotional/behavioral response, typically in an advice-column or Reddit-relationship-advice register. Lower-activating cluster members include related but more hedged, explanatory, or descriptive sentences (e.g., discussing possible causes, validating feelings, or giving advice) that surround the same topic but don't deliver the crisp condemnatory verdict itself. Sentences that merely describe events, give neutral advice, or validate someone positively without a critical judgment of a reaction/behavior are not central to this cluster.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 12,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Referencing a prior comparative statement",
+    "description": "This latent fires on sentences that explicitly recall or restate something the interlocutor previously said, particularly a comparison or equivalence claim (e.g., 'you mentioned that X would have cost/been similar to Y'). Included sentences use second-person attribution ('you mentioned/said') to reintroduce a prior claim as context before continuing the discussion, often involving a quantitative or comparative relationship. It does not include sentences that merely state a comparison directly without attributing it to a prior speaker, nor general recollections that lack a comparative or equivalence structure.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 13,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 14,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 15,
+    "cluster_size": 36583,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "AITA verdict framing",
+    "description": "This latent fires on the rhetorical moment in advice/AITA-style responses where the model poses or restates the core judgment question ('So, are you the asshole?', 'AITA?', 'Would you be the asshole?') or delivers a short, direct verdict ('No, you're not the asshole', 'Not entirely'), typically after a 'So,' transition marking the shift from narrative summary to judgment. The top-activating examples are almost purely these formulaic question/verdict templates, including variants like 'are you in the wrong', 'are you being unreasonable', and truncated fragments ('Not', 'Not entirely') that serve as the verdict lead-in. It is not about the surrounding justification, reasoning, or explanation for why someone is or isn't the asshole (e.g., sentences that argue, contextualize, or elaborate on the situation are only weakly represented, in the random sample) -- it specifically targets the formulaic question-posing or bare verdict-stating move itself, not the supporting argumentation.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 16,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 17,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 18,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 19,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 20,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 21,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 22,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 23,
+    "cluster_size": 2,
+    "n_exemplars_used": 2,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating affirmation",
+    "description": "This latent fires on sentences that offer reassurance or approval of another person's expectation, feeling, or action as reasonable, valid, or a good move. The included sentences are supportive, affirming statements that legitimize someone's stance or decision (e.g., 'that's reasonable,' 'that's a great step') rather than providing new information or advice themselves. It excludes sentences that merely state facts, give direct instructions, or express uncertainty without validating a prior claim or action. The key function is interpersonal affirmation/validation, not the specific topic (relationships, health, etc.) being discussed.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 24,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 25,
+    "cluster_size": 27251,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Discourse-transition preamble to enumerated response",
+    "description": "This latent fires on short formulaic lead-in phrases that signal the start of a structured explanation or list-based response, such as 'Here's my take:', 'Here's a breakdown:', 'Here's why:', and 'Let's break it down.' The highest-activating examples are almost purely these bare transitional stubs, often immediately followed by a numbered list marker ('1.'), functioning as a discourse cue rather than conveying any content themselves. Lower-activating cluster members include the same phrases embedded in fuller advice-giving contexts (e.g., empathetic AITA-style responses) or followed by actual substantive analysis, but the latent is specifically tracking the introductory framing device, not the empathetic tone, judgment, or topical content that follows. Sentences that merely express sympathy, validate feelings, or render a verdict without this 'here's my analysis is coming' framing are not central to the cluster.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 26,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 27,
+    "cluster_size": 9687,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item in justification enumeration",
+    "description": "This latent fires on the discrete items of a numbered list, most strongly on the bare numeral markers themselves (\"2.\", \"3.\", \"4.\", \"5.\") that begin each list entry, and more weakly on the full sentences that make up those enumerated points. The random-sample sentences reveal the underlying pattern: each is one bullet in a list of reasons or pieces of evidence supporting a verdict or judgment (e.g., \"You did have a point: the couple did arrive late...\", \"You've already contacted the owner and informed him of the issue\"), often restating a fact and validating it as reasonable, fair, or justified. It is not simply about counting or numbers in general, nor about narrative or evaluative sentences that lack list structure; sentences that state similar facts but aren't part of an itemized justification list do not trigger it as strongly.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 28,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 29,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  }
+]
