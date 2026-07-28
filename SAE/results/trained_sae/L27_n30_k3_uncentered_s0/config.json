@@ -1,0 +1,16 @@
+{
+  "layer": 27,
+  "n_latents": 30,
+  "k": 3,
+  "centered": false,
+  "seed": 0,
+  "lr": 0.004673899157377418,
+  "batch_size": 512,
+  "max_epochs": 300,
+  "patience": 10,
+  "val_frac": 0.05,
+  "d_in": 4096,
+  "n_epochs_trained": 32,
+  "activations_input_hash": "750d3a8e2c2be6e3c03aa3ecc55812432c587acbdc1b2e54da51eeb38719a9f4",
+  "timestamp": "2026-07-22T10:48:17.752135+00:00"
+}

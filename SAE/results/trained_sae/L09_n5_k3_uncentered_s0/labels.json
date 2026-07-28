@@ -1,0 +1,52 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 3294,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-column register",
+    "description": "This latent fires on the characteristic voice of a supportive, non-judgmental advice-giver (e.g., an AI or advice-column respondent) addressing someone's personal/relationship problem. It captures validating openers ('I'm sorry you had to go through that', 'It's completely reasonable to...'), reassurances of non-judgment ('Please know that I'm not here to judge'), tentative interpretive claims about others' motives or feelings ('It's likely he...', 'This could suggest that...'), encouraging affirmations ('That's a great starting point!', 'I'm so proud of you'), and check-in/engagement questions ('What do you think?', 'How does that sound?') that punctuate this advice-giving discourse. It does NOT track any particular topic (relationships, chores, driving, health advice all appear) but rather the pragmatic stance and rhetorical moves of empathetic, hedged, second-person counseling language. Sentences that merely state neutral facts, instructions, or first-person narrative without this validating/advisory register are excluded, even if topically similar.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 811,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic relationship-advice validation and tips",
+    "description": "This latent fires on the stock language of AI-generated interpersonal/relationship advice responses (e.g., Reddit AITA or relationship-advice answers): validating statements ('It's understandable that...', 'It's okay to feel...', 'You deserve...'), reframing/perspective-taking observations about a conflict, and enumerated actionable tips ('Practice mindfulness', 'Avoid being confrontational'), along with the numbered/bolded list markers ('2.', '4. **') that structure these advice lists. Included sentences validate emotions, normalize behavior, assign responsibility among parties in a dispute, or offer a discrete coping/communication strategy, typically in a warm, hedged, second-person advisory tone. It does not include neutral factual statements, narrative descriptions of events unconnected to advice-giving, or purely informational content (e.g., dog breed facts, government links) that lack this validating/advisory framing, even though a few such outliers appear among top activations, likely due to co-occurring list-structure formatting.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 395,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "error",
+    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Conversational advice-giving register\", \"description\": \"This latent fires on the stylistic register of AI-assistant advice and social-coaching text: reassuring validations (\\'You\\'re absolutely right\\', \\'Absolutely not!\\'), empathetic framing (\\'I\\'m so sorry to hear...\\', \\'It\\'s natural to wonder...\\'), bolded advice-list headers (\\'Visualize success**:\\', \\'Listen actively**:\\'), rhetorical check-in questions (\\'Is it when you\\'re tired, stressed, or feeling overwhelmed?\\'), and stock exclamatory topic intros (\\'The fascinating world of...!\\'). Included sentences are the formulaic scaffolding of helpful, therapeutic, or interpersonal-advice responses\u2014reassurances, hedges, invitations to elaborate, numbered/bulleted tip fragments, and empathetic acknowledgments\u2014regardless of whether the underlying topic is relationships, finance, health, or logistics. It is not about the specific factual content or domain (diamonds, credit cards, flights, acne, etc.) but about this recurring rapport-building/advice-structuring discourse pattern; plain factual statements without this conversational-coaching tone or without hedging/validation/list-structuring framing are excluded.\"'"
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 54701,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Transition into enumerated list of reasons or suggestions",
+    "description": "This latent fires on short, formulaic lead-in phrases (often followed by a numbered list marker like '1.' or '1. **') that signal the model is about to enumerate reasons, suggestions, tips, or considerations, such as 'Here's why:', 'Here are some thoughts to consider:', 'Here's what I would suggest:', and similar preambles including transitional 'Here's where things get tricky' style hooks. The cluster includes these introductory framing sentences themselves and the bare numeral/bullet markers that immediately follow them (e.g., '1.', '2. **'), which co-activate as part of the same list-initiation pattern. It does NOT include the substantive content of the list items (the actual reasons, advice, or judgments given), nor does it include unrelated advice-giving or verdict sentences (e.g., 'you're not the asshole') that lack this explicit enumerative lead-in or numbered marker structure.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 102523,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Recommending professional or social support-seeking",
+    "description": "This latent fires on advice-genre sentences that recommend seeking help from a therapist, counselor, or trusted friend/family member to process emotions, gain perspective, or develop coping strategies. The highest-activating examples are formulaic 'they/a therapist can help you work through X and develop Y (coping strategies/a plan)' constructions, or direct imperatives like 'Consider talking to a therapist/trusted friend about your feelings.' It specifically captures the recommendation to outsource emotional processing to a third party (professional or personal support network), not general advice-giving about resolving a situation oneself. Excluded are sentences advising direct conversation with the person actually involved in the conflict (e.g., 'talk to your girlfriend/boyfriend/sibling'), which instead center on interpersonal communication/negotiation rather than seeking outside emotional support.",
+    "status": "ok",
+    "error": null
+  }
+]

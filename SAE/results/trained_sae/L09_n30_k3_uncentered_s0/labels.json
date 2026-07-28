@@ -1,0 +1,302 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 34747,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "AITA verdict negation phrases",
+    "description": "This latent fires on short verdict-delivering phrases from AITA/relationship-advice style responses that negate blame, especially the formulaic 'Not entirely,' 'Not really,' 'Not necessarily,' 'Absolutely not,' and 'No, you're not the asshole' constructions. The cluster centers on terse, standalone judgment statements (often a single sentence or fragment) that directly answer an implicit or explicit 'Am I the asshole?' question with a negation, hedged or emphatic. It does not include the longer explanatory or reasoning sentences that justify or elaborate on the verdict (e.g., discussing motivations, context, or nuance) unless they open with one of these short negating phrases; full argumentative or descriptive sentences about the situation are excluded even if they conclude the person is not at fault.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 12361,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "List-item numeral markers",
+    "description": "This latent fires on standalone numeral tokens (e.g. '2.', '3.', '4.') that serve as enumeration markers beginning a new item in a numbered list, such as a ranked pros/cons list or step-by-step reasoning. The top-activating examples are almost purely these bare digit-plus-period tokens with no other content, capturing the structural act of starting a new list entry. The lower-activating 'random' examples include softer, semantically related material -- balanced-perspective transition sentences like 'However, it's also important to consider...' or 'It's also worth noting that...' which often appear as list items in advice-style responses, but these are not the pure numeral markers themselves. It does not include list markers for unrelated content types (e.g., bullet points with dashes/asterisks) or numerals used in non-list contexts such as dates, quantities, or calculations.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 17779,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Recommending emotional support-seeking",
+    "description": "This latent fires on advice-giving statements that recommend the reader seek emotional support from friends, family, therapists, counselors, or support groups, typically as a bulleted or imperative-style suggestion (e.g., 'Seek support: Talk to a trusted friend...'). The highest-activating examples are near-templatic instances of this exact 'Seek support' recommendation formula, often with bold headers and stock phrasing about reaching out to trusted friends/family/mental health professionals for guidance. The broader cluster includes related but more varied advice-giving sentences that still center on directing someone to a support resource (professional help, counseling, hotlines, accountability partners) or explain why such support would help. It does NOT include general empathetic statements lacking a recommendation to act (e.g., 'there are people who care about you'), diagnostic/explanatory statements about someone's feelings or situation without an actionable suggestion, or advice about unrelated topics like legal, medical, or logistical matters that don't involve seeking interpersonal/emotional support.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 74792,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Recounting prior agreements and commitments",
+    "description": "This latent fires on second-person narrative sentences that recap a factual sequence of events involving a request, agreement, or prior arrangement -- typically in an 'X asked, you agreed/did Y' or 'you had already committed to Z' structure, often as part of summarizing the facts of an interpersonal dispute (e.g., AITA-style scenarios). Included sentences state who asked/initiated something and how the addressee responded (agreeing, declining, complying, paying, showing up, or reneging), frequently with temporal markers like 'initially,' 'already,' or 'beforehand' establishing a timeline of commitment versus later events. It captures neutral, fact-recounting statements of what was agreed or done, not evaluative or advisory commentary. Explicitly excluded are sentences that interpret, judge, or advise about the situation (e.g., 'that's unreasonable,' 'you should consider,' 'it's understandable that'), which instead belong to the surrounding analytical/opinion text rather than the bare recitation of agreed-upon facts.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 41164,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Benefit-framing lead-in phrase",
+    "description": "This latent fires on the templated sentence-initial construction '[This/That] can/will help ...' used to introduce the positive benefit or rationale of a suggested action, especially in advice-giving contexts about relationships, confidence, and social connection. The top-activating examples are almost entirely this exact skeletal phrase (often truncated), frequently followed by verbs like 'build,' 'feel,' or 'create' and objects like 'confidence,' 'trust,' 'connection,' or 'momentum.' The random cluster examples show the same underlying template embedded in fuller advice sentences, still explaining how a proposed action will yield a beneficial outcome. It does NOT capture sentences that merely discuss relationships, trust, or confidence as topics without using this 'this/that + help' framing, nor does it include cautionary statements, questions, or descriptions of negative consequences that lack the benefit-introducing structure.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 61603,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating self-care and boundary-setting",
+    "description": "This latent fires on second-person affirmations, typically in an advice/therapy-speak register, that validate the reader's choice to prioritize their own needs, well-being, boundaries, or happiness. Top-activating examples are highly formulaic 'You deserve/You're taking care of yourself/prioritizing your own X' statements that reassure the addressee they are justified in self-care, self-prioritization, or boundary-setting. The broader cluster includes related supportive reassurances about rights, boundaries, and not being selfish for looking after oneself, even when phrased more loosely or embedded in longer advice sentences. It does NOT include neutral descriptions of a situation, advice about how to act toward others, or general relationship commentary that lacks this direct affirming 'you deserve/you're entitled to prioritize yourself' framing.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 10,
+    "cluster_size": 45191,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic opener stock phrase",
+    "description": "This latent fires on short, formulaic emotional-validation openers that an assistant uses to launch a supportive reply, especially exact stock phrases like 'I'm happy to help!', 'I completely understand!', 'I'm so glad you reached out!', and 'I'm so sorry to hear that!'. The highest activations are near-verbatim, exclamation-punctuated boilerplate greetings/acknowledgments that appear at the very start of a response, before any substantive content or advice is given. Lower (random-sample) activations extend to similar but more elaborated or varied empathy-signaling sentences ('It's completely understandable that...', 'I understand your frustration...', 'Firstly, kudos to you for...') that still perform the same rapport-building, validating function but are less templated. It does NOT include sentences that give actual advice, analysis, factual content, or nuanced reasoning about the user's situation -- only the ritualized empathetic/acknowledging framing language, not the substance that follows it.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 11,
+    "cluster_size": 76851,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Enumerated example options in suggestion lists",
+    "description": "This latent fires on list items that present a suggestion category (often a bolded header) followed by a parallel set of concrete, interchangeable example options, typically in the form 'X, Y, or Z' or 'This could be a A, B, C, or D.' The included sentences are almost all activity/hobby/side-hustle recommendations (join a club, take a class, attend a festival, sell products online) structured as open-ended menus of equivalent choices rather than a single prescribed action. It does not include general advice, reasoning, or explanatory sentences that lack this enumerative 'pick one of these examples' structure -- e.g., sentences giving a single directive, expressing empathy, weighing pros/cons, or making an argument, even if they discuss similar topics like hobbies or self-improvement, are excluded because they lack the parallel list-of-options format that drives this feature.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 12,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Truncated token 'Don'",
+    "description": "This latent activates on the isolated token fragment 'Don', likely representing the start of a word such as 'Don't', 'Donald', or a name like 'Don'. Because only a single, truncated example is available, the exact functional role (e.g., contraction marker, proper noun onset) cannot be determined with confidence beyond flagging this specific token string. It does not represent a broader semantic theme, sentiment, or reasoning pattern, and should not be confused with clusters capturing full contractions ('Don't') or complete personal names, since only the bare fragment is present here. The lack of surrounding context means this activation reflects a surface-level token match rather than any discourse-level function.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 13,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 14,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 15,
+    "cluster_size": 34495,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "List-introducing transitional phrase",
+    "description": "This latent fires on short transitional phrases that immediately precede an enumerated list, such as 'Here are some points to consider:', 'Here's why:', 'Here are some suggestions:', or similar lead-ins followed by a numbered item (often '1.' or '1. **'). The included sentences are almost entirely these boilerplate framing phrases themselves -- the colon-terminated header plus the start of the first list marker -- rather than the substantive content that follows in the list. It captures the structural/formatting function of announcing an upcoming enumerated list of advice, reasons, or tips, regardless of the topic (relationships, English learning, apologies, productivity, etc.). It does NOT include the actual list content, fully elaborated advice sentences, rhetorical questions, or narrative reasoning statements that lack this list-preamble-plus-numbering structure (e.g., 'Well, let's break it down.' or explanatory sentences without a following numbered item) score lower/appear only as weaker peripheral examples.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 16,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 17,
+    "cluster_size": 41467,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Active-listening advice imperatives",
+    "description": "This latent fires on imperative-mood advice bullets instructing the reader to listen actively, show genuine interest/empathy, and avoid interrupting or becoming defensive, typically as part of listicle-style relationship or communication guidance. The highest-activating examples are short, formulaic directives (often starting with 'Listen actively' or 'Avoid interrupting') that prescribe attentive, non-defensive listening behavior, frequently with bolded headers or parallel phrasing repeated across many similar tips. Lower-activating cluster members broaden into related but more elaborated communication advice (e.g., using 'I' statements, validating feelings, setting boundaries, being honest) that shares the advice-giving format but drifts from the core 'listen/don't interrupt' instruction. Excluded are descriptive or diagnostic sentences that merely discuss listening or empathy as a topic (e.g., analyzing why someone failed to listen) rather than issuing a direct imperative to listen or engage actively.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 18,
+    "cluster_size": 36331,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Self-care advice list items",
+    "description": "This latent fires on imperative-mood bullet points from advice-giving text (often bolded headers like 'Practice X**:') that recommend emotional coping and wellness strategies, such as mindfulness, deep breathing, self-compassion, taking breaks, and celebrating small wins. The cluster includes short standalone directives (e.g., 'Practice self-care', 'Take deep breaths') as well as longer list items that elaborate on the same directive with a following explanatory clause. It is specifically tied to the formulaic structure of therapeutic/self-help listicle advice rather than to any single topic -- it activates across contexts like anxiety, breakups, work stress, or grief as long as the sentence takes the form of a prescriptive coping-strategy recommendation. It does NOT include general reflective or descriptive statements about emotions, situational analysis, or advice that isn't phrased as a discrete actionable self-care/coping step (e.g., sentences merely describing someone's feelings or circumstances rather than instructing a wellness practice).",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 19,
+    "cluster_size": 47065,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Reassuring 'Remember' reminder-preamble",
+    "description": "This latent fires on the discourse marker 'Remember' (with or without a trailing comma or 'that') used to introduce a reassuring piece of advice or a key takeaway, typically in advice-column or relationship-counseling style responses. The top-activating examples are just the bare token/phrase itself, showing the latent tracks the onset of this rhetorical move independent of what follows; the broader cluster shows the fuller pattern, where 'Remember' prefaces empathetic, normalizing statements (e.g., 'Remember, it's okay to...', 'Remember, you're not alone...', 'Remember that relationships are about compromise...'). It is not simply about memory or recollection tasks, nor does it activate on generic advice sentences that lack this specific lead-in word ('It's essential to...', 'Take your time...') -- the defining feature is the specific reminder-framing word 'Remember' functioning as a rhetorical hinge before supportive guidance.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 20,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 21,
+    "cluster_size": 51331,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list markers",
+    "description": "This latent fires on the numeral tokens that begin items in an enumerated or ordered list (e.g., '2.', '3.', sometimes followed by bold markdown formatting '**'), rather than on any semantic content. The included sentences are almost entirely bare list-item markers like '2.' or '3. **' that appear at the start of a numbered step, point, or section in structured text such as instructions, outlines, or markdown-formatted responses. It is not tied to a particular topic or to the content that follows the number, and it does not activate on numbers used in other contexts such as arithmetic, dates, quantities, or inline counting within a sentence -- only on the list-enumeration marker itself.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 22,
+    "cluster_size": 23915,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Formulaic evaluative validation of a situation",
+    "description": "This latent fires on short, templated evaluative judgments\u2014typically opening with 'That's...'\u2014that appraise a previously described situation, feeling, or behavior as good, bad, reasonable, or unacceptable (e.g., 'That's not okay', 'That's a great approach!', 'That's a valid concern'). The top-activating examples are almost purely the bare template itself, while the broader cluster includes longer sentences that perform the same move embedded in advice-giving text (e.g., 'This is a significant development,' 'His conduct was disruptive, offensive, and unprofessional,' 'That's a valid feeling, even if it's not rational'), i.e., a stock phrase delivering a categorical verdict on prior content rather than adding new factual detail. It does not include purely descriptive or narrative statements that lack an evaluative stance, nor does it include questions, hedged uncertainty, or explanations that analyze causes/reasons without rendering a judgment of acceptability or quality.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 23,
+    "cluster_size": 26162,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Open-ended therapeutic follow-up questions",
+    "description": "This latent fires on conversational, open-ended prompting questions typical of a counselor, coach, or supportive listener inviting the interlocutor to elaborate on their feelings, situation, or thoughts\u2014phrases like 'Is there anything specific...?', 'Can you tell me more about what happened?', 'What's on your mind?', and 'What do you think?'. Included sentences are generic, low-content solicitations for more detail or reflection, often formulaic and repeated verbatim, used to keep an empathetic dialogue going rather than to convey factual information. It also extends to slightly more elaborated variants that probe emotional state, relationship dynamics, or self-reflection ('Have you considered...', 'How do you feel about...'), as long as they function as an invitation to share more rather than a statement or directive. It does NOT include declarative advice, instructions, or statements that assert content (e.g., 'Consider whether this is healthy', 'Reflect on your strengths') unless phrased as a direct question to the listener, nor does it include questions embedded in narrative or factual exposition rather than dialogic prompting.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 24,
+    "cluster_size": 16070,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Formulaic 'age-old dilemma' framing",
+    "description": "This latent fires on a stock rhetorical opener that labels an upcoming topic as a familiar, universal conflict or problem, typically an exclamatory noun phrase like 'The age-old dilemma!', 'The eternal struggle!', or 'The classic X conundrum!' used to preface advice or commentary (often in advice-column or AITA-style responses). Included sentences are short, punchy, exclamation-marked framings that name a dilemma/debate/struggle/conundrum as generic and timeless, whether generic ('The age-old dilemma!') or topic-specific ('The age-old conundrum of Secret Santa etiquette!'). Not included are sentences that merely discuss family drama, relationship conflicts, or dilemmas in substantive/descriptive prose without this exclamatory 'age-old/eternal/classic X!' labeling convention, or that state uncertainty/complexity without invoking this rhetorical trope (e.g. 'What a complicated and painful situation.' is borderline included only via the same templated exclamation pattern, while analytical or narrative descriptions of the same conflicts are excluded).",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 25,
+    "cluster_size": 47546,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Affirming self-help generalizations",
+    "description": "This latent fires on generic, affirming statements that validate personal qualities (confidence, self-awareness, uniqueness, kindness, belief in oneself) or normalize common emotional struggles (feeling like you don't fit in, feeling unmotivated), typically phrased as broad declarative truisms rather than advice tied to a specific situation. The top-activating examples are short, standalone abstract sentences of the form 'X can be incredibly empowering/important/valuable' or 'Believing in yourself/Having confidence... is a powerful catalyst for success,' functioning as motivational, therapy-speak-style affirmations detached from concrete context. The lower-activating cluster members are similar in tone (empathetic, validating, self-help register) but are more embedded in specific advice-giving or situational analysis (e.g., addressing a particular relationship problem or interpreting someone's behavior), so they activate less strongly. What is explicitly excluded are purely factual, narrative, or context-specific statements that don't perform this generalized affirming/normalizing function -- e.g., sentences describing a specific person's concrete situation, technical explanations, or straightforward reporting without the validating, empowerment-oriented framing.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 26,
+    "cluster_size": 47470,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice to 'have an open and honest conversation'",
+    "description": "This latent fires specifically on the stock advice-giving phrase 'have an open and honest conversation with [person] about [topic]', typically issued as an imperative or suggestion (e.g., 'consider having...', 'I would suggest having...') in response to interpersonal problems. The highest-activating examples are near-verbatim repetitions of this exact templated phrase with only the addressee (mom, girlfriend, boyfriend, sister, wife, coworker) and topic (concerns, feelings, decision) varying. Lower-activating cluster members are more loosely related advice sentences about communication, boundaries, compromise, and conflict resolution that share the general theme but do not use the precise 'open and honest conversation' template, or use variant phrasing ('calm and respectful conversation', 'talk to', 'communicate openly') -- these still relate to the topic but activate less strongly because they lack the fixed template structure. The function is not about topic (relationships) but about detecting this specific formulaic advice-giving construction.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 27,
+    "cluster_size": 62446,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on standalone numeric tokens that serve as list or step markers (e.g., '5.', '7', '9.'), typically appearing at the start of an enumerated item in a structured list, outline, or step-by-step response. The top-activating examples are almost purely the bare digit itself (often followed by a period), reflecting the model's representation of list enumeration structure rather than any semantic content. The random cluster samples show the same numeric markers but often paired with markdown bold formatting ('**') indicating list items in formatted text (e.g., headers or step labels). This is NOT about the numerical value or quantity being referenced in a sentence, nor about counting/arithmetic reasoning -- it is purely a structural/formatting marker for list position, independent of the topic or content that follows.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 28,
+    "cluster_size": 34513,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Suggested conversational scripts for social requests",
+    "description": "This latent fires on quoted or template-style example utterances that model how to phrase a social/interpersonal request \u2014 asking to catch up, reconnect, get a number, change topics, take a break, or set a boundary in a relationship. The highest-activating examples are short, polite, often question-form scripts (\"Can we catch up later?\", \"Would you like to grab coffee sometime?\", \"I've been thinking about you and wanted to reach out\") that read like suggested dialogue a person could say verbatim, frequently wrapped in quotation marks as advice output. The broader cluster extends this to longer suggested scripts for handling harder relational conversations (setting boundaries, expressing feelings, negotiating time/space), still framed as \"you could say...\" style proposed wording. It does NOT include general narrative statements, factual claims, or third-person description of relationships/events that aren't phrased as a recommended thing-to-say \u2014 the defining feature is the presence of a modeled, quotable interpersonal script rather than the topic of relationships itself.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 29,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  }
+]

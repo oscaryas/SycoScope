@@ -1,0 +1,52 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Ease of accessibility",
+    "description": "This latent fires on short phrases describing something as being easily accessible or readily obtainable. Included sentences use brief adjective-phrase constructions asserting low-effort availability, such as describing an item, resource, or location as 'easily accessible.' It does not capture broader discussions of accessibility policy, detailed explanations of how access is achieved, or unrelated descriptions of ease/difficulty in other contexts. The cluster is narrowly limited to the terse evaluative phrase itself rather than surrounding elaboration.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 138,
+    "n_exemplars_used": 138,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic relationship-advice register",
+    "description": "This latent fires on the stock rhetorical moves of an advice-giving, therapist-like voice used in emotional/interpersonal (often AITA-style) contexts: exclamatory acknowledgments of a topic's sensitivity ('What a sensitive and complex topic!'), short verdict phrases ('Not entirely.', 'Not at all.', 'That's not being a jerk.'), probing motivational questions ('What drives you?', 'What triggers your behavior?'), instructions to avoid sensitive topics or to share feelings gently, and validating 'It sounds like...' summaries of the user's situation. Included sentences are short, formulaic conversational fragments -- exclamations, brief yes/no-style judgments, coaching tips about emotional disclosure, and empathetic paraphrases -- rather than sentences conveying substantive factual content. Excluded are sentences that discuss the same topics (parenting, conflict, emotions) in a purely descriptive or narrative way without this advice-voice framing, as well as any detailed argumentation or factual explanation; the latent tracks the register/formula, not the subject matter itself.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 2,
+    "n_exemplars_used": 2,
+    "judge_model": "claude-sonnet-5",
+    "title": "Short exclamatory fragment",
+    "description": "This latent fires on brief, standalone exclamatory or fragmentary utterances that function as terse emotional interjections rather than full grammatical sentences. Included are short phrases ending in an exclamation point or minimal clause structure that convey immediacy, tension, or emphatic reaction (e.g., 'The pressure's on!') as well as single-word fragments used conversationally ('With.'). It does not include longer, syntactically complete sentences, declarative statements of fact, or expository/explanatory prose, even if they discuss similar themes of stress or completion.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "General factual statement about employment/hiring practices",
+    "description": "This latent activates on plain declarative sentences that state a general fact about who hires or employs a category of workers, often naming both institutional and private actors (e.g., 'government agencies and private companies'). Included sentences are neutral, informational statements describing employment patterns or practices without argument, opinion, or narrative framing. It does not include sentences that express opinions about employment, give instructions on how to get hired, tell personal anecdotes about a job, or discuss unrelated topics like wages, working conditions, or specific individuals' careers -- the defining feature is the generic 'X hires/employs Y' factual assertion structure, independent of the specific occupation mentioned.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-giving imperative fragment",
+    "description": "This latent fires on truncated imperative-style phrasing that opens self-help or instructional advice, typically beginning with a verb like 'Learn to' followed by a call to recognize, manage, or address something. The single example captures the syntactic pattern of an advice-giving directive aimed at the reader ('Learn to recognize and manage your...'), rather than any particular topic like emotions, health, or finance. It does not include completed sentences, factual statements, questions, or first-person narration; it specifically marks the imperative 'Learn to X' construction used to introduce guidance or self-improvement tips. Because only one sentence is assigned, the exact scope of variation (e.g., other verbs or completed clauses) cannot be fully confirmed from this cluster alone.",
+    "status": "ok",
+    "error": null
+  }
+]

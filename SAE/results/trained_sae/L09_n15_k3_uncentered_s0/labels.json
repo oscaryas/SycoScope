@@ -1,0 +1,152 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 3932,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Finding common ground advice",
+    "description": "This latent fires on advice-list items (often formatted as bolded imperative headers like \"Find common ground**:\") that instruct the reader to identify shared interests, hobbies, experiences, or values with another person as a way to start or sustain a conversation and build rapport. The highest-activating examples are near-verbatim repetitions of the 'find common ground / shared interests' formula applied to dating, networking, socializing, and small talk. The broader cluster extends to related relationship-building tips (show genuine interest, listen actively, join groups with similar interests, prepare conversation starters) that share the same imperative-advice-bullet structure and social-connection theme. It does not include unrelated advice bullets on other topics (cooking, budgeting, medical resources, emotional processing) that share the bolded-header format but lack any reference to shared interests or connecting with others.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 37,
+    "n_exemplars_used": 37,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating and suggesting advice options",
+    "description": "This latent fires on segments of advice-style assistant responses that either (a) offer a concrete suggested activity or option, often as a bolded bullet-point item (e.g., cooking together, volunteering, tutoring, gift ideas), or (b) affirm/validate the user's feelings, choices, or situation in a warm, supportive tone (e.g., 'it's admirable that you...', 'kudos to you for...', 'you were a reasonable and polite customer'). Included sentences are the actionable recommendation items in list-formatted advice and the empathetic validating statements that frame someone's actions or feelings positively. It does not include neutral factual statements, questions, or advice-seeking descriptions of a problem itself -- only the supportive/suggestion-giving moves within an advice or counseling-style response are captured, not the surrounding topic (cooking, volunteering, relationships, etc.) which varies widely.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 5,
+    "n_exemplars_used": 5,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "error",
+    "error": "ValueError: No JSON object found in judge response: ''"
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 68,
+    "n_exemplars_used": 68,
+    "judge_model": "claude-sonnet-5",
+    "title": "Interpersonal advice-giving discourse",
+    "description": "This latent fires on sentences from an assistant-style advice-giving register, particularly in relationship/conflict/personal-dilemma contexts (AITA-style or advice-column responses). It captures validating statements ('your feelings are valid'), recommendations to consult professionals, suggestions to focus on one's own feelings/needs, proposals for open/honest/respectful communication, refusals to provide harmful advice, and rhetorical questions posed to the advice-seeker to prompt reflection or gather more context. It is not about the topic of the advice (relationships, health, law, sports, etc.) but about the pragmatic move of coaching, validating, redirecting, or refusing within a supportive advisory dialogue. Purely factual or descriptive statements without this advisory/coaching framing (e.g., neutral descriptions of rules or policies) are excluded unless they serve this interpersonal-guidance function.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 174,
+    "n_exemplars_used": 174,
+    "judge_model": "claude-sonnet-5",
+    "title": "Interpersonal advice-giving recommendations",
+    "description": "This latent fires on advice-column style prose that offers concrete relational recommendations for resolving personal, family, or workplace conflicts: suggesting conversations, mediators, compromises, boundary-setting, or self-affirming reframes ('you deserve', 'consider having a conversation', 'a neutral third party can help facilitate'). Included sentences are imperative or second-person suggestions, validating reassurances, or action steps aimed at improving communication and emotional well-being in a specific interpersonal scenario, often part of a numbered list of tips. It excludes purely factual, descriptive, or narrative statements that don't prescribe an interpersonal action or emotional stance (e.g. definitions, plot summaries, or generic factual claims), as well as advice that is purely logistical/practical with no relational or emotional dimension (e.g. buying furniture online, searching patents), which appear only peripherally. The core function is proposing or endorsing a relationship-oriented coping or communication strategy, not the specific topic (family, romance, work, roommates, etc.) the advice happens to address.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 37,
+    "n_exemplars_used": 37,
+    "judge_model": "claude-sonnet-5",
+    "title": "Interpersonal-verdict discourse markers",
+    "description": "This latent fires on conversational moves typical of advice-giving or AITA-style judgment responses: rhetorical questions posed to the reader ('Would you like that?', 'Can we agree to disagree?'), short verdict statements ('the answer is no', 'So, NTA', 'I'd say no'), and hedged evaluative framings that balance sympathy with judgment ('I understand your concerns, but you're partially in the wrong'). It captures the discourse-level scaffolding of an advice/verdict exchange -- transitional openers ('So, ...'), direct-address engagement phrases, and closing moral appraisals of someone's behavior -- rather than the specific topic (dogs, parties, apologies, etc.) being discussed. It does NOT include purely factual, descriptive, or narrative sentences that lack this second-person evaluative or verdict-delivering framing, nor does it include technical instructions devoid of interpersonal judgment.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 158702,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeric markers that begin items in an enumerated or numbered list (e.g., '2.', '3.', '4. **'), typically within a structured response that presents tips, suggestions, points, or steps. It also activates on the introductory colon-terminated phrases that launch such lists ('Here's why:', 'Here are some tips...') and the first '1.' that follows them. It is not tied to the topic or content of the list items themselves, but to the formatting device of sequential enumeration. It does not activate on prose sentences lacking list structure, nor on numbers used in non-list contexts (e.g., quantities, dates, or numerals embedded in ordinary sentences).",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 45,
+    "n_exemplars_used": 45,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-giving in interpersonal/relationship contexts",
+    "description": "This latent fires on sentences from advice-column or coaching-style text that offer guidance, validation, or reflective observations about personal relationships, emotions, and social situations. Included sentences validate the reader's feelings ('You've had enough of her behavior'), suggest actions or reframes ('This might be worth highlighting in your negotiation'), or make generalized empathetic observations about human behavior and coping ('Many women have to make difficult choices to prioritize their safety'). It captures the tone and structure of second-person or generalized advice-giving discourse - reassurance, suggestions, conditional recommendations, and normalizing statements - rather than any single topic like breakups, friendships, or parenting. It does NOT include purely factual statements, technical instructions unrelated to interpersonal advice (e.g. the Gmail feature sentence is a borderline/outlier), or narrative descriptions of events without an advisory or validating framing.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 45,
+    "n_exemplars_used": 45,
+    "judge_model": "claude-sonnet-5",
+    "title": "Second-person relationship advice and validation",
+    "description": "This latent fires on sentences from an advice-giving or counseling register that address the reader directly as 'you,' typically validating their feelings/situation ('This is a reasonable and compassionate response'), summarizing their circumstances ('You've been with your girlfriend for 4 years...'), offering concrete action steps or bolded advice-list items ('Networking**: Leverage your connections...'), or posing reflective/clarifying questions ('What are your time-wasting habits?'). It spans topics like relationships, family conflict, workplace issues, therapy/mindfulness, and customer service, but the unifying function is the coaching/counselor voice that assesses a personal situation and prescribes or elicits next steps. It does NOT include purely factual, narrative, or third-person descriptive statements that lack this direct-address advisory or validating stance, even if they touch similar topics.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 94,
+    "n_exemplars_used": 94,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-column validation and reframing",
+    "description": "This latent fires on sentences from an advice-giving persona (e.g., an AI responding to interpersonal/relationship/etiquette dilemmas) that validate the user's actions as reasonable, reframe an incident in a more balanced or sympathetic light, or gently prescribe a better alternative approach or attitude. Included are reassurances ('You simply asked him to move'), normalizing statements ('It's reasonable to feel burnt out'), suggested reframes ('He might not have intended to be inappropriate'), encouragements to learn/grow ('Don't beat yourself up over it'), and lead-ins to suggested alternative actions ('A more thoughtful approach might have been to:'). It also captures short affirming exclamations and transitional advice-giving phrases ('Well played!', 'Just be natural and have fun!'). Excluded are purely factual/neutral statements, questions unrelated to advice framing, and sentences from other domains (e.g., technical, narrative, or descriptive content) that don't perform this validating/reframing/advising function.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 10,
+    "cluster_size": 22,
+    "n_exemplars_used": 22,
+    "judge_model": "claude-sonnet-5",
+    "title": "Supportive self-help advice tone",
+    "description": "This latent fires on sentences in an encouraging, advice-giving register typical of self-help, counseling, or communication-skills writing -- affirming statements, gentle validations, and actionable tips (e.g., 'seek professional help', 'use reflective listening', 'those are all important things to prioritize'). Included sentences tend to be short, upbeat, second-person or general-audience directives or reassurances about personal growth, listening skills, emotional support, or life advice, often phrased as list items, bolded tips, or warm affirmations. It is not simply about the topic of psychology or communication -- neutral factual or technical descriptions of these same topics (e.g., a clinical definition of active listening) would not activate it. What matters is the supportive, encouraging, advice-column tone and phrasing rather than the subject matter itself.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 11,
+    "cluster_size": 56,
+    "n_exemplars_used": 56,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic validation opener in advice-giving",
+    "description": "This latent fires on the opening validating or framing move an advice-giver (often chatbot-style) makes at the start of a response to a personal or emotional dilemma: phrases like 'Firstly, it's understandable that...', 'That's totally okay', 'You're not an asshole for...', or a wry topic-naming exclamation ('The age-old conundrum of...!', 'Gift-giving conundrums!') that reframes the user's problem before substantive advice is given. Included sentences validate feelings, normalize a behavior or decision, reassure the person they aren't wrong/selfish, or playfully name the type of dilemma being discussed, typically in interpersonal/relationship/emotional advice contexts. Not included are the actual substantive advice, factual claims, or analytical content that follows these openers, nor unrelated topical sentences that merely discuss similar subjects (e.g., relationships, cutting ties) without this validating/framing rhetorical move.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 12,
+    "cluster_size": 58,
+    "n_exemplars_used": 58,
+    "judge_model": "claude-sonnet-5",
+    "title": "Relationship-advice coaching discourse",
+    "description": "This latent fires on sentences from an advice-giving register typical of relationship/self-help chatbot responses: bolded strategy headers followed by explanatory advice ('Model positive behavior**: ...', 'Reduce stress**: ...'), reassuring or normalizing statements about feelings and behavior ('It's natural to wonder...', 'Sometimes... it's not always easy to...'), reflective clarifying questions posed to the user ('Are you drawn to...', 'What are the potential benefits and drawbacks...'), and soft transitional/justifying phrases ('This way, you'll ensure...', 'On the one hand...'). Included sentences are generic, template-like coaching language about communication, boundaries, habits, and emotional processing, often with a gentle, validating or instructive tone. Not included are purely factual, narrative, or topic-specific statements lacking this advisory/reflective framing (e.g., concrete plot descriptions or technical facts), even if they share subject matter like relationships or behavior, since the latent tracks the advice-column rhetorical style rather than the content domain.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 13,
+    "cluster_size": 12,
+    "n_exemplars_used": 12,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "error",
+    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Empathetic validation of the reader\\'s actions\", \"description\": \"This latent fires on second-person statements from an advice-giving or judgment context (e.g., Reddit AITA-style responses) that validate, excuse, or assess the addressee\\'s behavior by imagining being in their position or citing their circumstances. Core examples are explicit \\'in your shoes, I would...\\' formulations that express solidarity with the reader\\'s choices, alongside related lines that assign blame (\\'they brought this upon themselves\\'), pose culpability questions (\\'Would you be the asshole?\\'), or cite mitigating facts about the reader\\'s situation (financial support given, commitments made, caregiving burdens) to justify their conduct. It does not include general descriptive narration of events or instructions unconnected to judging or empathizing with the addressee\\'s actions -- e.g., plain factual statements about someone\\'s diet or generic cooking tips are only included when they serve as supporting justification within this validating/blame-assessing frame, not as standalone topic content. The unifying function is rhetorical validation or exoneration of \\'you\\' through perspective-taking or contextual justification, not the specific subject'"
+  },
+  {
+    "latent_id": 14,
+    "cluster_size": 12,
+    "n_exemplars_used": 12,
+    "judge_model": "claude-sonnet-5",
+    "title": "Interpersonal advice validation and guidance",
+    "description": "This latent fires on sentences from advice-giving contexts (often relationship or workplace advice) that validate the reader's feelings/autonomy or prescribe a concrete relational action, such as having an honest conversation, setting boundaries, or asking for feedback. Included sentences are second-person, supportive statements that affirm the reader deserves respect/agency or recommend a specific communicative or practical step to resolve a personal situation. It is not simply about advice topics generally, but specifically the affirming/prescriptive tone-phrases like 'you deserve to,' 'it's essential to,' 'be willing to,' or 'have an open and honest conversation.' Excluded are purely factual, descriptive, or narrative sentences that don't validate feelings or issue direct guidance.",
+    "status": "ok",
+    "error": null
+  }
+]
