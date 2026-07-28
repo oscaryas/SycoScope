@@ -1,0 +1,102 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Fragment: 'way'",
+    "description": "This latent activates on the isolated word 'way' appearing as a sentence fragment, likely at the end of a phrase such as 'in a certain way' or 'no way.' Because only a single, minimal example is available, the function appears to be lexical -- triggering on this specific token/fragment rather than on any broader reasoning pattern or topic. It does not capture argumentative moves, hedging, or topic-specific content; it is not about manner, method, or direction as a concept, but simply about the surface token 'way' occurring in truncated or fragment form. Without more examples, confidence in a richer semantic or functional characterization beyond this token-level pattern is low.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 144678,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the token(s) that begin an enumerated list item, such as a bare number followed by a period (e.g. '2.', '3.'), often followed by bold markdown formatting ('**') marking a bolded header word within the list item. It activates regardless of the actual topic or content of the list, capturing the structural/formatting element of sequential list enumeration (introductory list numbers, sub-points, pros/cons items, step-by-step instructions) rather than any semantic theme. It does not activate on the prose content of sentences, on lists introduced without numerals (like bullet dashes), or on numbers used in non-list contexts such as dates, quantities, or measurements -- it is specifically tied to the numeral-plus-period marker that opens a discrete list entry, sometimes alongside a preceding lead-in phrase like 'Here's why:' or 'You should:'.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 6,
+    "n_exemplars_used": 6,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "error",
+    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Assertive directive or judgment statement\", \"description\": \"This latent fires on short, self-contained sentences that deliver a firm directive, refusal, or evaluative judgment rather than descriptive or narrative content. Included examples are imperative instruct'"
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Instruction to be direct",
+    "description": "This latent fires on phrases instructing the reader/writer to avoid indirectness or evasive phrasing, such as 'avoid beating around the bush' or similar directives to get straight to the point. Included sentences are imperative-style instructions or advice urging directness, brevity, or bluntness in communication. It does not include sentences that merely discuss communication style descriptively, express uncertainty, or use idioms in a non-instructional context\u2014only explicit directive framing toward directness qualifies.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Joking retraction",
+    "description": "This latent fires on phrases where the speaker explicitly retracts or defuses a preceding statement by labeling it as a joke, e.g. 'just kidding' or similar disclaimers that cancel the literal force of what was just said. Included sentences are self-referential asides that mark prior content as non-serious or playful, often appearing parenthetically after a teasing or provocative remark. It does not include genuine humor, sarcasm without an explicit retraction marker, or sincere apologies/clarifications that aren't framed as jokes. The defining feature is the explicit meta-comment signaling 'that wasn't real,' not humor or lightheartedness in general.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 2,
+    "n_exemplars_used": 2,
+    "judge_model": "claude-sonnet-5",
+    "title": "Hedging with tentative adverbs",
+    "description": "This latent fires on tentative, hedging adverbs like 'Maybe' or 'Perhaps' that introduce a speculative alternative or possibility, typically at the start of a clause or sentence. Included are short fragments or sentence openers signaling uncertainty or a softened suggestion before further elaboration follows. It does not capture fully expressed uncertain claims or hedged statements with complete propositions (e.g., 'It might rain later'), nor does it activate on confident assertions or question forms; the trigger is specifically the bare tentative marker itself, often truncated before the main content is given.",
+    "status": "ok",
+    "error": null
+  }
+]

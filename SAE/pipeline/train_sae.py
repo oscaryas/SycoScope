@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn.functional as F
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import DataLoader, SubsetRandomSampler, TensorDataset
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
@@ -57,15 +57,17 @@ def train_sae(
 
     arr = load_layer_array(layer, activations_dir)
     d_in = arr.shape[1]
-    center = compute_global_center(layer, activations_dir) if centered else np.zeros(d_in, dtype=np.float32)
-    x = torch.from_numpy(arr.astype(np.float32)) - torch.from_numpy(center)
+    x = torch.from_numpy(arr.astype(np.float32))
+    del arr
+    if centered:
+        x -= torch.from_numpy(compute_global_center(layer, activations_dir))
     n = x.shape[0]
 
     split_gen = torch.Generator().manual_seed(SPLIT_SEED)
     perm = torch.randperm(n, generator=split_gen)
     n_val = max(1, int(n * val_frac))
     val_idx, train_idx = perm[:n_val], perm[n_val:]
-    x_train, x_val = x[train_idx], x[val_idx]
+    x_val = x[val_idx]
 
     torch.manual_seed(seed)
     model = TopKSAE(d_in, n_latents, k).to(device)
@@ -73,10 +75,8 @@ def train_sae(
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 
     x_val_dev = x_val.to(device)
-    train_loader = DataLoader(
-        TensorDataset(x_train), batch_size=batch_size, shuffle=True,
-        generator=torch.Generator().manual_seed(seed),
-    )
+    train_sampler = SubsetRandomSampler(train_idx, generator=torch.Generator().manual_seed(seed))
+    train_loader = DataLoader(TensorDataset(x), batch_size=batch_size, sampler=train_sampler)
 
     fired_ever = torch.zeros(n_latents, dtype=torch.bool, device=device)
     best_val_loss = float("inf")
@@ -112,6 +112,7 @@ def train_sae(
             if epochs_since_improve >= patience:
                 early_stopped = True
                 break
+        print(f"  epoch {n_epochs_trained}: val_loss={val_loss:.6f} best={best_val_loss:.6f}")
 
     model.load_state_dict(best_state)
     model.eval()

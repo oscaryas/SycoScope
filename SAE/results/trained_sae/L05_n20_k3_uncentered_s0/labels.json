@@ -1,0 +1,202 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 552,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-giving conversational register",
+    "description": "This latent fires on the interpersonal, coaching/advice-column register common in relationship-advice, self-help, and forum-reply contexts: offers of help ('Would you like some help with that?'), perspective-taking hedges ('However, it's essential to consider X's feelings/perspective as well'), reflective or validating statements ('You are not the asshole...', 'It's completely understandable to feel...'), empathy-building questions ('Would you like to add anything?', 'Are there external factors that might have influenced their actions?'), and soft transitional/filler phrases (numbered-tip intros, 'Hey!', 'Thanks for...', reframing cues). It captures the pragmatic function of hedged, considerate, second-person advice-giving discourse rather than any particular topic (advice spans relationships, health, careers, orthodontics, etc.). It does NOT activate on purely factual/declarative statements, technical content, or narrative description that lacks this advisory/empathetic address to a 'you'; sentences that merely mention a topic (e.g. cost figures, orthodontic facts) without the conversational, perspective-considering framing are only weakly or incidentally included.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 1040,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-column relational counseling discourse",
+    "description": "This latent fires on the characteristic language of advice-giving responses to interpersonal/relationship dilemmas (often Reddit-style AITA or advice-column answers): validating framings ('It's not about being the bad guy'), empathetic acknowledgments ('It's understandable/natural that...'), structured suggestion lists and their lead-in phrases ('Here are some tips/points to consider: 1.'), reframing statements ('Instead of X, consider Y'), and reflective/hedged judgments about someone's situation or behavior. It includes stock rhetorical scaffolding of this genre -- transition words, bolded headers introducing advice, rhetorical questions probing feelings or motives, and reassurance/normalizing statements -- regardless of the specific relationship topic (roommates, family, coworkers, romance) being discussed. It does NOT include purely factual, technical, or narrative content unrelated to interpersonal advice-giving (e.g., plain descriptions of events, product/resource listings, or historical facts) unless they are embedded in this advice/validation framing, and it excludes direct instructions or steps that lack the empathetic/consider-this framing typical of the genre.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 374,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating the user's feelings and innocence (AITA-style reassurance)",
+    "description": "This latent fires on second-person statements that validate, absolve, or affirm the reader/poster's feelings and conduct in an interpersonal conflict, typically in an advice or Reddit-AITA register. Included sentences explicitly tell the addressee they are 'not the asshole,' 'not wrong,' 'right to feel X,' or that a reaction was 'understandable,' as well as parallel constructions instructing a third party to avoid blaming the addressee (e.g., 'avoid criticizing her for...'). It centers on judgments of blamelessness/justification framed directly at 'you,' not on describing the underlying conflict or facts, and not on the reciprocal move of assigning blame to the other party (e.g., 'your dad was unreasonable') unless paired with vindicating the user's own stance. It excludes neutral narrative description of events, questions probing motives, or generic advice/action suggestions that don't carry this reassuring/validating judgment.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 261,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-column reasoning",
+    "description": "This latent fires on the characteristic language of advice/support responses (e.g., relationship, personal, or interpersonal guidance columns): validating feelings ('it's understandable that...'), reassuring generalizations ('everyone struggles with...', 'we've all been there'), reflective probing questions ('are there specific situations that trigger...?', 'what do you think...?'), and gentle suggestions or encouragements ('take time to process', 'try new things', 'do things that bring you joy'). Included sentences are second-person, emotionally supportive, non-judgmental statements or questions that validate, normalize, probe motives/feelings, or offer soft behavioral suggestions within a counseling-style register. It is not about the topic (relationships, food, driving, finances, etc. all appear) but about this empathetic-advisor rhetorical mode; it excludes purely factual/instructional steps without emotional framing (e.g., 'press the tofu', 'register the ATV') and neutral declarative facts that lack the validating or reflective advice-giving tone.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 1561,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Interpersonal advice directives",
+    "description": "This latent fires on the advice-giving core of relationship/interpersonal-conflict responses: imperative or modal suggestions telling the reader what to do (\"discuss,\" \"engage in,\" \"be honest,\" \"share your thoughts,\" \"avoid,\" \"try to\") to improve communication, resolve conflict, or manage emotions, as well as accompanying validating/reassuring frames (\"it's understandable,\" \"you didn't do anything wrong,\" \"it can be challenging to...\"). Included sentences are almost all drawn from advice-column or chatbot-style responses to personal/relationship dilemmas, whether phrased as direct commands, rhetorical questions prompting reflection, or empathetic reassurances that set up such advice. It is not simply about the topic of relationships or emotions in general -- purely descriptive or factual statements (tax rules, historical facts, dog breed traits, medical facts) score low unless embedded in this advice-giving/validating rhetorical frame. The distinguishing feature is the functional stance of coaching the reader toward better communication or behavior, not the subject matter itself.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 98291,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Bolded imperative advice items in listicles",
+    "description": "This latent fires on list-formatted, imperative-mood advice steps, typically self-help or how-to bullet points that begin with a bolded action phrase followed by a colon and brief elaboration (e.g., 'Attend school events**: Participate in...', 'Set a schedule**: Plan out your day...'). The highest-activating examples are almost all such bolded gerund/verb-first headers naming a concrete activity (attend, practice, build, celebrate, network, explore) within numbered self-improvement or lifestyle lists. It is less about the topic (mindfulness, networking, hobbies, productivity) and more about the surface template: short imperative command + bold header + colon + explanatory clause, common in AI-generated advice lists. Sentences that give similar advice but in full conversational or narrative prose without the bolded-header/list format (e.g., 'Try to have a calm and respectful conversation with your sister' or reflective statements about relationships and emotions) activate much less, appearing only in the lower-activation random sample rather than as prototypical top examples.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 15974,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Benefit-explaining 'this can help' clause",
+    "description": "This latent fires on sentences (typically advice-genre text) that begin with a demonstrative subject like 'This can help,' 'This will help,' or 'This helps' followed by a list of positive psychological or relational outcomes (e.g., feeling more confident, connected, relaxed, motivated, or reducing stress/anxiety). The pattern is a templated cause-effect construction where an unspecified prior action/strategy ('This') is credited with producing vague, feel-good benefits, often stacking two or more adjectives/outcomes joined by 'and' or 'which can in turn.' It captures the syntactic-semantic frame of benefit-justification rather than any particular topic, spanning advice about relationships, parenting, productivity, finance, and self-improvement alike. It does NOT include sentences that give concrete instructions, state facts, ask questions, express uncertainty without a benefit clause, or describe negative consequences (e.g., 'This can lead to feelings of inadequacy') -- the defining feature is the affirmative 'help/benefit' framing, not merely discussing advice or relationships.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 38459,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Formulaic emotional-support reassurance",
+    "description": "This latent fires on the closing, advice-column register of empathetic assistant responses: brief reassuring imperatives and validations like 'Remember...', 'Take care of yourself...', 'Be kind/patient with yourself...', and 'You deserve/are not alone...' that wrap up personal or relationship advice with generic self-care and validation messaging. Included sentences are short, formulaic reassurance or encouragement statements addressed directly to 'you,' often starting with discourse markers such as 'Remember,' 'Ultimately,' or 'Take care of yourself,' emphasizing themes of self-worth, boundaries, well-being, and not being alone or to blame. It is not simply about the topic of relationships or parenting in general, nor does it include substantive analysis, concrete advice steps, or factual claims -- it specifically captures the soothing, boilerplate affirming tone/phrasing used to comfort or validate the reader, regardless of the underlying situation.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 46,
+    "n_exemplars_used": 46,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic validation in advice-giving",
+    "description": "This latent fires on sentences from an advice-giving or counseling register that validate, normalize, or empathize with the reader's feelings and situation (e.g., 'It's understandable that you're feeling frustrated...', 'It's completely understandable to feel conflicted about this'), as well as related supportive/advisory moves like offering reassurance, explaining others' likely intentions, suggesting concrete coping strategies, or asking clarifying follow-up questions in a supportive tone. Included sentences are typically addressed to a 'you' seeking guidance on a personal or emotional dilemma, often in second person, and use hedged, validating language ('it sounds like', 'that's okay', 'understandable') rather than neutral description. Excluded are purely factual, procedural, or instructional statements that lack this empathetic/validating tone even if topically similar (e.g., factual finance or logistics steps like transferring funds or checking mileage) -- though a few such neutral procedural sentences appear as noisier co-activations, the core and dominant pattern is emotionally validating advice language.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 1638,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-column framing",
+    "description": "This latent fires on the rhetorical scaffolding used in advice-giving/Reddit-AITA-style responses: exclamatory naming of a dilemma as a 'conundrum' or 'scenario', transitional phrases introducing lists of suggestions or tasks ('Some suggestions for moving forward:', 'Here's a breakdown of...'), and empathetic validating statements that reassure the person they're not overreacting or in the wrong. Included sentences are stock discourse markers and framing devices an AI assistant uses to structure supportive, non-judgmental advice (e.g., 'The eternal conundrum!', 'I'm here to offer some perspective', numbered list intros, validation like 'you're not the one in the wrong'). It is not about the specific topic of the advice (pets, relationships, moving, grief, etc.) but about the recurring conversational scaffolding/tone of empathetic advice-giving. Excluded are purely factual or descriptive statements that don't perform this framing/validating/list-introducing function, such as statistics, plain descriptions of events, or neutral factual claims without an advisory or empathetic rhetorical role.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 10,
+    "cluster_size": 169,
+    "n_exemplars_used": 169,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-column validation",
+    "description": "This latent fires on the stock rhetorical moves of an advice-giving/therapeutic persona (e.g., Reddit AITA or Dear Abby style responses): validating the user's feelings or actions ('You're not being selfish', 'It's understandable that...'), offering reassurance about self-worth ('They don't define your worth as a person'), gently assigning blame to a third party ('They should have picked up on that'), quantifying effort or time as evidence of reasonableness ('You've tolerated this for a year, which is significant'), and formulaic empathetic openers/closers like 'I'm happy to help you with that' or 'Honesty is usually the best policy.' Included sentences are these evaluative, validating, or advice-framing statements that assess a situation's fairness, normalize the person's emotions, or state generic supportive maxims, regardless of the specific topic (concerts, breakups, decluttering, pronouns, etc.). Excluded are purely factual, instructional, or narrative sentences that lack this validating/advisory stance -- e.g., plain how-to steps without empathetic framing, price lists, or neutral descriptions that don't judge, reassure, or assign responsibility.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 11,
+    "cluster_size": 115,
+    "n_exemplars_used": 115,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-response conversational scaffolding",
+    "description": "This latent fires on the structural and empathetic framing language used in AI-generated personal-advice responses, rather than on any particular topic. It captures things like bolded list-item headers introducing tips ('Ask for advice:**', 'Investment options:**'), validating/empathetic acknowledgments ('It's great that you're willing to help out...', 'It sounds like you're struggling with...'), reflective or clarifying questions posed to the user ('What are your core values?', 'Are there things you're passionate about?'), and short exclamatory framings that name a relatable dilemma before advice follows ('The eternal struggle of...', 'The golden days of...'). It does not activate on the substantive factual or instructional content itself (e.g., the actual financial figures, activity descriptions, or specific reasoning); rather it marks the rapport-building, transitional, and organizational phrases that surround and introduce that content in a warm, advice-column register.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 12,
+    "cluster_size": 173,
+    "n_exemplars_used": 173,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-column validation",
+    "description": "This latent fires on the stock rhetorical moves of an advice-giving persona (e.g., Reddit AITA/relationship-advice bot): validating the reader's feelings or actions ('that's okay!', 'you're not the asshole'), normalizing their situation ('it's natural to feel apprehensive'), reframing events positively ('that's something to be celebrated'), and posing gentle diagnostic questions ('Are you trying to prove a point?') or transitional filler ('And you know what?', 'Let's weigh the pros and cons'). Included sentences are short, second-person, emotionally supportive or reassuring statements, framing devices that introduce advice, and rhetorical/rapport-building questions typical of an empathetic counselor voice. Not included are purely factual or instructional content without this validating/rapport-building framing (e.g., concrete how-to steps, factual descriptions, or neutral information delivery), even if topically similar, since the latent tracks the supportive conversational stance rather than the subject matter being discussed.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 13,
+    "cluster_size": 401,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-column validation",
+    "description": "This latent fires on the characteristic rhetorical moves of relationship/advice-column responses: validating the reader's feelings ('It's understandable that...', 'It's natural to worry...'), reassuring them they aren't at fault ('not a reflection of your worth'), and issuing soft advice or communication prompts ('Ask her how she feels', 'Be honest about...', 'Let them know what you're comfortable with'). Included sentences are empathetic hedges, normalizing statements, suggestions to communicate openly, and rhetorical questions probing feelings, all delivered in a warm, therapeutic advice-giving register regardless of the underlying topic (romance, family, work, pets, etc). It does NOT include neutral factual statements, narrative descriptions of events without evaluative/advisory framing, or purely instructional/how-to content lacking emotional validation language (e.g., plain lists of steps or factual claims like hospital names or prices), even if they appear adjacent in the same passages.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 14,
+    "cluster_size": 41366,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Relationship-conflict scripts and validation",
+    "description": "This latent fires on language from interpersonal-advice contexts (e.g., relationship/family conflict coaching, AITA-style responses) that either models a suggested script for expressing feelings and boundaries ('I feel...', 'I want you to know...', 'You could say something like...') or validates/explains a party's feelings or actions in a dispute ('You did have a right to feel...', 'She didn't mean to harm you'). Included sentences are first- or second-person statements structured around acknowledging hurt, setting a boundary, apologizing, checking in, or excusing/justifying behavior within a relational conflict narrative. It is not about the specific topic (dogs, exes, roommates, holidays, etc.) but about this template-like communicative move of naming feelings and negotiating relational boundaries. Excluded are purely factual, descriptive, or analytical sentences that don't involve this emotional-negotiation or validation framing, even if they occur in similar advice text.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 15,
+    "cluster_size": 156,
+    "n_exemplars_used": 156,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic relationship-advice register",
+    "description": "This latent fires on the characteristic voice of advice-column or therapeutic-style text (e.g., Reddit relationship/advice threads), where the model validates the reader's feelings, reframes their situation charitably, offers gentle reassurance, and gives practical self-help suggestions. Included sentences perform moves like normalizing a dilemma ('What works for one person may not work for another'), validating emotions ('It's not unreasonable to feel that way'), reassuring the reader they're not at fault ('You're not the asshole for...'), suggesting reflective questions ('What are my true feelings for this person?'), or giving listicle-style practical tips (chargers, wardrobe, breathing exercises, online course platforms) delivered in the same supportive, second-person advice tone. It is not about the topic itself (relationships, fashion, gadgets, breathing) but about the rhetorical stance of gentle validation/advice-giving in second person; factual statements, narrative descriptions without this advisory framing, or purely informational content lacking the reassuring/coaching register are excluded.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 16,
+    "cluster_size": 140,
+    "n_exemplars_used": 140,
+    "judge_model": "claude-sonnet-5",
+    "title": "Interpersonal relationship-advice framing",
+    "description": "This latent fires on sentences from advice-column-style text that analyzes interpersonal conflicts and coaches the reader on emotional communication\u2014validating feelings ('you're not obligated,' 'it's understandable that...'), reframing others' behavior ('instead of assuming X, try Y'), and offering assertiveness/boundary-setting guidance ('let them know,' 'practice assertive communication'). Included sentences diagnose a relationship dynamic (rudeness, dominance, feeling unheard, boundary violations), validate the reader's perspective, or prescribe a communication strategy or cognitive reframe for handling conflict with family, partners, roommates, or friends. It does not include purely factual, narrative, or topic-specific content unrelated to relational communication (e.g., unrelated financial or medical facts) unless framed within this advice/validation/reframing structure, nor does it include neutral descriptive statements lacking an evaluative or coaching stance on interpersonal behavior.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 17,
+    "cluster_size": 273,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-column relational validation",
+    "description": "This latent fires on the stock rhetorical moves of advice-response text (e.g., AITA/relationship-advice bots): empathetic validation phrases ('It's understandable that...', 'I'm glad you're...'), exclamatory framing of a situation ('The complex web of relationships!', 'Wow, what a wild ride!'), congratulatory openers ('Congratulations!', 'Firstly, congratulations on...'), reassurance/absolution statements ('You didn't do anything wrong', 'NTA'), and clarifying follow-up questions ('Are they related to work, personal relationships, or other areas of your life?'). Included sentences are formulaic conversational scaffolding used to open, frame, or emotionally validate a response to someone's personal dilemma or life situation, regardless of the specific topic (parenting, roommates, dating, finances, etc.). Not included are purely factual or instructional content delivered without this emotional/rhetorical framing (e.g., plain tips like tipping percentages or recycling instructions stated as bare facts), and not included are neutral third-person informational statements lacking any empathetic, validating, or exclamatory address to a 'you'.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 18,
+    "cluster_size": 135963,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral tokens (and following punctuation/bold markers) that begin items in an enumerated list, such as '2.', '3.', '5. **', etc. It activates specifically at the position of the list-item number itself, often paired with markdown bold formatting or preceded by a colon-terminated lead-in like 'Here's why:' or a header such as '**Your actions:**'. It captures the structural/formatting role of introducing a discrete point in a numbered list rather than any semantic content of the point itself. It does not activate on the textual content of the list items, on bullet points using dashes or asterisks, or on numbers appearing in non-list contexts (e.g., dates, quantities, or arithmetic).",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 19,
+    "cluster_size": 602,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-column validation",
+    "description": "This latent fires on the characteristic voice of relationship/advice-column responses that validate, reframe, or gently assess the reader's ('you'/'your') situation and feelings, often in an interpersonal (relationship, family, friendship, conflict) context. Included sentences are second-person statements that acknowledge feelings ('It's understandable that...'), offer soft judgments ('You're not entirely in the wrong'), give kudos or reassurance ('kudos to you for...', 'There are people who care about you'), or diagnose the emotional/relational dynamic at play ('It sounds like...', 'This can be really frustrating when...'). It captures the rhetorical stance of a sympathetic advisor validating, contextualizing, or softly critiquing someone's actions/emotions, rather than the specific topic (romance, family, work, etc.) being discussed. Excluded are purely factual statements, neutral instructions, topic-only content without an empathetic/advisory framing (e.g. travel destination descriptions, martial arts facts), and third-person narrative that lacks direct address or validating tone.",
+    "status": "ok",
+    "error": null
+  }
+]
