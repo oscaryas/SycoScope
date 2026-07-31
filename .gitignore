@@ -4,3 +4,4 @@ __pycache__/
 .env
 SAE/results/activations/
 SAE/results/runs/
+tool_calling/tasks/sycophancy/runs/

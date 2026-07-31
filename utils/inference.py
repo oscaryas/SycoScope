@@ -16,6 +16,13 @@ def build_chat_prompt(tokenizer, user_message: str, system_prompt: str | None = 
     )
 
 
+def build_chat_prompt_multiturn(tokenizer, messages: list) -> str:
+    """Like build_chat_prompt, but for a pre-built multi-turn message list
+    (e.g. SyPR's persona-calibration history + final utterance) rather than
+    a single user string."""
+    return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+
+
 def iter_batches(items: list, batch_size: int):
     for i in range(0, len(items), batch_size):
         yield items[i : i + batch_size]
