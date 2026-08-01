@@ -4,3 +4,12 @@ __pycache__/
 .env
 SAE/results/activations/
 SAE/results/runs/
+tool_calling/tasks/sycophancy/runs/
+
+# Keep the tracked-markdown surface to README/CLAUDE/AGENTS only. Existing
+# tracked files (e.g. tool_calling/tasks/*/skills/*.md) are unaffected --
+# gitignore only blocks new/untracked paths from being added.
+*.md
+!/README.md
+!/CLAUDE.md
+!/AGENTS.md

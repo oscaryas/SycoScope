@@ -7,10 +7,10 @@ from pathlib import Path
 def build_system_prompt(task: str, model_path: str, skill_names: list, tool_names: list) -> str:
     skills_list = "\n".join(f"  {s}" for s in skill_names)
     tools_list = ", ".join(["load_skill"] + tool_names)
-    return f"""You are an interpretability researcher running a benchmark task.
+    return f"""You are an interpretability researcher running a mechanistic interpretability task.
 
-Task: {task} probing
-Target model to probe: {model_path}
+Task: {task}
+Target model: {model_path}
 
 Available skills — call load_skill("<name>") to get detailed instructions:
 {skills_list}
@@ -23,7 +23,7 @@ Do not ask for user input. Operate autonomously."""
 
 
 def load_task_module(task: str, repo_root: Path):
-    tools_path = repo_root / "src" / "tool_calling" / "tasks" / task / "tools.py"
+    tools_path = repo_root / "tool_calling" / "tasks" / task / "tools.py"
     if not tools_path.exists():
         raise FileNotFoundError(f"No tools.py for task '{task}' at {tools_path}")
     spec = importlib.util.spec_from_file_location(f"task_tools_{task}", tools_path)
@@ -40,15 +40,15 @@ def main():
     parser.add_argument("--output-dir", default=".")
     args = parser.parse_args()
 
-    repo_root = Path(__file__).resolve().parent.parent.parent
-    sys.path.insert(0, str(repo_root / "src" / "tool_calling"))
+    repo_root = Path(__file__).resolve().parent.parent
+    sys.path.insert(0, str(repo_root / "tool_calling"))
 
     output_dir = Path(args.output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
     from tool_loop import run_tool_loop, set_skills_dir
 
-    skills_dir = repo_root / "src" / "tool_calling" / "tasks" / args.task / "skills"
+    skills_dir = repo_root / "tool_calling" / "tasks" / args.task / "skills"
     set_skills_dir(skills_dir)
     skill_names = sorted(p.stem for p in skills_dir.glob("*.md")) if skills_dir.exists() else []
 
@@ -64,7 +64,7 @@ def main():
         tool_names=list(tools.keys()),
     )
     user_prompt = (
-        f"Run the full {args.task} probing pipeline on {args.model_path}. "
+        f"Complete the {args.task} task (target model: {args.model_path}). "
         "Call load_skill to get instructions for each step before executing it."
     )
 

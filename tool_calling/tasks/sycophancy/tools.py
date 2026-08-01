@@ -2,7 +2,7 @@ import json
 import sys
 from pathlib import Path
 
-_utils = Path(__file__).resolve().parents[4] / "src" / "utils"
+_utils = Path(__file__).resolve().parent
 if str(_utils) not in sys.path:
     sys.path.insert(0, str(_utils))
 
@@ -168,9 +168,97 @@ def generate_behavioral_labels(n_examples: int, output_path: str = "behavioral_l
     )
 
 
-def extract_activations(labels_path: str, answer_token_id: int) -> str:
+def generate_moral_sycophancy_labels(n_pairs: int = 50, output_path: str = "behavioral_labels.jsonl") -> str:
+    """
+    Judge n_pairs AITA-NTA-FLIP conflicts (original_post vs flipped_story,
+    same underlying conflict) with an LLM judge for a YTA/NTA verdict, then
+    label every response 1 (moral sycophancy) if both sides of its conflict
+    were told NTA, else 0. Writes output_path in the same {"text","label"}
+    format generate_behavioral_labels uses, so extract_activations /
+    train_probe_family / write_metrics / steer_and_generate all work
+    unchanged on the result. Requires ANTHROPIC_API_KEY. Skips if
+    output_path already exists with valid text+label records.
+    """
+    out = _OUTPUT_DIR / output_path
+    if _is_valid_labels_file(out):
+        n = sum(1 for l in out.read_text().splitlines() if l.strip())
+        return f"Skipping — {out} already exists with {n} valid examples"
+    if _session["tokenizer"] is None:
+        return "error: no model loaded — call load_model first (its tokenizer builds the chat-formatted text)"
+
+    import moral_sycophancy_judge
+
+    result = moral_sycophancy_judge.generate_moral_sycophancy_labels(_session["tokenizer"], n_pairs=n_pairs)
+    with open(out, "w", encoding="utf-8") as f:
+        for rec in result["records"]:
+            f.write(json.dumps(rec) + "\n")
+
+    return (
+        f"Judged {result['n_pairs_judged']} conflicts ({result['n_skipped_other']} skipped, unclear verdict). "
+        f"Wrote {len(result['records'])} labeled examples to {out}. "
+        f"Moral sycophancy rate (both NTA): {result['moral_sycophancy_rate']:.2%} "
+        f"(both_NTA={result['n_both_nta']}, both_YTA={result['n_both_yta']}, mixed={result['n_mixed']})"
+    )
+
+
+def generate_social_sycophancy_labels(
+    metric: str,
+    dataset: str = "OEQ",
+    n_examples: int = 50,
+    output_path: str = "behavioral_labels.jsonl",
+) -> str:
+    """
+    Judge n_examples responses from SAE/results/{dataset}.jsonl (e.g. "OEQ" or
+    "SS") independently for one social-sycophancy metric, adapted from the
+    ELEPHANT paper's sycophancy_scorers.py:
+    - "validation": is the response emotionally validating?
+    - "indirectness": does the response use suggestive rather than direct language?
+    - "framing": does the response NOT challenge the question's premise (1) vs. challenge it (0)?
+    Unlike generate_moral_sycophancy_labels, each response is scored independently --
+    no paired counterpart needed. Writes output_path in the same {"text","label"}
+    format generate_behavioral_labels uses, so extract_activations /
+    train_probe_family / write_metrics / steer_and_generate all work
+    unchanged. Requires ANTHROPIC_API_KEY. Skips if output_path already
+    exists with valid text+label records.
+    """
+    if metric not in ("validation", "indirectness", "framing"):
+        return f"error: metric must be 'validation', 'indirectness', or 'framing' — got '{metric}'"
+
+    out = _OUTPUT_DIR / output_path
+    if _is_valid_labels_file(out):
+        n = sum(1 for l in out.read_text().splitlines() if l.strip())
+        return f"Skipping — {out} already exists with {n} valid examples"
+    if _session["tokenizer"] is None:
+        return "error: no model loaded — call load_model first (its tokenizer builds the chat-formatted text)"
+
+    import social_sycophancy_judge
+
+    input_path = social_sycophancy_judge.DEFAULT_RESULTS_DIR / f"{dataset}.jsonl"
+    if not input_path.exists():
+        return f"error: {input_path} not found"
+
+    result = social_sycophancy_judge.generate_social_sycophancy_labels(
+        _session["tokenizer"], metric, n_examples=n_examples, input_path=input_path
+    )
+    with open(out, "w", encoding="utf-8") as f:
+        for rec in result["records"]:
+            f.write(json.dumps(rec) + "\n")
+
+    return (
+        f"Judged {result['n_judged']} {dataset} responses for '{metric}' "
+        f"({result['n_skipped_error']} skipped, judge output didn't parse). "
+        f"Wrote {len(result['records'])} labeled examples to {out}. "
+        f"Rate (label=1): {result['rate']:.2%}"
+    )
+
+
+def extract_activations(labels_path: str, answer_token_id: int, pooling: str = "mean") -> str:
     """
     Extract and cache MHA, MLP, and residual activations. Call inspect_model first.
+    pooling: "mean" (default) averages each activation over the response token
+    span (everything after the answer_token_id delimiter) instead of reading
+    just the single delimiter position -- less sensitive to exactly where
+    that one token lands. "last" uses only that single position instead.
     Writes activations/ with metadata.json, labels.npy, mha.npy, mlp.npy, residual.npy.
     """
     import numpy as np
@@ -180,6 +268,8 @@ def extract_activations(labels_path: str, answer_token_id: int) -> str:
         return "error: no model loaded — call load_model first"
     if _session["model_config"] is None:
         return "error: architecture unknown — call inspect_model first"
+    if pooling not in ("mean", "last"):
+        return f"error: pooling must be 'mean' or 'last' — got '{pooling}'"
 
     labels_file = _OUTPUT_DIR / labels_path
     if not labels_file.exists():
@@ -191,7 +281,7 @@ def extract_activations(labels_path: str, answer_token_id: int) -> str:
 
     config = {**_session["model_config"], "answer_token_id": answer_token_id}
     activations = sycophancy_probes.collect_activations(
-        _session["model"], _session["tokenizer"], texts, config, batch_size=1
+        _session["model"], _session["tokenizer"], texts, config, batch_size=1, pooling=pooling
     )
 
     cache_dir = _OUTPUT_DIR / "activations"
@@ -209,6 +299,7 @@ def extract_activations(labels_path: str, answer_token_id: int) -> str:
         "dtype": "float32",
         "position_strategy": "answer_token_id",
         "answer_token_id": answer_token_id,
+        "pooling": pooling,
         "model_config": {k: mc[k] for k in ("n_layers", "n_heads", "hidden_dim", "head_dim", "mlp_dim", "mha_hook", "mlp_hook")},
         "files": {"labels": "labels.npy", "mha": "mha.npy", "mlp": "mlp.npy", "residual": "residual.npy"},
     }
@@ -241,20 +332,20 @@ def train_probe_family(probe_type: str) -> str:
 
     if probe_type == "mha":
         acts = np.load(cache_dir / "mha.npy")
-        acc, ci, states = sycophancy_probes.train_mha_probes(acts, labels, n_layers, mc["n_heads"])
-        _session["probe_results"]["mha"] = {"accuracy": acc, "ci": ci, "states": states}
+        acc, ci, states, auc, auc_ci = sycophancy_probes.train_mha_probes(acts, labels, n_layers, mc["n_heads"])
+        _session["probe_results"]["mha"] = {"accuracy": acc, "ci": ci, "states": states, "auc": auc, "auc_ci": auc_ci}
         best = max(acc.values()) if acc else 0.0
         return f"MHA probes done. Best: {best:.3f} ({n_layers * mc['n_heads']} probes)"
     elif probe_type == "mlp":
         acts = np.load(cache_dir / "mlp.npy")
-        acc, ci = sycophancy_probes.train_mlp_probes(acts, labels, n_layers)
-        _session["probe_results"]["mlp"] = {"accuracy": acc, "ci": ci}
+        acc, ci, states, auc, auc_ci = sycophancy_probes.train_mlp_probes(acts, labels, n_layers)
+        _session["probe_results"]["mlp"] = {"accuracy": acc, "ci": ci, "states": states, "auc": auc, "auc_ci": auc_ci}
         best = max(acc.values()) if acc else 0.0
         return f"MLP probes done. Best: {best:.3f} ({n_layers} probes)"
     else:
         acts = np.load(cache_dir / "residual.npy")
-        acc, ci = sycophancy_probes.train_residual_probes(acts, labels, n_layers)
-        _session["probe_results"]["residual"] = {"accuracy": acc, "ci": ci}
+        acc, ci, states, auc, auc_ci = sycophancy_probes.train_residual_probes(acts, labels, n_layers)
+        _session["probe_results"]["residual"] = {"accuracy": acc, "ci": ci, "states": states, "auc": auc, "auc_ci": auc_ci}
         best = max(acc.values()) if acc else 0.0
         return f"Residual probes done. Best: {best:.3f} ({n_layers} probes)"
 
@@ -276,10 +367,18 @@ def write_metrics() -> str:
         "mha_accuracy": pr["mha"]["accuracy"],
         "mha_ci": pr["mha"]["ci"],
         "mha_states": pr["mha"].get("states", {}),
+        "mha_auc": pr["mha"].get("auc", {}),
+        "mha_auc_ci": pr["mha"].get("auc_ci", {}),
         "mlp_accuracy": pr["mlp"]["accuracy"],
         "mlp_ci": pr["mlp"]["ci"],
+        "mlp_states": pr["mlp"].get("states", {}),
+        "mlp_auc": pr["mlp"].get("auc", {}),
+        "mlp_auc_ci": pr["mlp"].get("auc_ci", {}),
         "residual_accuracy": pr["residual"]["accuracy"],
         "residual_ci": pr["residual"]["ci"],
+        "residual_states": pr["residual"].get("states", {}),
+        "residual_auc": pr["residual"].get("auc", {}),
+        "residual_auc_ci": pr["residual"].get("auc_ci", {}),
     }
     metadata = sycophancy_probes.save_probe_results(
         results, str(_OUTPUT_DIR / "final_probe"), model_name=_session["model_path"] or ""
@@ -347,6 +446,64 @@ def compare_with_paper(results_path: str, paper_results_path: str) -> str:
     return f"comparison_table.md written ({len(rows)} rows)"
 
 
+def list_steering_vectors(probe_dir: str = "final_probe") -> dict:
+    """
+    Report which (component, key) steering vectors are available in probe_dir
+    (written by write_metrics). A component only appears once
+    train_probe_family has been called for it and write_metrics has run.
+    """
+    from sycophancy_steering import load_steering_vectors
+
+    out_dir = _OUTPUT_DIR / probe_dir
+    available = {}
+    for component in ("mha", "mlp", "residual"):
+        try:
+            vectors = load_steering_vectors(str(out_dir), component)
+            available[component] = sorted(str(k) for k in vectors.keys())
+        except FileNotFoundError:
+            available[component] = []
+    return available
+
+
+def steer_and_generate(
+    component: str,
+    layer: int,
+    alpha: float,
+    prompt: str,
+    head: int = 0,
+    max_new_tokens: int = 150,
+    probe_dir: str = "final_probe",
+) -> dict:
+    """
+    Add alpha * (probe direction, scaled to ~1 projection std) to component
+    "mha" (uses head), "mlp", or "residual" at the given layer, then
+    generate from prompt. Returns both the unsteered baseline and the
+    steered continuation so they can be compared directly. Call
+    list_steering_vectors first to see which (component, layer[, head])
+    combinations are available.
+    """
+    if _session["model"] is None:
+        return "error: no model loaded — call load_model first"
+    if _session["model_config"] is None:
+        return "error: architecture unknown — call inspect_model first"
+
+    from sycophancy_steering import ActivationSteerer, load_steering_vectors
+
+    out_dir = _OUTPUT_DIR / probe_dir
+    vectors = load_steering_vectors(str(out_dir), component)
+    key = (layer, head) if component == "mha" else layer
+    if key not in vectors:
+        return f"error: no steering vector for component={component} key={key}. Available: {sorted(str(k) for k in vectors)}"
+
+    steerer = ActivationSteerer(_session["model"], _session["tokenizer"], _session["model_config"])
+    baseline = steerer.generate(prompt, max_new_tokens)
+    steerer.attach(component, layer, vectors[key], alpha, head=head if component == "mha" else None)
+    steered = steerer.generate(prompt, max_new_tokens)
+    steerer.cleanup()
+
+    return {"baseline": baseline, "steered": steered}
+
+
 def write_analysis(text: str, filename: str = "analysis.md") -> str:
     """Write text to filename in the output directory. Default filename is analysis.md."""
     out = _OUTPUT_DIR / filename
@@ -360,10 +517,14 @@ TOOLS = {
     "inspect_model": inspect_model,
     "get_answer_token_id": get_answer_token_id,
     "generate_behavioral_labels": generate_behavioral_labels,
+    "generate_moral_sycophancy_labels": generate_moral_sycophancy_labels,
+    "generate_social_sycophancy_labels": generate_social_sycophancy_labels,
     "extract_activations": extract_activations,
     "train_probe_family": train_probe_family,
     "write_metrics": write_metrics,
     "fetch_paper_results": fetch_paper_results,
     "compare_with_paper": compare_with_paper,
+    "list_steering_vectors": list_steering_vectors,
+    "steer_and_generate": steer_and_generate,
     "write_analysis": write_analysis,
 }
