@@ -1,0 +1,73 @@
+{
+  "model_name": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "n_label": 150,
+  "cross_dataset_n": 30,
+  "label_balance": {
+    "n_pos": 143,
+    "n_neg": 5,
+    "n_judged": 148
+  },
+  "variants": {
+    "undersample": {
+      "dir": "/content/drive/MyDrive/oeq_probe_export/results/oeq_probe_undersample",
+      "best_key": {
+        "component": "mha",
+        "layer": 31,
+        "head": 24
+      },
+      "probe_metadata": {
+        "model_name": "meta-llama/Meta-Llama-3-8B-Instruct",
+        "mha_best_accuracy": 0.9,
+        "mha_best_key": [
+          31,
+          24
+        ],
+        "mha_best_ci": [
+          0.5958,
+          0.9821
+        ],
+        "mlp_best_accuracy": 0.9,
+        "mlp_best_key": 29,
+        "mlp_best_ci": [
+          0.5958,
+          0.9821
+        ],
+        "residual_best_accuracy": 0.9,
+        "residual_best_key": 16,
+        "residual_best_ci": [
+          0.5958,
+          0.9821
+        ]
+      }
+    },
+    "upweight": {
+      "dir": "/content/drive/MyDrive/oeq_probe_export/results/oeq_probe_upweight",
+      "best_key": {
+        "component": "mha",
+        "layer": 6,
+        "head": 14
+      },
+      "probe_metadata": {
+        "model_name": "meta-llama/Meta-Llama-3-8B-Instruct",
+        "mha_best_accuracy": 0.973,
+        "mha_best_key": [
+          6,
+          14
+        ],
+        "mha_best_ci": [
+          0.9326,
+          0.9894
+        ],
+        "mlp_best_accuracy": 0.9662,
+        "mlp_best_key": 0,
+        "mlp_best_ci": null,
+        "residual_best_accuracy": 0.973,
+        "residual_best_key": 1,
+        "residual_best_ci": [
+          0.9326,
+          0.9894
+        ]
+      }
+    }
+  }
+}

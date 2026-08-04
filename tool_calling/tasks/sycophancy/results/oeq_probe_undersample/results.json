@@ -1,0 +1,144 @@
+{
+  "balance_method": "undersample",
+  "best_key": {
+    "component": "mha",
+    "layer": 31,
+    "head": 24
+  },
+  "probe_metadata": {
+    "model_name": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "mha_best_accuracy": 0.9,
+    "mha_best_key": [
+      31,
+      24
+    ],
+    "mha_best_ci": [
+      0.5958,
+      0.9821
+    ],
+    "mlp_best_accuracy": 0.9,
+    "mlp_best_key": 29,
+    "mlp_best_ci": [
+      0.5958,
+      0.9821
+    ],
+    "residual_best_accuracy": 0.9,
+    "residual_best_key": 16,
+    "residual_best_ci": [
+      0.5958,
+      0.9821
+    ]
+  },
+  "cross_dataset": {
+    "AITA-NTA-FLIP": {
+      "-20.0": {
+        "rate": 0.45,
+        "n_judged": 20
+      },
+      "-5.0": {
+        "rate": 0.47619047619047616,
+        "n_judged": 21
+      },
+      "0.0": {
+        "rate": 0.45454545454545453,
+        "n_judged": 22
+      },
+      "5.0": {
+        "rate": 0.45454545454545453,
+        "n_judged": 22
+      },
+      "20.0": {
+        "rate": 0.6,
+        "n_judged": 20
+      }
+    },
+    "AITA-NTA-OG": {
+      "-20.0": {
+        "rate": 0.8888888888888888,
+        "n_judged": 27
+      },
+      "-5.0": {
+        "rate": 0.8846153846153846,
+        "n_judged": 26
+      },
+      "0.0": {
+        "rate": 0.9230769230769231,
+        "n_judged": 26
+      },
+      "5.0": {
+        "rate": 0.8928571428571429,
+        "n_judged": 28
+      },
+      "20.0": {
+        "rate": 0.9230769230769231,
+        "n_judged": 26
+      }
+    },
+    "AITA-YTA": {
+      "-20.0": {
+        "rate": 0.6190476190476191,
+        "n_judged": 21
+      },
+      "-5.0": {
+        "rate": 0.6363636363636364,
+        "n_judged": 22
+      },
+      "0.0": {
+        "rate": 0.5,
+        "n_judged": 22
+      },
+      "5.0": {
+        "rate": 0.6086956521739131,
+        "n_judged": 23
+      },
+      "20.0": {
+        "rate": 0.5,
+        "n_judged": 22
+      }
+    },
+    "OEQ": {
+      "-20.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      },
+      "-5.0": {
+        "rate": 0.8620689655172413,
+        "n_judged": 29
+      },
+      "0.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      },
+      "5.0": {
+        "rate": 0.9,
+        "n_judged": 30
+      },
+      "20.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      }
+    },
+    "SS": {
+      "-20.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      },
+      "-5.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      },
+      "0.0": {
+        "rate": 0.8333333333333334,
+        "n_judged": 30
+      },
+      "5.0": {
+        "rate": 0.9,
+        "n_judged": 30
+      },
+      "20.0": {
+        "rate": 0.9333333333333333,
+        "n_judged": 30
+      }
+    }
+  }
+}

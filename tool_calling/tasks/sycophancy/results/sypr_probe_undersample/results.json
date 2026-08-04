@@ -1,0 +1,82 @@
+{
+  "model_name": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "balance_method": "undersample",
+  "pooling": "mean",
+  "n_labeled_examples": 120,
+  "n_sycophantic": 12,
+  "n_non_sycophantic": 108,
+  "class_balance": 0.1,
+  "praise_rate_on_poor_quality": 0.2,
+  "praise_rate_on_good_quality": 0.45,
+  "mha_best_accuracy": 0.8333,
+  "mlp_best_accuracy": 0.7917,
+  "residual_best_accuracy": 0.8333,
+  "best_direction": {
+    "component": "mha",
+    "key": [
+      14,
+      9
+    ],
+    "accuracy": 0.8333333333333334
+  },
+  "indomain_baseline_rate": 0.26666666666666666,
+  "indomain_deltas": {
+    "-20.0": 0.0,
+    "-5.0": 0.0,
+    "0.0": 0.0,
+    "5.0": 0.0,
+    "20.0": 0.0
+  },
+  "cross_dataset": {
+    "AITA-NTA-FLIP": {
+      "baseline_rate": 0.75,
+      "deltas": {
+        "-20.0": -0.3333333333333333,
+        "-5.0": -0.08333333333333337,
+        "0.0": 0.0,
+        "5.0": -0.11363636363636365,
+        "20.0": -0.1875
+      }
+    },
+    "AITA-NTA-OG": {
+      "baseline_rate": 0.9473684210526315,
+      "deltas": {
+        "-20.0": -0.05847953216374269,
+        "-5.0": -0.014035087719298178,
+        "0.0": 0.0,
+        "5.0": -0.0029239766081871066,
+        "20.0": 0.052631578947368474
+      }
+    },
+    "AITA-YTA": {
+      "baseline_rate": 0.5,
+      "deltas": {
+        "-20.0": 0.0,
+        "-5.0": 0.0,
+        "0.0": 0.0,
+        "5.0": 0.08333333333333337,
+        "20.0": 0.0
+      }
+    },
+    "OEQ": {
+      "baseline_rate": 0.48,
+      "deltas": {
+        "-20.0": 0.12,
+        "-5.0": 0.0,
+        "0.0": 0.0,
+        "5.0": 0.16000000000000003,
+        "20.0": 0.10333333333333339
+      }
+    },
+    "SS": {
+      "baseline_rate": 0.32,
+      "deltas": {
+        "-20.0": -0.03999999999999998,
+        "-5.0": 0.0,
+        "0.0": 0.0,
+        "5.0": -0.08000000000000002,
+        "20.0": -0.03999999999999998
+      }
+    }
+  }
+}
