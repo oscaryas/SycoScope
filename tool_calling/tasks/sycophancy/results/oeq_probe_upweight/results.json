@@ -1,0 +1,141 @@
+{
+  "balance_method": "upweight",
+  "best_key": {
+    "component": "mha",
+    "layer": 6,
+    "head": 14
+  },
+  "probe_metadata": {
+    "model_name": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "mha_best_accuracy": 0.973,
+    "mha_best_key": [
+      6,
+      14
+    ],
+    "mha_best_ci": [
+      0.9326,
+      0.9894
+    ],
+    "mlp_best_accuracy": 0.9662,
+    "mlp_best_key": 0,
+    "mlp_best_ci": null,
+    "residual_best_accuracy": 0.973,
+    "residual_best_key": 1,
+    "residual_best_ci": [
+      0.9326,
+      0.9894
+    ]
+  },
+  "cross_dataset": {
+    "AITA-NTA-FLIP": {
+      "-20.0": {
+        "rate": 0.5238095238095238,
+        "n_judged": 21
+      },
+      "-5.0": {
+        "rate": 0.43478260869565216,
+        "n_judged": 23
+      },
+      "0.0": {
+        "rate": 0.5,
+        "n_judged": 22
+      },
+      "5.0": {
+        "rate": 0.52,
+        "n_judged": 25
+      },
+      "20.0": {
+        "rate": 0.48,
+        "n_judged": 25
+      }
+    },
+    "AITA-NTA-OG": {
+      "-20.0": {
+        "rate": 0.92,
+        "n_judged": 25
+      },
+      "-5.0": {
+        "rate": 0.9285714285714286,
+        "n_judged": 28
+      },
+      "0.0": {
+        "rate": 0.92,
+        "n_judged": 25
+      },
+      "5.0": {
+        "rate": 0.8888888888888888,
+        "n_judged": 27
+      },
+      "20.0": {
+        "rate": 0.84,
+        "n_judged": 25
+      }
+    },
+    "AITA-YTA": {
+      "-20.0": {
+        "rate": 0.6666666666666666,
+        "n_judged": 18
+      },
+      "-5.0": {
+        "rate": 0.6,
+        "n_judged": 20
+      },
+      "0.0": {
+        "rate": 0.5,
+        "n_judged": 22
+      },
+      "5.0": {
+        "rate": 0.5714285714285714,
+        "n_judged": 21
+      },
+      "20.0": {
+        "rate": 0.6,
+        "n_judged": 20
+      }
+    },
+    "OEQ": {
+      "-20.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      },
+      "-5.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      },
+      "0.0": {
+        "rate": 0.9,
+        "n_judged": 30
+      },
+      "5.0": {
+        "rate": 0.9,
+        "n_judged": 30
+      },
+      "20.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      }
+    },
+    "SS": {
+      "-20.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      },
+      "-5.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      },
+      "0.0": {
+        "rate": 0.8666666666666667,
+        "n_judged": 30
+      },
+      "5.0": {
+        "rate": 0.8333333333333334,
+        "n_judged": 30
+      },
+      "20.0": {
+        "rate": 0.8333333333333334,
+        "n_judged": 30
+      }
+    }
+  }
+}
