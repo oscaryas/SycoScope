@@ -1,0 +1,152 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 265955,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Enumerated list item markers in advice reasoning",
+    "description": "This latent fires most strongly on the bare numeral markers (e.g. '2.', '3.', '4.') that begin items in a numbered list, particularly within structured advice-style responses (e.g. AITA/relationship advice) that break down reasoning into itemized points such as 'reasons you're not wrong' or 'things to consider'. The random sample shows the surrounding sentence-level context is typically judgment/validation statements about interpersonal conflicts ('You didn't deserve...', 'It's understandable that...'), but the latent itself is keyed to the structural device of enumerating points rather than to any particular topic or sentiment. It is not about giving advice or moral judgment per se, nor about any specific subject matter (relationships, driving, etiquette, etc.); rather it tracks the formatting/discourse marker signaling 'here is another item in a list of reasons or steps.' Sentences that make similar claims but aren't part of a numbered list structure would not trigger this latent as strongly.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 167453,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Affirming self-worth reassurance",
+    "description": "This latent fires on formulaic, second-person affirmations that directly reassure the reader of their inherent worth, strength, and right to happiness, typically using templated phrasing like 'You are strong, capable, and deserving of love and respect' or 'Remember, you deserve to be happy and fulfilled.' The highest-activating examples are near-identical boilerplate validation statements (worth, deservingness, strength, capability, love, respect) often opening with 'You are...' or 'Remember...' and frequently appearing as stock closing lines in advice-giving text. It does NOT include general advice-giving, practical suggestions, empathetic acknowledgments of feelings, or reflective questions about relationships/situations (e.g., 'It's okay to feel hurt,' 'Reflect on your needs,' 'Create a schedule')\u2014those lack the direct declarative affirmation of the person's inherent worth/strength/deservingness that defines the top cluster, even though they share the same self-help register and appear in the lower-activating random sample.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 151411,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-step list openers",
+    "description": "This latent fires on the opening tokens of enumerated or bulleted advice steps in relationship/communication guidance -- numeric list markers like '2.' and '3.', and gerund-phrase openers such as 'By communicating', 'By being', 'By expressing', or imperative openers like 'Consider' and 'Try to' that introduce a suggested method or action. The top-activating examples are literally just these bare openers/fragments, showing the latent tracks the structural position where a new numbered or 'By [verb]ing...' advice clause begins, rather than any topical content. The broader cluster includes full advice sentences (e.g., 'Have an open conversation with your wife', 'By expressing your feelings...you can help your friend') that instantiate this same list-step or method-introducing pattern in interpersonal advice-giving contexts. It does NOT include general narrative, descriptive, or emotional statements that lack this enumerated 'step/method' framing, even if they discuss similar relationship topics.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 10,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 11,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 12,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 13,
+    "cluster_size": 125831,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-column opener",
+    "description": "This latent fires on stock introductory phrases that an AI assistant (in a chatbot/advice-column persona) uses to preface a response to a personal dilemma, question, or emotional situation\u2014e.g. 'What a tricky situation!', 'The age-old dilemma!', 'I'm going to give you a nuanced/balanced/neutral answer', 'I'm here to help you navigate this situation.' These are formulaic exclamations or throat-clearing statements that signal the assistant is about to offer perspective, empathy, or balanced advice, typically appearing at the very start of a reply. It does NOT include the substantive advice itself, follow-up clarifying questions ('Can you tell me more...'), numbered tips/lists, factual content, or judgments like NTA/YTA verdicts\u2014those are excluded even though they occur in similar advice-giving contexts.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 14,
+    "cluster_size": 122622,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list markers",
+    "description": "This latent fires on the numeral or bullet token that begins an item in an enumerated or bulleted list, often followed by a period and/or bold markdown markers (e.g. '3.', '4. **', '9.'). The top-activating examples are almost purely the bare list-marker tokens themselves, while the broader cluster includes similar numbered/bulleted markers embedded at the start of list items in advice-style or step-by-step content (e.g. career tips, schedules, self-help suggestions). It does not activate on the substantive content or topic of the list items -- the actual advice text, sentences, or full bullet content are not what drives the activation; only the structural marker denoting list position matters, not what the list is about.",
+    "status": "ok",
+    "error": null
+  }
+]

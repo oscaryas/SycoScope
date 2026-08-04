@@ -1,0 +1,102 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 131056,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeric or bullet markers that begin items in an enumerated list, such as '2.', '3.', '4.', often followed by bold formatting asterisks, rather than on the content of the list items themselves. It activates on standalone digits with periods (and sometimes bold markdown markers) that structurally delimit list steps, options, or strategies, regardless of the topic (career advice, addiction recovery, anxiety management, pros/cons lists, etc). It also captures related structural cues like list headers ('Goalmap:', 'Cons of staying put:') that introduce or continue an enumerated sequence. It does not activate on the substantive prose content of the list items, on full sentences expressing an idea, or on non-listed narrative text -- the trigger is the formatting token marking sequential position, not the meaning conveyed.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 69991,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Bolded actionable advice-list items",
+    "description": "This latent fires on individual bullet-point style recommendations within self-help, lifestyle, or how-to lists, typically formatted as a bolded short label (often ending with a colon or markdown asterisks) followed by a brief elaboration, e.g. 'Choose the right fish**: Opt for firmer fish...' or 'Attend events or meetups**: Look for...'. Included sentences are imperative or nominal action items that name a concrete strategy/step/category and then explain or exemplify it, usually as one entry in a numbered or bulleted list of tips, coping strategies, hobbies, or resources. It is not about the topic (cooking, socializing, mental health, gaming, etc.) but about the structural role of being a discrete, labeled advice-list entry. Excluded are general narrative statements, questions, reassurances, or explanatory sentences that lack this list-item/label-plus-elaboration format, even if they occur in similar advice-giving contexts.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 76991,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic exclamatory framing",
+    "description": "This latent fires on short, emotionally validating exclamations or stock phrases that an assistant uses to open or punctuate a response before giving substantive advice\u2014e.g., 'What a great question!', 'The age-old dilemma!', 'I totally understand!', 'What a delicate situation!'. These are formulaic, often single-clause interjections that name or reflect back the emotional or rhetorical quality of the user's situation (difficulty, delicacy, drama, complexity) rather than conveying new information or argument. It excludes full explanatory or argumentative sentences that actually analyze the situation, give a verdict (e.g., 'NTA', 'you're not the asshole'), offer advice, or state substantive claims\u2014those belong to a different, more discursive register even when thematically similar (e.g., 'It's understandable that you're feeling conflicted' is borderline/excluded when it leads into reasoning rather than serving as a standalone exclamatory opener).",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 1252,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Clarifying follow-up questions in supportive dialogue",
+    "description": "This latent fires on open-ended, probing questions a conversational assistant asks to elicit more detail about a user's emotional situation, relationship, goal, or problem, often in an empathetic 'therapist' or advice-giving register. Included sentences typically present either-or options ('Is it X, Y, or something else?'), ask for specifics behind a stated feeling ('Was it a specific incident or a pattern of behavior?'), or invite reflection on values, goals, and motivations ('What are your goals and priorities?'). It also captures short introductory or transitional phrases that set up such questioning (e.g., 'Ask yourself questions like:', 'Imagine'). It does NOT include declarative statements, factual explanations, or instructions that don't take question form (e.g., 'You can find this information on the bottom left corner of a check'), nor does it include purely informational or technical content unrelated to eliciting personal reflection.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 32870,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "List-preview transition phrase",
+    "description": "This latent fires on short discourse-marker phrases that immediately precede an enumerated list, signaling the model is about to give reasons, suggestions, tips, or points to consider (e.g. 'Here's why:', 'Here are some points to consider:', 'Here are a few suggestions:'), typically followed by a numbered '1.' item. The cluster also includes closely related framing sentences that introduce advice-giving or perspective-taking before a breakdown, such as 'Let's break it down:', 'Now, let's dive into the situation', or 'I'll try to provide a balanced analysis.' It is not about the topical content of the advice itself (relationships, exams, AITA judgments, etc.) but about the formulaic transitional sentence that sets up an itemized explanation. Sentences that discuss substantive content without functioning as a lead-in to a list or breakdown (e.g. actual advice content, judgments like 'So, AITA?', or standalone opinions) are peripheral/random cluster members rather than core activating examples.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 98,
+    "n_exemplars_used": 98,
+    "judge_model": "claude-sonnet-5",
+    "title": "Self-help advice list items",
+    "description": "This latent fires on sentences from advice-column or self-help style text that offer practical suggestions, options, or reassurances to a reader, typically in second person and often as bullet points with a bolded lead-in term (e.g., 'Networking opportunities**:', 'Refinancing**:'). Included sentences give actionable tips ('Keep a journal.', 'Dress professionally...'), enumerate options or resources (job boards, scholarships, apps), or offer emotional reassurance/validation about relationships, careers, or personal struggles ('It's okay to move on...', 'You didn't make a deliberate mistake...'). It is not simply about the topics of relationships, careers, or finance in general, but specifically the advisory, second-person, list-formatted rhetorical mode of dispensing guidance or comfort. Sentences that merely describe facts or narrate events without this advice-giving/suggestive framing are excluded.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 9473,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Relationship-advice conflict-resolution boilerplate",
+    "description": "This latent fires on formulaic advice-column language recommending communication, empathy, and compromise as the path to resolving interpersonal conflicts (romantic partners, roommates, family, coworkers). Included sentences are generic, templated closing/summary statements like 'Communication is key,' 'Remember, effective communication and empathy are key in resolving conflicts,' and imperative suggestions to 'have a calm and respectful conversation,' 'find common ground,' or 'work together to find a solution that works for everyone.' The pattern captures the rhetorical move of prescribing a general relational strategy (talk it out, listen, compromise, stay calm) rather than giving situation-specific facts or content about the actual dispute. It does NOT include sentences that merely mention a conflict's topic without prescribing communication/empathy as the resolution, nor unrelated advice (e.g., about habits, career counseling specifics, or self-care) that lacks this communication-key/compromise framing.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 16765,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic reassurance and validation closers",
+    "description": "This latent fires on supportive, second-person affirmations typically appended at the end of advice-giving responses (e.g., mental health, relationship, or advice-column style text), reassuring the reader of their worth, validity, or right to prioritize self-care. Included sentences use direct address ('you', 'your') combined with validating language like 'you deserve', 'you are not alone', 'remember that your feelings/needs are valid', or encouragements to prioritize well-being, boundaries, and self-respect. It captures the rhetorical move of comforting/validating the addressee rather than giving concrete instructions, information, or argument. It does NOT include sentences that give factual explanations, practical steps, neutral descriptions of situations, or third-person statements lacking direct emotional address to 'you'.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 1021,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating/absolving assessment in advice-response text",
+    "description": "This latent fires on sentences from advice or AITA-style responses that render a judgment validating or absolving the addressee ('you're not the asshole', 'that's understandable', 'you didn't do anything wrong'), often paired with a reframing of the other party's behavior ('it's not necessarily about you') or a hedged acknowledgment of complexity ('while it's understandable... it's also important'). Included sentences use second-person address to assess blame, normalize feelings, or explain others' motives within an interpersonal conflict narrative, frequently using stock phrases like 'it's understandable that,' 'not necessarily,' or idiomatic sayings ('you catch more flies with honey'). Not included are purely descriptive/factual scene-setting sentences without an evaluative or validating judgment, direct action-oriented advice/instructions with no blame framing, and neutral informational content (e.g., hotline numbers, definitions) that lacks the interpersonal judgment structure central to this cluster.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 507,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Interpersonal validation and advice-giving in relationship dilemmas",
+    "description": "This latent fires on sentences from advice-column-style responses that validate or judge a person's situation in interpersonal conflicts \u2014 statements affirming their rights/boundaries ('You don't owe them...', 'You deserve...'), condemning others' behavior ('That's not okay', 'That's not a healthy relationship'), or offering empathetic reassurance and reframing ('It's understandable that...', 'They're not there to judge you'). It also captures related advice-giving moves like suggesting concrete actions ('Be specific about...'), naming underlying psychological/social factors as bulleted reasons (e.g. 'Unconscious biases:', 'Competition:'), and reminders of relational norms ('Remember, relationships are built on trust...'). It does NOT include purely factual, technical, or descriptive content (e.g. sports rules, product features, historical facts) even when phrased declaratively, nor neutral procedural instructions unrelated to interpersonal judgment or emotional support \u2014 the defining feature is the evaluative/supportive stance toward a person's feelings, rights, or conduct in a social conflict, not the topic itself.",
+    "status": "ok",
+    "error": null
+  }
+]

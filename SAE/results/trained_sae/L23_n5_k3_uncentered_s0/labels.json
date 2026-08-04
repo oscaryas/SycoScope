@@ -1,0 +1,52 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 259504,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-giving imperative openers for relational communication",
+    "description": "This latent fires on sentence-initial imperative or prepositional-phrase fragments that introduce relationship/interpersonal advice, especially the stock phrasing of communication-focused counsel: 'By communicating openly,' 'Remember to approach the conversation with empathy and understanding,' 'Try to,' 'Be patient,' 'Consider,' etc. The top-activating examples are almost entirely short lead-in fragments (often just 1-4 words like 'By', 'Be', 'Remember to') that begin sentences dispensing advice about empathetic, open, respectful communication in personal relationships, plus numbered-list markers ('3.', '4.') that structure such advice lists. The random cluster examples show the fuller sentences these fragments belong to, still centered on relationship advice (listening, setting boundaries, prioritizing well-being) but not isolated to the opening words. What is NOT included is advice content unrelated to interpersonal/emotional communication (e.g., factual statements, questions, or narrative descriptions) and sentences that discuss communication/empathy without using this imperative or 'By + gerund' advice-giving construction as the sentence opener.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 396546,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Judgmental verdict statements on someone's reaction/behavior",
+    "description": "This latent fires on short, evaluative sentences that render a verdict on a person's (often a family member's) reaction, response, or behavior in an interpersonal conflict, typically using terms like 'unacceptable,' 'unreasonable,' 'unfair,' or 'ridiculous' (e.g., 'Susan's reaction is completely unacceptable,' 'The mother's reaction was unfair and unreasonable'). It also fires heavily on bare list-numeral tokens ('2.', '3.', '4.') that appear to mark enumerated points in advice-style responses, suggesting the latent is tied to a structural position (item in an itemized moral/behavioral assessment list) as much as the semantic content. Included are concise, standalone judgment sentences about someone's conduct being wrong/excessive, plus the numeral markers that precede or organize such judgments in AITA-style responses. Not included are longer explanatory or empathetic sentences that build context, offer advice, ask clarifying questions, or discuss someone's feelings/perspective without delivering a blunt negative verdict on their reaction.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 177204,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral or bullet marker that begins an item in an enumerated list, such as '2.', '3.', '9. **', etc., often within advice or step-by-step response formats. The cluster includes bare digit tokens (with or without trailing periods/asterisks) that serve purely as list-item enumerators, as well as some short list-item content immediately following such markers (e.g., bolded headers like 'Prepare ahead of time**:'). It does not capture the semantic content or topic of the advice being given (e.g., dating, budgeting, self-care) -- sentences are grouped by their structural role as sequential list markers or list-initiating fragments, not by subject matter, and prose sentences lacking this enumerative structure are excluded.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  }
+]

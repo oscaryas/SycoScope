@@ -94,10 +94,10 @@
     "cluster_size": 21928,
     "n_exemplars_used": 200,
     "judge_model": "claude-sonnet-5",
-    "title": null,
-    "description": null,
-    "status": "error",
-    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Formulaic exclamatory framing of a dilemma\", \"description\": \"This latent fires on short, stock exclamatory phrases that an advice-giving AI (typically in AITA/relationship-advice contexts) uses to frame or introduce a situation as a familiar type of problem before actually analyzing it, e.g. \\'The age-old dilemma!\\', \\'The classic conundrum!\\', \\'What a complex and painful situation you\\'re in.\\' These are templated, almost interjection-like openers that name the genre of problem (dilemma, conundrum, debate, struggle, dram'"
+    "title": "Formulaic exclamatory framing of a dilemma",
+    "description": "This latent fires on short, stock exclamatory openers that frame an upcoming interpersonal or advice-style situation as a familiar type of problem, typically of the form 'The age-old/classic/eternal [dilemma/conundrum/debate/question] of X!' The cluster is dominated by this rote templated phrase (with 'dilemma,' 'conundrum,' 'debate,' 'concern,' or 'struggle' as the noun and an exclamation point), used as a rhetorical throat-clearing move before an AITA-style or advice response gets into specifics. It also extends more loosely to other brief exclamatory reaction phrases ('The irony!', 'What a mess!', 'Ah, yes!') that serve the same framing/reaction function rather than substantive content. It does NOT include the actual verdicts, judgments, or advice that follow (e.g., 'NTA,' 'You are not the asshole,' explanations of fault), nor does it include plain questions or hedged statements like 'Not necessarily' or 'Maybe' that lack this exclamatory scene-setting quality.",
+    "status": "ok",
+    "error": null
   },
   {
     "latent_id": 10,
@@ -244,10 +244,10 @@
     "cluster_size": 102682,
     "n_exemplars_used": 200,
     "judge_model": "claude-sonnet-5",
-    "title": null,
-    "description": null,
-    "status": "error",
-    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Numbered list item markers\", \"description\": \"This latent fires on the numeral token that begins an item in a numbered list (e.g., \\'2.\\', \\'3.\\', sometimes followed by bold markdown \\'**\\'), regardless of the content that follows. The cluster includes list markers of varying numbers (2 through 11) across many different documents and topics, often paired with markdown bold formatting used to introduce a list header or item title. It captures the structural/formatting role of enumerating sequential items rather than any semantic content, and does not include the actual text or reasoning content of the list items themselves, nor numbers used in other contexts like dates, quantities, or equations.\"'"
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral token (and following period) that begins an item in a numbered list, such as '2.', '3.', or '4.', often followed by bold markdown formatting. The cluster includes these bare list-marker tokens regardless of the actual content or topic of the list item that follows, spanning many different subjects and documents. It does not include the surrounding prose or explanatory text of the list items themselves, nor unnumbered bullet points, headers, or other structural markers -- the activation is tied specifically to the digit-plus-period sequence marking sequential list positions.",
+    "status": "ok",
+    "error": null
   },
   {
     "latent_id": 25,

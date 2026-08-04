@@ -4,10 +4,10 @@
     "cluster_size": 386630,
     "n_exemplars_used": 200,
     "judge_model": "claude-sonnet-5",
-    "title": null,
-    "description": null,
-    "status": "error",
-    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Imperative self-help action items\", \"description\": \"This latent fires on the imperative, list-style action items that populate self-help, wellness, and interpersonal-advice responses -- short directive phrases like \\\\\"Practice mindfulness,\\\\\" \\\\\"Exercise regularly,\\\\\" \\\\\"Read a book,\\\\\" \\\\\"Set realistic goals,\\\\\" or \\\\\"Have an open and honest conversation,\\\\\" typically appearing as bullet or numbered list entries (often bolded headers) that tell the reader what concrete step to take. The highest-activating'"
+    "title": "Self-help advice list items",
+    "description": "This latent fires on short, imperative-style bullet points from enumerated self-improvement or advice lists\u2014typically a bolded action verb or noun phrase (e.g., 'Practice mindfulness', 'Exercise regularly', 'Read a book') optionally followed by a colon and brief elaboration. The highest-activating examples are almost entirely these terse, list-formatted suggestion headers pulled from 'here are some tips' style responses (wellness, productivity, hobbies, self-care). It does not activate strongly on full explanatory or empathetic advice sentences that discuss feelings, relationships, or reasoning ('It's understandable to feel...', 'Try to have a calm conversation...') even though these appear in similar advice-giving contexts\u2014the key distinguishing feature is the compressed, imperative, list-item form rather than discursive advice content.",
+    "status": "ok",
+    "error": null
   },
   {
     "latent_id": 1,
@@ -214,10 +214,10 @@
     "cluster_size": 1799,
     "n_exemplars_used": 200,
     "judge_model": "claude-sonnet-5",
-    "title": null,
-    "description": null,
-    "status": "error",
-    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Short standalone yes/no answer\", \"description\": \"This latent fires on brief, self-contained affirmative or negative reply tokens that function as a direct one- or two-word answer to an implied yes/no question, such as \\'Not necessarily,\\' \\'Not really,\\' \\'Absolutely!,\\' \\'Maybe,\\' or \\'No.\\' These are terse, sentence-initial (often full-turn) responses that hedge, confirm, or deny, sometimes followed by a short qualifying clause (\\'Not entirely, but you could have done better\\'). It does not include longer explanatory answers, questions themselves, or negation used within a larger descriptive sentence rather than as a standalone reply -- the defining feature is the compact interjection-like answer form, not the topic or the polarity (yes vs no) of the response.\", }'"
+    "title": "Short standalone yes/no reply",
+    "description": "This latent fires on brief, standalone one- or two-word (or short phrase) responses that directly answer an implicit yes/no or degree-of-agreement question, such as 'Not necessarily.', 'Not entirely.', 'Maybe.', 'Absolutely!', or 'Nope.' These are terse affirmations, denials, or hedged qualifications that function as a complete conversational turn rather than part of a longer explanatory sentence, often appearing at the start of a reply before any elaboration follows. It captures the pattern regardless of topic, including minor variants like 'Absolutely not!', 'No way!', or 'I think not.' It does NOT include longer, fully elaborated answers that explain reasoning at length, declarative statements that are not responses to a yes/no framing, or sentences where the short reply is embedded mid-paragraph rather than standing as its own discrete utterance.",
+    "status": "ok",
+    "error": null
   },
   {
     "latent_id": 22,

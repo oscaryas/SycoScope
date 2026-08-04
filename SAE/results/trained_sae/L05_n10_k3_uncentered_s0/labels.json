@@ -67,7 +67,7 @@
     "title": null,
     "description": null,
     "status": "error",
-    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Assertive directive or judgment statement\", \"description\": \"This latent fires on short, self-contained sentences that deliver a firm directive, refusal, or evaluative judgment rather than descriptive or narrative content. Included examples are imperative instruct'"
+    "error": "ValueError: No JSON object found in judge response: ''"
   },
   {
     "latent_id": 7,
