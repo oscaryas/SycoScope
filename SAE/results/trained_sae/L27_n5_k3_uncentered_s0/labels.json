@@ -1,0 +1,52 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 49,
+    "n_exemplars_used": 49,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral tokens (and following period/bold markdown asterisks) that begin items in an enumerated list, such as '2. **', '5. **', '9', or '3.'. The included sentences are almost entirely just the list-marker fragment itself\u2014a digit followed by a period and often opening bold formatting\u2014rather than any substantive content or complete sentence. It captures the structural/formatting act of starting a new numbered list entry, not the topic or meaning of the item that follows. It does not include full sentences with numeric content embedded in prose, ordinal words spelled out, or list markers using bullets, letters, or roman numerals instead of arabic numerals with periods.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 65,
+    "n_exemplars_used": 65,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral and punctuation that begin an item in a numbered list, often immediately followed by bold formatting markup (**), rather than on any semantic content. Included are tokens like '2.', '3. **', '7. **', etc., appearing at the start of enumerated list entries, largely in the range 2-8. It does not activate on the textual content that follows the marker, on list markers using bullets or letters instead of numerals, or on numerals appearing elsewhere in prose (e.g., as quantities or dates).",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 121,
+    "n_exemplars_used": 121,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral (and often trailing bold-markdown asterisks) that begins an item in a numbered list, such as '2. **', '7', or '13. **', rather than on any surrounding prose content. It activates purely on the structural token marking list enumeration -- the digit plus punctuation/formatting that starts a new list entry -- regardless of what topic the list is about (recipes, arguments, steps, rankings, etc.). It is not about the semantic content of the list items themselves, nor about ordinal words spelled out in text (e.g. 'second', 'third'); it specifically targets the numeric list-marker formatting pattern at the start of an enumerated line.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 781495,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathic validation of feelings/situations",
+    "description": "This latent fires on sentences that validate or normalize a person's emotions or situation in advice/support contexts, typically using formulas like 'It's understandable/natural/reasonable that you feel X' or 'It sounds like a really tough/emotional situation.' These sentences empathetically legitimize the reader's (or a third party's) feelings, reactions, or circumstances as normal, valid, or expected given the described events, often as a preface before giving advice. It does NOT include the advice, action steps, or suggestions themselves (e.g., 'set boundaries,' 'consider a compromise'), nor neutral descriptive or list-formatting text -- the highest activations are specifically the validating/normalizing statement itself, not the surrounding recommendations or numbered instructions.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 311,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on standalone numeral tokens (e.g., '2.', '3.', '4.', occasionally followed by '**') that function as list item or step markers in enumerated lists, such as numbered steps in instructions, ranked items, or itemized reasoning chains. The activating tokens are almost purely the digit plus punctuation, with no surrounding semantic content driving the activation, indicating the latent tracks list-structure/enumeration formatting rather than any topic. It does not include ordinal words spelled out ('third', 'fourth'), bullet symbols, or numbers used as quantities/measurements within prose -- only the specific pattern of a digit marking a position in a numbered sequence, typically at the start of a line or list entry.",
+    "status": "ok",
+    "error": null
+  }
+]

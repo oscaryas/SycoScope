@@ -1,0 +1,102 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 396921,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Evaluative verdict on someone's reaction/behavior",
+    "description": "This latent fires on short, formulaic evaluative judgments\u2014typically the opening or topic sentence of a paragraph in advice/AITA-style text\u2014that pass verdict on a specific person's (often possessive-marked, e.g. 'Your dad's', 'Her', 'Susan's') reaction, response, or behavior using stock evaluative adjectives like unacceptable, unfair, unreasonable, harsh, concerning, disproportionate, or understandable-but-X. The highest-activating examples are terse, near-templatic sentences of the form '[Person]'s reaction/response/behavior was/is [evaluative adjective(s)]', often hedged with 'however' or 'while understandable, ...' before delivering a negative or mixed judgment. It is NOT simply about relationship-advice topics in general or empathetic/explanatory commentary (e.g. sentences that explain why someone feels a certain way, offer suggestions, ask questions, or provide context/background)\u2014those appear only in the lower-activating random sample and lack the concise subject+verdict evaluative sentence structure that defines the top examples.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 289303,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-giving sentence openers for relationship communication",
+    "description": "This latent fires on the syntactic/functional opening fragments of advice-list items, especially those introducing relationship or interpersonal-communication tips: gerund/prepositional starters like 'By communicating', 'By having an open...', imperative starters like 'Try to', 'Consider', 'Be patient,' and bare list markers ('2.', '3.') that precede such advice. The highest-activating examples are truncated stubs of these advice constructions, particularly ones invoking open/honest communication, expressing feelings, and working together toward resolution, rather than full elaborated sentences. It does not activate strongly on complete, self-contained advice statements with concrete content (e.g., full sentences about specific actions, questions to ask, or general reassurances) unless they retain this same 'By/Try to/Consider + communication-themed' opening structure -- the pattern is about the templated lead-in to communication-focused suggestions, not the advice topic itself or fully formed sentences in general.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 49,
+    "n_exemplars_used": 49,
+    "judge_model": "claude-sonnet-5",
+    "title": "Conversational icebreaker questions and prompts",
+    "description": "This latent fires on short, direct conversational prompts\u2014mostly questions inviting personal disclosure or social engagement (e.g., 'What do you like about it?', 'Would you like to exchange numbers?', 'Do anything exciting?')\u2014along with terse advice-style directives that share the same clipped, second-person, script-like phrasing (e.g., 'Aim for...', 'Avoid rambling...'). These are typically embedded in guidance about small talk, networking, or social interaction tips, often appearing as suggested lines to say or brief imperative advice fragments rather than full explanatory sentences. It does not include longer explanatory or narrative sentences that discuss social dynamics in the third person or provide reasoning/context (e.g., 'Talking about your ex might be a way for her to add excitement...'), nor does it include declarative statements lacking the question/directive conversational-prompt form. The common thread is brevity and a direct address or advice-line format suited for scripts, tips lists, or conversation starters.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 11,
+    "n_exemplars_used": 11,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "error",
+    "error": "ValueError: No JSON object found in judge response: '{\"title\": \"Enumerated options in advice questions\", \"description\": \"This latent fires on clauses that present a short list of concrete alternatives\\\\u2014either as a multiple-choice style cl'"
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 8,
+    "n_exemplars_used": 8,
+    "judge_model": "claude-sonnet-5",
+    "title": "Catchy phenomenon-naming exclamation",
+    "description": "This latent fires on short, punchy phrases that dramatically label a common, relatable struggle or dilemma, often using the pattern 'The [eternal/pesky/curse of] X!' or 'This is often referred to as...'. Included sentences have a rhetorical, almost listicle-style flourish\u2014frequently ending in an exclamation point\u2014that names a phenomenon (stage fright, procrastination, being the new guy, a slump) rather than explaining it in depth. It also captures light conversational hook questions like 'Are you a morning person or a night owl?' that similarly frame a familiar dichotomy or relatable trope. It does NOT include plain, neutral informational or explanatory prose that conveys facts without this catchy, labeling/exclamatory framing, even if the topic (e.g., a virus's symptoms or a sense of purpose) is similarly about a common human experience.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 2,
+    "n_exemplars_used": 2,
+    "judge_model": "claude-sonnet-5",
+    "title": "Skeptical debunking of assumed value",
+    "description": "This latent fires on statements that push back against an inflated or taken-for-granted claim of worth, status, or benefit, often with a wry or skeptical tone. Included sentences call out something that seems attractive or prestigious on the surface (a cash bonus, a college pedigree) but imply it is overstated, hard to actually obtain, or doesn't confer the assumed advantage. It is not simply about describing rewards, credentials, or comparisons neutrally; the key function is the corrective or debunking stance toward an implicit overvaluation. Sentences that merely state facts about offers or qualifications without challenging their perceived worth would not belong here.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 146994,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral (and often trailing markdown bold marker '**') that begins an item in an enumerated list, such as '2.', '3.', '4. **', etc. It activates on the bare list-index token itself, typically appearing at the start of a step-by-step instruction, tip list, or pros/cons breakdown, regardless of the topic of the list content that follows. It does not activate on the substantive text of the list items (the actual advice, facts, or explanations), only on the numbering/formatting token that introduces them, and it is indifferent to subject matter (finance, relationships, careers, etc.). Sentences that are full list-item content without a leading numeral marker are not central examples of this cluster.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 10,
+    "n_exemplars_used": 10,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic framing statement",
+    "description": "This latent fires on short, generic declarative sentences that validate, characterize, or introduce a common experience or challenge\u2014often as an opening line before elaboration or advice. Included sentences use evaluative or intensifying language ('can be overwhelming', 'daunting', 'debilitating') or exclamatory appreciation ('The allure of...!') to frame a topic in relatable, empathetic terms, frequently in a self-help or productivity-advice register. It also captures brief instructional or definitional framing sentences (e.g., stating how a score is calculated, or a simple actionable tip like committing to 2 minutes) that serve a similar rhetorical role of setting up a point rather than elaborating it. It does NOT include sentences that provide detailed explanation, argumentation, narrative content, or technical specifics beyond this brief framing/acknowledgment function.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Actionable list-item instruction with rationale",
+    "description": "This latent fires on items from a numbered or bulleted list that present a bolded imperative action step followed by a brief colon-separated explanation of its purpose or benefit. Included sentences follow the pattern 'Do X**: explanation of why/what it accomplishes,' typically as part of a how-to or tips list (e.g., health, habits, productivity advice). It does not merely capture advice-giving in general prose, narrative suggestions, or full explanatory paragraphs -- the key trigger is the specific formatted structure of a highlighted action phrase paired with a concise justificatory clause.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Acknowledging individual variation as a caveat",
+    "description": "This latent fires on sentences that open an argument or discussion by conceding a general exception or variation among people, often as a rhetorical softening move before making a broader claim (e.g., 'Not everyone is born with a passion...'). Included sentences use negation plus a universal quantifier ('not everyone', 'not all people') to acknowledge diversity of circumstance or trait before pivoting to advice or generalization. It is not simply about the topic of passion or careers, but about the concessive framing pattern itself. Excluded are sentences that state a generalization without the concessive/exception structure, or that discuss individual differences without using this negated-universal rhetorical setup.",
+    "status": "ok",
+    "error": null
+  }
+]

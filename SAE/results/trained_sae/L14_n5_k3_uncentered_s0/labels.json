@@ -1,0 +1,52 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 22,
+    "n_exemplars_used": 22,
+    "judge_model": "claude-sonnet-5",
+    "title": "Warm affirming advice-tip phrasing",
+    "description": "This latent fires on short, upbeat statements typical of an assistant's self-help or advice-giving register: validating affirmations about the user's traits ('you have a strong sense of confidence'), encouraging observations ('That's a very kind and compassionate gesture!'), and the lead-in or closing fragments of bulleted advice tips (often bolded headers like 'Make it enjoyable**:' or 'Find joy in the everyday**:'). Included sentences are brief, emotionally warm, and either affirm/validate the reader or introduce/cap a practical suggestion in a listicle-style format. It does not include neutral factual statements, technical explanations, or advice content itself when stripped of the encouraging or affirming framing\u2014the latent tracks the supportive tone and tip-structuring phrasing rather than the topic (finance, relationships, career, mindfulness, etc.) being discussed.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 503,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Acknowledging prior commitments while asserting a boundary or complaint",
+    "description": "This latent fires on sentences from interpersonal-conflict narratives (often AITA/advice-style text) that first validate or concede a fact about what someone did agree to, offer, promise, or intend, and then pivot to a 'but/however' clause that reasserts a grievance, boundary, or unmet expectation. The pattern typically follows a 'You did X, but/and Y' or 'I know/understand X, but I feel Y' template, explicitly naming an agreement, prior action, or good intention before qualifying or contrasting it with what went wrong or what still bothers the speaker. It captures the rhetorical move of fairness-balancing: crediting someone's stated intent or partial compliance while still holding them accountable or expressing frustration. It does NOT include simple factual narration without this concessive contrast, straightforward complaints with no acknowledgment of the other side, or neutral descriptive statements lacking the 'acknowledge-then-counter' structure.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 42,
+    "n_exemplars_used": 42,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the tokens that begin enumerated list items within structured, often advice-style responses -- particularly the number/bullet plus bold-formatting marker (e.g., '2. **', '4.', '5. **') that precedes a list entry's content, as well as section headers like '**During work:**' that introduce a numbered list. It also picks up some short, formulaic conversational fillers (apologies, reassurances, caveats) that typically appear as standalone list items or transitional lines in advice-giving text. It does NOT track the semantic content of the list items themselves (health, relationships, travel, etc.) or ordinary sentences with numbers embedded in prose; the activation is tied to the structural role of introducing or marking a discrete enumerated point, not the topic being enumerated.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 7,
+    "n_exemplars_used": 7,
+    "judge_model": "claude-sonnet-5",
+    "title": "Validating feelings while offering interpersonal advice",
+    "description": "This latent fires on sentences from advice-giving or relationship-counseling contexts where the speaker acknowledges, validates, or empathizes with someone's emotional stance or concern, often as a transitional move before or alongside guidance. Included sentences explicitly affirm a person's feelings or judgments ('That's not okay', 'this is a valid concern'), assert boundaries or responsibilities in interpersonal situations, or share a brief personal anecdote as supportive evidence. It is not simply about discussing relationships or emotions in general -- purely descriptive or narrative statements about a situation without an evaluative/validating stance are not included. The defining feature is the act of affirming, validating, or normatively framing someone's concern, boundary, or feeling within advice-style discourse.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 94535,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-column benefit clauses",
+    "description": "This latent fires on the templated 'benefit statement' clause that follows a piece of relational advice in advice-column or chatbot-style responses -- typically a sentence or fragment beginning with 'This can/could/might/will help...' or 'They can offer...' that explains the positive outcome of taking an action (talking to a partner, seeking a professional, sharing concerns, etc.). Included sentences are almost formulaic: subject (This, They, A professional, Sharing your concerns) plus a modal-help verb plus an abstract payoff like 'a better understanding,' 'build trust,' 'feel more supported,' or 'make an informed decision,' often truncated mid-sentence. It captures the rhetorical function of justifying/motivating advice rather than the advice's content or topic (relationships, dating, family conflict, work, etc. all appear). Excluded are the advice directives themselves when phrased as imperative action steps without the 'this helps' framing (e.g., 'Seek a compromise', 'Set boundaries', 'Listen to her perspective'), as well as sentences offering opinions, caveats, disclaimers, or purely factual/descriptive statements that lack this help-justification structure.",
+    "status": "ok",
+    "error": null
+  }
+]

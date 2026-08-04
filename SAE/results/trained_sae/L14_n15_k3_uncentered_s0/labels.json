@@ -1,0 +1,152 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 175033,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Suggested activity list items",
+    "description": "This latent fires on bullet-point or list-style recommendations that suggest a specific activity, hobby, or action the reader could try, often in a 'Bolded label**: do X' or imperative format (e.g., 'Take a class', 'Go for a walk', 'Try a new hobby', 'Join an online community'). The highest-activating examples are heavily clustered around self-improvement/leisure suggestions (learning new skills, exercise, hobbies, socializing, relaxation techniques) presented as items in an enumerated or bulleted list of options. It captures the generic advice-listicle format itself rather than the specific topic\u2014so it fires similarly on fitness tips, creative hobbies, or stress-relief suggestions as long as they're phrased as a recommended action to try. It does NOT include sentences that give explanations, justifications, diagnoses of a problem, direct dialogue/quotes, or descriptive narrative statements that aren't themselves an actionable suggested activity.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 33455,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list markers / AITA-style justification statements",
+    "description": "This latent fires strongly on bare numbered-list markers (e.g., '2.', '3.', '4.') that introduce enumerated points in a structured response, and more weakly on the sentences that follow such markers in advice/judgment contexts (e.g., Reddit-style 'Am I the Asshole' responses). These weaker activations consist of declarative statements that assign blame, validate feelings, or explain why a person's behavior was or wasn't reasonable, often using hedged language like 'it's understandable,' 'it's unfair,' or 'you have a right to.' The cluster is not about the topic of interpersonal conflict itself, but about the structural role of enumerating and justifying points in an evaluative list. It excludes narrative description, factual reporting, or sentences that don't function as either a list delimiter or a supporting justification within such a list.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 116262,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice to have an open conversation",
+    "description": "This latent fires on advice-giving text that recommends communicating openly and honestly about feelings or concerns with a specific person (partner, family member, friend), often in list format ('Have an open and honest conversation with X about Y'). It also fires heavily on the numbered list markers (e.g., '2.', '3.') that introduce these advice steps in relationship/interpersonal-advice contexts, suggesting the latent tracks the structural pattern of enumerated communication-advice steps as much as the content itself. Included sentences are imperative recommendations to talk, share feelings, listen, or seek support/compromise, and the bare list-numbering tokens that precede such advice items. Not included are sentences that merely describe a conversation that already happened, analyze someone's past behavior or motivations, ask reflective/rhetorical questions, or give unrelated procedural advice not centered on the 'have an open conversation' communication-advice template.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 181719,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Formulaic emotional-support affirmations",
+    "description": "This latent fires on direct, second-person reassurance statements that affirm the reader's worth, strength, or right to well-being, typically using stock phrases like 'Remember, you are...', 'You deserve...', or 'You are strong, capable, and deserving of love and respect.' These are template-like closing affirmations delivered as validating pep-talk lines, often stacking adjectives (strong, capable, worthy) and concluding with a deserving-of clause (love, respect, happiness, healing). The highest-activating examples are near-verbatim boilerplate affirmations with minimal topical content beyond the affirmation itself. It does NOT include general advice-giving, hedged reasoning, or context-specific suggestions about relationships, boundaries, or self-care strategies (e.g., 'consider seeking therapy' or 'it's okay to prioritize your needs')\u2014those appear only in the lower-activating random sample and lack the direct affirmational 'you are/you deserve' formula that defines the top cluster.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 10,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Conditional concession about perceived harm",
+    "description": "This latent captures sentences that use an 'Even if X, Y may still have felt/been Z' structure to concede a mitigating factor while asserting that a negative subjective impact (like feeling betrayed, violated, or wronged) persists regardless. Included sentences acknowledge a counterpoint or excuse (e.g., lack of intent, lack of interest) but pivot to emphasize the emotional or ethical harm experienced by another party. Not included are straightforward statements of harm without a concessive clause, factual conditionals unrelated to feelings or trust, or sentences that resolve the concession in favor of the excuse rather than the harmed party's perspective.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 11,
+    "cluster_size": 110445,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic exclamatory validation openers",
+    "description": "This latent fires on short, formulaic exclamatory phrases (often \"What a [adjective(s)] situation/feeling/realization!\" or \"That's exciting/wonderful!\" or \"I totally understand/get it!\") that a conversational assistant uses to open a response by validating or emotionally mirroring the user's stated experience before giving substantive advice. The top-activating examples are almost purely these stock exclamations with minimal content beyond the emotional label (heartbreaking, complex, wonderful, exciting, tough, etc.), typically standalone one-liners. The broader cluster (random sample) includes related but structurally different empathetic/validating sentences embedded in longer supportive commentary (e.g., \"It's completely understandable that...\", \"Firstly, it's great that...\"), which share the validating function but lack the terse exclamatory template, so the latent activates most strongly on the compact, punchy exclamation form rather than on discursive empathetic reasoning or advice-giving content.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 12,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 13,
+    "cluster_size": 109854,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on standalone numeral tokens (often followed by a period and/or bold markdown markers like **) that mark the start of an item in an enumerated or numbered list. The activating tokens are essentially just the list index itself -- digits like 2, 3, 4, 5, etc., frequently followed by '. **' formatting typical of markdown-rendered numbered lists (e.g., steps, pros/cons, ranked items). It captures the structural/formatting role of a list-item number rather than any semantic content of the item that follows. It does NOT activate on numbers used as quantities, dates, measurements, or other numeric content embedded within prose -- only on the discrete enumeration marker token that begins a new list entry.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 14,
+    "cluster_size": 106450,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "AITA-verdict framing",
+    "description": "This latent fires on the rhetorical moment in Reddit AITA-style advice text where the writer poses or transitions into the climactic judgment question or verdict, most saliently the literal phrase 'So, AITA?' (or variants like 'WIBTA?', 'Now, AITA?') and hedged verdict openers like 'I'd say... maybe/kinda.' The highest activations are almost purely this stock question/hedge itself, functioning as a discourse marker that signals 'here comes the judgment.' The lower-activating cluster members are the surrounding verdict-delivering sentences (e.g., 'You're not the asshole,' 'Here's why:', 'In this situation, you might be considered in the wrong') that provide reasoning or explicit rulings rather than posing the question. It does not include general advice-giving, empathy statements, or topic content about the underlying conflict -- only the structural act of asking or transitioning into the AITA-style verdict, with the pure question form activating most strongly.",
+    "status": "ok",
+    "error": null
+  }
+]

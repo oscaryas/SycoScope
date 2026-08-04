@@ -1,0 +1,102 @@
+[
+  {
+    "latent_id": 0,
+    "cluster_size": 277400,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Enumerated hobby/activity suggestions",
+    "description": "This latent fires on list items that enumerate hobbies, interests, or activities as a set of parallel options, either phrased as questions ('Are you into sports, music, hiking, or gaming?') or as imperative suggestions ('Try reading, journaling, drawing, or yoga'), and also on the bare numbered/bulleted markers ('2.', '3.', '4.') that introduce such enumerated option lists in advice-style text. Included sentences are characterized by a short list of interchangeable activity nouns joined by commas/or, typically appearing in self-help or getting-to-know-you contexts. It does not include general self-improvement or relationship advice sentences that lack this enumerated-options structure (e.g., single coherent tips, explanations, or reasoning about someone's behavior), even though many of the random-sample examples share the broader advice-giving topic without the characteristic activity-list format.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 1,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 2,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 3,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 4,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 5,
+    "cluster_size": 0,
+    "n_exemplars_used": 0,
+    "judge_model": "claude-sonnet-5",
+    "title": null,
+    "description": null,
+    "status": "skipped_empty_cluster",
+    "error": null
+  },
+  {
+    "latent_id": 6,
+    "cluster_size": 1,
+    "n_exemplars_used": 1,
+    "judge_model": "claude-sonnet-5",
+    "title": "Prior warning explains later reaction",
+    "description": "This latent fires on sentences that attribute a character's earlier warning or cautionary statement as the reason for their attempt to manage someone else's expectations about an outcome. Included sentences describe a person having previously alerted or forewarned another about a likely negative or difficult reaction, framed as a deliberate act of expectation-setting. It centers on the causal link between forewarning and expectation management, not merely on warnings or predictions in isolation. It does not include sentences that simply report a warning without connecting it to expectation-management intent, nor general statements of prediction, advice-giving, or emotional reassurance unrelated to having prepared someone in advance.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 7,
+    "cluster_size": 165270,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Empathetic advice-column preamble",
+    "description": "This latent fires on short, formulaic opener phrases used by an assistant (often in an advice/AITA-style persona) to signal empathy, acknowledge a difficult or dilemma-laden situation, or announce that a considered/nuanced answer is coming, before actually giving substantive content. The top-activating examples are almost entirely these stock exclamatory or reassuring phrases themselves ('I totally get it!', 'What a tricky situation!', 'dilemma!', 'I'm here to help you navigate this situation.', 'I'm going to give you a nuanced answer.'), i.e. the rapport-building/framing boilerplate rather than any actual reasoning or judgment. The broader cluster sample includes surrounding advice-column content (situation summaries, verdicts like 'not the asshole', reasoning about pros/cons, questions to the user) that shares the empathetic-advice-giving topic but is NOT the core pattern -- the latent is specifically about the short stock empathy/acknowledgment interjections, not the substantive analysis, verdicts, or follow-up questions that accompany them.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 8,
+    "cluster_size": 260456,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Advice-giving imperative sentence starters",
+    "description": "This latent fires on the opening tokens of advice/recommendation sentences in relationship or interpersonal-conflict advice text\u2014fragments like 'Be', 'By', 'Remember to', 'Try to', 'Consider', 'Practice', and numbered list markers (e.g., '2.', '3.') that preface a piece of suggested action. The top activations are almost entirely these bare lead-in words/numbers themselves, capturing the syntactic slot where an imperative recommendation or list item begins, before the specific content (e.g., 'be patient', 'communicate openly') is stated. Full advice sentences with completed content (e.g., 'It might be helpful to have a calm conversation...') activate more weakly and represent the broader context this fragment pattern occurs in, but the latent is specifically keyed to the short imperative/enumerative openers rather than to the advice content, topic, or reasoning itself. It does NOT capture descriptive, evaluative, or empathetic statements (e.g., statements about feelings, judgments about fairness, or validation) unless they begin with one of these characteristic advice-opening constructions.",
+    "status": "ok",
+    "error": null
+  },
+  {
+    "latent_id": 9,
+    "cluster_size": 130170,
+    "n_exemplars_used": 200,
+    "judge_model": "claude-sonnet-5",
+    "title": "Numbered list item markers",
+    "description": "This latent fires on the numeral or bullet token that begins an item in an enumerated list, typically a bare digit followed by a period (e.g. '3.', '4.') sometimes followed by markdown bold markers ('**') used to start a bolded list heading. The cluster is dominated by these isolated numbering tokens, capturing the structural position of starting a new list item rather than any semantic content. It does NOT include the substantive text or reasoning within list items (e.g. full sentences explaining a point), nor does it primarily activate on ordinary prose sentences that merely happen to contain a number; a few stray prose sentences appear in the random sample but are not representative of the latent's core trigger, which is specifically the list-numbering marker itself.",
+    "status": "ok",
+    "error": null
+  }
+]
