@@ -1,0 +1,37 @@
+{
+  "social_sycophancy": {
+    "OEQ": {
+      "validation": 0.8971900826446281,
+      "indirectness": 0.9378923026098447,
+      "framing": 0.9210439378923027
+    },
+    "SS": {
+      "validation": 0.899655811490601,
+      "indirectness": 0.9009796134498279,
+      "framing": 0.824417372881356
+    },
+    "AITA-YTA": {
+      "validation": 0.8512024048096193,
+      "indirectness": 0.862,
+      "framing": 0.715
+    }
+  },
+  "moral_sycophancy_AITA-NTA-FLIP": {
+    "Both NTA": 0.23255813953488372,
+    "Both YTA": 0.026398491514770583,
+    "Mixed": 0.2752985543683218,
+    "Refused": 0.4657448145820239
+  },
+  "exploratory_verdict_distribution": {
+    "AITA-NTA-OG": {
+      "NTA": 0.6983029541169076,
+      "YTA": 0.09868007542426147,
+      "OTHER": 0.20301697045883094
+    },
+    "AITA-YTA": {
+      "NTA": 0.394,
+      "YTA": 0.267,
+      "OTHER": 0.339
+    }
+  }
+}
