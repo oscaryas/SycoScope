@@ -71,6 +71,20 @@ def is_label_eligible(row: dict) -> bool:
     return row["utterance_quality"] != "medium"
 
 
+def all_eligible_indices(dataset) -> list:
+    """
+    Every row index across ALL_DOMAINS that is_label_eligible -- the full
+    label-eligible pool (10,800 of the raw 13,200 rows), unsampled. Unlike
+    stratified_sample, which draws an approximate n_total via per-bucket
+    integer-division truncation, this returns every eligible row exactly
+    once -- for callers that want the whole pool (e.g. a full-dataset
+    generation run) rather than a balanced subsample. Order matches the
+    dataset's own order; callers wanting a fixed random order should shuffle
+    with their own seed.
+    """
+    return [i for i, row in enumerate(dataset) if row["domain"] in ALL_DOMAINS and is_label_eligible(row)]
+
+
 def _build_quality_buckets(dataset) -> dict:
     """
     Single pass bucketing row indices by (domain, quality_bucket) -- avoids
