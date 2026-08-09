@@ -2,9 +2,18 @@ __pycache__/
 *.pyc
 .venv/
 .env
+.DS_Store
 SAE/results/activations/
 SAE/results/runs/
 tool_calling/tasks/sycophancy/runs/
+
+# Large generated data/weights stay local-only going forward -- doesn't
+# affect files already tracked (e.g. some older results/*.jsonl), only
+# blocks new ones like this session's SyPR/social/mixture outputs from
+# being accidentally committed.
+tool_calling/tasks/sycophancy/results/**/*.pt
+tool_calling/tasks/sycophancy/results/**/*.pth
+tool_calling/tasks/sycophancy/results/**/*.jsonl
 
 # Keep the tracked-markdown surface to README/CLAUDE/AGENTS only. Existing
 # tracked files (e.g. tool_calling/tasks/*/skills/*.md) are unaffected --
