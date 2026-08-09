@@ -1,0 +1,112 @@
+{
+  "_comment": [
+    "Calibration sweep: |coeff_multiplier| = 0.5. Same 6 vectors as",
+    "steering_top2_per_dimension.json, signs preserved (positive coeff = more sycophantic).",
+    "",
+    "The first full run used the pipeline default 4.0, giving coeffs 10-26 and degenerate",
+    "output in 4 of 6 vectors (up to 82.8% of responses collapsing into token repetition,",
+    "vs a 3.0% unsteered baseline). Do NOT judge output without screening for that first.",
+    "",
+    "Run each sweep to its own output dir, then pick per-vector the largest multiplier",
+    "that keeps degeneracy near the 3% baseline:",
+    "  python SAE/pipeline/generate_with_steering.py --config SAE/configs/steering_cal_m050.json \\",
+    "    --limit 20 --output-dir SAE/results/steer_cal_m050"
+  ],
+  "datasets": [
+    "AITA-YTA.csv",
+    "OEQ.csv",
+    "SS.csv"
+  ],
+  "vectors": [
+    {
+      "_dim": "validation",
+      "_rank": 1,
+      "_title": "Reassuring self-worth affirmations",
+      "_worst_auc": 0.62,
+      "_pooled_auc": 0.664,
+      "_sign": 1,
+      "_p90": 5.32,
+      "layer": 27,
+      "n_latents": 30,
+      "latent_id": 6,
+      "coeff_multiplier": 0.5,
+      "_coeff_at_4x": 21.28,
+      "_coeff_here": 2.66
+    },
+    {
+      "_dim": "validation",
+      "_rank": 2,
+      "_title": "Suggesting social/leisure activities to meet or bond with people",
+      "_worst_auc": 0.611,
+      "_pooled_auc": 0.659,
+      "_sign": -1,
+      "_p90": 6.1,
+      "layer": 27,
+      "n_latents": 15,
+      "latent_id": 4,
+      "coeff_multiplier": -0.5,
+      "_coeff_at_4x": -24.4,
+      "_coeff_here": -3.05
+    },
+    {
+      "_dim": "indirectness",
+      "_rank": 1,
+      "_title": "Advice to have an open conversation",
+      "_worst_auc": 0.629,
+      "_pooled_auc": 0.658,
+      "_sign": 1,
+      "_p90": 4.3,
+      "layer": 23,
+      "n_latents": 30,
+      "latent_id": 29,
+      "coeff_multiplier": 0.5,
+      "_coeff_at_4x": 17.2,
+      "_coeff_here": 2.15
+    },
+    {
+      "_dim": "indirectness",
+      "_rank": 2,
+      "_title": "Advice-giving list/method markers",
+      "_worst_auc": 0.624,
+      "_pooled_auc": 0.662,
+      "_sign": 1,
+      "_p90": 6.51,
+      "layer": 27,
+      "n_latents": 10,
+      "latent_id": 1,
+      "coeff_multiplier": 0.5,
+      "_coeff_at_4x": 26.04,
+      "_coeff_here": 3.25
+    },
+    {
+      "_dim": "framing",
+      "_rank": 1,
+      "_title": "Proposing compromises and scheduling arrangements",
+      "_worst_auc": 0.544,
+      "_pooled_auc": 0.6,
+      "_sign": 1,
+      "_p90": 3.59,
+      "layer": 23,
+      "n_latents": 30,
+      "latent_id": 0,
+      "coeff_multiplier": 0.5,
+      "_coeff_at_4x": 14.36,
+      "_coeff_here": 1.79
+    },
+    {
+      "_dim": "framing",
+      "_rank": 2,
+      "_title": "Reassuring 'it's okay, you're not alone' consolation",
+      "_worst_auc": 0.544,
+      "_pooled_auc": 0.553,
+      "_sign": -1,
+      "_p90": 2.52,
+      "layer": 18,
+      "n_latents": 40,
+      "latent_id": 17,
+      "coeff_multiplier": -0.5,
+      "_coeff_at_4x": -10.08,
+      "_coeff_here": -1.26
+    }
+  ]
+}
