@@ -1,0 +1,22 @@
+{
+  "layer": 23,
+  "n_latents": 30,
+  "k": 3,
+  "centered": false,
+  "seed": 0,
+  "latent_id": 0,
+  "coeff": 3.59134840965271,
+  "coeff_source": "p90_multiplier",
+  "p90": 3.59134840965271,
+  "coeff_multiplier": 1.0,
+  "title": "Proposing compromises and scheduling arrangements",
+  "description": "This latent fires on sentences that propose a negotiated solution to an interpersonal conflict, typically phrased as a suggestion or question offering to split, alternate, schedule, or set rules around a shared resource or responsibility (e.g., 'Can we find a compromise?', 'Maybe we could take turns...', 'Can we schedule a specific time...?'). It activates most strongly on direct, second-person proposals using hedging/suggestion markers ('maybe', 'perhaps', 'could we', 'can we') paired with concrete mechanisms like turn-taking, timers, rotations, or agreed schedules. It does not activate on general commentary, validation, or analysis of a conflict (e.g., statements about who is right/wrong, explanations of feelings or motives, or advice framed as background reasoning) even when the topic is the same interpersonal dispute, since those lack the actual act of proposing a specific negotiated arrangement.",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "limit": 20,
+  "datasets": [
+    "AITA-YTA",
+    "OEQ",
+    "SS"
+  ],
+  "created_at": "2026-08-09T14:00:49.391491+00:00"
+}
