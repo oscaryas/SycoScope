@@ -1,0 +1,22 @@
+{
+  "layer": 23,
+  "n_latents": 30,
+  "k": 3,
+  "centered": false,
+  "seed": 0,
+  "latent_id": 29,
+  "coeff": 17.21774673461914,
+  "coeff_source": "p90_multiplier",
+  "p90": 4.304436683654785,
+  "coeff_multiplier": 4.0,
+  "title": "Advice to have an open conversation",
+  "description": "This latent fires on the recurring advice-genre phrase pattern of recommending open, honest, or calm communication as a means to resolve interpersonal conflict, typically in relationship-advice text (e.g. 'By having an open and honest conversation, you can work together to find a solution/resolution/compromise'). It activates most strongly on sentence fragments and full sentences built around the template 'By/Try/Consider (having) an open/honest/calm conversation... to find a mutually beneficial solution/resolution/compromise,' including truncated openers like 'By' or 'Consider' that begin this stock advice construction. It does not activate merely on discussion of relationship conflict, emotions, or advice in general (e.g. reflecting on one's actions, setting boundaries, apologizing, asking clarifying questions) unless the sentence specifically invokes the 'open communication leads to resolution' formula; sentences about listening, boundaries, or self-reflection without this explicit communicate-to-resolve framing activate it weakly or not at all.",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "limit": 300,
+  "datasets": [
+    "AITA-YTA",
+    "OEQ",
+    "SS"
+  ],
+  "created_at": "2026-08-09T10:40:57.869974+00:00"
+}
