@@ -11,5 +11,12 @@
   "dead_latent_count": 0,
   "mean_l0": 0.9386475682258606,
   "n_epochs_trained": 13,
-  "early_stopped": true
+  "early_stopped": true,
+  "steering_p90": [
+    6.217136859893799,
+    5.377065658569336,
+    5.493338108062744,
+    10.735519409179688,
+    6.133761405944824
+  ]
 }

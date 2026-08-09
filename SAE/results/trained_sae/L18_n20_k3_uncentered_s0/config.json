@@ -10,7 +10,7 @@
   "patience": 10,
   "val_frac": 0.05,
   "d_in": 4096,
-  "n_epochs_trained": 15,
-  "activations_input_hash": null,
-  "timestamp": "2026-07-15T10:17:53.290021+00:00"
+  "n_epochs_trained": 35,
+  "activations_input_hash": "750d3a8e2c2be6e3c03aa3ecc55812432c587acbdc1b2e54da51eeb38719a9f4",
+  "timestamp": "2026-08-05T12:14:13.189944+00:00"
 }
