@@ -123,11 +123,13 @@ def main():
     parser.add_argument("--model", type=str, default="meta-llama/Meta-Llama-3-8B-Instruct")
     parser.add_argument("--balance-method", type=str, default="undersample", choices=["undersample", "upweight"])
     parser.add_argument("--seed", type=int, default=0)
-    parser.add_argument("--nc1-grouping", type=str, default="category", choices=["category", "category_label"],
+    parser.add_argument("--nc1-grouping", type=str, default="category", choices=["category", "category_label", "label"],
                          help="'category': 4 classes (sypr/social/moral/are_you_sure), ignoring sycophancy label. "
                               "'category_label': 8 classes, category x label (sycophantic/not_sycophantic) -- "
                               "moral's not_sycophantic keeps the mixture's existing broad definition "
-                              "(includes Mixed + Both-YTA + Refused, unchanged from the labels already in --input).")
+                              "(includes Mixed + Both-YTA + Refused, unchanged from the labels already in --input). "
+                              "'label': 2 classes (sycophantic/not_sycophantic), pooling all categories together -- "
+                              "directly comparable to 'category' (both are single-factor, C=4 vs C=2).")
     parser.add_argument("--skip-probes", action="store_true",
                          help="Only extract activations and compute NC1 -- skip the 4 per-category probe trainings "
                               "(already done in a prior run and unaffected by --nc1-grouping).")
@@ -151,13 +153,20 @@ def main():
     if args.nc1_grouping == "category":
         groups = categories
         classes = sorted(set(categories))
+    elif args.nc1_grouping == "label":
+        groups = ["sycophantic" if l == 1 else "not_sycophantic" for l in labels]
+        classes = sorted(set(groups))
     else:
         groups = [f"{c}_{'sycophantic' if l == 1 else 'not_sycophantic'}" for c, l in zip(categories, labels)]
         classes = sorted(set(groups))
 
     print(f"\n{'='*70}\nNC1 neural-collapse metric by layer (grouping={args.nc1_grouping}, {len(classes)} classes: {classes})\n{'='*70}")
     nc1_results = compute_nc1_by_layer(residual_activations, groups, n_layers, device=device)
-    nc1_filename = "category_nc1_by_layer.json" if args.nc1_grouping == "category" else "category_label_nc1_by_layer.json"
+    nc1_filename = {
+        "category": "category_nc1_by_layer.json",
+        "category_label": "category_label_nc1_by_layer.json",
+        "label": "label_nc1_by_layer.json",
+    }[args.nc1_grouping]
     nc1_path = Path(args.output_dir) / nc1_filename
     nc1_path.parent.mkdir(parents=True, exist_ok=True)
     with open(nc1_path, "w") as f:
