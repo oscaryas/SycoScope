@@ -46,6 +46,10 @@ def load_decoder_direction(
     return w_dec[:, latent_id]
 
 
+def _no_firing_stats(firing_rate: float = 0.0) -> dict:
+    return {"firing_rate": firing_rate, "n_fired": 0, "mean": 0.0, "median": 0.0, "p90": 0.0, "max": 0.0}
+
+
 def compute_latent_activation_stats(
     layer: int,
     n_latents: int,
@@ -70,7 +74,7 @@ def compute_latent_activation_stats(
     member_idx = np.flatnonzero((assignments_topk == latent_id).any(axis=1))
 
     if member_idx.size == 0:
-        return {"firing_rate": 0.0, "n_fired": 0, "mean": 0.0, "median": 0.0, "p90": 0.0, "max": 0.0}
+        return _no_firing_stats()
 
     state_dict = torch.load(run_dir / "sae.pt", map_location="cpu")
     d_in = state_dict["b_dec"].shape[0]
@@ -92,6 +96,15 @@ def compute_latent_activation_stats(
         z, _ = model.encode(x_members.to(device))
     z_lat = z[:, latent_id].cpu()
     z_lat = z_lat[z_lat > 0]  # guards float edge cases; should be ~all of member_idx by construction
+
+    # For the most marginal latents (firing rates ~1e-5, a few dozen member rows) the
+    # re-encode above can drop the latent out of the top-k on *every* member row, leaving
+    # nothing to take statistics over -- assignments_topk.npy was written by the training
+    # run's own forward pass, so tiny float differences at the top-k boundary are enough to
+    # flip a barely-winning latent. Report it as non-firing rather than letting mean/median/
+    # quantile raise on an empty tensor.
+    if z_lat.numel() == 0:
+        return _no_firing_stats(member_idx.size / n_total)
 
     return {
         "firing_rate": member_idx.size / n_total,

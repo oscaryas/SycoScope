@@ -19,7 +19,11 @@ def call_judge(
     system: str | None = None,
     model: str = DEFAULT_JUDGE_MODEL,
     max_retries: int = 3,
-    max_tokens: int = 1024,
+    # Current models may think adaptively even with no `thinking` param set, and thinking
+    # tokens come out of this same budget. At 1024 a hard prompt could spend the entire
+    # allowance reasoning and return a thinking block with no text after it, so leave room
+    # for both -- the answer itself is only a few hundred tokens.
+    max_tokens: int = 4096,
 ) -> str:
     import anthropic
 
@@ -32,15 +36,24 @@ def call_judge(
     for attempt in range(max_retries):
         try:
             response = client.messages.create(**kwargs)
-            return "".join(block.text for block in response.content if block.type == "text")
+            text = "".join(block.text for block in response.content if block.type == "text")
+            if text.strip():
+                return text
+            # Returning "" here would surface downstream as a confusing "no JSON found in
+            # ''" parse failure. Sampling is stochastic, so retry; if it keeps happening,
+            # say what actually went wrong.
+            last_error = ValueError(
+                f"judge returned no text block (stop_reason={response.stop_reason}, "
+                f"output_tokens={response.usage.output_tokens}, max_tokens={max_tokens}); "
+                "the whole budget was likely consumed before an answer was produced"
+            )
         except anthropic.APIStatusError as e:
             if 400 <= e.status_code < 500:
                 raise
             last_error = e
-            time.sleep(2**attempt)
         except (anthropic.APIConnectionError, anthropic.RateLimitError) as e:
             last_error = e
-            time.sleep(2**attempt)
+        time.sleep(2**attempt)
     raise last_error
 
 

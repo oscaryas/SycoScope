@@ -64,6 +64,6 @@ def compute_global_center(layer: int, activations_dir: Path = DEFAULT_ACTIVATION
     return means.astype(np.float32).mean(axis=0)
 
 
-def sae_dir_name(layer: int, n_latents: int, k: int, centered: bool, seed: int) -> str:
+def sae_dir_name(layer: int, n_latents: int, k: int = 3, centered: bool = False, seed: int = 0) -> str:
     tag = "centered" if centered else "uncentered"
     return f"L{layer:02d}_n{n_latents}_k{k}_{tag}_s{seed}"

@@ -141,10 +141,17 @@ def train_sae(
 
     topk_vals, topk_idx = z_full.topk(k, dim=1)
     assignments_topk = torch.where(topk_vals > 0, topk_idx, torch.full_like(topk_idx, -1)).numpy().astype(np.int32)
+    # Per-slot activation, so downstream code can rank a latent's exemplars on rows where it
+    # is in the top-k but doesn't win argmax. assignment_strength only covers the argmax
+    # latent, so on those rows it holds a *different* latent's activation.
+    assignments_topk_strength = (
+        torch.where(topk_vals > 0, topk_vals, torch.zeros_like(topk_vals)).numpy().astype(np.float32)
+    )
 
     np.save(run_dir / "assignments.npy", assignments)
     np.save(run_dir / "assignment_strength.npy", assignment_strength)
     np.save(run_dir / "assignments_topk.npy", assignments_topk)
+    np.save(run_dir / "assignments_topk_strength.npy", assignments_topk_strength)
     torch.save(model.state_dict(), run_dir / "sae.pt")
 
     meta_path = activations_dir / "meta.json"

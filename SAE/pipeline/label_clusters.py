@@ -20,19 +20,29 @@ JUDGE_SYSTEM_PROMPT = (
 
 
 def gather_exemplars(
-    assignments: np.ndarray,
-    assignment_strength: np.ndarray,
+    assignments_topk: np.ndarray,
+    topk_strength: np.ndarray,
     sentences_df: pd.DataFrame,
     latent_id: int,
     n_top: int = 100,
     n_random: int = 100,
     seed: int = 0,
 ) -> tuple[list[str], list[str]]:
-    member_idx = np.flatnonzero(assignments == latent_id)
+    """
+    Exemplars for one latent, over every sentence where it is among the top-k active
+    -- not just the sentences where it wins the argmax. Both arrays are (n_sentences, k):
+    assignments_topk names the latent in each slot, topk_strength holds that latent's
+    own activation there, so ranking uses this latent's real strength even on rows where
+    some other latent is stronger.
+    """
+    hit = assignments_topk == latent_id
+    member_idx = np.flatnonzero(hit.any(axis=1))
     if member_idx.size == 0:
         return [], []
 
-    order = np.argsort(-assignment_strength[member_idx], kind="stable")
+    # A latent can occupy at most one slot per row, so argmax finds the one that matched.
+    member_strength = topk_strength[member_idx, hit[member_idx].argmax(axis=1)]
+    order = np.argsort(-member_strength, kind="stable")
     top_idx = member_idx[order[:n_top]]
 
     remaining_idx = member_idx[~np.isin(member_idx, top_idx)]
@@ -40,38 +50,42 @@ def gather_exemplars(
     if n_random_take > 0:
         rng = np.random.default_rng((seed, latent_id))
         random_idx = rng.choice(remaining_idx, size=n_random_take, replace=False)
-    else:
+    else: 
         random_idx = np.array([], dtype=int)
 
     text_arr = sentences_df["text"].to_numpy()
     return text_arr[top_idx].tolist(), text_arr[random_idx].tolist()
 
 
-def build_prompt1(top_sentences: list[str], random_sentences: list[str]) -> str:
+def build_prompt1(top_sentences: list[str], random_sentences: list[str], k: int = 3) -> str:
     numbered = []
     for s in top_sentences:
         numbered.append(f"[top-activating] {s}")
     for s in random_sentences:
-        numbered.append(f"[random from cluster] {s}")
+        numbered.append(f"[random] {s}")
     sentence_block = "\n".join(f"{i + 1}. {s}" for i, s in enumerate(numbered))
 
     if random_sentences:
         provenance = (
-            f"{len(top_sentences)} are the highest-activating examples for this latent; "
-            f"{len(random_sentences)} more are a random sample from the rest of the cluster."
+            f"{len(top_sentences)} are the sentences where this latent activates most strongly; "
+            f"{len(random_sentences)} more are a random sample from the rest of the sentences it is active on."
         )
     else:
         provenance = (
-            f"These are all {len(top_sentences)} sentences currently assigned to this latent "
-            "(the cluster is smaller than the requested sample size, so no random sample was needed)."
+            f"These are all {len(top_sentences)} sentences this latent is active on "
+            "(there were fewer than the requested sample size, so no random sample was needed)."
         )
 
     return f"""Below are sentences that activate a specific latent direction in a sparse \
 autoencoder trained on a language model's hidden activations. {provenance}
 
+Each sentence activates the {k} strongest latents at once, so these sentences are not exclusive \
+to this latent -- other latents fire on them too, capturing different aspects of the same text. \
+Your job is to characterise what THIS latent contributes.
+
 Your task is to identify the precise function these sentences serve -- the shared reasoning \
 strategy, linguistic pattern, or functional role -- and NOT the surface-level topic they happen \
-to discuss. Sentences in this cluster may span many different subjects; look for what they are \
+to discuss. These sentences may span many different subjects; look for what they are \
 doing (e.g. "proposing an alternative approach", "expressing uncertainty", "restating the \
 question before answering it"), not what they are about.
 
@@ -82,31 +96,40 @@ Respond with a single JSON object and nothing else, using exactly these two keys
 - "title": a crisp, single-concept title for this function (a few words; no slashes, no \
 parentheses, no compound "X / Y" phrases -- pick the single best description).
 - "description": 3-4 sentences that (1) state the specific function this latent captures, \
-(2) describe what kinds of sentences ARE included in this cluster, and (3) describe what is \
-explicitly NOT included -- what distinguishes this cluster from superficially similar sentences.
+(2) describe what kinds of sentences it is active on, and (3) describe what would NOT activate \
+it -- what distinguishes it from superficially similar sentences. Judge (3) by what this latent \
+responds to, not by claiming exclusivity: a sentence can legitimately activate this latent and \
+several others at the same time.
 
 Return only the JSON object, with no markdown code fences and no additional commentary."""
 
 
 def label_latent(
     latent_id: int,
-    assignments: np.ndarray,
-    assignment_strength: np.ndarray,
+    assignments_topk: np.ndarray,
+    topk_strength: np.ndarray,
+    argmax_assignments: np.ndarray,
     sentences_df: pd.DataFrame,
     n_top: int,
     n_random: int,
     seed: int,
     judge_model: str,
 ) -> dict:
-    cluster_size = int((assignments == latent_id).sum())
+    n_members_topk = int((assignments_topk == latent_id).any(axis=1).sum())
+    # Kept alongside the top-k count purely for continuity: existing analyses index on
+    # cluster_size meaning the argmax count, and it's the contrast that shows how much
+    # membership argmax was discarding.
+    cluster_size = int((argmax_assignments == latent_id).sum())
     top_sentences, random_sentences = gather_exemplars(
-        assignments, assignment_strength, sentences_df, latent_id, n_top, n_random, seed
+        assignments_topk, topk_strength, sentences_df, latent_id, n_top, n_random, seed
     )
     n_exemplars_used = len(top_sentences) + len(random_sentences)
 
     record = {
         "latent_id": latent_id,
+        "membership": "topk",
         "cluster_size": cluster_size,
+        "n_members_topk": n_members_topk,
         "n_exemplars_used": n_exemplars_used,
         "judge_model": judge_model,
         "title": None,
@@ -119,8 +142,9 @@ def label_latent(
         record["status"] = "skipped_empty_cluster"
         return record
 
+    k = assignments_topk.shape[1]
     try:
-        raw = call_judge(build_prompt1(top_sentences, random_sentences), system=JUDGE_SYSTEM_PROMPT, model=judge_model)
+        raw = call_judge(build_prompt1(top_sentences, random_sentences, k), system=JUDGE_SYSTEM_PROMPT, model=judge_model)
         parsed = parse_json_response(raw)
         title = parsed.get("title")
         description = parsed.get("description")
@@ -146,18 +170,32 @@ def label_run(
 ) -> Path:
     config = json.loads((run_dir / "config.json").read_text(encoding="utf-8"))
     n_latents = config["n_latents"]
-    assignments = np.load(run_dir / "assignments.npy")
-    assignment_strength = np.load(run_dir / "assignment_strength.npy")
-    if len(assignments) != len(sentences_df) or len(assignment_strength) != len(sentences_df):
+
+    strength_path = run_dir / "assignments_topk_strength.npy"
+    if not strength_path.exists():
+        raise FileNotFoundError(
+            f"{run_dir}: no {strength_path.name}. Run "
+            f"`python SAE/pipeline/backfill_topk_strength.py --run-dir {run_dir}` first "
+            "(it also verifies this run's assignments still match the activations cache)."
+        )
+
+    assignments_topk = np.load(run_dir / "assignments_topk.npy")
+    topk_strength = np.load(strength_path)
+    argmax_assignments = np.load(run_dir / "assignments.npy")
+    if any(len(a) != len(sentences_df) for a in (assignments_topk, topk_strength, argmax_assignments)):
         raise ValueError(
-            f"{run_dir}: assignments length {len(assignments)} != sentences.parquet length {len(sentences_df)}"
+            f"{run_dir}: assignments length {len(assignments_topk)} != sentences.parquet length {len(sentences_df)}"
         )
 
     labels_path = run_dir / "labels.json"
     existing: dict[int, dict] = {}
     if labels_path.exists() and not force:
         for rec in json.loads(labels_path.read_text(encoding="utf-8")):
-            if rec["status"] in ("ok", "skipped_empty_cluster"):
+            # Records written before the switch to top-k membership describe a different
+            # (argmax) cluster, so they're stale by definition -- drop them here rather than
+            # making the caller remember to pass --force. Resuming a partial top-k run works
+            # exactly as before.
+            if rec["status"] in ("ok", "skipped_empty_cluster") and rec.get("membership") == "topk":
                 existing[rec["latent_id"]] = rec
 
     print(f"Labeling {run_dir.name} ({n_latents} latents, {len(existing)} already done) ...")
@@ -167,7 +205,8 @@ def label_run(
             records.append(existing[latent_id])
             continue
         record = label_latent(
-            latent_id, assignments, assignment_strength, sentences_df, n_top, n_random, seed, judge_model
+            latent_id, assignments_topk, topk_strength, argmax_assignments,
+            sentences_df, n_top, n_random, seed, judge_model,
         )
         records.append(record)
         print(f"  latent {latent_id}: {record['status']}" + (f" ({record['title']})" if record["title"] else ""))
