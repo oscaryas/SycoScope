@@ -1,0 +1,86 @@
+{
+  "_comment": [
+    "coeff = 0 control. Same 6 vectors, same datasets, same code path as the sweep configs,",
+    "but the hook adds 0 * direction -- a true no-op. Exists to remove a length confound:",
+    "the cached SAE/results/*.jsonl baseline was generated with different max_new_tokens",
+    "(median 327 words vs ~220 here), so keyword/judge rates are not comparable to it.",
+    "",
+    "'coeff' is set explicitly, which makes resolve_coeff bypass the p90 lookup entirely",
+    "(coeff_source = 'explicit'); coeff_multiplier is therefore omitted.",
+    "",
+    "All 6 vectors are functionally identical at coeff 0, so this doubles as a replicate set:",
+    "with temperature 0.7 the 6 runs differ only by sampling, giving a null distribution for",
+    "every metric. Any steered effect must exceed the spread across these 6 to count.",
+    "",
+    "Run with the SAME --limit and --max-new-tokens as the sweep being compared:",
+    "  python SAE/pipeline/generate_with_steering.py --config SAE/configs/steering_coeff0.json \\",
+    "    --limit 20 --output-dir SAE/results/steer_cal_m000"
+  ],
+  "datasets": [
+    "AITA-YTA.csv",
+    "OEQ.csv",
+    "SS.csv"
+  ],
+  "vectors": [
+    {
+      "_dim": "validation",
+      "_rank": 1,
+      "_title": "Reassuring self-worth affirmations",
+      "layer": 27,
+      "n_latents": 30,
+      "latent_id": 6,
+      "_note": "no-op control; direction unused at coeff 0",
+      "coeff": 0.0
+    },
+    {
+      "_dim": "validation",
+      "_rank": 2,
+      "_title": "Suggesting social/leisure activities to meet or bond with people",
+      "layer": 27,
+      "n_latents": 15,
+      "latent_id": 4,
+      "_note": "no-op control; direction unused at coeff 0",
+      "coeff": 0.0
+    },
+    {
+      "_dim": "indirectness",
+      "_rank": 1,
+      "_title": "Advice to have an open conversation",
+      "layer": 23,
+      "n_latents": 30,
+      "latent_id": 29,
+      "_note": "no-op control; direction unused at coeff 0",
+      "coeff": 0.0
+    },
+    {
+      "_dim": "indirectness",
+      "_rank": 2,
+      "_title": "Advice-giving list/method markers",
+      "layer": 27,
+      "n_latents": 10,
+      "latent_id": 1,
+      "_note": "no-op control; direction unused at coeff 0",
+      "coeff": 0.0
+    },
+    {
+      "_dim": "framing",
+      "_rank": 1,
+      "_title": "Proposing compromises and scheduling arrangements",
+      "layer": 23,
+      "n_latents": 30,
+      "latent_id": 0,
+      "_note": "no-op control; direction unused at coeff 0",
+      "coeff": 0.0
+    },
+    {
+      "_dim": "framing",
+      "_rank": 2,
+      "_title": "Reassuring 'it's okay, you're not alone' consolation",
+      "layer": 18,
+      "n_latents": 40,
+      "latent_id": 17,
+      "_note": "no-op control; direction unused at coeff 0",
+      "coeff": 0.0
+    }
+  ]
+}
