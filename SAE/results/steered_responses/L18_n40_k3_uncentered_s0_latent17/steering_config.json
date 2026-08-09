@@ -1,0 +1,22 @@
+{
+  "layer": 18,
+  "n_latents": 40,
+  "k": 3,
+  "centered": false,
+  "seed": 0,
+  "latent_id": 17,
+  "coeff": -10.072121620178223,
+  "coeff_source": "p90_multiplier",
+  "p90": 2.5180304050445557,
+  "coeff_multiplier": -4.0,
+  "title": "Reassuring 'it's okay, you're not alone' consolation",
+  "description": "This latent fires on short, formulaic reassurance phrases that normalize imperfection and failure, typically opening with 'Remember,' 'It's okay,' 'Nobody/No one is perfect,' or affirming 'That's okay!'/'We all do!' The activating text is direct, second- or first-person-plural comforting language explicitly telling the reader that mistakes, flaws, and struggles are normal and acceptable, often as a standalone sentence or closing line of advice. It does not activate on longer analytical or explanatory advice sentences that discuss a situation's nuance, give conditional judgments (e.g., 'It's possible that...', 'That being said...'), or provide practical instructions/tips without the core 'it's okay/you're not alone/nobody's perfect' consolation framing\u2014even if those sentences are also supportive or empathetic in tone.",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "limit": 300,
+  "datasets": [
+    "AITA-YTA",
+    "OEQ",
+    "SS"
+  ],
+  "created_at": "2026-08-09T11:09:11.441737+00:00"
+}
