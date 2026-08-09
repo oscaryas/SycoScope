@@ -1,0 +1,22 @@
+{
+  "layer": 27,
+  "n_latents": 10,
+  "k": 3,
+  "centered": false,
+  "seed": 0,
+  "latent_id": 1,
+  "coeff": 1.6282222270965576,
+  "coeff_source": "p90_multiplier",
+  "p90": 6.5128889083862305,
+  "coeff_multiplier": 0.25,
+  "title": "Advice-giving list/method markers",
+  "description": "This latent fires on the structural scaffolding of relationship/interpersonal advice: numbered list markers (\"2.\", \"3.\", \"4.\"), sentence-initial method prepositions like \"By\" or \"Try to\" that introduce a recommended action, and imperative openers (\"Consider\", \"Practice\", \"Be patient\", \"Seek support\") that begin a suggested strategy, especially ones invoking open/honest communication. It activates most strongly on these short fragmentary openers and enumerators themselves, even in isolation, rather than on the full elaborated advice sentence. It does not activate strongly on descriptive, evaluative, or narrative sentences that lack this list/method-introducing syntax (e.g., statements assessing blame, expressing empathy, or describing a situation) even if they discuss the same relationship-advice topic.",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "limit": 20,
+  "datasets": [
+    "AITA-YTA",
+    "OEQ",
+    "SS"
+  ],
+  "created_at": "2026-08-09T13:48:47.768639+00:00"
+}

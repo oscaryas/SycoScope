@@ -1,0 +1,22 @@
+{
+  "layer": 27,
+  "n_latents": 30,
+  "k": 3,
+  "centered": false,
+  "seed": 0,
+  "latent_id": 6,
+  "coeff": 5.322935104370117,
+  "coeff_source": "p90_multiplier",
+  "p90": 5.322935104370117,
+  "coeff_multiplier": 1.0,
+  "title": "Reassuring self-worth affirmations",
+  "description": "This latent fires on formulaic, therapeutic-style affirmations that directly address 'you' with validating statements about deserving happiness, respect, love, or well-being, and imperative encouragements to prioritize self-care, healing, or boundary-setting. It activates most strongly on short, template-like phrases such as 'You deserve to be...', 'Remember, you deserve...', 'Take care of yourself and prioritize your own...', and 'Keep...' that read like closing lines of advice-column or chatbot responses offering comfort and permission for self-focus. It is weaker or inactive on sentences that give situational analysis, ask questions, list numbered options, or discuss the other person's behavior/motives, even if they occur in the same supportive advice-giving context, since the latent specifically tracks the direct affirming/validating address to the reader rather than general relationship advice or reasoning.",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "limit": 20,
+  "datasets": [
+    "AITA-YTA",
+    "OEQ",
+    "SS"
+  ],
+  "created_at": "2026-08-09T13:57:03.462244+00:00"
+}

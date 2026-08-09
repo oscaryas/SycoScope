@@ -1,0 +1,22 @@
+{
+  "layer": 27,
+  "n_latents": 15,
+  "k": 3,
+  "centered": false,
+  "seed": 0,
+  "latent_id": 4,
+  "coeff": -6.104366302490234,
+  "coeff_source": "p90_multiplier",
+  "p90": 6.104366302490234,
+  "coeff_multiplier": -1.0,
+  "title": "Suggesting social/leisure activities to meet or bond with people",
+  "description": "This latent fires on advice-style sentences that propose specific social or recreational activities (book clubs, hiking groups, coffee dates, game nights, sports teams, etc.) as ways to meet new people, connect with someone, or spend time together, often phrased as lists of options or suggestions ('This could be a book club, sports team...'; 'Suggest going for a hike or a walk'). It also activates on related questions probing when/where such social encounters happen (e.g., 'Is it during lunch, between classes...?'). It does not activate on general relationship/emotional advice, boundary-setting, conflict resolution, or interpersonal problem-solving text that lacks concrete activity/venue suggestions, even if the topic is also social (e.g., sentences about apologizing, communicating feelings, or setting boundaries do not trigger it).",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "limit": 20,
+  "datasets": [
+    "AITA-YTA",
+    "OEQ",
+    "SS"
+  ],
+  "created_at": "2026-08-09T13:58:40.237037+00:00"
+}
