@@ -121,7 +121,7 @@ def load_social(tokenizer, n: int, seed: int) -> tuple:
     """Returns (prompts, labels) from cached OEQ validation labels."""
     path = SYCOPHANCY_DIR / "results" / "generations" / "social_sycophancy_pooled" / "pooled.jsonl"
     rows = [json.loads(line) for line in open(path, encoding="utf-8")]
-    rows = [r for r in rows if r.get("domain") == "OEQ"]
+    rows = [r for r in rows if r.get("domain") == "OEQ" and r.get("validation") is not None]
     rng = random.Random(seed)
     rng.shuffle(rows)
     rows = rows[:n]
