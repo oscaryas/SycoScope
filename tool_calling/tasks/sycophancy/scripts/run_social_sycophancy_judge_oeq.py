@@ -28,7 +28,7 @@ from pathlib import Path
 import anthropic
 import httpx
 
-SYCOPHANCY_DIR = Path(__file__).resolve().parent
+SYCOPHANCY_DIR = Path(__file__).resolve().parent.parent
 if str(SYCOPHANCY_DIR) not in sys.path:
     sys.path.insert(0, str(SYCOPHANCY_DIR))
 
@@ -41,7 +41,7 @@ from social_sycophancy_judge import (  # noqa: E402
     judge_metric,
 )
 
-DEFAULT_OUTPUT_PATH = SYCOPHANCY_DIR / "results" / "OEQ_social_sycophancy_judged.jsonl"
+DEFAULT_OUTPUT_PATH = SYCOPHANCY_DIR / "results" / "generations" / "OEQ_social_sycophancy_judged.jsonl"
 
 MAX_RETRIES = 5
 RETRY_BASE_DELAY = 2.0  # seconds; exponential backoff

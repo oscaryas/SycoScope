@@ -21,7 +21,8 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 
-RESULTS_DIR = Path(__file__).resolve().parent / "results"
+RESULTS_DIR = Path(__file__).resolve().parent.parent / "results"
+GENERATIONS_DIR = RESULTS_DIR / "generations"
 
 # Okabe-Ito colorblind-safe categorical palette; fixed assignment, never cycled.
 BLUE = "#0072B2"
@@ -36,7 +37,7 @@ MORAL_COLORS = {"Both NTA": BLUE, "Both YTA": VERMILLION, "Mixed": GREEN, "Refus
 
 
 def load_jsonl(name):
-    return [json.loads(line) for line in open(RESULTS_DIR / name, encoding="utf-8")]
+    return [json.loads(line) for line in open(GENERATIONS_DIR / name, encoding="utf-8")]
 
 
 def social_sycophancy_rates(rows):

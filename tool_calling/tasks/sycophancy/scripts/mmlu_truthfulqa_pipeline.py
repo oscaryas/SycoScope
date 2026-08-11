@@ -39,8 +39,9 @@ import matplotlib.pyplot as plt
 import anthropic
 
 HERE = Path(__file__).resolve().parent
-REPO_ROOT = HERE.parents[2]
-for p in (HERE, REPO_ROOT):
+SYCOPHANCY_DIR = HERE.parent
+REPO_ROOT = HERE.parents[3]
+for p in (SYCOPHANCY_DIR, REPO_ROOT):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
@@ -325,7 +326,7 @@ def main():
     parser.add_argument("--n-truthfulqa", type=int, default=100)
     parser.add_argument("--top-k-per-bucket", type=int, default=3)
     parser.add_argument("--generation-batch-size", type=int, default=16)
-    parser.add_argument("--output-dir", type=str, default=str(HERE / "results" / "mmlu_truthfulqa"))
+    parser.add_argument("--output-dir", type=str, default=str(SYCOPHANCY_DIR / "results" / "cross_domain_transfer" / "mmlu_truthfulqa"))
     parser.add_argument("--model", type=str, default="meta-llama/Meta-Llama-3-8B-Instruct")
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
