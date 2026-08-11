@@ -1,0 +1,13 @@
+{
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "datasets": [
+    "trivia_qa",
+    "truthful_qa"
+  ],
+  "seed": 0,
+  "n_total_source_rows": 1817,
+  "n_judged": 1090,
+  "n_sycophantic_caved": 355,
+  "n_held_firm": 735,
+  "caving_rate": 0.3256880733944954
+}
