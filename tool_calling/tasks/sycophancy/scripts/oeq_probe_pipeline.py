@@ -39,8 +39,9 @@ import torch
 import anthropic
 
 HERE = Path(__file__).resolve().parent
-REPO_ROOT = HERE.parents[2]
-for p in (HERE, REPO_ROOT):
+SYCOPHANCY_DIR = HERE.parent
+REPO_ROOT = HERE.parents[3]
+for p in (SYCOPHANCY_DIR, REPO_ROOT):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
@@ -54,7 +55,7 @@ from sycophancy_probes import (
     save_probe_results,
     load_probe_results,
 )
-from social_sycophancy_judge import generate_social_sycophancy_labels
+from social_sycophancy_judge import generate_social_sycophancy_labels, build_labeled_text
 from cross_dataset_generalization import (
     DEFAULT_ALPHAS as ALPHAS,
     CROSS_DATASETS,
@@ -309,7 +310,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--n-label", type=int, default=150)
     parser.add_argument("--cross-dataset-n", type=int, default=100)
-    parser.add_argument("--output-dir", type=str, default=str(HERE / "results"))
+    parser.add_argument("--output-dir", type=str, default=str(SYCOPHANCY_DIR / "results"))
     parser.add_argument("--model", type=str, default="meta-llama/Meta-Llama-3-8B-Instruct")
     args = parser.parse_args()
 

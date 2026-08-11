@@ -2,7 +2,7 @@ import json
 import sys
 from pathlib import Path
 
-_utils = Path(__file__).resolve().parent
+_utils = Path(__file__).resolve().parent.parent
 if str(_utils) not in sys.path:
     sys.path.insert(0, str(_utils))
 

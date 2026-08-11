@@ -14,6 +14,7 @@ Usage (from agent):
 import gc
 import json
 import pickle
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -445,6 +446,14 @@ def _pool(seq: torch.Tensor, pos: int, pooling: str) -> torch.Tensor:
     raise ValueError(f"pooling must be 'last' or 'mean', got {pooling!r}")
 
 
+def _pool_indices(seq: torch.Tensor, indices: list) -> torch.Tensor:
+    """Mean over an arbitrary set of token indices of seq (seq_len, dim) --
+    for pooling a sub-span (e.g. one sentence) rather than _pool's
+    contiguous "position to end" span."""
+    idx = torch.tensor(indices, dtype=torch.long)
+    return seq[idx].mean(dim=0)
+
+
 def collect_activations(
     model,
     tokenizer,
@@ -545,6 +554,174 @@ def collect_activations(
     res_arr = res_arr.transpose(1, 0, 2)         # (n_layers, n_examples, hidden_dim)
 
     return {"mha": mha_arr, "mlp": mlp_arr, "residual": res_arr}
+
+
+def split_sentences(text: str) -> list:
+    """Lightweight regex sentence splitter -- no nltk/spacy dependency.
+    Splits on whitespace following a sentence-ending punctuation mark;
+    keeps a trailing fragment even without terminal punctuation. Returns
+    list of (sentence_text, start_char, end_char), offsets into `text`."""
+    spans = []
+    start = 0
+    for m in re.finditer(r"(?<=[.!?])\s+", text):
+        end = m.start()
+        sent = text[start:end]
+        if sent.strip():
+            spans.append((sent, start, end))
+        start = m.end()
+    tail = text[start:]
+    if tail.strip():
+        spans.append((tail, start, len(text)))
+    return spans
+
+
+def collect_sentence_activations(
+    model,
+    tokenizer,
+    records: list,
+    model_config: dict,
+    max_length: int = 1024,
+) -> tuple:
+    """
+    Like collect_activations, but pools per-sentence within each record's
+    response text instead of one vector per whole record -- one forward
+    pass per record (preserves the true generation context the response
+    was produced under), multiple pooled vectors extracted from that single
+    pass's cached activations.
+
+    records: list of dicts with "prompt" and "response" keys (any other
+    keys, e.g. a label, are carried through unchanged).
+
+    Sentences that fall (even partially) outside the max_length truncation
+    window have no surviving tokens and are dropped; the dropped count is
+    printed.
+
+    Returns (sentence_records, activations):
+      - sentence_records: list of dicts, one per surviving sentence, each
+        the parent record's fields plus "sentence_text" and "parent_index"
+        (index into `records`) -- record order preserved, sentences within
+        a record in reading order.
+      - activations: same {"mha", "mlp", "residual"} shape contract as
+        collect_activations's return, except n_examples = len(sentence_records),
+        and dtype is float16 (not float32) -- see memory note below.
+
+    Memory: at full dataset scale, sentence-splitting can multiply the
+    example count ~20x over collect_activations's one-vector-per-response.
+    Growing Python lists of per-sentence float32 vectors then np.stack-ing
+    them (collect_activations's pattern) OOM-killed a 52GB-RAM Colab VM
+    partway through a ~2,100-response / ~40,000-sentence run. To avoid that,
+    this function pre-allocates the three output arrays ONCE, sized from a
+    cheap pure-Python pre-pass over split_sentences (no forward pass needed
+    to upper-bound the count -- the exact count is only smaller if some
+    sentences get truncated away), and writes directly into them -- no
+    intermediate list, no doubling at stack time. float16 (not float32)
+    roughly halves the footprint on top of that; downstream training
+    upcasts to float32 per (layer, [head]) slice via torch.FloatTensor(X),
+    which is a tiny fraction of the full array, so precision loss here is
+    a non-issue for the linear probes trained on these pooled means.
+    """
+    from sycophancy_model_registry import register_hooks, remove_hooks
+    from utils.inference import build_chat_prompt
+
+    n_layers = model_config["n_layers"]
+    n_heads = model_config["n_heads"]
+    head_dim = model_config["head_dim"]
+    hidden_dim = model_config["hidden_dim"]
+
+    presplit = [split_sentences(rec["response"]) for rec in records]
+    max_total_sentences = sum(len(s) for s in presplit)
+
+    mha_arr = np.zeros((max_total_sentences, n_layers, n_heads, head_dim), dtype=np.float16)
+    mlp_arr = np.zeros((max_total_sentences, n_layers, hidden_dim), dtype=np.float16)
+    res_arr = np.zeros((max_total_sentences, n_layers, hidden_dim), dtype=np.float16)
+    sentence_records = []
+    n_dropped = 0
+    write_idx = 0
+
+    handles, activation_store = register_hooks(model, model_config)
+    device = next(model.parameters()).device
+
+    model.eval()
+    with torch.no_grad():
+        for rec_idx, rec in enumerate(records):
+            sentences = presplit[rec_idx]
+            if not sentences:
+                continue
+
+            chat_prefix = build_chat_prompt(tokenizer, rec["prompt"], system_prompt=None)
+            response = rec["response"]
+            prefix_char_len = len(chat_prefix)
+            full_text = chat_prefix + response
+
+            activation_store["mha"].clear()
+            activation_store["mlp"].clear()
+
+            enc = tokenizer(
+                full_text, return_tensors="pt", truncation=True, max_length=max_length,
+                return_offsets_mapping=True,
+            )
+            offsets = enc.pop("offset_mapping")[0].tolist()
+            inputs = dict(enc)
+            if str(device) != "cpu":
+                inputs = {k: v.to(device) for k, v in inputs.items()}
+
+            outputs = model(**inputs, output_hidden_states=True)
+            # Move every layer's hidden state to CPU ONCE per record here --
+            # mirrors what register_hooks' mha_pre_hook/mlp_hook already do
+            # (.detach().cpu() at capture time). Without this, the sentence
+            # loop below would call .cpu() on a GPU tensor once per
+            # (sentence, layer) pair -- at full-dataset scale that's tens of
+            # thousands of individual GPU sync round-trips instead of one
+            # batched transfer per record.
+            hidden_states_cpu = [hs[0].detach().cpu() for hs in outputs.hidden_states[1:]]
+
+            for sent_text, sent_start, sent_end in sentences:
+                full_start = prefix_char_len + sent_start
+                full_end = prefix_char_len + sent_end
+                token_idx = [
+                    j for j, (tok_start, tok_end) in enumerate(offsets)
+                    if tok_end > tok_start and full_start <= tok_start < full_end
+                ]
+                if not token_idx:
+                    n_dropped += 1
+                    continue
+
+                for layer_idx, act in activation_store["mha"].items():
+                    vec = _pool_indices(act[0], token_idx).float().numpy()
+                    mha_arr[write_idx, layer_idx] = vec.reshape(n_heads, head_dim).astype(np.float16)
+
+                for layer_idx, act in activation_store["mlp"].items():
+                    mlp_arr[write_idx, layer_idx] = _pool_indices(act[0], token_idx).float().numpy().astype(np.float16)
+
+                for layer_idx in range(n_layers):
+                    hs = _pool_indices(hidden_states_cpu[layer_idx], token_idx).float().numpy()
+                    res_arr[write_idx, layer_idx] = hs.astype(np.float16)
+
+                sentence_records.append({**rec, "sentence_text": sent_text, "parent_index": rec_idx})
+                write_idx += 1
+
+            if (rec_idx + 1) % 20 == 0:
+                print(
+                    f"  Extracted sentences for {rec_idx+1}/{len(records)} records "
+                    f"({write_idx} sentences so far, {n_dropped} dropped)"
+                )
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+
+    remove_hooks(handles)
+    print(
+        f"Sentence extraction done: {write_idx} sentences from {len(records)} "
+        f"records ({n_dropped} dropped -- truncated past max_length={max_length})."
+    )
+
+    # Trim unused pre-allocated rows (from dropped sentences) -- a view, not a
+    # copy, since it's a slice on the leading axis -- then transpose to match
+    # collect_activations's (n_layers, [n_heads,] n_examples, dim) contract.
+    mha_arr = mha_arr[:write_idx].transpose(1, 2, 0, 3)  # (n_layers, n_heads, n_sentences, head_dim)
+    mlp_arr = mlp_arr[:write_idx].transpose(1, 0, 2)     # (n_layers, n_sentences, hidden_dim)
+    res_arr = res_arr[:write_idx].transpose(1, 0, 2)     # (n_layers, n_sentences, hidden_dim)
+
+    return sentence_records, {"mha": mha_arr, "mlp": mlp_arr, "residual": res_arr}
 
 
 def extract_and_train_all(

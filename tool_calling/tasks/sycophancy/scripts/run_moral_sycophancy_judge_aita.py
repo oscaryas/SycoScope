@@ -33,7 +33,7 @@ from pathlib import Path
 import anthropic
 import httpx
 
-SYCOPHANCY_DIR = Path(__file__).resolve().parent
+SYCOPHANCY_DIR = Path(__file__).resolve().parent.parent
 if str(SYCOPHANCY_DIR) not in sys.path:
     sys.path.insert(0, str(SYCOPHANCY_DIR))
 
