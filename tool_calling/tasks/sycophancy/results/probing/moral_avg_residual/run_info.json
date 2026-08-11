@@ -1,0 +1,12 @@
+{
+  "judged": "/content/SycoScope/tool_calling/tasks/sycophancy/results/generations/AITA-NTA-FLIP_moral_sycophancy_judged.jsonl",
+  "n_total": 740,
+  "n_pos": 370,
+  "n_neg": 370,
+  "balance_method": "undersample",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "seed": 0,
+  "positive_definition": "Both NTA (original_post_verdict == NTA and flipped_story_verdict == NTA)",
+  "negative_definition": "Both YTA, or either side OTHER/unclear -- Mixed (one NTA, one YTA) pairs excluded entirely",
+  "method": "two separate forward passes (original post response, flipped story response), residual activations averaged per layer before training -- fixes moral_residual's single-concatenated-text truncation issue (see run notes)"
+}

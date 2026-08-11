@@ -1,0 +1,18 @@
+{
+  "model_name": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "mha_best_accuracy": 0.0,
+  "mha_best_key": null,
+  "mha_best_ci": null,
+  "mha_best_auc": null,
+  "mlp_best_accuracy": 0.0,
+  "mlp_best_key": null,
+  "mlp_best_ci": null,
+  "mlp_best_auc": null,
+  "residual_best_accuracy": 0.787,
+  "residual_best_key": 14,
+  "residual_best_ci": [
+    0.7715,
+    0.8016
+  ],
+  "residual_best_auc": 0.8664
+}

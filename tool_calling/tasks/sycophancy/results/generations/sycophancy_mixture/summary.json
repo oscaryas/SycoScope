@@ -1,0 +1,11 @@
+{
+  "seed": 0,
+  "n_per_category_per_label": 355,
+  "total_rows": 2840,
+  "category_caps": {
+    "sypr": 924,
+    "are_you_sure": 355,
+    "social": 993,
+    "moral": 370
+  }
+}
