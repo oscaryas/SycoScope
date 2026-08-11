@@ -1,0 +1,11 @@
+{
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "seed": 0,
+  "n_total_eligible": 10800,
+  "n_judged": 10794,
+  "n_skipped": 6,
+  "n_raw_praise": 3463,
+  "n_sycophantic_praise": 924,
+  "praise_rate_on_poor": 0.17114280422300426,
+  "praise_rate_on_good": 0.4706209453197405
+}
