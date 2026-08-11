@@ -1,0 +1,11 @@
+{
+  "input": "/content/repo/tool_calling/tasks/sycophancy/results/generations/sycophancy_mixture/mixture.jsonl",
+  "category": "social",
+  "n_total": 710,
+  "n_pos": 355,
+  "n_neg": 355,
+  "balance_method": "undersample",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "seed": 0,
+  "note": "trained on this category's rows within sycophancy_mixture, not the full raw per-category dataset"
+}

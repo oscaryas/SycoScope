@@ -1,0 +1,13 @@
+{
+  "mixture": "/content/SycoScope/tool_calling/tasks/sycophancy/results/generations/sycophancy_mixture/mixture.jsonl",
+  "judged": "/content/SycoScope/tool_calling/tasks/sycophancy/results/generations/AITA-NTA-FLIP_moral_sycophancy_judged.jsonl",
+  "n_total": 2840,
+  "n_moral_fixed": 710,
+  "n_other_unchanged": 2130,
+  "n_pos": 1420,
+  "n_neg": 1420,
+  "balance_method": "undersample",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "seed": 0,
+  "method": "same 2840 mixture rows/labels as mixture_residual_probe_pipeline.py's original run; moral rows re-extracted as two separate forward passes (original post, flipped story) averaged per layer, instead of one concatenated/truncated pass"
+}

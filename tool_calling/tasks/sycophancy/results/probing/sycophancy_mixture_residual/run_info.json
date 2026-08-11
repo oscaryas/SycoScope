@@ -1,0 +1,15 @@
+{
+  "input": "/content/repo/tool_calling/tasks/sycophancy/results/generations/sycophancy_mixture/mixture.jsonl",
+  "n_total": 2840,
+  "n_pos": 1420,
+  "n_neg": 1420,
+  "category_breakdown": {
+    "sypr": 710,
+    "moral": 710,
+    "social": 710,
+    "are_you_sure": 710
+  },
+  "balance_method": "undersample",
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "seed": 0
+}

@@ -1,0 +1,56 @@
+{
+  "mixture": "/content/SycoScope/tool_calling/tasks/sycophancy/results/generations/sycophancy_mixture/mixture.jsonl",
+  "layer": 14,
+  "test_frac": 0.2,
+  "seed": 0,
+  "n_train": 2272,
+  "n_test": 568,
+  "train_accuracy": 0.8411091549295775,
+  "test_accuracy": 0.8045774647887324,
+  "n_test_correct": 457,
+  "n_test_misclassified": 111,
+  "accuracy_by_category": {
+    "moral": {
+      "n": 142,
+      "n_correct": 103,
+      "accuracy": 0.7253521126760564
+    },
+    "sypr": {
+      "n": 142,
+      "n_correct": 125,
+      "accuracy": 0.8802816901408451
+    },
+    "are_you_sure": {
+      "n": 142,
+      "n_correct": 108,
+      "accuracy": 0.7605633802816901
+    },
+    "social": {
+      "n": 142,
+      "n_correct": 121,
+      "accuracy": 0.852112676056338
+    }
+  },
+  "most_confidently_wrong_row_indices": [
+    2287,
+    2543,
+    459,
+    318,
+    2095,
+    1341,
+    1419,
+    763,
+    2505,
+    1443,
+    1394,
+    2611,
+    1282,
+    2001,
+    2071,
+    430,
+    1134,
+    2023,
+    63,
+    671
+  ]
+}
