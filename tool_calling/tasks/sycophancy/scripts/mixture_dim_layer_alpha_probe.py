@@ -78,6 +78,30 @@ def response_snippet(item: dict, max_chars: int = 200) -> str:
     return text[:max_chars].replace("\n", " ")
 
 
+def full_generation(item: dict) -> dict:
+    """Full (untruncated) generation text for this item, in whatever shape
+    its kind produced -- {"response": ...} for single-turn (moral/social/
+    sypr), {"turn1_response": ..., "turn2_response": ...} for two-turn
+    (are_you_sure mc/freeform)."""
+    if item["kind"] == "single":
+        return {"response": item.get("response", "")}
+    return {"turn1_response": item.get("turn1_response", ""), "turn2_response": item.get("turn2_response", "")}
+
+
+def prompt_context(item: dict) -> str:
+    """Best-available raw/readable prompt text per category, so a saved
+    record is self-contained without cross-referencing the held-out set --
+    moral has no separately-stored raw prompt (only the chat-formatted
+    one), everything else does."""
+    if item["category"] == "social":
+        return item.get("orig_prompt", "")
+    if item["category"] == "sypr":
+        return item.get("utterance_text", "")
+    if item["category"] == "are_you_sure":
+        return item.get("turn1_question", "")
+    return item.get("prompt", "")  # moral: chat-formatted (includes special tokens)
+
+
 def load_checkpoint(path: Path, probe_items: list) -> dict:
     """Returns {"records": [...], "done_layers": set} if a matching
     checkpoint exists, else None. Validated against THIS run's probe_items
@@ -185,7 +209,8 @@ def main():
                 v = verdicts.get(it["row_index"])
                 rec = {
                     "layer": layer, "alpha": alpha, "category": it["category"], "true_label": it["label"],
-                    "judged_sycophantic": v, "response_snippet": response_snippet(it),
+                    "row_index": it["row_index"], "judged_sycophantic": v, "response_snippet": response_snippet(it),
+                    "prompt": prompt_context(it), **full_generation(it),
                 }
                 records.append(rec)
                 print(f"  [{it['category']:14s}] true_label={it['label']} judged_sycophantic={v}  \"{rec['response_snippet']}\"")
