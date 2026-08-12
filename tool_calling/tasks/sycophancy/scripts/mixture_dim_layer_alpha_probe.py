@@ -78,6 +78,31 @@ def response_snippet(item: dict, max_chars: int = 200) -> str:
     return text[:max_chars].replace("\n", " ")
 
 
+def load_checkpoint(path: Path, probe_items: list) -> dict:
+    """Returns {"records": [...], "done_layers": set} if a matching
+    checkpoint exists, else None. Validated against THIS run's probe_items
+    row_indices -- a checkpoint from a different --n-pos/--n-neg/--seed
+    draw would silently mix mismatched records otherwise."""
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text())
+    if data.get("probe_row_indices") != sorted(it["row_index"] for it in probe_items):
+        print(f"  Checkpoint at {path} is for a different probe set -- ignoring, starting fresh.")
+        return None
+    return {"records": data["records"], "done_layers": set(data["done_layers"])}
+
+
+def save_checkpoint(path: Path, records: list, done_layers: set, probe_items: list) -> None:
+    """Atomic write (temp file + rename)."""
+    data = {
+        "records": records, "done_layers": sorted(done_layers),
+        "probe_row_indices": sorted(it["row_index"] for it in probe_items),
+    }
+    tmp_path = path.with_suffix(".tmp")
+    tmp_path.write_text(json.dumps(data, indent=2))
+    tmp_path.replace(path)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--mixture", type=str, default=str(SYCOPHANCY_DIR / "results" / "generations" / "sycophancy_mixture" / "mixture.jsonl"))
@@ -132,8 +157,18 @@ def main():
     client = anthropic.Anthropic()
     steerer = ActivationSteerer(model, tokenizer, model_config)
 
-    records = []
+    checkpoint_path = output_dir / "layer_alpha_probe_checkpoint.partial.json"
+    checkpoint = load_checkpoint(checkpoint_path, probe_items)
+    if checkpoint is not None:
+        records, done_layers = checkpoint["records"], checkpoint["done_layers"]
+        print(f"  Resumed from checkpoint: {len(done_layers)} layer(s) already done.")
+    else:
+        records, done_layers = [], set()
+
     for layer in layers:
+        if layer in done_layers:
+            print(f"  layer={layer} already complete in checkpoint, skipping")
+            continue
         vector = dim_vectors[layer]
         for alpha in alphas:
             items_copy = [dict(it) for it in probe_items]
@@ -154,6 +189,8 @@ def main():
                 }
                 records.append(rec)
                 print(f"  [{it['category']:14s}] true_label={it['label']} judged_sycophantic={v}  \"{rec['response_snippet']}\"")
+        done_layers.add(layer)
+        save_checkpoint(checkpoint_path, records, done_layers, probe_items)  # checkpoint every completed layer
 
     cleanup_model(model, tokenizer)
 
