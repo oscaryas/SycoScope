@@ -436,6 +436,38 @@ def judge_items(client, eval_items: list) -> dict:
     return verdicts
 
 
+def load_steering_checkpoint(path: Path, eval_items: list) -> dict:
+    """Returns {"baseline":..., "by_layer": {int layer: {float alpha: result}}}
+    if a matching checkpoint exists, else None. Validated against the exact
+    held-out row_indices of THIS run's eval_items -- a checkpoint from a
+    different --seed/--n-heldout would silently mix mismatched results
+    otherwise, since layer/alpha keys alone don't encode which held-out set
+    produced them."""
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text())
+    if data.get("heldout_row_indices") != sorted(it["row_index"] for it in eval_items):
+        print(f"  Checkpoint at {path} is for a different held-out set -- ignoring, starting fresh.")
+        return None
+    return {
+        "baseline": data["baseline"],
+        "by_layer": {int(l): {float(a): v for a, v in per_alpha.items()} for l, per_alpha in data["by_layer"].items()},
+    }
+
+
+def save_steering_checkpoint(path: Path, sweep_results: dict, eval_items: list) -> None:
+    """Atomic write (temp file + rename) so a crash mid-write never corrupts
+    the checkpoint a resume would otherwise trust."""
+    data = {
+        "baseline": sweep_results["baseline"],
+        "by_layer": {str(l): {str(a): v for a, v in per_alpha.items()} for l, per_alpha in sweep_results["by_layer"].items()},
+        "heldout_row_indices": sorted(it["row_index"] for it in eval_items),
+    }
+    tmp_path = path.with_suffix(".tmp")
+    tmp_path.write_text(json.dumps(data, indent=2))
+    tmp_path.replace(path)
+
+
 def run_one_combo(steerer, client, eval_items: list, max_new_tokens: int) -> dict:
     items_copy = [dict(it) for it in eval_items]
     generate_responses(steerer, items_copy, max_new_tokens)
@@ -593,16 +625,29 @@ def main():
     client = anthropic.Anthropic()
     steerer = ActivationSteerer(model, tokenizer, model_config)
 
-    print("  Computing no-steering baseline...")
-    baseline_result = run_one_combo(steerer, client, eval_items, args.max_new_tokens)
-    print(f"    baseline rate={baseline_result['rate']}, n_valid={baseline_result['n_valid']}/{baseline_result['n_total']}, "
-          f"by_category={baseline_result['rate_by_category']}")
+    checkpoint_path = output_dir / "steering_sweep_results.partial.json"
+    checkpoint = load_steering_checkpoint(checkpoint_path, eval_items)
+    if checkpoint is not None:
+        sweep_results = checkpoint
+        print(f"  Resumed from checkpoint: {len(sweep_results['by_layer'])} layer(s) already done.")
+    else:
+        print("  Computing no-steering baseline...")
+        baseline_result = run_one_combo(steerer, client, eval_items, args.max_new_tokens)
+        print(f"    baseline rate={baseline_result['rate']}, n_valid={baseline_result['n_valid']}/{baseline_result['n_total']}, "
+              f"by_category={baseline_result['rate_by_category']}")
+        sweep_results = {"baseline": baseline_result, "by_layer": {}}
+        save_steering_checkpoint(checkpoint_path, sweep_results, eval_items)
 
-    sweep_results = {"baseline": baseline_result, "by_layer": {}}
     for layer in steer_layers:
-        sweep_results["by_layer"][layer] = {}
+        done_alphas = sweep_results["by_layer"].get(layer, {})
+        if set(done_alphas) >= set(nonzero_alphas):
+            print(f"  layer={layer:2d} already complete in checkpoint, skipping")
+            continue
+        sweep_results["by_layer"].setdefault(layer, {})
         vector = dim_vectors[layer]
         for alpha in nonzero_alphas:
+            if alpha in sweep_results["by_layer"][layer]:
+                continue
             steerer.attach("residual", layer, vector, alpha)
             try:
                 result = run_one_combo(steerer, client, eval_items, args.max_new_tokens)
@@ -611,6 +656,7 @@ def main():
             sweep_results["by_layer"][layer][alpha] = result
             print(f"  layer={layer:2d} alpha={alpha:<8} rate={result['rate']} "
                   f"n_valid={result['n_valid']}/{result['n_total']} by_category={result['rate_by_category']}")
+        save_steering_checkpoint(checkpoint_path, sweep_results, eval_items)  # checkpoint every completed layer
 
     cleanup_model(model, tokenizer)
 
