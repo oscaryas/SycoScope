@@ -18,20 +18,20 @@ Three pooling modes, all averaging over the response span (tokens after the
 | Probe | Pooling | Best layer | Accuracy | Accuracy 95% CI | AUC-ROC | AUC-ROC 95% CI |
 |---|---|---|---|---|---|---|
 | sypr | mean (full response) | 31 | 0.960 | [0.950, 0.968] | 0.991 | [0.987, 0.996] |
-| sypr | mean_first5 | 22 | 0.956 | [0.945, 0.964] | 0.986 | [0.982, 0.991] |
-| sypr | mean_first_sentence | 27 | **0.967** | [0.957, 0.974] | **0.992** | [0.989, 0.995] |
+| sypr | mean_first5 | 31 | 0.959 | [0.949, 0.968] | 0.985 | [0.980, 0.990] |
+| sypr | mean_first_sentence | 26 | **0.965** | [0.955, 0.972] | **0.992** | [0.988, 0.995] |
 | are_you_sure | mean (full response) | 14 | **0.758** | [0.739, 0.776] | **0.838** | [0.828, 0.848] |
-| are_you_sure | mean_first5 | 13 | 0.683 | [0.662, 0.703] | 0.742 | [0.723, 0.758] |
-| are_you_sure | mean_first_sentence | 13 | 0.680 | [0.659, 0.700] | 0.740 | [0.731, 0.748] |
+| are_you_sure | mean_first5 | 14 | 0.682 | [0.661, 0.702] | 0.743 | [0.723, 0.758] |
+| are_you_sure | mean_first_sentence | 13 | 0.683 | [0.662, 0.703] | 0.742 | [0.731, 0.748] |
 | social | mean (full response) | 14 | **0.846** | [0.829, 0.861] | **0.929** | [0.922, 0.936] |
-| social | mean_first5 | 14 | 0.641 | [0.620, 0.662] | 0.687 | [0.673, 0.700] |
-| social | mean_first_sentence | 11 | 0.774 | [0.756, 0.792] | 0.846 | [0.830, 0.863] |
+| social | mean_first5 | 13 | 0.643 | [0.622, 0.664] | 0.691 | [0.673, 0.700] |
+| social | mean_first_sentence | 11 | 0.771 | [0.752, 0.789] | 0.844 | [0.830, 0.863] |
 | truthfulqa | mean (full response) | 13 | **0.774** | [0.757, 0.791] | **0.859** | [0.844, 0.874] |
-| truthfulqa | mean_first5 | 15 | 0.754 | [0.736, 0.772] | 0.828 | [0.820, 0.838] |
-| truthfulqa | mean_first_sentence | 29 | 0.749 | [0.731, 0.767] | 0.817 | [0.802, 0.829] |
+| truthfulqa | mean_first5 | 15 | 0.749 | [0.730, 0.766] | 0.829 | [0.820, 0.838] |
+| truthfulqa | mean_first_sentence | 29 | 0.753 | [0.735, 0.771] | 0.819 | [0.802, 0.829] |
 | moral_avg | mean (full response) | 13 | **0.758** | [0.726, 0.788] | **0.840** | [0.805, 0.876] |
-| moral_avg | mean_first5 | 31 | 0.716 | [0.683, 0.748] | 0.797 | [0.746, 0.846] |
-| moral_avg | mean_first_sentence | 30 | 0.714 | [0.680, 0.745] | 0.785 | [0.740, 0.832] |
+| moral_avg | mean_first5 | 31 | 0.726 | [0.692, 0.757] | 0.796 | [0.746, 0.846] |
+| moral_avg | mean_first_sentence | 16 | 0.715 | [0.681, 0.746] | 0.779 | [0.740, 0.832] |
 | sycophancy_mixture (4-way combined) | mean (full response) | 14 | **0.760** | [0.743, 0.775] | **0.848** | [0.839, 0.858] |
 | sycophancy_mixture (4-way combined) | mean_first5 | 15 | 0.673 | [0.655, 0.690] | 0.759 | [0.752, 0.769] |
 | sycophancy_mixture (4-way combined) | mean_first_sentence | 13 | 0.699 | [0.682, 0.716] | 0.788 | [0.770, 0.802] |
@@ -81,3 +81,49 @@ strong AUC (0.812) — a calibration artifact (the probe's decision threshold is
 the mixture's forced 50/50 balance, not moral's real ~32%-positive prevalence), not an
 absence of signal. AUC is the fairer metric whenever a target's natural class balance
 differs sharply from the training balance, which is true for all five targets here.
+
+### mean_first5 / mean_first_sentence → mixture (own-category transfer)
+
+Run via `pooling_variant_transfer_batch.py`, which extracts mixture activations
+**once per pooling mode** (all 2,840 rows get the same single forward pass regardless
+of category, so one extraction serves all 5 probes trained with that pooling) rather
+than once per probe. Layers used are each probe's own best layer for that pooling mode
+(re-derived after a mid-session VM reset forced a full retrain — GPU non-determinism
+shifted a few picks slightly from the same-dataset table above, e.g. moral_avg
+mean_first_sentence: layer 30 → 16).
+
+| Probe (layer) | Pooling | Target | Accuracy | AUC-ROC |
+|---|---|---|---|---|
+| sypr (31 / 26) | mean_first5 / mean_first_sentence | mixture, sypr rows only | 0.948 / 0.962 | 0.986 / 0.990 |
+| are_you_sure (14 / 13) | mean_first5 / mean_first_sentence | mixture, are_you_sure rows only | 0.800 / 0.792 | 0.915 / 0.896 |
+| social (13 / 11) | mean_first5 / mean_first_sentence | mixture, social rows only | 0.690 / 0.824 | 0.758 / 0.899 |
+| moral_avg (31 / 16) | mean_first5 / mean_first_sentence | mixture, moral rows only | 0.499 / 0.497 | **0.495 / 0.542** (chance) |
+| truthfulqa (15 / 29) | mean_first5 / mean_first_sentence | mixture overall (no own-category cell) | 0.562 / 0.540 | 0.571 / 0.569 |
+
+Compared against the full-response own-category numbers above (sypr 0.995, are_you_sure
+0.949, social 0.953, moral 0.733 AUC): **full-response pooling transfers best for every
+probe, without exception.** Two patterns stand out:
+
+- **sypr and social** stay strong under truncated pooling too (sypr barely drops at
+  all; social's mean_first_sentence result, 0.899, comes close to its full-response
+  0.953) — consistent with these being the "front-loaded" probes in the same-dataset
+  table.
+- **moral_avg collapses to chance** under both truncated variants (AUC 0.495 and 0.542,
+  vs. 0.733 for full response) — a much larger relative drop than its same-dataset CV
+  degradation (0.840 → 0.797 → 0.785). Likely explanation: the mixture's moral rows use
+  a single *concatenated* original-post + flipped-story text (unlike moral_avg's own
+  training data, which pools each side separately then averages), so a 5-token or
+  first-sentence window over that concatenation lands on arbitrary framing text rather
+  than anything resembling what the probe was trained on — the full-response mean
+  survives this mismatch far better than any truncated window does.
+
+`.pth` weights for all 10 category-level pooling-variant probes and both transfer
+result sets are saved under `results/probing/` and
+`results/cross_domain_transfer/pooling_variant_transfer_{mean_first5,mean_first_sentence}/`.
+
+**Infra note**: the training VM's runtime reset mid-session (Colab browser-connection
+drop recycled the instance, wiping `/content/repo` and every trained weight) after the
+first pass of these 10 probes but before the transfer checks could run. All 10 were
+retrained from a fresh clone + re-pulled datasets before the transfer checks above ran
+against them — the same-dataset numbers in this doc are from that second (final) training
+pass, not the first.
