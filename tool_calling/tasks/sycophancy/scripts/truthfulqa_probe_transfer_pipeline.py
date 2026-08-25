@@ -199,6 +199,56 @@ class DimScorer:
         return self.sign * (X_t @ self.unit_direction - self.threshold)
 
 
+def dim_cv_out_of_sample(X: np.ndarray, y: np.ndarray, strata: list, n_folds: int, seed: int) -> np.ndarray:
+    """Genuine out-of-sample DIM scores for EVERY row of the fitting
+    distribution (the mixture): stratified k-fold by (category, label); per
+    fold, a fresh difference-in-means direction + train-midpoint threshold is
+    fit on the other k-1 folds and only the held-out fold is scored with it.
+    Complements the frozen-direction score on the full mixture, which is
+    ~99% in-sample (the saved direction was fit on all but --n-heldout=20ish
+    rows of it). No orientation handling needed: (mean1 - mean0) always
+    projects the class-1 TRAIN mean above class-0 by construction.
+    Returns oriented scores, >0 == predicted sycophantic."""
+    rng = np.random.default_rng(seed)
+    fold_of = np.empty(len(y), dtype=int)
+    for s in sorted(set(zip(strata, y.tolist()))):
+        idx = np.nonzero([(st, yy) == s for st, yy in zip(strata, y.tolist())])[0]
+        rng.shuffle(idx)
+        fold_of[idx] = np.arange(len(idx)) % n_folds
+    scores = np.zeros(len(y), dtype=np.float64)
+    for f in range(n_folds):
+        te, tr = fold_of == f, fold_of != f
+        Xtr, ytr = X[tr], y[tr]
+        d = Xtr[ytr == 1].mean(axis=0) - Xtr[ytr == 0].mean(axis=0)
+        d = d / (np.linalg.norm(d) + 1e-8)
+        thr = ((Xtr[ytr == 1] @ d).mean() + (Xtr[ytr == 0] @ d).mean()) / 2.0
+        scores[te] = X[te] @ d - thr
+    return scores
+
+
+def report_from_scores(scores: np.ndarray, labels: np.ndarray, groups: list) -> dict:
+    """Same output shape as score_by_group, but from precomputed continuous
+    scores (>0 == predicted positive) instead of a probe callable -- needed
+    for CV out-of-sample scores, where each row was scored by a different
+    fold's direction so no single frozen scorer exists."""
+    out = {}
+    for name, idx in [("__all__", list(range(len(labels))))] + [
+        (g, [i for i, gg in enumerate(groups) if gg == g]) for g in sorted(set(groups)) if g is not None
+    ]:
+        sg, yg = scores[idx], labels[idx]
+        n_correct = int(((sg > 0).astype(np.float32) == yg).sum())
+        n_total = len(yg)
+        auc = _fold_auc(yg, sg)
+        out[name] = {
+            "n": n_total, "n_pos": int((yg == 1).sum()),
+            "accuracy": n_correct / n_total if n_total else 0.0,
+            "ci": wilson_ci(n_correct, n_total),
+            "auc_roc": auc,
+            "auc_roc_ci": bootstrap_auc_ci(yg, sg) if auc is not None else None,
+        }
+    return out
+
+
 def score_by_group(probe, X: np.ndarray, labels: np.ndarray, groups: list) -> dict:
     """Accuracy/CI/AUC(+CI) for the full set plus each distinct group value
     (e.g. mixture's "category" field) -- None group values are skipped as
@@ -237,6 +287,12 @@ def main():
     parser.add_argument("--output-dir", type=str, default=None,
                          help="Default: cross_domain_transfer/truthfulqa_probe_transfer for probe, "
                               "cross_domain_transfer/mixture_dim_transfer for dim.")
+    parser.add_argument("--dim-cv-folds", type=int, default=5,
+                         help="For --direction-format dim + the 'mixture' target: also report genuine "
+                              "out-of-sample scores via stratified k-fold DIM refitting (0 disables). "
+                              "The frozen-direction score on the full mixture is ~99% in-sample; this is "
+                              "the honest in-distribution number.")
+    parser.add_argument("--seed", type=int, default=0, help="Fold-assignment seed for --dim-cv-folds.")
     parser.add_argument("--pooling-override", type=str, default=None,
                          help="Overrides TARGET_POOLING for every selected target (e.g. 'mean_first_turn' to "
                               "test pooling only the first assistant turn of a multi-turn target like syconbench). "
@@ -325,6 +381,21 @@ def main():
             X = residual_activations[args.layer]
             categories = [None] * len(rows)
             n_total = len(rows)
+        elif name == "mixture" and args.direction_format == "dim":
+            # Match DIM training's extraction exactly: moral rows og+flip
+            # averaged (moralfix), everything else single-pass -- reuses
+            # mixture_dim_pipeline.extract_all_activations so the frozen
+            # direction is scored on the same kind of activations it was fit
+            # on (the generic branch below would single-pass moral rows).
+            from mixture_dim_pipeline import extract_all_activations
+            rows = [json.loads(line) for line in open(path, encoding="utf-8")]
+            labels = np.array([r["label"] for r in rows], dtype=np.float32)
+            categories = [r["category"] for r in rows]
+            n_pos, n_neg = int((labels == 1).sum()), int((labels == 0).sum())
+            print(f"Loaded {len(rows)} mixture rows ({n_pos} positive / {n_neg} negative), moralfix extraction")
+            residual_activations = extract_all_activations(model, tokenizer, model_config, rows, DEFAULT_MORAL_JUDGED)
+            X = residual_activations[args.layer]
+            n_total = len(rows)
         else:
             texts, labels, categories = load_target(path)
             n_pos, n_neg = int((labels == 1).sum()), int((labels == 0).sum())
@@ -351,6 +422,26 @@ def main():
             "n_total": n_total, "n_pos": n_pos, "n_neg": n_neg,
             "n_dropped_nan": n_dropped_nan, "scores": scores,
         }
+
+        if name == "mixture" and args.direction_format == "dim":
+            all_results["targets"][name]["frozen_direction_note"] = (
+                "the 'scores' block scores the FROZEN saved direction, which was fit on all but "
+                "~20 of these rows -- treat as in-sample fit quality, not generalization"
+            )
+            if args.dim_cv_folds > 0:
+                print(f"Computing {args.dim_cv_folds}-fold out-of-sample DIM scores on the mixture "
+                      f"(stratified by category x label, seed={args.seed})...")
+                oos_scores = dim_cv_out_of_sample(X, labels, categories, args.dim_cv_folds, args.seed)
+                oos = report_from_scores(oos_scores, labels, categories)
+                all_results["targets"][name]["out_of_sample_cv"] = {
+                    "n_folds": args.dim_cv_folds, "seed": args.seed, "scores": oos,
+                }
+                overall_oos = oos["__all__"]
+                print(f"[mixture OOS {args.dim_cv_folds}-fold] overall: accuracy={overall_oos['accuracy']:.3f} "
+                      f"CI=[{overall_oos['ci'][0]:.3f},{overall_oos['ci'][1]:.3f}] AUC={overall_oos['auc_roc']}")
+                for cat, r in oos.items():
+                    if cat != "__all__":
+                        print(f"    {cat}: accuracy={r['accuracy']:.3f} (n={r['n']}) AUC={r['auc_roc']}")
 
         overall = scores["__all__"]
         print(f"[{name}] overall: accuracy={overall['accuracy']:.3f} CI=[{overall['ci'][0]:.3f},{overall['ci'][1]:.3f}] "
