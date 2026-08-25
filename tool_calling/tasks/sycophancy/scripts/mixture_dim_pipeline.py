@@ -71,6 +71,13 @@ prompt reconstruction needed there). build_heldout_eval_set resamples further
 down each stratum when a row's prompt material can't be resolved, and warns
 if a stratum still comes up short.
 
+NOTE on resuming: the steering-sweep checkpoint validates only the held-out
+row indices, not the generation config -- after the 2026-08-24 fix removing
+the doubled BOS and adding explicit <|eot_id|> terminators to
+ActivationSteerer, delete/rename any pre-fix steering_sweep_results.partial.json
+before rerunning, or the resume will silently mix pre- and post-fix
+generations.
+
 Usage:
     python mixture_dim_pipeline.py \
         --mixture results/generations/sycophancy_mixture/mixture.jsonl \
@@ -295,7 +302,10 @@ def resolve_eval_item(row: dict, moral_idx: dict, social_idx: dict, sypr_idx: di
             return None
         return {
             "category": "sypr", "kind": "single",
-            "prompt": build_chat_prompt(tokenizer, rec["prompt"], system_prompt=None),
+            # checkpoint.jsonl's `prompt` is ALREADY a fully rendered chat prompt
+            # (written from build_chat_prompt_multiturn by sypr_praise_full_generate.py)
+            # -- wrapping it in build_chat_prompt again would nest the template.
+            "prompt": rec["prompt"],
             "utterance_text": meta["utterance_text"], "is_poor_quality": bool(meta["is_poor_quality"]),
         }
 

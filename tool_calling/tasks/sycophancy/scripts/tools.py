@@ -477,8 +477,10 @@ def steer_and_generate(
     """
     Add alpha * (probe direction, scaled to ~1 projection std) to component
     "mha" (uses head), "mlp", or "residual" at the given layer, then
-    generate from prompt. Returns both the unsteered baseline and the
-    steered continuation so they can be compared directly. Call
+    generate from prompt. The prompt is a raw user message -- it gets wrapped
+    in the model's chat template here, since ActivationSteerer.generate
+    expects a fully rendered chat prompt. Returns both the unsteered baseline
+    and the steered continuation so they can be compared directly. Call
     list_steering_vectors first to see which (component, layer[, head])
     combinations are available.
     """
@@ -488,6 +490,7 @@ def steer_and_generate(
         return "error: architecture unknown — call inspect_model first"
 
     from sycophancy_steering import ActivationSteerer, load_steering_vectors
+    from utils.inference import build_chat_prompt
 
     out_dir = _OUTPUT_DIR / probe_dir
     vectors = load_steering_vectors(str(out_dir), component)
@@ -495,10 +498,11 @@ def steer_and_generate(
     if key not in vectors:
         return f"error: no steering vector for component={component} key={key}. Available: {sorted(str(k) for k in vectors)}"
 
+    rendered = build_chat_prompt(_session["tokenizer"], prompt)
     steerer = ActivationSteerer(_session["model"], _session["tokenizer"], _session["model_config"])
-    baseline = steerer.generate(prompt, max_new_tokens)
+    baseline = steerer.generate(rendered, max_new_tokens)
     steerer.attach(component, layer, vectors[key], alpha, head=head if component == "mha" else None)
-    steered = steerer.generate(prompt, max_new_tokens)
+    steered = steerer.generate(rendered, max_new_tokens)
     steerer.cleanup()
 
     return {"baseline": baseline, "steered": steered}

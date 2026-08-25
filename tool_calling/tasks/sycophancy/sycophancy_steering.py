@@ -84,6 +84,12 @@ class ActivationSteerer:
         self.tokenizer = tokenizer
         self.model_config = model_config
         self.handles = []
+        # Explicit end-of-turn terminators, matching utils.inference.generate_batch --
+        # Llama-3 assistant turns end with <|eot_id|>, not necessarily eos.
+        eot_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
+        self.terminators = [tokenizer.eos_token_id]
+        if isinstance(eot_id, int) and eot_id not in (None, tokenizer.unk_token_id, tokenizer.eos_token_id):
+            self.terminators.append(eot_id)
 
     def attach(self, component: str, layer: int, vector: torch.Tensor, alpha: float, head: int = None):
         device = next(self.model.parameters()).device
@@ -129,13 +135,19 @@ class ActivationSteerer:
             raise ValueError(f"component must be 'mha', 'mlp', or 'residual', got {component!r}")
 
     def generate(self, prompt: str, max_new_tokens: int = 150) -> str:
-        inputs = self.tokenizer(prompt, return_tensors="pt", truncation=True, max_length=1024)
+        """Greedy generation from a FULLY RENDERED chat prompt (including BOS,
+        e.g. from build_chat_prompt) -- tokenized with add_special_tokens=False
+        so the template's own <|begin_of_text|> isn't doubled."""
+        inputs = self.tokenizer(
+            prompt, return_tensors="pt", truncation=True, max_length=1024, add_special_tokens=False,
+        )
         inputs = {k: v.to(self.model.device) for k, v in inputs.items()}
         with torch.no_grad():
             output_ids = self.model.generate(
                 **inputs,
                 max_new_tokens=max_new_tokens,
                 do_sample=False,
+                eos_token_id=self.terminators,
                 pad_token_id=self.tokenizer.pad_token_id or self.tokenizer.eos_token_id,
             )
         new_tokens = output_ids[0][inputs["input_ids"].shape[1] :]
@@ -143,7 +155,8 @@ class ActivationSteerer:
 
     def generate_batch(self, prompts: list, max_new_tokens: int = 150, batch_size: int = 8) -> list:
         """
-        Same greedy, already-chat-formatted-prompt contract as generate(), but
+        Same greedy, fully-rendered-chat-prompt contract as generate() (prompts
+        must already include BOS; tokenized with add_special_tokens=False), but
         left-padded and chunked by batch_size for throughput. Requires
         tokenizer.padding_side == "left" (set by utils.model.load_model_and_tokenizer)
         -- right-padding would corrupt position ids for every prompt but the
@@ -160,6 +173,7 @@ class ActivationSteerer:
             chunk = prompts[start : start + batch_size]
             inputs = self.tokenizer(
                 chunk, return_tensors="pt", padding=True, truncation=True, max_length=1024,
+                add_special_tokens=False,
             )
             inputs = {k: v.to(self.model.device) for k, v in inputs.items()}
             with torch.no_grad():
@@ -167,6 +181,7 @@ class ActivationSteerer:
                     **inputs,
                     max_new_tokens=max_new_tokens,
                     do_sample=False,
+                    eos_token_id=self.terminators,
                     pad_token_id=pad_id,
                 )
             input_len = inputs["input_ids"].shape[1]
