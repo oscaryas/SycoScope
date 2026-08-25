@@ -34,6 +34,28 @@ MODELS = {
         "config_key": None,
         "answer_token_id": 128007,
     },
+    "meta-llama/Meta-Llama-3-8B-Instruct": {
+        # Same tokenizer/chat-template family as Llama-3.1-8B-Instruct above
+        # (verified: token id 128007 decodes to "<|end_header_id|>" in this
+        # model's own tokenizer too, and correctly lands right before the
+        # assistant response in a build_chat_prompt-rendered sequence).
+        # Previously absent from this registry -- every probe trained with
+        # --model meta-llama/Meta-Llama-3-8B-Instruct (the project's default)
+        # silently fell through to get_model_config's AutoConfig auto-detect
+        # branch, which always sets answer_token_id=None, so residual
+        # extraction's "mean" pooling used the WHOLE sequence (prompt +
+        # response) instead of the response-only span it was documented to use.
+        "family": "llama",
+        "n_layers": 32,
+        "n_heads": 32,
+        "hidden_dim": 4096,
+        "mlp_dim": 14336,        # verified via AutoConfig.intermediate_size
+        "head_dim": 128,         # hidden_dim // n_heads
+        "mha_hook": "self_attn.o_proj",
+        "mlp_hook": "mlp.down_proj",
+        "config_key": None,
+        "answer_token_id": 128007,
+    },
     # -------------------------------------------------------------------------
     # Small models — for smoke tests and fast iteration
     # -------------------------------------------------------------------------
