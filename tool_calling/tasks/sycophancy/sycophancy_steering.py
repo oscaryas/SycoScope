@@ -172,6 +172,7 @@ class ActivationSteerer:
             )
         pad_id = self.tokenizer.pad_token_id or self.tokenizer.eos_token_id
         responses = []
+        truncated = []
         n_truncated = 0
         for start in range(0, len(prompts), batch_size):
             chunk = prompts[start : start + batch_size]
@@ -194,13 +195,17 @@ class ActivationSteerer:
                 # A finished row ends with an end-of-turn token, or right-pad
                 # after it; a row still mid-generation at the cap ends with an
                 # ordinary token -- that response is incomplete.
-                if len(new_tokens) and int(new_tokens[-1]) not in self.terminators and int(new_tokens[-1]) != pad_id:
-                    n_truncated += 1
+                is_trunc = bool(len(new_tokens)) and int(new_tokens[-1]) not in self.terminators and int(new_tokens[-1]) != pad_id
+                n_truncated += is_trunc
+                truncated.append(is_trunc)
                 responses.append(self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip())
         if n_truncated:
             print(f"  WARNING: {n_truncated}/{len(prompts)} generations hit the max_new_tokens={max_new_tokens} "
                   "cap without an end-of-turn token -- those responses are INCOMPLETE "
                   "(thinking models need a much larger budget).")
+        # Per-row flags for the last call, so callers can set cap-hit rows aside
+        # (see scripts/*_generate.py -> checkpoint.truncated.jsonl).
+        self.last_truncated = truncated
         return responses
 
     def cleanup(self):

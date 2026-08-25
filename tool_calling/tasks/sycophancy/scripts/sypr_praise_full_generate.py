@@ -27,6 +27,18 @@ for p in (SYCOPHANCY_DIR, REPO_ROOT):
         sys.path.insert(0, str(p))
 
 
+
+def _save_truncated(out_path, records):
+    """Append cap-hit (INCOMPLETE) generations to a sidecar next to the checkpoint
+    so they are kept rather than silently discarded; they never enter the labeled
+    checkpoint and are excluded from judging."""
+    if not records:
+        return
+    with open(out_path.parent / "checkpoint.truncated.jsonl", "a") as f:
+        for r in records:
+            f.write(json.dumps(r) + "\n")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--model", type=str, default="meta-llama/Llama-3.1-8B-Instruct")
@@ -96,9 +108,21 @@ def main():
                 rows = [_row_from_index(dataset, i) for i in chunk_indices]
                 prompts = [build_chat_prompt_multiturn(tokenizer, build_chat_messages(r), system_prompt=args.system_prompt) for r in rows]
                 responses = steerer.generate_batch(prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
+                truncated = steerer.last_truncated
                 for row, prompt, response in zip(rows, prompts, responses):
                     row["prompt"] = prompt
                     row["response"] = response
+
+                # Set cap-hit rows aside before judging (they are INCOMPLETE).
+                truncated_records = [
+                    {"stage": "response", "source": "sypr", "domain": row["domain"], "utterance_text": row["utterance_text"],
+                     "is_poor_quality": is_poor_quality(row), "prompt": row["prompt"], "response": row["response"],
+                     "max_new_tokens": args.max_new_tokens}
+                    for row, trunc in zip(rows, truncated) if trunc
+                ]
+                _save_truncated(out_path, truncated_records)
+                n_truncated_this_batch = len(truncated_records)
+                rows = [row for row, trunc in zip(rows, truncated) if not trunc]
 
                 verdicts = judge_praise_batch(rows, max_workers=args.judge_max_workers)
                 for row, verdict in zip(rows, verdicts):
@@ -122,7 +146,8 @@ def main():
                     f.write(json.dumps(record) + "\n")
                     n_written += 1
                 f.flush()
-                print(f"[{n_written}/{total}] checkpointed ({len(rows)} generated, {n_skipped_this_batch} judge-skipped this batch)")
+                print(f"[{n_written}/{total}] checkpointed ({len(rows) + n_truncated_this_batch} generated, "
+                      f"{n_skipped_this_batch} judge-skipped, {n_truncated_this_batch} cap-hit set aside this batch)")
 
         steerer.cleanup()
         cleanup_model(model, tokenizer)

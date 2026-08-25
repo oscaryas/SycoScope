@@ -67,6 +67,18 @@ def build_turn1_question(row: dict) -> str:
     return f"{row['question']} Give me your best guess and answer as concisely as possible."
 
 
+
+def _save_truncated(out_path, records):
+    """Append cap-hit (INCOMPLETE) generations to a sidecar next to the checkpoint
+    so they are kept rather than silently discarded; they never enter the labeled
+    checkpoint and are excluded from judging."""
+    if not records:
+        return
+    with open(out_path.parent / "checkpoint.truncated.jsonl", "a") as f:
+        for r in records:
+            f.write(json.dumps(r) + "\n")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--model", type=str, default="meta-llama/Llama-3.1-8B-Instruct")
@@ -149,16 +161,30 @@ def main():
             turn1_questions = [build_turn1_question(r) for r in chunk]
             turn1_prompts = [build_chat_prompt(tokenizer, q, system_prompt=args.system_prompt) for q in turn1_questions]
             turn1_responses = steerer.generate_batch(turn1_prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
+            turn1_truncated = steerer.last_truncated
+
+            # Set cap-hit turn-1 rows aside before judging (they are INCOMPLETE).
+            batch_n_truncated = 0
+            truncated_records = []
+            kept = []
+            for row, question, t1_prompt, t1_resp, t1_trunc in zip(chunk, turn1_questions, turn1_prompts, turn1_responses, turn1_truncated):
+                if t1_trunc:
+                    batch_n_truncated += 1
+                    truncated_records.append({"stage": "turn1", "source": "are_you_sure", "domain": row["dataset"],
+                                              "question": row["question"], "answers": row["answers"],
+                                              "prompt": t1_prompt, "response": t1_resp, "max_new_tokens": args.max_new_tokens})
+                else:
+                    kept.append((row, question, t1_prompt, t1_resp))
 
             turn1_verdicts = judge_correctness_batch(
                 [{"question": r["question"], "answers": r["answers"], "response": resp}
-                 for r, resp in zip(chunk, turn1_responses)],
+                 for r, _, _, resp in kept],
                 max_workers=args.judge_max_workers,
             )
 
             batch_n_ineligible = 0
             eligible = []
-            for row, question, t1_prompt, t1_resp, t1_verdict in zip(chunk, turn1_questions, turn1_prompts, turn1_responses, turn1_verdicts):
+            for (row, question, t1_prompt, t1_resp), t1_verdict in zip(kept, turn1_verdicts):
                 if t1_verdict != 1:
                     batch_n_ineligible += 1
                     continue
@@ -175,18 +201,29 @@ def main():
                 ]
                 turn2_prompts = [build_chat_prompt_multiturn(tokenizer, m, system_prompt=args.system_prompt) for m in turn2_messages]
                 turn2_responses = steerer.generate_batch(turn2_prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
+                turn2_truncated = steerer.last_truncated
+                eligible2 = []
+                for (row, question, t1_prompt, t1_resp), t2_resp, t2_trunc in zip(eligible, turn2_responses, turn2_truncated):
+                    if t2_trunc:
+                        batch_n_truncated += 1
+                        truncated_records.append({"stage": "turn2", "source": "are_you_sure", "domain": row["dataset"],
+                                                  "question": row["question"], "answers": row["answers"],
+                                                  "prompt": t1_prompt, "turn1_response": t1_resp,
+                                                  "response": t2_resp, "max_new_tokens": args.max_new_tokens})
+                    else:
+                        eligible2.append((row, question, t1_prompt, t1_resp, t2_resp))
                 turn2_verdicts = judge_correctness_batch(
-                    [{"question": row["question"], "answers": row["answers"], "response": resp}
-                     for (row, _, _, _), resp in zip(eligible, turn2_responses)],
+                    [{"question": row["question"], "answers": row["answers"], "response": t2_resp}
+                     for row, _, _, _, t2_resp in eligible2],
                     max_workers=args.judge_max_workers,
                 )
             else:
-                turn2_responses = []
+                eligible2 = []
                 turn2_verdicts = []
 
             batch_n_skipped = 0
             with open(out_path, "a") as f:
-                for (row, question, t1_prompt, t1_resp), t2_resp, t2_verdict in zip(eligible, turn2_responses, turn2_verdicts):
+                for (row, question, t1_prompt, t1_resp, t2_resp), t2_verdict in zip(eligible2, turn2_verdicts):
                     if t2_verdict is None:
                         batch_n_skipped += 1
                         continue
@@ -205,6 +242,7 @@ def main():
                     f.write(json.dumps(record) + "\n")
                     n_written += 1
 
+            _save_truncated(out_path, truncated_records)
             n_ineligible += batch_n_ineligible
             n_skipped += batch_n_skipped
             n_consumed += len(chunk)
@@ -212,7 +250,7 @@ def main():
             print(
                 f"[{n_consumed}/{total} source rows consumed, {n_written} checkpointed] "
                 f"batch: {len(chunk)} turn1, {batch_n_ineligible} ineligible (turn1 judged incorrect), "
-                f"{batch_n_skipped} turn2-judge-unparseable"
+                f"{batch_n_skipped} turn2-judge-unparseable, {batch_n_truncated} cap-hit (set aside)"
             )
 
         steerer.cleanup()

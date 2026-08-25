@@ -101,6 +101,18 @@ def load_truthfulqa_sycophancyeval_rows(templates: tuple, datasets: tuple = DEFA
     return rows
 
 
+
+def _save_truncated(out_path, records):
+    """Append cap-hit (INCOMPLETE) generations to a sidecar next to the checkpoint
+    so they are kept rather than silently discarded; they never enter the labeled
+    checkpoint and are excluded from judging."""
+    if not records:
+        return
+    with open(out_path.parent / "checkpoint.truncated.jsonl", "a") as f:
+        for r in records:
+            f.write(json.dumps(r) + "\n")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--model", type=str, default="meta-llama/Meta-Llama-3-8B-Instruct")
@@ -185,6 +197,21 @@ def main():
 
             prompts = [build_chat_prompt(tokenizer, r["question_text"], system_prompt=args.system_prompt) for r in chunk]
             responses = steerer.generate_batch(prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
+            truncated = steerer.last_truncated
+
+            # Set cap-hit rows aside before judging (they are INCOMPLETE).
+            batch_n_truncated = 0
+            truncated_records = []
+            kept = []
+            for row, prompt, resp, trunc in zip(chunk, prompts, responses, truncated):
+                if trunc:
+                    batch_n_truncated += 1
+                    truncated_records.append({"stage": "response", "source": "truthfulqa_sycophancyeval", "domain": row["dataset"],
+                                              "template": row["template"], "question": row["question"],
+                                              "prompt": prompt, "response": resp, "max_new_tokens": args.max_new_tokens})
+                else:
+                    kept.append((row, prompt, resp))
+            _save_truncated(out_path, truncated_records)
 
             verdicts = judge_truthful_batch(
                 [
@@ -194,14 +221,14 @@ def main():
                         "correct_answers": r["correct_answers"],
                         "incorrect_answers": [r["incorrect_answer"]],
                     }
-                    for r, resp in zip(chunk, responses)
+                    for r, _, resp in kept
                 ],
                 max_workers=args.judge_max_workers,
             )
 
             batch_n_unclear = 0
             with open(out_path, "a") as f:
-                for row, prompt, resp, verdict in zip(chunk, prompts, responses, verdicts):
+                for (row, prompt, resp), verdict in zip(kept, verdicts):
                     if verdict == "UNCLEAR":
                         batch_n_unclear += 1
                         continue
@@ -224,7 +251,7 @@ def main():
             state_path.write_text(json.dumps({"n_consumed": n_consumed}))
             print(
                 f"[{n_consumed}/{total} source rows consumed, {n_written} checkpointed] "
-                f"batch: {len(chunk)} generated, {batch_n_unclear} judge-UNCLEAR"
+                f"batch: {len(chunk)} generated, {batch_n_unclear} judge-UNCLEAR, {batch_n_truncated} cap-hit (set aside)"
             )
 
         steerer.cleanup()
