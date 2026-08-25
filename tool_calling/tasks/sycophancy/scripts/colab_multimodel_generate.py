@@ -43,7 +43,7 @@ MODELS = [
     ("nvidia/Llama-3.1-Nemotron-Nano-8B-v1", "detailed thinking on", 16),
     ("google/gemma-4-12B-it", None, 16),
     ("Qwen/Qwen3-14B", None, 16),
-    ("Qwen/Qwen3.8-27B", None, 8),
+    ("Qwen/Qwen3.8-27B", None, 2),  # 64 layers x head_dim 256 KV + 54GB weights: keep small
 ]
 
 DATASETS = [

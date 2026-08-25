@@ -187,7 +187,7 @@ def main():
 
             turn1_questions = [build_turn1_question(r) for r in chunk]
             turn1_prompts = [build_chat_prompt(tokenizer, q, system_prompt=args.system_prompt) for q in turn1_questions]
-            turn1_responses = steerer.generate_batch(turn1_prompts, max_new_tokens=args.max_new_tokens)
+            turn1_responses = steerer.generate_batch(turn1_prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
 
             batch_n_ineligible = 0
             eligible = []
@@ -208,7 +208,7 @@ def main():
                     for _, question, _, t1_resp, _ in eligible
                 ]
                 turn2_prompts = [build_chat_prompt_multiturn(tokenizer, m, system_prompt=args.system_prompt) for m in turn2_messages]
-                turn2_responses = steerer.generate_batch(turn2_prompts, max_new_tokens=args.max_new_tokens)
+                turn2_responses = steerer.generate_batch(turn2_prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
             else:
                 turn2_responses = []
 

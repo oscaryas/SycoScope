@@ -184,7 +184,7 @@ def main():
             chunk = remaining_rows[start : start + args.generation_batch_size]
 
             prompts = [build_chat_prompt(tokenizer, r["question_text"], system_prompt=args.system_prompt) for r in chunk]
-            responses = steerer.generate_batch(prompts, max_new_tokens=args.max_new_tokens)
+            responses = steerer.generate_batch(prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
 
             verdicts = judge_truthful_batch(
                 [

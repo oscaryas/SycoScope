@@ -95,7 +95,7 @@ def main():
                 chunk_indices = remaining_indices[start : start + args.generation_batch_size]
                 rows = [_row_from_index(dataset, i) for i in chunk_indices]
                 prompts = [build_chat_prompt_multiturn(tokenizer, build_chat_messages(r), system_prompt=args.system_prompt) for r in rows]
-                responses = steerer.generate_batch(prompts, max_new_tokens=args.max_new_tokens)
+                responses = steerer.generate_batch(prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
                 for row, prompt, response in zip(rows, prompts, responses):
                     row["prompt"] = prompt
                     row["response"] = response
