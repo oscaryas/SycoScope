@@ -65,6 +65,9 @@ def main():
     parser.add_argument("--datasets", type=str, default=",".join(d for d, _, _ in DATASETS))
     parser.add_argument("--n", type=int, default=1000, help="Row cap per dataset per model (0 = full).")
     parser.add_argument("--max-new-tokens", type=int, default=2048)
+    parser.add_argument("--batch-scale", type=int, default=1,
+                        help="Multiply each model's generation batch size (decode is memory-bound; "
+                             "A100-80GB uses ~26GB at Qwen3-8B x16, so 4 is safe there).")
     parser.add_argument("--tar", type=str, default="/content/multimodel_generations.tar.gz")
     args = parser.parse_args()
 
@@ -84,7 +87,7 @@ def main():
                 sys.executable, str(HERE / script),
                 "--model", model, "--out", str(out),
                 "--max-new-tokens", str(args.max_new_tokens),
-                "--generation-batch-size", str(batch_size),
+                "--generation-batch-size", str(batch_size * args.batch_scale),
                 *extra,
             ]
             if args.n:
