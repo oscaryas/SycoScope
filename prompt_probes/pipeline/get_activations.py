@@ -38,12 +38,19 @@ via model_config["answer_token_id"], which is None for
 meta-llama/Meta-Llama-3-8B-Instruct (absent from sycophancy_model_registry.MODELS),
 silently degrading to a mean over the whole sequence including the system prompt.
 
+Padding side is verified on every batch, not only under --validate-only: the
+attention mask must be right-aligned, because left padding would shift every
+real token and silently move all three spans. (A mask-sum check cannot catch
+that -- the sum is the same whichever side the padding sits on.) With that
+invariant always on, --validate-only is an optional diagnostic rather than a
+required pre-flight step.
+
 Usage:
-    # alignment + batching validation on a few examples, then exit
+    python get_activations.py --run-name main --layers 8 16 24 --batch-size 8
+
+    # optional diagnostic: compare batched vs single-example pooling on a few examples, then exit
     python get_activations.py --run-name smoke --model meta-llama/Llama-3.2-1B-Instruct \\
         --layer-fracs 0.25 0.5 0.75 --validate-only
-
-    python get_activations.py --run-name main --layers 8 16 24 --batch-size 8
 """
 import argparse
 import json
@@ -237,14 +244,26 @@ def extract(model, tokenizer, prepared: list[dict], layers: list[int], hidden_di
             idxs = order[bstart : bstart + batch_size]
             texts = [prepared[i]["full_text"] for i in idxs]
             enc = tokenizer(texts, return_tensors="pt", padding=True, add_special_tokens=False)
-            lengths = enc["attention_mask"].sum(dim=1).tolist()
-            for i, length in zip(idxs, lengths):
+            mask = enc["attention_mask"]
+            lengths = mask.sum(dim=1).tolist()
+            for row, (i, length) in enumerate(zip(idxs, lengths)):
                 # Right padding means the unpadded prefix is identical to the
                 # single-example tokenization, so precomputed spans index
                 # directly into the batched hidden states. Verify it.
                 assert length == prepared[i]["n_tokens_full"], (
                     f"{prepared[i]['rec']['example_id']}: batched length {length} != "
                     f"single-example length {prepared[i]['n_tokens_full']}"
+                )
+                # The length check above does NOT catch left padding: the mask
+                # sums to the same value whichever side the pad tokens sit on.
+                # Left padding would shift every real token by (T - length), so
+                # the spans would silently read the wrong positions. Check the
+                # mask's shape, not just its sum. This is the only guard on
+                # padding side beyond the padding_side="right" assignment.
+                assert mask[row, :length].all() and not mask[row, length:].any(), (
+                    f"{prepared[i]['rec']['example_id']}: padding is not right-aligned. "
+                    "Absolute token indices would read the wrong tokens -- check that "
+                    'tokenizer.padding_side = "right" is still set after loading.'
                 )
             enc = {k: v.to(device) for k, v in enc.items()}
             hs = model(**enc, output_hidden_states=True, use_cache=False).hidden_states
