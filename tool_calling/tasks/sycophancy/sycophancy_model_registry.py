@@ -10,6 +10,24 @@ import torch
 
 
 MODELS = {
+    "nvidia/Llama-3.1-Nemotron-Nano-8B-v1": {
+        # Llama-3.1-8B architecture + tokenizer/chat template (verified via
+        # AutoConfig + tokenizer 2026-08-24: answer_token_id 128007 =
+        # <|end_header_id|> lands right before assistant content, eos =
+        # <|eot_id|>). Reasoning model with a per-prompt toggle: system
+        # prompt "detailed thinking on" / "detailed thinking off" -- lets the
+        # same checkpoint be probed with and without reasoning traces.
+        "family": "llama",
+        "n_layers": 32,
+        "n_heads": 32,
+        "hidden_dim": 4096,
+        "mlp_dim": 14336,
+        "head_dim": 128,
+        "mha_hook": "self_attn.o_proj",
+        "mlp_hook": "mlp.down_proj",
+        "config_key": None,
+        "answer_token_id": 128007,
+    },
     "google/gemma-4-12B-it": {
         # Gemma 4 (June 2026), dense 12B, public weights. All values verified
         # via AutoConfig (nested text_config) + tokenizer on 2026-08-24.
@@ -243,6 +261,27 @@ MODELS = {
     # -------------------------------------------------------------------------
     # Opt-in larger models (not part of default reproduction matrix)
     # -------------------------------------------------------------------------
+    "Qwen/Qwen3.8-27B": {
+        # Qwen3.8 (Aug 2026), 27B dense multimodal (model_type qwen3_5, arch
+        # info nested under text_config). Verified via AutoConfig + tokenizer
+        # 2026-08-24. NOTE the NEW larger vocab: <|im_start|> is 248045 here,
+        # NOT Qwen3's 151644 -- copying the old id would silently reintroduce
+        # whole-sequence pooling. head_dim 256 is explicit in the config
+        # (hidden_dim//n_heads would give 213 -- wrong). Chat template
+        # auto-opens a <think> block in the generation prompt. ~54GB bf16:
+        # needs an 80GB A100 or 8-bit quantization, and a transformers
+        # recent enough for model_type qwen3_5.
+        "family": "qwen3.8",
+        "n_layers": 64,
+        "n_heads": 24,
+        "hidden_dim": 5120,
+        "mlp_dim": 17408,
+        "head_dim": 256,
+        "mha_hook": "self_attn.o_proj",
+        "mlp_hook": "mlp.down_proj",
+        "config_key": "text_config",
+        "answer_token_id": 248045,
+    },
     "google/gemma-3-27b-it": {
         "family": "gemma",
         "n_layers": 62,
