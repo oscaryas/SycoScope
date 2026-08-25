@@ -10,6 +10,28 @@ import torch
 
 
 MODELS = {
+    "google/gemma-4-12B-it": {
+        # Gemma 4 (June 2026), dense 12B, public weights. All values verified
+        # via AutoConfig (nested text_config) + tokenizer on 2026-08-24.
+        # answer_token_id 101 = "<channel|>" -- Gemma 4's chat template opens
+        # the assistant turn with "<|turn>model\n<|channel>thought\n<channel|>",
+        # so the LAST 101 occurrence sits immediately before assistant content;
+        # pooling after it is response-only. NOTE: with add_generation_prompt
+        # the template opens a *thought* channel -- read-probing texts append
+        # the response there, which a native generation would have put in a
+        # final channel; acceptable for cross-model read-probing, but revisit
+        # before generating WITH this model.
+        "family": "gemma4",
+        "n_layers": 48,
+        "n_heads": 16,
+        "hidden_dim": 3840,
+        "mlp_dim": 15360,
+        "head_dim": 256,         # independent of hidden_dim, like Gemma 3
+        "mha_hook": "self_attn.o_proj",
+        "mlp_hook": "mlp.down_proj",
+        "config_key": "text_config",
+        "answer_token_id": 101,
+    },
     "google/gemma-3-12b-it": {
         "family": "gemma",
         "n_layers": 46,
@@ -187,7 +209,7 @@ MODELS = {
         "n_layers": 36,
         "n_heads": 32,
         "hidden_dim": 4096,
-        "mlp_dim": 14336,
+        "mlp_dim": 12288,        # fixed 2026-08-24: was 14336; verified via AutoConfig.intermediate_size
         "head_dim": 128,
         "mha_hook": "self_attn.o_proj",
         "mlp_hook": "mlp.down_proj",
@@ -199,7 +221,7 @@ MODELS = {
         "n_layers": 40,
         "n_heads": 40,
         "hidden_dim": 5120,
-        "mlp_dim": 17920,
+        "mlp_dim": 17408,        # fixed 2026-08-24: was 17920; verified via AutoConfig.intermediate_size
         "head_dim": 128,
         "mha_hook": "self_attn.o_proj",
         "mlp_hook": "mlp.down_proj",
