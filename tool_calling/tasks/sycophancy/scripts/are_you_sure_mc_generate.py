@@ -109,11 +109,17 @@ def main():
     parser.add_argument("--datasets", type=str, default=",".join(DEFAULT_DATASETS),
                          help="Comma-separated are_you_sure.jsonl base.dataset values to include.")
     parser.add_argument("--seed", type=int, default=0, help="Shuffles row order (also the resume order) -- keep fixed across resumes.")
+    parser.add_argument("--system-prompt", type=str, default=None,
+                         help="Optional system prompt for every generation turn -- e.g. 'detailed thinking on' "
+                              "to enable Nemotron's reasoning mode (its thinking is OFF without it).")
     parser.add_argument("--generation-batch-size", type=int, default=16)
     parser.add_argument("--max-new-tokens", type=int, default=300)
     parser.add_argument("--out", type=str, default=str(SYCOPHANCY_DIR / "results" / "generations" / "are_you_sure_mc_extra" / "checkpoint.jsonl"))
     parser.add_argument("--n", type=int, default=None, help="Cap on number of rows, for smoke-testing. Default: all rows across the selected datasets.")
     args = parser.parse_args()
+    if "nemotron" in args.model.lower() and not args.system_prompt:
+        print("WARNING: Nemotron models run with thinking OFF unless --system-prompt "
+              "'detailed thinking on' is passed.")
     datasets = tuple(d.strip() for d in args.datasets.split(",") if d.strip())
 
     import torch
@@ -180,7 +186,7 @@ def main():
             chunk = remaining_rows[start : start + args.generation_batch_size]
 
             turn1_questions = [build_turn1_question(r) for r in chunk]
-            turn1_prompts = [build_chat_prompt(tokenizer, q, system_prompt=None) for q in turn1_questions]
+            turn1_prompts = [build_chat_prompt(tokenizer, q, system_prompt=args.system_prompt) for q in turn1_questions]
             turn1_responses = steerer.generate_batch(turn1_prompts, max_new_tokens=args.max_new_tokens)
 
             batch_n_ineligible = 0
@@ -201,7 +207,7 @@ def main():
                     ]
                     for _, question, _, t1_resp, _ in eligible
                 ]
-                turn2_prompts = [build_chat_prompt_multiturn(tokenizer, m) for m in turn2_messages]
+                turn2_prompts = [build_chat_prompt_multiturn(tokenizer, m, system_prompt=args.system_prompt) for m in turn2_messages]
                 turn2_responses = steerer.generate_batch(turn2_prompts, max_new_tokens=args.max_new_tokens)
             else:
                 turn2_responses = []

@@ -110,12 +110,18 @@ def main():
                          help="Comma-separated answer.jsonl base.dataset values to include "
                               "(from: trivia_qa,truthful_qa).")
     parser.add_argument("--seed", type=int, default=0, help="Shuffles row order (also the resume order) -- keep fixed across resumes.")
+    parser.add_argument("--system-prompt", type=str, default=None,
+                         help="Optional system prompt for every generation turn -- e.g. 'detailed thinking on' "
+                              "to enable Nemotron's reasoning mode (its thinking is OFF without it).")
     parser.add_argument("--generation-batch-size", type=int, default=16)
     parser.add_argument("--max-new-tokens", type=int, default=200)
     parser.add_argument("--judge-max-workers", type=int, default=16)
     parser.add_argument("--out", type=str, default=str(SYCOPHANCY_DIR / "results" / "generations" / "truthfulqa_sycophancyeval" / "checkpoint.jsonl"))
     parser.add_argument("--n", type=int, default=None, help="Cap on number of rows, for smoke-testing. Default: all rows across the selected templates.")
     args = parser.parse_args()
+    if "nemotron" in args.model.lower() and not args.system_prompt:
+        print("WARNING: Nemotron models run with thinking OFF unless --system-prompt "
+              "'detailed thinking on' is passed.")
 
     label_to_template = {v: k for k, v in TEMPLATE_LABELS.items()}
     selected_labels = [t.strip() for t in args.templates.split(",") if t.strip()]
@@ -177,7 +183,7 @@ def main():
         for start in range(0, len(remaining_rows), args.generation_batch_size):
             chunk = remaining_rows[start : start + args.generation_batch_size]
 
-            prompts = [build_chat_prompt(tokenizer, r["question_text"], system_prompt=None) for r in chunk]
+            prompts = [build_chat_prompt(tokenizer, r["question_text"], system_prompt=args.system_prompt) for r in chunk]
             responses = steerer.generate_batch(prompts, max_new_tokens=args.max_new_tokens)
 
             verdicts = judge_truthful_batch(

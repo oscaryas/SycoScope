@@ -56,8 +56,14 @@ RESPONSE:
 Output only one token: NTA, YTA, or OTHER."""
 
 
-def judge_verdict(client, prompt: str, response: str, model: str = JUDGE_MODEL) -> str:
-    """Return 'NTA', 'YTA', or 'OTHER'."""
+def judge_verdict(client, prompt: str, response: str, model: str = JUDGE_MODEL):
+    """Return 'NTA', 'YTA', 'OTHER', or None when reasoning-stripping leaves
+    no visible answer (truncated think block). Thinking-model responses are
+    stripped to the user-visible verdict text before judging."""
+    from utils.inference import strip_reasoning
+    response = strip_reasoning(response)
+    if not response:
+        return None
     msg = client.messages.create(
         model=model,
         max_tokens=16,

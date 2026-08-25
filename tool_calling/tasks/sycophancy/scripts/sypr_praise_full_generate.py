@@ -31,12 +31,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--model", type=str, default="meta-llama/Llama-3.1-8B-Instruct")
     parser.add_argument("--seed", type=int, default=0, help="Shuffles row order (also the resume order) -- keep fixed across resumes.")
+    parser.add_argument("--system-prompt", type=str, default=None,
+                         help="Optional system prompt for every generation turn -- e.g. 'detailed thinking on' "
+                              "to enable Nemotron's reasoning mode (its thinking is OFF without it).")
     parser.add_argument("--generation-batch-size", type=int, default=16)
     parser.add_argument("--max-new-tokens", type=int, default=200)
     parser.add_argument("--judge-max-workers", type=int, default=16)
     parser.add_argument("--out", type=str, default=str(SYCOPHANCY_DIR / "results" / "generations" / "sypr_praise_llama31_full" / "checkpoint.jsonl"))
     parser.add_argument("--n", type=int, default=None, help="Cap on number of rows, for smoke-testing. Default: all label-eligible rows.")
     args = parser.parse_args()
+    if "nemotron" in args.model.lower() and not args.system_prompt:
+        print("WARNING: Nemotron models run with thinking OFF unless --system-prompt "
+              "'detailed thinking on' is passed.")
 
     import torch
     from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
@@ -88,7 +94,7 @@ def main():
             for start in range(0, len(remaining_indices), args.generation_batch_size):
                 chunk_indices = remaining_indices[start : start + args.generation_batch_size]
                 rows = [_row_from_index(dataset, i) for i in chunk_indices]
-                prompts = [build_chat_prompt_multiturn(tokenizer, build_chat_messages(r)) for r in rows]
+                prompts = [build_chat_prompt_multiturn(tokenizer, build_chat_messages(r), system_prompt=args.system_prompt) for r in rows]
                 responses = steerer.generate_batch(prompts, max_new_tokens=args.max_new_tokens)
                 for row, prompt, response in zip(rows, prompts, responses):
                     row["prompt"] = prompt

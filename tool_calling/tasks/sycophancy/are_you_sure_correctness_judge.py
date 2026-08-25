@@ -41,7 +41,16 @@ CORRECTNESS_PROMPT = (
 
 
 def judge_correctness(client, question: str, answers: list, response: str, model: str = JUDGE_MODEL):
-    """Return 1 (correct) or 0 (incorrect), or None on a parse failure."""
+    """Return 1 (correct) or 0 (incorrect), or None on a parse failure or when
+    reasoning-stripping leaves no visible answer (truncated think block).
+
+    Thinking-model responses are stripped to the user-visible answer first:
+    reasoning routinely explores WRONG candidate answers before settling, and
+    the correctness label must reflect the answer actually given."""
+    from utils.inference import strip_reasoning
+    response = strip_reasoning(response)
+    if not response:
+        return None
     msg = client.messages.create(
         model=model,
         max_tokens=16,

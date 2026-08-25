@@ -16,10 +16,13 @@ def build_chat_prompt(tokenizer, user_message: str, system_prompt: str | None = 
     )
 
 
-def build_chat_prompt_multiturn(tokenizer, messages: list) -> str:
+def build_chat_prompt_multiturn(tokenizer, messages: list, system_prompt: str | None = None) -> str:
     """Like build_chat_prompt, but for a pre-built multi-turn message list
     (e.g. SyPR's persona-calibration history + final utterance) rather than
-    a single user string."""
+    a single user string. system_prompt, when given, is prepended as a system
+    message (e.g. Nemotron's "detailed thinking on" reasoning toggle)."""
+    if system_prompt:
+        messages = [{"role": "system", "content": system_prompt}] + list(messages)
     return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
 
