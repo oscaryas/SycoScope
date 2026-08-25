@@ -52,7 +52,14 @@ def parse_mc_letter(text: str, letters: str):
     """Same preference order as mmlu_truthfulqa_pipeline.parse_mmlu_letter
     (prefer the LAST 'Answer: X' occurrence, fall back to the last standalone
     letter anywhere in the text), generalized to an arbitrary letter set
-    instead of a hardcoded A-D. Returns None if nothing matches."""
+    instead of a hardcoded A-D. Returns None if nothing matches.
+
+    Reasoning wrappers (Qwen3 <think> blocks, Gemma-4 channel segments) are
+    stripped first so the fallback can't match a letter the model merely
+    considered mid-reasoning; a truncated (unclosed) think block parses as
+    None rather than as whatever letter the reasoning mentioned last."""
+    from utils.inference import strip_reasoning
+    text = strip_reasoning(text)
     letter_class = "".join(sorted(set(letters)))
     answer_matches = re.findall(rf"answer:\s*\(?([{letter_class}])\)?", text, re.IGNORECASE)
     if answer_matches:

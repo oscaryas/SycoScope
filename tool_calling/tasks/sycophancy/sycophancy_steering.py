@@ -84,21 +84,11 @@ class ActivationSteerer:
         self.tokenizer = tokenizer
         self.model_config = model_config
         self.handles = []
-        # Explicit end-of-turn terminators: the UNION of the checkpoint's own
-        # generation_config eos list (authoritative per model family -- e.g.
-        # Gemma ends turns with <turn|>/<end_of_turn>, which is NOT
-        # tokenizer.eos_token, so replacing rather than extending that list
-        # would run every generation to max_new_tokens), tokenizer.eos_token,
-        # and Llama-3's <|eot_id|> (older Llama-3 checkpoints ship a
-        # generation_config listing only <|end_of_text|>, the gap
-        # utils.inference.generate_batch hardcodes around).
-        gen_cfg_eos = getattr(getattr(model, "generation_config", None), "eos_token_id", None)
-        ids = list(gen_cfg_eos) if isinstance(gen_cfg_eos, (list, tuple)) else ([gen_cfg_eos] if gen_cfg_eos is not None else [])
-        ids.append(tokenizer.eos_token_id)
-        eot_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
-        if isinstance(eot_id, int) and eot_id not in (None, tokenizer.unk_token_id):
-            ids.append(eot_id)
-        self.terminators = sorted({i for i in ids if isinstance(i, int)})
+        # Model-agnostic end-of-turn terminators -- shared with the sampled
+        # utils.inference.generate_batch path so both generation routes stop
+        # identically for every registered model family.
+        from utils.inference import resolve_terminators
+        self.terminators = resolve_terminators(model, tokenizer)
 
     def attach(self, component: str, layer: int, vector: torch.Tensor, alpha: float, head: int = None):
         device = next(self.model.parameters()).device

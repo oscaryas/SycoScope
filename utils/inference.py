@@ -28,6 +28,41 @@ def iter_batches(items: list, batch_size: int):
         yield items[i : i + batch_size]
 
 
+def resolve_terminators(model, tokenizer) -> list[int]:
+    """Model-agnostic end-of-turn terminator list: the UNION of the
+    checkpoint's own generation_config eos ids (authoritative per family --
+    e.g. Gemma ends turns with <turn|>/<end_of_turn>, which is NOT
+    tokenizer.eos_token, so replacing that list would run every generation to
+    max_new_tokens), tokenizer.eos_token, and Llama-3's <|eot_id|> (older
+    Llama-3 checkpoints ship a generation_config listing only
+    <|end_of_text|>)."""
+    gen_cfg_eos = getattr(getattr(model, "generation_config", None), "eos_token_id", None)
+    ids = list(gen_cfg_eos) if isinstance(gen_cfg_eos, (list, tuple)) else ([gen_cfg_eos] if gen_cfg_eos is not None else [])
+    ids.append(tokenizer.eos_token_id)
+    eot_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
+    if isinstance(eot_id, int) and eot_id not in (None, tokenizer.unk_token_id):
+        ids.append(eot_id)
+    return sorted({i for i in ids if isinstance(i, int)})
+
+
+def strip_reasoning(text: str) -> str:
+    """Remove visible reasoning wrappers from a generated response before
+    MECHANICAL answer parsing (LLM judges should keep the full text):
+    - Qwen3-style <think>...</think>: keep only text after the LAST closing
+      tag. An OPENED but unclosed block means generation was truncated
+      mid-think -- return "" so parsers report no answer instead of matching
+      letters/words inside the reasoning.
+    - Gemma-4-style channels: keep text after the last <channel|> marker
+      when the markers survived decoding."""
+    if "<think>" in text and "</think>" not in text:
+        return ""
+    if "</think>" in text:
+        text = text.rsplit("</think>", 1)[-1]
+    if "<channel|>" in text:
+        text = text.rsplit("<channel|>", 1)[-1]
+    return text.strip()
+
+
 def generate_batch(
     model,
     tokenizer,
@@ -48,7 +83,7 @@ def generate_batch(
     inputs = tokenizer(
         chat_texts, return_tensors="pt", padding=True, add_special_tokens=False
     ).to(model.device)
-    terminators = [tokenizer.eos_token_id, tokenizer.convert_tokens_to_ids("<|eot_id|>")]
+    terminators = resolve_terminators(model, tokenizer)
 
     gen_kwargs = dict(
         max_new_tokens=max_new_tokens,
