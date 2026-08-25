@@ -1,0 +1,62 @@
+{
+  "cells": [
+    "general_baseline",
+    "pv_explicit",
+    "ctrl_politeness"
+  ],
+  "cosine": [
+    [
+      0.9999999900000003,
+      0.1076663976427833,
+      -0.0659157425381792
+    ],
+    [
+      0.1076663976427833,
+      0.9999999900000003,
+      0.041801075377831814
+    ],
+    [
+      -0.0659157425381792,
+      0.041801075377831814,
+      0.9999999900000002
+    ]
+  ],
+  "reliability_ceiling": {
+    "general_baseline": {
+      "mean": 0.05685792476474212,
+      "min": 0.020193059715534485,
+      "max": 0.07630110886519792,
+      "n": 5
+    },
+    "pv_explicit": {
+      "mean": 0.08591321684895589,
+      "min": 0.06095825926559945,
+      "max": 0.11073899736198514,
+      "n": 5
+    },
+    "ctrl_politeness": {
+      "mean": 0.305017093693496,
+      "min": 0.24917561500099988,
+      "max": 0.3220012875324366,
+      "n": 5
+    }
+  },
+  "clustering": {
+    "clusters": {
+      "cluster_2": [
+        "general_baseline"
+      ],
+      "cluster_1": [
+        "pv_explicit"
+      ],
+      "cluster_0": [
+        "ctrl_politeness"
+      ]
+    },
+    "internal_similarity_range": {
+      "cluster_2": null,
+      "cluster_1": null,
+      "cluster_0": null
+    }
+  }
+}

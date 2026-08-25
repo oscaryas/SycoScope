@@ -128,7 +128,11 @@ def fit_probe(X: np.ndarray, y: np.ndarray, seed: int, C: float, max_iter: int):
     from sklearn.preprocessing import StandardScaler
 
     scaler = StandardScaler().fit(X)
-    clf = LogisticRegression(penalty="l2", C=C, max_iter=max_iter, random_state=seed)
+    # L2 is LogisticRegression's default. Passing penalty="l2" explicitly is
+    # deprecated in sklearn 1.8 and removed in 1.10; omitting it is verified
+    # bit-identical (coef max abs diff 0.0) and keeps the paper's lambda=1
+    # as C=1.0.
+    clf = LogisticRegression(C=C, max_iter=max_iter, random_state=seed)
     clf.fit(scaler.transform(X), y)
     return scaler, clf
 

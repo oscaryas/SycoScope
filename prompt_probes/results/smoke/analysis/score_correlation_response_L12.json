@@ -1,0 +1,49 @@
+{
+  "basis": "neutral",
+  "n_samples": 8,
+  "cells": [
+    "general_baseline",
+    "pv_explicit",
+    "ctrl_politeness"
+  ],
+  "correlation": [
+    [
+      1.0,
+      -0.11117753909583108,
+      -0.4356651169098577
+    ],
+    [
+      -0.1111775390958311,
+      1.0,
+      0.4296622559604983
+    ],
+    [
+      -0.4356651169098577,
+      0.4296622559604983,
+      1.0
+    ]
+  ],
+  "control_median": {
+    "general_baseline": -2.435196701671992,
+    "pv_explicit": 0.9461748851955678,
+    "ctrl_politeness": 4.131965658115836
+  },
+  "clustering": {
+    "clusters": {
+      "cluster_2": [
+        "general_baseline"
+      ],
+      "cluster_1": [
+        "pv_explicit"
+      ],
+      "cluster_0": [
+        "ctrl_politeness"
+      ]
+    },
+    "internal_similarity_range": {
+      "cluster_2": null,
+      "cluster_1": null,
+      "cluster_0": null
+    }
+  }
+}
