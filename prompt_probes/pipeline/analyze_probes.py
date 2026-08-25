@@ -62,6 +62,9 @@ import get_activations as ga  # noqa: E402
 from train_probes import load_cell, paired_win_rate, safe_auc  # noqa: E402
 
 
+ELEPHANT_BASIS = "elephant"
+
+
 def cosine(a: np.ndarray, b: np.ndarray) -> float:
     """Same convention as rq1_gate1_geometry.cosine."""
     return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-8))
@@ -184,16 +187,31 @@ def transfer_matrix(run_dir, slugs, probes, position, layer, split, drop_degener
 def score_correlations(run_dir, slugs, probes, position, layer, basis_slug):
     """Pearson correlation between probe scores over one common sample set.
 
-    The `neutral` cell is the cleanest basis available: identical inputs for
-    every probe (same 200 responses, no system prompt) and no probe was trained
-    on it, so nothing about the correlation reflects one probe's own training
-    rows.
+    basis_slug == "elephant" uses the cached OOD activations, which is what the
+    paper does -- section 5.3 correlates probe outputs "across all evaluation
+    samples". That is the version to report: correlations measured
+    in-distribution are computed where every probe saturates, so they describe
+    behaviour on data that cannot discriminate between them.
+
+    Any per-cell slug (e.g. `neutral`) is also accepted as an in-distribution
+    basis. `neutral` is the cleanest of those -- identical inputs for every
+    probe, and no probe trained on it -- and remains the reference for
+    control-adjusted scores (section 5.5).
     """
     key = ga.act_key(position, layer)
-    npz = run_dir / "activations" / f"{basis_slug}.npz"
-    if not npz.exists():
-        return None
-    X = ga.load_acts(run_dir, basis_slug, position, layer)
+    if basis_slug == ELEPHANT_BASIS:
+        npz = run_dir / "eval_elephant" / "activations.npz"
+        if not npz.exists():
+            return None
+        with np.load(npz) as z:
+            if key not in z.files:
+                return None
+            X = z[key].astype(np.float32)
+    else:
+        npz = run_dir / "activations" / f"{basis_slug}.npz"
+        if not npz.exists():
+            return None
+        X = ga.load_acts(run_dir, basis_slug, position, layer)
 
     names, scores = [], []
     for slug in slugs:
@@ -230,6 +248,18 @@ def length_analysis(run_dir, slugs, probes, position, layer, drop_degenerate) ->
     `first5` is immune by construction (always five tokens), so a large
     correlation on `response` alongside a small one on `first5` localises the
     problem to the pooling rather than to the representation.
+
+    Read `score_length_r_within`, not `score_length_r`. The raw correlation is
+    confounded by class: when the probe separates well and lengths differ by
+    class, score and length are both driven by the label, so |r| is large even
+    where reading length is impossible.
+
+    `last_prompt` is a free null control for exactly that. Response length is
+    causally unavailable there -- no response token has been generated yet --
+    so its within-class r must sit near zero. Observed on the smoke run:
+    ctrl_politeness raw r = +0.826 (length gap +300 tokens) but within-class
+    r = +0.077. A large within-class value at last_prompt would mean this
+    metric is broken, not that the probe reads length.
     """
     key = ga.act_key(position, layer)
     out = {}
@@ -398,6 +428,19 @@ def main():
     parser.add_argument("--positions", type=str, nargs="+", default=None, choices=common.POSITIONS)
     parser.add_argument("--layers", type=int, nargs="+", default=None)
     parser.add_argument("--n-clusters", type=int, default=5, help="Paper found 5 clusters over 23 prompts.")
+    parser.add_argument(
+        "--anova-source",
+        choices=("elephant", "cv"),
+        default="elephant",
+        help="Decompose OOD ELEPHANT AUC (paper-faithful) or in-distribution cv_auc "
+        "(saturated, uninterpretable). Falls back to cv if the ELEPHANT summary is absent.",
+    )
+    parser.add_argument(
+        "--cluster-basis",
+        default=ELEPHANT_BASIS,
+        help="Sample set for the score-correlation clustering: 'elephant' (the paper's "
+        "'all evaluation samples') or a cell slug such as 'neutral'.",
+    )
     parser.add_argument("--ceiling-splits", type=int, default=5, help="0 to skip reliability ceilings.")
     parser.add_argument("--C", type=float, default=1.0)
     parser.add_argument("--max-iter", type=int, default=2000)
@@ -430,18 +473,44 @@ def main():
     print(f"{len(slugs)} cells, positions {positions}, layers {layers}")
 
     # ---- 1. ANOVA -------------------------------------------------------
-    decomposition = anova(summary["rows"], "cv_auc")
-    (out_dir / "anova.json").write_text(json.dumps(decomposition, indent=2), encoding="utf-8")
-    print("\n--- ANOVA on cv_auc (paper: prompt 70.6%, layer 2.7%, token selection 0.6%) ---")
+    # The paper computes this on OOD AUC (section 4.1: "evaluated each on the
+    # validation dataset"), NOT on training separation. Running it on cv_auc is
+    # a category error once the in-distribution numbers saturate: a measure
+    # pinned at 1.000 has no variance to decompose, which surfaces as a huge
+    # residual. So prefer the ELEPHANT AUCs whenever they exist.
+    ood_path = run_dir / "eval_elephant" / "summary.json"
+    if args.anova_source == "elephant" and ood_path.exists():
+        ood = json.loads(ood_path.read_text(encoding="utf-8"))
+        anova_rows = [dict(r, spec=r["slug"]) for r in ood["rows"] if r["split"] == "eval"]
+        value_key, source_label = "auc", "ELEPHANT eval-half AUC"
+    else:
+        if args.anova_source == "elephant":
+            print()
+            print(f"  NOTE: {ood_path} not found; falling back to in-distribution cv_auc.")
+        anova_rows = summary["rows"]
+        value_key, source_label = "cv_auc", "in-distribution cv_auc (SATURATED)"
+
+    decomposition = anova(anova_rows, value_key)
+    (out_dir / "anova.json").write_text(
+        json.dumps({"source": source_label, **decomposition}, indent=2), encoding="utf-8"
+    )
+    print()
+    print(f"--- ANOVA on {source_label} (paper: prompt 70.6%, layer 2.7%, token selection 0.6%) ---")
     if "error" in decomposition:
         print(f"  skipped: {decomposition['error']}")
     else:
         for label in ("prompt_pair", "layer", "position", "residual"):
-            e = decomposition[label]
-            p = e.get("p")
-            ptxt = "" if p is None else f"  p={p:.3g}"
+            e = decomposition.get(label)
+            if not e:
+                continue
+            pv = e.get("p")
+            ptxt = "" if pv is None else f"  p={pv:.3g}"
             print(f"  {label:<12} {e['pct_variance']:>6.2f}%  (df={e['df']}){ptxt}")
-        anova_plot(plot_dir / "anova_cv_auc.png", decomposition, "AUC variance explained (cv_auc)")
+        if value_key == "cv_auc":
+            print("  These percentages are not interpretable: in-distribution AUC saturates")
+            print("  near 1.000, so there is no variance to attribute and the residual absorbs")
+            print("  it. Run eval_elephant.py, then re-run for the version the paper reports.")
+        anova_plot(plot_dir / f"anova_{value_key}.png", decomposition, f"AUC variance explained ({value_key})")
 
     # ---- 2/3/4 per (position, layer) ------------------------------------
     for position in positions:
@@ -505,7 +574,13 @@ def main():
                         "    up, the pooling is the problem, not the representation."
                     )
 
-            sc = score_correlations(run_dir, slugs, probes, position, layer, common.NEUTRAL_SLUG)
+            sc = score_correlations(run_dir, slugs, probes, position, layer, args.cluster_basis)
+            if sc is None and args.cluster_basis == ELEPHANT_BASIS:
+                sc = score_correlations(run_dir, slugs, probes, position, layer, common.NEUTRAL_SLUG)
+                if sc is not None:
+                    print("  NOTE: no ELEPHANT activations; clustered on the in-distribution")
+                    print("  'neutral' cell instead, where probes saturate. The paper correlates")
+                    print("  over evaluation samples -- run eval_elephant.py for that version.")
             if sc:
                 corr = np.array(sc["correlation"], dtype=float)
                 sc["clustering"] = cluster_from_matrix(sc["cells"], corr, args.n_clusters)

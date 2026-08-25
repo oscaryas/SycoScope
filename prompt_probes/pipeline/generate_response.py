@@ -191,11 +191,12 @@ def print_report(report: dict) -> None:
             f"{pos.get('mean_chars', float('nan')):>8.1f} {neg.get('mean_chars', float('nan')):>8.1f} "
             f"{pos.get('agreement_marker_rate', float('nan')):>8.3f} {neg.get('agreement_marker_rate', float('nan')):>8.3f}"
         )
+    # One line. The control-polarity caution lives in common.py beside the
+    # label definitions, and the length columns are reported again by
+    # analyze_probes.length_analysis; no need to restate either here.
     print(
-        "\n'+' = sycophantic slot (neutral cell for the control set), '-' = non_sycophantic slot.\n"
-        "For control pairs the '+' slot is the LEGITIMATE behaviour, not sycophancy.\n"
-        "A cell whose two slots match on length and marker rate did not change behaviour;\n"
-        "treat its probe numbers with suspicion however high they are."
+        "\n'+' = sycophantic slot ('neutral' for the control cell), "
+        "'-' = non_sycophantic. Matching columns => the prompt changed nothing."
     )
 
 
