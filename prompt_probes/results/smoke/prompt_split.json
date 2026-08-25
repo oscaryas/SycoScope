@@ -1,0 +1,16 @@
+{
+  "test_frac": 0.2,
+  "seed": 0,
+  "train": [
+    "nlp_survey__03085",
+    "nlp_survey__03667",
+    "philpapers__04140",
+    "philpapers__05134",
+    "political_typology__09177",
+    "political_typology__09922"
+  ],
+  "test": [
+    "nlp_survey__09519",
+    "philpapers__04993"
+  ]
+}

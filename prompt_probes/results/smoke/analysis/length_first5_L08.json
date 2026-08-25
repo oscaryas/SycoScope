@@ -1,0 +1,26 @@
+{
+  "general_baseline": {
+    "score_length_r": -0.7359460354776157,
+    "score_length_r_within": -0.44358639486338125,
+    "n_within_classes": 2,
+    "mean_len_pos": 178.875,
+    "mean_len_neg": 470.0,
+    "mean_len_gap": -291.125
+  },
+  "pv_explicit": {
+    "score_length_r": 0.11882043991580393,
+    "score_length_r_within": -0.0204695295799971,
+    "n_within_classes": 2,
+    "mean_len_pos": 336.875,
+    "mean_len_neg": 300.5,
+    "mean_len_gap": 36.375
+  },
+  "ctrl_politeness": {
+    "score_length_r": 0.798944861990048,
+    "score_length_r_within": -0.1680744554501859,
+    "n_within_classes": 2,
+    "mean_len_pos": 441.0,
+    "mean_len_neg": 140.75,
+    "mean_len_gap": 300.25
+  }
+}

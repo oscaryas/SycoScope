@@ -249,8 +249,27 @@ def length_analysis(run_dir, slugs, probes, position, layer, drop_degenerate) ->
             continue
         scores = apply_probe(probe, X)
         r = float(np.corrcoef(scores, lens)[0, 1]) if np.std(lens) > 0 else float("nan")
+
+        # The overall correlation is confounded by class and cannot answer the
+        # question on its own: when a probe separates well AND length differs by
+        # class, score and length are both driven by the label, so |r| is large
+        # even where the probe demonstrably cannot be reading length (it shows
+        # up at last_prompt, before any response token exists).
+        #
+        # The within-class correlation removes that shared cause. It asks: among
+        # responses that share a label, do longer ones score higher? That is the
+        # actual "probe reads length" signal.
+        within = []
+        for label in (0, 1):
+            m = y == label
+            if m.sum() >= 3 and np.std(lens[m]) > 0 and np.std(scores[m]) > 0:
+                within.append(float(np.corrcoef(scores[m], lens[m])[0, 1]))
+        r_within = float(np.mean(within)) if within else float("nan")
+
         out[slug] = {
             "score_length_r": r,
+            "score_length_r_within": r_within,
+            "n_within_classes": len(within),
             "mean_len_pos": float(lens[y == 1].mean()) if (y == 1).any() else None,
             "mean_len_neg": float(lens[y == 0].mean()) if (y == 0).any() else None,
         }
@@ -463,19 +482,27 @@ def main():
             la = length_analysis(run_dir, slugs, probes, position, layer, drop_degenerate)
             if la:
                 (out_dir / f"length_{tag}.json").write_text(json.dumps(la, indent=2), encoding="utf-8")
-                worst = max(la.items(), key=lambda kv: abs(kv[1]["score_length_r"] or 0))
-                print(f"  score-vs-length |r|: max {abs(worst[1]['score_length_r']):.3f} ({worst[0]})")
-                for slug, e in sorted(la.items(), key=lambda kv: -abs(kv[1]["score_length_r"] or 0))[:3]:
+
+                def _within(e):
+                    v = e.get("score_length_r_within")
+                    return 0.0 if v is None or v != v else v
+
+                worst = max(la.items(), key=lambda kv: abs(_within(kv[1])))
+                print(f"  score-vs-length: max within-class |r| {abs(_within(worst[1])):.3f} ({worst[0]})")
+                for slug, e in sorted(la.items(), key=lambda kv: -abs(_within(kv[1])))[:3]:
                     gap = e.get("mean_len_gap")
                     print(
-                        f"    {slug:<26} r={e['score_length_r']:+.3f}"
+                        f"    {slug:<26} within r={_within(e):+.3f}  (raw r={e['score_length_r']:+.3f})"
                         + (f"  len gap {gap:+.0f} tok" if gap is not None else "")
                     )
-                if abs(worst[1]["score_length_r"] or 0) > 0.5 and position == "response":
+                # Gate on the within-class value: the raw correlation is large
+                # whenever the probe separates well and lengths differ by class,
+                # which says nothing about whether length is being read.
+                if abs(_within(worst[1])) > 0.5 and position == "response":
                     print(
-                        "    WARNING: response-position scores track response length. Compare against\n"
-                        "    first5 (length-immune by construction); if first5 holds up, the pooling is\n"
-                        "    the problem, not the representation."
+                        "    WARNING: within-class, response-position scores still track length.\n"
+                        "    Compare against first5 (length-immune by construction); if first5 holds\n"
+                        "    up, the pooling is the problem, not the representation."
                     )
 
             sc = score_correlations(run_dir, slugs, probes, position, layer, common.NEUTRAL_SLUG)
