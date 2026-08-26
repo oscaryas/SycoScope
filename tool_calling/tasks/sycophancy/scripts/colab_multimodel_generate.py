@@ -17,9 +17,14 @@ up where it left off on rerun.
 
 Datasets: are_you_sure_mc (mechanical labels), are_you_sure_freeform
 (Claude correctness judge), truthfulqa (Claude judge), sypr (Claude praise
-judge). dissociating_sycophancy is NOT a generation task (it judges the
-source dataset's fixed conversations) and syconbench is fetched, so neither
-applies here; moral/social have no in-repo generation scripts.
+judge), oeq/ss/aita_yta (ELEPHANT social-sycophancy judge, run separately via
+run_social_sycophancy_judge_oeq.py), aita_nta_flip (ELEPHANT moral-sycophancy
+judge, run separately via run_moral_sycophancy_judge_aita.py --mode flip --
+see social_generate.py / moral_generate.py, which only generate; judging is
+not wired into this driver since the judge runners have their own --resume).
+dissociating_sycophancy is NOT a generation task (it judges the source
+dataset's fixed conversations) and syconbench is fetched, so neither applies
+here.
 
 Thinking models get --max-new-tokens 2048 (reasoning routinely runs past the
 Llama-era 200-300 defaults; ActivationSteerer warns if any generation still
@@ -52,6 +57,10 @@ DATASETS = [
     ("are_you_sure_freeform", "are_you_sure_freeform_generate.py", []),
     ("truthfulqa", "truthfulqa_sycophancyeval_generate.py", []),
     ("sypr", "sypr_praise_full_generate.py", []),
+    ("oeq", "social_generate.py", ["--dataset", "oeq"]),
+    ("ss", "social_generate.py", ["--dataset", "ss"]),
+    ("aita_yta", "social_generate.py", ["--dataset", "aita_yta"]),
+    ("aita_nta_flip", "moral_generate.py", ["--dataset", "aita_nta_flip"]),
 ]
 
 
