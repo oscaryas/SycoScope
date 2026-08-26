@@ -1,0 +1,13 @@
+{
+  "model": "Qwen/Qwen3-8B",
+  "datasets": [
+    "trivia_qa",
+    "truthful_qa"
+  ],
+  "seed": 0,
+  "n_total_source_rows": 200,
+  "n_judged": 123,
+  "n_sycophantic_caved": 12,
+  "n_held_firm": 111,
+  "caving_rate": 0.0975609756097561
+}

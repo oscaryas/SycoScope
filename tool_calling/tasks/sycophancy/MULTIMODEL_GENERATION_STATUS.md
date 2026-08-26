@@ -1,3 +1,125 @@
+# Session 3 (2026-08-26) — second GPU run: gemma-4-12B, Qwen3-14B, Qwen3.8-27B (partial); stopped by user
+
+Branch `worktree-fix-steerer-asymmetries`. **No code changes this session** — the run used the
+code pushed in session 2 (`d0377b8`). This section records what was generated, what the numbers
+look like, and exactly what remains. Read it before the Session-2 and Session-1 sections below.
+
+## Outcome in one paragraph
+
+A fresh Colab **A100-SXM4 80 GB** VM ran the remaining models as one detached bash chain
+(`gemma-4-12B-it --batch-scale 4` → `Qwen3-14B --batch-scale 2` → `Qwen3.8-27B --batch-scale 4`
+→ `Qwen3-8B --datasets truthfulqa`, all `--n 200`). **gemma-4-12B-it and Qwen3-14B completed all
+four datasets.** Qwen3.8-27B completed are_you_sure_mc and (all but the last batch of)
+are_you_sure_freeform; the user stopped the chain there because the 27B runs ~3.4 h per dataset
+at batch 8. **Not generated:** Qwen3.8-27B truthfulqa + sypr, and Qwen3-8B truthfulqa. Results
+were pulled SHA-verified and committed to git (force-added past `.gitignore`) — see "Where the
+data is".
+
+## Run timeline (local time, 2026-08-26)
+
+- colab-mcp reconnect landed on a **CPU** runtime first; the user switched it to A100 and
+  reconnected. Setup: clone branch, `pip install -U transformers anthropic` (transformers 5.15.1,
+  torch 2.11.0+cu128), `%run colab_load_secrets.py`.
+- Session-2 checkpoints were **not** restored onto the VM (the base64 cell payload was too large
+  to push through one MCP call); gemma's 54 partial rows were simply regenerated (~10 min).
+  Finished models were excluded with `--models`, so nothing else was redone.
+- ~2 h: gemma done (rarely hits the 2048 cap). ~4 h 20 min: Qwen3-14B done. ~7 h 40 min: 27B
+  are_you_sure_mc done. ~9 h 40 min: user asked to stop after freeform → chain parent and
+  driver killed by pid; the freeform generator kept running as an orphan.
+- ~10 h 40 min: the 27B freeform generator **crashed on its final batch** (source rows
+  193–200) with `anthropic.OverloadedError: 529` from the Claude judge. 123 rows were already
+  checkpointed; `checkpoint.resume_state.json` says `n_consumed: 192`, so a rerun finishes the
+  last 8 rows. The judges have no retry/backoff — see "What needs to be done".
+- Pull: tar+gzip → base64 in a cell → `decode_mm.py` (SHA-verified) → repo.
+
+## Where the data is
+
+`tool_calling/tasks/sycophancy/results/generations/multimodel/<model_slug>/<dataset>/`
+(`checkpoint.jsonl`, `checkpoint.truncated.jsonl`, `checkpoint.resume_state.json`,
+`summary.json`). Session-2 data (Qwen3-8B, Nemotron-Nano-8B) lives in the same tree. These paths
+match `.gitignore` (`results/**/*.jsonl`) and were added with `git add -f`; add future pulls the
+same way.
+
+| model / dataset | labeled rows | pos (sycophantic) | neg | truncated set aside |
+|---|---|---|---|---|
+| gemma-4-12B-it / are_you_sure_mc | 173 | 2 | 171 | 9 |
+| gemma-4-12B-it / are_you_sure_freeform | 137 | 22 | 115 | 2 |
+| gemma-4-12B-it / truthfulqa | 184 | 57 | 127 | 1 |
+| gemma-4-12B-it / sypr | 192 | 21 | 171 | 8 |
+| Qwen3-14B / are_you_sure_mc | 104 | 1 | 103 | 78 |
+| Qwen3-14B / are_you_sure_freeform | 146 | 6 | 140 | 5 |
+| Qwen3-14B / truthfulqa | 179 | 46 | 133 | 12 |
+| Qwen3-14B / sypr | 159 | 28 | 131 | 41 |
+| Qwen3.8-27B / are_you_sure_mc | 132 | 1 | 131 | 63 |
+| Qwen3.8-27B / are_you_sure_freeform | 123 (192/200 consumed) | 12 | 111 | 36 |
+| Qwen3.8-27B / truthfulqa | — not run | | | |
+| Qwen3.8-27B / sypr | — not run | | | |
+| Qwen3-8B / truthfulqa | — not run | | | |
+
+Session-2 rows (Qwen3-8B ×3, Nemotron ×4) are in the Session-2 table below.
+
+## Findings worth keeping
+
+- **gemma-4-12B-it is the fastest and cleanest**: ~55 rows / 20 min at batch 64 including
+  judging, <5 % cap-hits. Caves on freeform pushback 16 % (22/137), almost never on MC (2/173);
+  31 % imitative falsehoods on truthfulqa; praises poor work 11 % (21/192).
+- **Qwen3-14B behaves like Qwen3-8B** (thinking on): MC pushback 1/104, ~45 % of MC
+  generations hit the 2048 cap (78 set aside), sypr 18 % (28/159), truthfulqa 26 % (46/179).
+  `--batch-scale 2` (batch 32) peaked at 77.5 GB on the 80 GB card — do not raise it.
+- **Qwen3.8-27B is slow and memory-bound**: batch 8 sits at 79–80.4 GB, ~3.4 h per 200-row
+  dataset, ~48 % cap-hits on MC. MC pushback 1/132; freeform 10 % (12/123).
+- Across all five models, MC "are you sure" sycophancy is near zero (0–3 positives per model);
+  are_you_sure positives for a balanced mixture have to come from freeform.
+- Throughput on A100-80GB at 2048 max-new-tokens: 8B thinking batch 64 ≈ 64 rows / 10 min;
+  12B non-thinking batch 64 ≈ 55 rows / 20 min; 14B batch 32 ≈ 30 rows / 20 min; 27B batch 8 ≈
+  12–16 rows / 20 min.
+
+## What needs to be done (remaining work)
+
+1. **Finish generation** — all resumable from the checkpoints now in git (clone the branch on
+   the VM and the checkpoints are already in place):
+   ```
+   S=tool_calling/tasks/sycophancy/scripts/colab_multimodel_generate.py
+   python $S --models Qwen/Qwen3.8-27B --datasets are_you_sure_freeform --n 200 --batch-scale 4  # last 8 rows, ~15 min incl. load
+   python $S --models Qwen/Qwen3-8B    --datasets truthfulqa --n 200 --batch-scale 4             # ~40 min
+   python $S --models Qwen/Qwen3.8-27B --datasets truthfulqa,sypr --n 200 --batch-scale 4         # ~7 h; or --n 100, or drop 27B
+   ```
+2. **Add retry/backoff to the Claude judges.** All four generation scripts call the judge
+   directly; a single 529/overloaded response kills the run (it cost the last 27B batch). Wrap
+   the `client.messages.create` calls (are_you_sure freeform judge, sypr judge,
+   `truthfulqa_verdict_judge.judge_truthful`) with exponential backoff on
+   `anthropic.APIStatusError` / `OverloadedError` / `RateLimitError`, or pass `max_retries=8` to
+   `anthropic.Anthropic(...)`.
+3. **Decide what to do with the truncated rows.** Every `checkpoint.truncated.jsonl` holds
+   cap-hit generations (25–50 % for the Qwen3 thinking models). Options: rerun those prompts
+   with `--max-new-tokens 4096` (there is no `--resume-truncated` mode yet — it would read the
+   sidecar, regenerate, and append to the main checkpoint), or accept the bias toward
+   short-thinking prompts.
+4. **Per-model mixtures.** `build_sycophancy_mixture.py` needs 4 balanced categories (sypr,
+   are_you_sure, social, moral) capped at min(pos, neg). This run yields only sypr + are_you_sure;
+   social and moral have no generation scripts. Either write `social_*_generate.py` /
+   `moral_*_generate.py` counterparts (same checkpoint/truncated/judge pattern), or build a
+   2-category mixture. With `--n 200` the balanced caps are small (are_you_sure ≈ 6–22 pairs,
+   sypr ≈ 21–28 pairs per model); raise `--n` for the positive-starved datasets if a bigger probe
+   set is needed.
+5. **Probe training / steering per model** then follows the Session-1 "What to do next" list
+   from step 6 onward.
+6. Disconnect the Colab VM after pulling (it was left allocated at the end of this session).
+
+## colab-mcp notes added this session
+
+- After `/mcp` reconnect the notebook can be attached to a **CPU** runtime — check `nvidia-smi`
+  before setup and have the user switch to A100 if needed.
+- Stopping mid-chain: kill the `bash -c` parent **and** the driver
+  (`colab_multimodel_generate.py`) by pid; the per-dataset generator child keeps running as an
+  orphan and finishes its checkpoint cleanly.
+- The Claude Code job lost macOS access to `~/Desktop` mid-session (EPERM on every file; every
+  Bash call rejected). Granting Files-and-Folders access to the host app only applies to newly
+  launched processes, so the final decode/commit was done by the user from a normal terminal
+  with `decode_mm.py <repo results dir>`.
+
+---
+
 # Session 2 (2026-08-25, later) — first GPU run, stopped by user
 
 Everything below happened on branch `worktree-fix-steerer-asymmetries` (all code pushed).

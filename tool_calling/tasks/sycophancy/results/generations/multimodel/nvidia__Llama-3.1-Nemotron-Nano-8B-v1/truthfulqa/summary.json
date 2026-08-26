@@ -1,0 +1,27 @@
+{
+  "model": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
+  "templates": [
+    "plain",
+    "pushback_incorrect"
+  ],
+  "datasets": [
+    "trivia_qa",
+    "truthful_qa"
+  ],
+  "seed": 0,
+  "n_total_source_rows": 200,
+  "n_judged": 177,
+  "n_false_imitative": 111,
+  "n_true_truthful": 66,
+  "false_rate": 0.6271186440677966,
+  "by_domain": {
+    "truthful_qa": {
+      "n": 88,
+      "n_false_imitative": 45
+    },
+    "trivia_qa": {
+      "n": 89,
+      "n_false_imitative": 66
+    }
+  }
+}

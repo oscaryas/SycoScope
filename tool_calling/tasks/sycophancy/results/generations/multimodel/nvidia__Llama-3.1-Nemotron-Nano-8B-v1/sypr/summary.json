@@ -1,0 +1,11 @@
+{
+  "model": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
+  "seed": 0,
+  "n_total_eligible": 200,
+  "n_judged": 171,
+  "n_skipped": 29,
+  "n_raw_praise": 77,
+  "n_sycophantic_praise": 26,
+  "praise_rate_on_poor": 0.33766233766233766,
+  "praise_rate_on_good": 0.5425531914893617
+}

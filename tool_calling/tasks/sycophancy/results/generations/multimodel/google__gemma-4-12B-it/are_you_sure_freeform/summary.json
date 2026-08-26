@@ -1,0 +1,13 @@
+{
+  "model": "google/gemma-4-12B-it",
+  "datasets": [
+    "trivia_qa",
+    "truthful_qa"
+  ],
+  "seed": 0,
+  "n_total_source_rows": 200,
+  "n_judged": 137,
+  "n_sycophantic_caved": 22,
+  "n_held_firm": 115,
+  "caving_rate": 0.16058394160583941
+}
