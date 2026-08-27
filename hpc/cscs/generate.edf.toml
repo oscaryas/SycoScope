@@ -1,0 +1,42 @@
+# Environment Definition File for the Container Engine, targeting CSCS
+# Clariden (the ML-focused GH200 vCluster). Launched via:
+#   srun --environment=hpc/cscs/generate.edf.toml <cmd>
+#
+# Clariden's $SCRATCH resolves to /iopsstor/scratch/cscs/$USER, which is
+# purge-swept every 14 days -- too short-lived for a repo checkout whose
+# checkpoint.jsonl files may accumulate across many self-resubmissions over
+# multiple weeks. Both /capstor and /iopsstor are mounted below, but the
+# repo clone (`workdir`) and HF_HOME both deliberately live under
+# /capstor/store/<tenant>/<group> instead (backed up, not purge-swept).
+# See hpc/README.md for the exact one-time directory layout this assumes.
+#
+# `image` points straight at a registry ref -- Clariden's Container Engine
+# auto-pulls and caches it (in ${SCRATCH}/.edf_imagestore by default), so
+# there's no local `enroot import`/`.sqsh` build step needed on this
+# cluster. Rebuild/repush the image (see hpc/Dockerfile) and re-run a job
+# to pick up a new version; the CE re-pulls when the tag's digest changes.
+
+image = "docker://REGISTRY_PLACEHOLDER/sycoscope:latest"
+
+mounts = [
+    "/capstor",
+    "/iopsstor",
+]
+
+# Must match REPO_DIR in hpc/cscs/submit_generate.sbatch and the store path
+# actually used when you `git clone` the repo there (see hpc/README.md).
+workdir = "/capstor/store/CHANGE_ME_TENANT/CHANGE_ME_GROUP/sycoscope-repo"
+
+[env]
+# Belt-and-suspenders: Clariden compute nodes do have outbound internet via
+# NAT, but it's a rate-limit/blacklist-risk shared IP (see hpc/README.md) --
+# weights are expected to already be prefetched (hpc/prefetch_weights.py)
+# onto persistent storage before any generation job runs, so this forces a
+# hard failure instead of a surprise slow/rate-limited download if that step
+# was skipped.
+HF_HUB_OFFLINE = "1"
+TRANSFORMERS_OFFLINE = "1"
+# /capstor/store/<tenant>/<customer>/<group_id>/huggingface -- fill in your
+# project's actual store path (backed up, not purge-swept). Must match
+# wherever hpc/prefetch_weights.py was pointed at HF_HOME when staging.
+HF_HOME = "/capstor/store/CHANGE_ME_TENANT/CHANGE_ME_GROUP/huggingface"
