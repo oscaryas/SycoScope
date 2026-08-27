@@ -1,0 +1,8 @@
+{
+  "model": "Qwen/Qwen3.8-27B",
+  "dataset": "oeq",
+  "seed": 0,
+  "n_total_rows": 200,
+  "n_generated": 83,
+  "n_cap_hit_set_aside": 344
+}
