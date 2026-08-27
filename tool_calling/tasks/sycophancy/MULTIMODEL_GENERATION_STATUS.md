@@ -146,6 +146,30 @@ running two sessions concurrently again fine afterward. So 2 concurrent sessions
 this account -- just don't immediately retry-loop `colab new` after an eviction; wait a bit for
 the dead assignment to actually clear on Colab's side first.
 
+## Monitoring pitfall: stdout buffering makes `tail`-ing the log unreliable
+
+`nohup python script.py > log 2>&1 &` fully buffers Python's stdout when it's not a TTY, so
+`tail`-ing the log file can look frozen for 30+ minutes while the script is progressing
+completely normally underneath -- the checkpoint file itself IS reliably flushed (`f.flush()`
+after every batch in `social_generate.py`/`moral_generate.py`), just not the log. This caused a
+false alarm mid-session (thought a run was on a 60-hour pace when it was actually ~2.5-3h,
+correctly progressing the whole time). **Always check progress via `wc -l` on the checkpoint file
+itself, not the log.** The log is still useful for reading error tracebacks after a crash, just
+not for live progress.
+
+## Lesson: pulling only at dataset-completion loses large in-progress chunks on session death
+
+A session died with 133/400 `aita_nta_flip` rows checkpointed on the VM -- all lost, because the
+per-dataset pull-and-commit habit only fires once a dataset's END line/full row count is reached,
+not incrementally during a long-running dataset. Smaller `--generation-batch-size` (this session's
+earlier fix) reduces how much of the *current batch* is lost, but does nothing for rows already
+checkpointed-but-not-yet-pulled if the session dies before the dataset finishes. For a dataset
+expected to take multiple hours, pull-and-commit the checkpoint file periodically (e.g. every
+~50-100 rows) as work-in-progress, not just once at the end -- the generate scripts' resume logic
+(`already_done = sum(1 for _ in f)` against the existing output file) means a `git pull` on a
+fresh recovery session would only need to fetch the missing tail if the WIP checkpoint had been
+committed, rather than restarting the whole dataset from row 0 as happened here.
+
 ## Session-loss frequency and the checkpoint-granularity fix
 
 Across the two-A100-session rerun, 6 total session losses occurred (Qwen3-8B's session died 5
