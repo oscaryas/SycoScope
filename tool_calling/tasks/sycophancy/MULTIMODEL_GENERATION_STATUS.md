@@ -99,6 +99,49 @@ blob is a very different cost than a 50KB one. The 120s-then-background pattern 
 4. Then pooling/mixture-building steps 3-5 from the Session-3 "Social + moral sycophancy" section
    still apply.
 
+## Confirmed: the VM was lost, and a better tool exists
+
+Checked with the newly-released official `google-colab-cli` (see below): `colab sessions` still
+listed the old A100 session locally, but `colab exec`/`colab status` against it both returned
+`Session '...' not found` on the backend -- the runtime was reclaimed. **All 8 of this session's
+generations (Qwen3-8B + gemma-4-12B-it x oeq/ss/aita_yta/aita_nta_flip) are lost** and need a
+full rerun; nothing from this session made it into git. Session-2/3 data (already committed) is
+unaffected.
+
+Going forward, **prefer `google-colab-cli` over colab-mcp** for this kind of run: it has a real
+`colab download REMOTE LOCAL` command that transfers files as actual bytes (not base64 printed
+through a notebook cell's stdout, which is what failed above), plus `colab exec`/`colab run` to
+drive scripts from the terminal directly. Install: `uv tool install google-colab-cli` (or `pip`;
+macOS/Linux only). Auth is ADC-based by default and, at least in this environment, was already
+configured. Recommended pattern for next time: after each per-dataset script finishes, tar just
+that dataset's output dir and `colab download` it immediately, rather than waiting for the whole
+matrix and pulling one big tarball at the end (which is what caused this session's loss risk in
+the first place -- see "The pull-back failure" above for why the old approach doesn't scale).
+
+## Rerun: two separate Colab CLI sessions (real concurrency, not `--parallel-models`)
+
+Both Colab-allocated A100s this session came back as the **40GB** variant, not the 80GB one prior
+sessions got -- Qwen3-8B alone at batch 16 already uses ~25.4GB, leaving too little headroom to
+safely run a second model on the same card via `--parallel-models`. Instead, provisioned two
+independent `google-colab-cli` sessions, each with its own repo clone + secrets, running one
+model's dataset queue each -- true concurrency via separate GPUs rather than shared-GPU
+concurrency:
+
+- `sycoscope-social-moral`: `Qwen/Qwen3-8B` only, `--datasets oeq,ss,aita_yta,aita_nta_flip`,
+  tar to `/content/qwen3_8b_generations.tar.gz`.
+- `sycoscope-gemma`: `google/gemma-4-12B-it` only, same datasets, tar to
+  `/content/gemma_generations.tar.gz`.
+
+Secrets (`HF_TOKEN`, `ANTHROPIC_API_KEY`) were loaded on each session by `colab upload`-ing the
+user's local `.env` file to `/content/secrets.env`, sourcing it into `os.environ` via a plain
+Python loop (no `google.colab.userdata` -- that requires the Colab frontend's postMessage bridge,
+which `colab exec`'s direct kernel-websocket path does not have; it hangs indefinitely if you try
+it, confirmed by testing), then deleting the uploaded file. This kept the actual secret values out
+of the assistant's context entirely -- only file bytes flowed through `colab upload`.
+
+Downloading per dataset as it finishes (`colab download`) rather than waiting for the whole run,
+per the lesson from the session's earlier data-loss incident above.
+
 ## New: `--parallel-models N` on `colab_multimodel_generate.py`
 
 Added (untested on GPU — implemented after this session's colab-mcp connection became
