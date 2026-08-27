@@ -118,6 +118,27 @@ that dataset's output dir and `colab download` it immediately, rather than waiti
 matrix and pulling one big tarball at the end (which is what caused this session's loss risk in
 the first place -- see "The pull-back failure" above for why the old approach doesn't scale).
 
+## Correction: the session losses were likely an account GPU-concurrency quota, not random timeouts
+
+After a second session (`sycoscope-gemma`) also went `Session '...' appears to be lost (404/401)`
+mid-`aita_yta`, tried to provision a replacement (`sycoscope-gemma-v2`) while
+`sycoscope-qwen8b-v2` was still healthy and running -- got `TooManyAssignmentsError: ... 412
+Precondition Failed` from `colab new`, repeatably, even after the "lost" sessions' raw IDs both
+report `Session '...' not found` via `colab status`. Reading between the two: the backend still
+counts a "lost" session against the account's concurrent-GPU-runtime quota for some time after
+the CLI client can no longer reach it (client-side unreachable != backend-side released). This
+means **the two prior "session reclaimed" incidents in this doc were likely quota evictions
+triggered by creating another session, not spontaneous idle disconnects** -- i.e. this account
+supports at most ~1 concurrent GPU runtime via this CLI, and every time a second one was created,
+Colab silently killed the older one to enforce that.
+
+Consequence for this and future sessions: **don't run multiple `google-colab-cli` GPU sessions
+concurrently on this account.** Run one model's queue to completion (or to a natural
+resume/pull-safe stopping point), free the session, then start the next. The
+`--parallel-models` flag added earlier in this doc has the same problem one level down (multiple
+processes on one GPU) plus this one level up (multiple GPU sessions) -- neither form of
+concurrency is safe here without confirming the account's actual quota first.
+
 ## A Colab CLI session can still be reclaimed mid-run -- incremental pulls are what saves you
 
 `sycoscope-social-moral` (Qwen3-8B) was silently reclaimed by Colab partway through `ss`
