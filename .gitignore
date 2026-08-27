@@ -27,7 +27,6 @@ tool_calling/tasks/sycophancy/results/**/*.jsonl
 # prompt_probes: generated data and probe weights stay local. The small
 # provenance/metrics artifacts (run_info.json, meta.json, summary.json,
 # analysis/*.json) stay tracked, matching the pattern in 075c614.
-prompt_probes/results/**/*.jsonl
 prompt_probes/results/**/*.npz
 prompt_probes/results/**/*.npy
 prompt_probes/results/**/*.pt
@@ -36,3 +35,4 @@ prompt_probes/results/**/*.csv
 prompt_probes/results/**/*.png
 prompt_probes/data/perez_raw/
 prompt_probes/data/perez_user_prompts.jsonl
+.ipynb_checkpoints/

@@ -75,7 +75,7 @@ def cosine(a: np.ndarray, b: np.ndarray) -> float:
 # ---------------------------------------------------------------------------
 
 
-def anova(rows: list[dict], value_key: str = "cv_auc") -> dict:
+def anova(rows: list[dict], value_key: str = "auc") -> dict:
     """Main-effect variance decomposition over a fully crossed design.
 
     One observation per (spec, position, layer) cell means interactions cannot
@@ -429,13 +429,6 @@ def main():
     parser.add_argument("--layers", type=int, nargs="+", default=None)
     parser.add_argument("--n-clusters", type=int, default=5, help="Paper found 5 clusters over 23 prompts.")
     parser.add_argument(
-        "--anova-source",
-        choices=("elephant", "cv"),
-        default="elephant",
-        help="Decompose OOD ELEPHANT AUC (paper-faithful) or in-distribution cv_auc "
-        "(saturated, uninterpretable). Falls back to cv if the ELEPHANT summary is absent.",
-    )
-    parser.add_argument(
         "--cluster-basis",
         default=ELEPHANT_BASIS,
         help="Sample set for the score-correlation clustering: 'elephant' (the paper's "
@@ -473,44 +466,33 @@ def main():
     print(f"{len(slugs)} cells, positions {positions}, layers {layers}")
 
     # ---- 1. ANOVA -------------------------------------------------------
-    # The paper computes this on OOD AUC (section 4.1: "evaluated each on the
-    # validation dataset"), NOT on training separation. Running it on cv_auc is
-    # a category error once the in-distribution numbers saturate: a measure
-    # pinned at 1.000 has no variance to decompose, which surfaces as a huge
-    # residual. So prefer the ELEPHANT AUCs whenever they exist.
+    # On OOD AUC only, as the paper does (section 4.1: "evaluated each on the
+    # validation dataset"). In-distribution AUC saturates near 1.000, so it has
+    # no variance to decompose and the residual absorbs everything.
     ood_path = run_dir / "eval_elephant" / "summary.json"
-    if args.anova_source == "elephant" and ood_path.exists():
+    if not ood_path.exists():
+        print()
+        print(f"--- ANOVA skipped: {ood_path} not found; run eval_elephant.py first ---")
+    else:
         ood = json.loads(ood_path.read_text(encoding="utf-8"))
         anova_rows = [dict(r, spec=r["slug"]) for r in ood["rows"] if r["split"] == "eval"]
-        value_key, source_label = "auc", "ELEPHANT eval-half AUC"
-    else:
-        if args.anova_source == "elephant":
-            print()
-            print(f"  NOTE: {ood_path} not found; falling back to in-distribution cv_auc.")
-        anova_rows = summary["rows"]
-        value_key, source_label = "cv_auc", "in-distribution cv_auc (SATURATED)"
-
-    decomposition = anova(anova_rows, value_key)
-    (out_dir / "anova.json").write_text(
-        json.dumps({"source": source_label, **decomposition}, indent=2), encoding="utf-8"
-    )
-    print()
-    print(f"--- ANOVA on {source_label} (paper: prompt 70.6%, layer 2.7%, token selection 0.6%) ---")
-    if "error" in decomposition:
-        print(f"  skipped: {decomposition['error']}")
-    else:
-        for label in ("prompt_pair", "layer", "position", "residual"):
-            e = decomposition.get(label)
-            if not e:
-                continue
-            pv = e.get("p")
-            ptxt = "" if pv is None else f"  p={pv:.3g}"
-            print(f"  {label:<12} {e['pct_variance']:>6.2f}%  (df={e['df']}){ptxt}")
-        if value_key == "cv_auc":
-            print("  These percentages are not interpretable: in-distribution AUC saturates")
-            print("  near 1.000, so there is no variance to attribute and the residual absorbs")
-            print("  it. Run eval_elephant.py, then re-run for the version the paper reports.")
-        anova_plot(plot_dir / f"anova_{value_key}.png", decomposition, f"AUC variance explained ({value_key})")
+        decomposition = anova(anova_rows, "auc")
+        (out_dir / "anova.json").write_text(
+            json.dumps({"source": "ELEPHANT eval-half AUC", **decomposition}, indent=2), encoding="utf-8"
+        )
+        print()
+        print("--- ANOVA on ELEPHANT eval-half AUC (paper: prompt 70.6%, layer 2.7%, token selection 0.6%) ---")
+        if "error" in decomposition:
+            print(f"  skipped: {decomposition['error']}")
+        else:
+            for label in ("prompt_pair", "layer", "position", "residual"):
+                e = decomposition.get(label)
+                if not e:
+                    continue
+                pv = e.get("p")
+                ptxt = "" if pv is None else f"  p={pv:.3g}"
+                print(f"  {label:<12} {e['pct_variance']:>6.2f}%  (df={e['df']}){ptxt}")
+            anova_plot(plot_dir / "anova_auc.png", decomposition, "AUC variance explained (ELEPHANT)")
 
     # ---- 2/3/4 per (position, layer) ------------------------------------
     for position in positions:
