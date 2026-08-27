@@ -146,6 +146,32 @@ running two sessions concurrently again fine afterward. So 2 concurrent sessions
 this account -- just don't immediately retry-loop `colab new` after an eviction; wait a bit for
 the dead assignment to actually clear on Colab's side first.
 
+## Session-loss frequency and the checkpoint-granularity fix
+
+Across the two-A100-session rerun, 6 total session losses occurred (Qwen3-8B's session died 5
+times, gemma's once), spread across roughly 2 hours of wall-clock GPU time -- frequent enough
+that "pull every finished dataset immediately" wasn't sufficient on its own once a single BATCH
+started taking 40-60 minutes (aita_nta_flip's longer AITA post pairs, worse for Qwen3-8B's
+thinking-mode generations): a session dying mid-batch loses that whole batch's progress, since
+`social_generate.py`/`moral_generate.py` only checkpoint once a full `--generation-batch-size`
+batch completes.
+
+Fix (per user instruction): when relaunching after a session loss on a dataset with long
+individual batches, drop `--generation-batch-size` well below the driver's default (16, derived
+from `batch-scale`) -- e.g. 4 -- by calling the underlying script directly instead of going
+through `colab_multimodel_generate.py`:
+```
+python moral_generate.py --model Qwen/Qwen3-8B --dataset aita_nta_flip \
+  --out results/generations/multimodel/Qwen__Qwen3-8B/aita_nta_flip/checkpoint.jsonl \
+  --max-new-tokens 2048 --generation-batch-size 4 --n 200
+```
+This directly maps to "checkpoint every N rows" -- checkpointing frequency is exactly
+`--generation-batch-size` rows, since that's the unit both generate scripts flush a checkpoint
+at. There's no time-based (e.g. every 20 min) checkpointing in these scripts -- would require
+interrupting `ActivationSteerer.generate_batch`'s HF `generate()` call mid-flight via a custom
+`StoppingCriteria`/callback, a real code change not attempted this session since the
+batch-size lever was sufficient.
+
 ## A Colab CLI session can still be reclaimed mid-run -- incremental pulls are what saves you
 
 `sycoscope-social-moral` (Qwen3-8B) was silently reclaimed by Colab partway through `ss`
