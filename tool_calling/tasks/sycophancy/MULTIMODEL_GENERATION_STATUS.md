@@ -139,6 +139,13 @@ resume/pull-safe stopping point), free the session, then start the next. The
 processes on one GPU) plus this one level up (multiple GPU sessions) -- neither form of
 concurrency is safe here without confirming the account's actual quota first.
 
+**Update:** the quota isn't a hard "1 concurrent session" wall -- it's that a "lost" session's
+backend assignment takes a few minutes to actually release even after the CLI reports it
+unreachable. Waiting ~5 min after a `TooManyAssignmentsError` and retrying `colab new` succeeded,
+running two sessions concurrently again fine afterward. So 2 concurrent sessions IS viable on
+this account -- just don't immediately retry-loop `colab new` after an eviction; wait a bit for
+the dead assignment to actually clear on Colab's side first.
+
 ## A Colab CLI session can still be reclaimed mid-run -- incremental pulls are what saves you
 
 `sycoscope-social-moral` (Qwen3-8B) was silently reclaimed by Colab partway through `ss`
