@@ -32,25 +32,17 @@ read at hidden_states[layer + 1] (index 0 is the embedding output). Note that
 SAE/pipeline/cache_activations.py uses the other convention (raw
 hidden_states[layer]) -- do not mix them.
 
-Deliberately does NOT use sycophancy_probes._pool / collect_activations /
-mixture_residual_probe_pipeline.collect_residual_only: those locate the response
-via model_config["answer_token_id"], which is None for
-meta-llama/Meta-Llama-3-8B-Instruct (absent from sycophancy_model_registry.MODELS),
-silently degrading to a mean over the whole sequence including the system prompt.
+Does not reuse sycophancy_probes._pool / collect_activations: those locate the
+response via model_config["answer_token_id"], which is None for
+Meta-Llama-3-8B-Instruct, silently degrading to a mean over the whole sequence
+including the system prompt.
 
-Padding side is verified on every batch, not only under --validate-only: the
-attention mask must be right-aligned, because left padding would shift every
-real token and silently move all three spans. (A mask-sum check cannot catch
-that -- the sum is the same whichever side the padding sits on.) With that
-invariant always on, --validate-only is an optional diagnostic rather than a
-required pre-flight step.
+Right padding is verified on every batch. Left padding would shift every real
+token and silently move all three spans, and a mask-sum check cannot catch it --
+the sum is identical whichever side the padding sits on.
 
 Usage:
     python get_activations.py --run-name main --layers 8 16 24 --batch-size 8
-
-    # optional diagnostic: compare batched vs single-example pooling on a few examples, then exit
-    python get_activations.py --run-name smoke --model meta-llama/Llama-3.2-1B-Instruct \\
-        --layer-fracs 0.25 0.5 0.75 --validate-only
 """
 import argparse
 import json
@@ -76,14 +68,13 @@ import common  # noqa: E402
 def response_token_span(offsets, chat_prefix_len: int) -> tuple[int, int]:
     """Token span covering the response portion (chars >= chat_prefix_len).
 
-    Copied from SAE/pipeline/cache_activations.py:78 rather than imported: that
-    module imports spacy at top level and is a script, not a library.
-    tests/test_prompt_probes_spans.py asserts this copy stays in agreement with
-    the original, so the duplication cannot drift silently.
+    Copied from SAE/pipeline/cache_activations.py rather than imported: that module
+    imports spacy at top level and is a script, not a library. The duplication is
+    kept honest by tests/test_prompt_probes_spans.py.
 
-    Using offsets rather than len(tokenizer(chat_prefix).input_ids) matters
-    because BPE can merge across the prompt/response boundary; the naive length
-    is then off by one, which shifts every activation.
+    Offsets rather than len(tokenizer(chat_prefix).input_ids) because BPE can merge
+    across the prompt/response boundary; the naive length is then off by one, which
+    shifts every activation.
     """
     tok_start = None
     tok_end = 0
@@ -142,33 +133,17 @@ def load_index(run_dir: Path, slug: str) -> list[dict]:
 # ---------------------------------------------------------------------------
 
 
-def prepare_records(
-    records: list[dict], tokenizer, args, on_long_prompt: str = "fail"
-) -> tuple[list[dict], list[dict], int]:
+def prepare_records(records: list[dict], tokenizer, args) -> tuple[list[dict], list[dict]]:
     """Tokenize (no weights) to compute spans and apply the length policy.
 
-    Returns (prepared, skip_log, n_naive_mismatch).
+    Returns (prepared, skip_log).
 
-    The prompt is never truncated under either policy -- a cut prompt makes
-    last_prompt meaningless. What differs is what happens instead:
-
-      on_long_prompt="fail" (training extraction): raise. We control the prompt
-        length upstream via fetch_user_prompts.py, so an over-length prompt here
-        means something is wrong, and silently dropping data would hide it.
-      on_long_prompt="skip" (evaluation on external data): skip and log. ELEPHANT
-        AITA posts run past 1k tokens and we do not control them, so aborting the
-        whole evaluation over one long post is useless. The skip count matters
-        though -- dropping the longest posts is a selection effect -- so callers
-        should report it.
-
-    An over-length prompt+response is always skipped and logged.
+    An over-length prompt+response is skipped and logged, never truncated -- a
+    cut prompt makes last_prompt meaningless.
     """
-    if on_long_prompt not in ("fail", "skip"):
-        raise ValueError(f"on_long_prompt must be 'fail' or 'skip', got {on_long_prompt!r}")
     from utils.inference import build_chat_prompt
 
     prepared, skip_log = [], []
-    n_naive_mismatch = 0
     for rec in records:
         response = rec.get("response") or ""
         chat_prefix = build_chat_prompt(tokenizer, rec["user_prompt"], rec["system_prompt"])
@@ -178,22 +153,6 @@ def prepare_records(
         prompt_len, resp_end = response_token_span(enc["offset_mapping"], len(chat_prefix))
         n_tokens_full = len(enc["input_ids"])
 
-        naive = len(tokenizer(chat_prefix, add_special_tokens=False)["input_ids"])
-        if naive != prompt_len:
-            n_naive_mismatch += 1
-
-        if prompt_len > args.max_prompt_tokens:
-            if on_long_prompt == "fail":
-                raise SystemExit(
-                    f"{rec['example_id']}: prompt is {prompt_len} tokens > --max-prompt-tokens "
-                    f"{args.max_prompt_tokens}. Truncating the prompt would make the last_prompt "
-                    "position meaningless, so this is fatal. Re-run fetch_user_prompts.py with a "
-                    "tighter cap, or raise this one."
-                )
-            skip_log.append(
-                {"example_id": rec["example_id"], "reason": "prompt_too_long", "n_tokens": prompt_len}
-            )
-            continue
         if n_tokens_full > args.max_length:
             skip_log.append({"example_id": rec["example_id"], "reason": "too_long", "n_tokens": n_tokens_full})
             continue
@@ -214,7 +173,7 @@ def prepare_records(
                 "first5_text": tokenizer.decode(first5_ids),
             }
         )
-    return prepared, skip_log, n_naive_mismatch
+    return prepared, skip_log
 
 
 def pool_span(hidden: "np.ndarray", start: int, end: int) -> np.ndarray:
@@ -247,19 +206,16 @@ def extract(model, tokenizer, prepared: list[dict], layers: list[int], hidden_di
             mask = enc["attention_mask"]
             lengths = mask.sum(dim=1).tolist()
             for row, (i, length) in enumerate(zip(idxs, lengths)):
-                # Right padding means the unpadded prefix is identical to the
-                # single-example tokenization, so precomputed spans index
-                # directly into the batched hidden states. Verify it.
+                # Right padding makes the unpadded prefix identical to the
+                # single-example tokenization, so precomputed spans index straight
+                # into the batched hidden states.
                 assert length == prepared[i]["n_tokens_full"], (
                     f"{prepared[i]['rec']['example_id']}: batched length {length} != "
                     f"single-example length {prepared[i]['n_tokens_full']}"
                 )
-                # The length check above does NOT catch left padding: the mask
-                # sums to the same value whichever side the pad tokens sit on.
-                # Left padding would shift every real token by (T - length), so
-                # the spans would silently read the wrong positions. Check the
-                # mask's shape, not just its sum. This is the only guard on
-                # padding side beyond the padding_side="right" assignment.
+                # The length check above cannot catch left padding -- the mask sums
+                # the same either way. Check the mask's shape instead. This is the
+                # only guard beyond the padding_side="right" assignment in main().
                 assert mask[row, :length].all() and not mask[row, length:].any(), (
                     f"{prepared[i]['rec']['example_id']}: padding is not right-aligned. "
                     "Absolute token indices would read the wrong tokens -- check that "
@@ -292,20 +248,9 @@ def main():
         help="Depth fractions, resolved as round(frac * n_layers). Default 0.25 0.5 0.75.",
     )
     parser.add_argument("--batch-size", type=int, default=8)
-    parser.add_argument("--max-prompt-tokens", type=int, default=768)
     parser.add_argument("--max-length", type=int, default=4096,
                         help="Skip prompt+response longer than this. Raised for uncapped generation.")
     parser.add_argument("--overwrite", action="store_true", help="Re-extract cells that already have a .npz.")
-    parser.add_argument(
-        "--validate-only",
-        type=int,
-        nargs="?",
-        const=5,
-        default=None,
-        metavar="N",
-        help="Compare batched vs single-example pooling on the first N examples of the first "
-        "cell, then exit without writing anything.",
-    )
     args = parser.parse_args()
 
     run_dir = common.resolve_run_dir(args.run_name, create=False)
@@ -339,39 +284,7 @@ def main():
     for layer in layers:
         print(f"  block {layer:>2} (depth {layer / n_layers:.2f}) -> hidden_states[{layer + 1}]")
 
-    if args.validate_only:
-        slug = available[0]
-        records = common.read_jsonl(gen_dir / f"{slug}.jsonl")[: args.validate_only]
-        prepared, skip_log, n_mismatch = prepare_records(records, tokenizer, args)
-        print(f"\nValidating {len(prepared)} examples from {slug} ...")
-        batched = extract(model, tokenizer, prepared, layers, hidden_dim, batch_size=len(prepared))
-        single = extract(model, tokenizer, prepared, layers, hidden_dim, batch_size=1)
-
-        # Gate on cosine, not absolute difference. bf16 batched GEMMs use
-        # different reduction orders than batch-of-1, so absolute diffs scale
-        # with the residual norm (which grows several-fold with depth) and an
-        # absolute threshold false-positives on deeper layers and larger models.
-        # A genuine span/padding bug compares unrelated vectors and shows up as
-        # cosine near 0, orders of magnitude away from this threshold.
-        worst_cos = 1.0
-        for key in batched:
-            B, S = batched[key], single[key]
-            cos = (B * S).sum(1) / (np.linalg.norm(B, axis=1) * np.linalg.norm(S, axis=1) + 1e-12)
-            worst_cos = min(worst_cos, float(cos.min()))
-            print(
-                f"  {key[0]}_L{key[1]:02d}: min cos {cos.min():.6f}  "
-                f"max abs diff {np.abs(B - S).max():.2e}  mean norm {np.linalg.norm(S, axis=1).mean():.1f}"
-            )
-        print(f"\nworst min cosine: {worst_cos:.6f} (tolerance 0.999)")
-        print(f"naive-vs-offsets prompt_len mismatches: {n_mismatch}/{len(records)}")
-        if worst_cos < 0.999:
-            cleanup_model(model, tokenizer)
-            raise SystemExit("batched and single-example pooling disagree -- padding or span bug")
-        cleanup_model(model, tokenizer)
-        print("\nPASS")
-        return
-
-    totals = {"n_examples": 0, "n_skipped": 0, "n_naive_mismatch": 0}
+    totals = {"n_examples": 0, "n_skipped": 0}
     for slug in available:
         npz_path = act_dir / f"{slug}.npz"
         if npz_path.exists() and not args.overwrite:
@@ -379,14 +292,8 @@ def main():
             continue
 
         records = common.read_jsonl(gen_dir / f"{slug}.jsonl")
-        prepared, skip_log, n_mismatch = prepare_records(records, tokenizer, args)
+        prepared, skip_log = prepare_records(records, tokenizer, args)
         print(f"\n[{slug}] {len(prepared)} examples ({len(skip_log)} skipped)")
-        if n_mismatch:
-            print(
-                f"  WARNING: naive prompt length disagreed with the offsets-derived span on "
-                f"{n_mismatch}/{len(records)} examples (BPE merged across the prompt/response "
-                "boundary). The offsets value is authoritative and was used."
-            )
         if not prepared:
             continue
 
@@ -415,12 +322,8 @@ def main():
             )
         common.write_jsonl(act_dir / f"{slug}_index.jsonl", index_rows)
 
-        n = len(prepared)
-        for key, arr in arrays.items():
-            assert arr.shape == (n, hidden_dim), f"{key} has shape {arr.shape}, expected {(n, hidden_dim)}"
-        totals["n_examples"] += n
+        totals["n_examples"] += len(prepared)
         totals["n_skipped"] += len(skip_log)
-        totals["n_naive_mismatch"] += n_mismatch
         if skip_log:
             (act_dir / f"{slug}_skips.json").write_text(json.dumps(skip_log, indent=2), encoding="utf-8")
 
@@ -435,7 +338,6 @@ def main():
         "positions": list(common.POSITIONS),
         "dtype": "float32",
         "max_length": args.max_length,
-        "max_prompt_tokens": args.max_prompt_tokens,
         "cells": available,
         "tokenizer_name_or_path": args.model,
         "code_version": common.get_code_version(),

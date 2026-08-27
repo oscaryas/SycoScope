@@ -22,7 +22,7 @@ train_residual_probes / save_probe_results:
     turn, sharing topic, vocabulary and the entire prompt in context, so a
     4096-dim probe fit on ~320 examples has ample capacity to encode "this is
     the linguistics-professor item, and the one I saw was label 1". That
-    inflates accuracy in the flattering direction. grouped_folds assigns whole
+    inflates accuracy in the flattering direction. group_split assigns whole
     prompt_ids instead.
   * the estimator is now sklearn rather than torch nn.Linear + BCE, so the
     save_probe_results layout (torch state dicts keyed by layer across an
@@ -35,8 +35,6 @@ torch probe on raw activations.
 Usage:
     python train_probes.py --run-name main
     python train_probes.py --run-name main --cells pv_explicit          # one cell
-    python train_probes.py --run-name main --shuffle-labels             # leakage control
-    python train_probes.py --run-name main --rebuild-summary            # re-aggregate only
 """
 import argparse
 import json
@@ -52,20 +50,16 @@ if str(HERE) not in sys.path:
 import common  # noqa: E402
 import get_activations as ga  # noqa: E402
 
-# sycophancy_probes does a bare `from sycophancy_model_registry import ...`, so
-# its directory has to be importable, not just REPO_ROOT.
-if str(common.SYCOPHANCY_DIR) not in sys.path:
-    sys.path.insert(0, str(common.SYCOPHANCY_DIR))
-
-from sycophancy_probes import bootstrap_ci, wilson_ci  # noqa: E402
-
 SPEC_PREFIX = {"baseline": "universal", "taxonomy": "cell", "control": "control"}
 
 # Degeneracy reasons that justify dropping a row (and its pair partner).
-# "truncated" and "refusal" are deliberately absent: neither corrupts the
-# activations, and dropping them would condition the sample on length or on
-# refusal behaviour rather than remove those effects. Both stay flagged.
-DROP_REASONS = frozenset({"empty", "too_short", "repetitive"})
+# "truncated", "refusal" and "too_short" are deliberately absent: none corrupts
+# the activations, and dropping them would condition the sample on the very
+# thing being measured. "too_short" especially -- a brusque system prompt is
+# supposed to produce short answers, so on ctrl_politeness it fires on 88 of 200
+# non_sycophantic rows and would take their sycophantic partners with them,
+# leaving the subset where the instruction worked least well. All stay flagged.
+DROP_REASONS = frozenset({"empty", "repetitive"})
 
 
 def spec_id(pair_type: str, slug: str) -> str:
@@ -80,17 +74,6 @@ def spec_id(pair_type: str, slug: str) -> str:
 # ---------------------------------------------------------------------------
 
 
-def grouped_folds(prompt_ids: list[str], n_folds: int, rng: np.random.Generator) -> np.ndarray:
-    """Assign whole prompt_ids to folds; returns a per-row fold index.
-
-    Class balance needs no separate stratification here: in the paired design
-    each prompt_id carries exactly one label-1 and one label-0 row per cell, so
-    assigning a group assigns one of each.
-    """
-    uniq = sorted(set(prompt_ids))
-    order = rng.permutation(len(uniq))
-    fold_of_group = {uniq[g]: int(i % n_folds) for i, g in enumerate(order)}
-    return np.array([fold_of_group[p] for p in prompt_ids], dtype=int)
 
 
 def group_split(prompt_ids: list[str], test_frac: float, seed: int) -> tuple[list[str], list[str]]:
@@ -174,57 +157,6 @@ def paired_win_rate(scores: np.ndarray, y: np.ndarray, prompt_ids: list[str]) ->
     return (float(np.mean(wins)) if wins else float("nan")), len(wins)
 
 
-def fit_cv(X, y, prompt_ids, n_folds, seed, C, max_iter) -> dict:
-    """Grouped k-fold CV. Returns the same key set as sycophancy_probes.train_probe
-    (so existing plotting code stays drop-in), plus group counts."""
-    rng = np.random.default_rng(seed)
-    n_groups = len(set(prompt_ids))
-    n_folds = min(n_folds, n_groups)
-    fold_of = grouped_folds(prompt_ids, n_folds, rng)
-
-    fold_accs, train_accs, fold_aucs = [], [], []
-    total_correct = total_test = 0
-    for fold in range(n_folds):
-        test_mask = fold_of == fold
-        train_mask = ~test_mask
-        if test_mask.sum() == 0 or train_mask.sum() == 0:
-            continue
-        if len(np.unique(y[train_mask])) < 2:
-            continue
-        scaler, clf = fit_probe(X[train_mask], y[train_mask], seed, C, max_iter)
-        s_test = score(scaler, clf, X[test_mask])
-        preds = (s_test > 0).astype(int)
-        n_correct = int((preds == y[test_mask]).sum())
-        total_correct += n_correct
-        total_test += int(test_mask.sum())
-        fold_accs.append(n_correct / int(test_mask.sum()))
-        train_preds = (score(scaler, clf, X[train_mask]) > 0).astype(int)
-        train_accs.append(float((train_preds == y[train_mask]).mean()))
-        auc = safe_auc(y[test_mask], s_test)
-        if auc is not None:
-            fold_aucs.append(auc)
-
-    ci_lower, ci_upper = wilson_ci(total_correct, total_test) if total_test else (0.0, 0.0)
-    if fold_aucs:
-        auc_roc = float(np.mean(fold_aucs))
-        auc_ci_lower, auc_ci_upper = bootstrap_ci(np.array(fold_aucs))
-    else:
-        auc_roc = auc_ci_lower = auc_ci_upper = float("nan")
-
-    return {
-        "accuracy": total_correct / total_test if total_test else float("nan"),
-        "fold_accuracies": fold_accs,
-        "train_accuracy": float(np.mean(train_accs)) if train_accs else float("nan"),
-        "ci_lower": ci_lower,
-        "ci_upper": ci_upper,
-        "n_test": total_test,
-        "auc_roc": auc_roc,
-        "fold_aucs": fold_aucs,
-        "auc_ci_lower": auc_ci_lower,
-        "auc_ci_upper": auc_ci_upper,
-        "n_folds": n_folds,
-        "n_groups": n_groups,
-    }
 
 
 def fit_holdout(X, y, prompt_ids, split, seed, C, max_iter) -> dict | None:
@@ -326,48 +258,21 @@ def rebuild_summary(run_dir: Path) -> dict:
         "rows": sorted(rows, key=lambda r: (r["spec"], r["position"], r["layer"])),
     }
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
-
-    if rows:
-        import pandas as pd
-
-        pd.DataFrame(summary["rows"]).to_csv(run_dir / "summary.csv", index=False)
     return summary
 
 
-def print_gates(summary: dict, shuffled: bool) -> None:
+def print_gates(summary: dict) -> None:
     rows = summary["rows"]
     if not rows:
         return
 
     def mean_auc(position):
-        vals = [r["cv_auc"] for r in rows if r["position"] == position and r["cv_auc"] == r["cv_auc"]]
+        vals = [r["holdout_auc"] for r in rows if r["position"] == position and r["holdout_auc"] is not None]
         return float(np.mean(vals)) if vals else float("nan")
 
     ceiling = mean_auc("last_prompt")
     print("\n--- gates ---")
-    if shuffled:
-        aucs = [r["cv_auc"] for r in rows if r["cv_auc"] == r["cv_auc"]]
-        n_groups = min((r["n_groups"] for r in rows), default=0)
-        mean, mx = float(np.mean(aucs)), float(np.max(aucs))
-        print(
-            f"label-shuffle control over {len(aucs)} settings: mean CV AUC {mean:.3f}, "
-            f"max {mx:.3f} (want mean ~0.5)"
-        )
-        # Gate on the mean, not the max. A real leak elevates every setting
-        # systematically; the max over many noisy per-fold estimates is near 1.0
-        # by construction whenever folds are small, which would make the gate
-        # fire on sample size rather than on leakage.
-        if n_groups < 20:
-            print(
-                f"  SKIPPED: only {n_groups} prompt groups. This control needs enough groups for "
-                "per-fold AUC to be meaningful; re-run it on the full data."
-            )
-        elif mean > 0.6:
-            print("  FAIL: shuffled labels are still separable -- grouped_folds or the index is leaking")
-        else:
-            print("  PASS")
-        return
-    print(f"ceiling gate  (last_prompt mean CV AUC): {ceiling:.3f} (want >= 0.95)")
+    print(f"ceiling gate  (last_prompt mean holdout AUC): {ceiling:.3f} (want >= 0.95)")
     if ceiling < 0.95:
         print(
             "  WARNING: last_prompt should be near-trivial -- the two classes differ there by\n"
@@ -375,8 +280,8 @@ def print_gates(summary: dict, shuffled: bool) -> None:
             "  prompt is not reaching the model or the extraction is misaligned. Fix before\n"
             "  interpreting anything else."
         )
-    print(f"intent  (first5   mean CV AUC): {mean_auc('first5'):.3f}")
-    print(f"behaviour (response mean CV AUC): {mean_auc('response'):.3f}")
+    print(f"intent  (first5   mean holdout AUC): {mean_auc('first5'):.3f}")
+    print(f"behaviour (response mean holdout AUC): {mean_auc('response'):.3f}")
     print(
         "\nfirst5 -> response is the content-contamination measurement. If they match, check\n"
         "the first5_text field in the activation index: five tokens are only a clean intent\n"
@@ -390,31 +295,16 @@ def main():
     common.add_cells_arg(parser)
     parser.add_argument("--positions", type=str, nargs="+", default=None, choices=common.POSITIONS)
     parser.add_argument("--layers", type=int, nargs="+", default=None, help="Default: all layers in meta.json.")
-    parser.add_argument("--n-folds", type=int, default=5)
     parser.add_argument("--test-frac", type=float, default=0.2)
     parser.add_argument("--C", type=float, default=1.0, help="Inverse L2 strength; 1.0 is the paper's lambda=1.")
     parser.add_argument("--max-iter", type=int, default=2000)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--keep-degenerate", action="store_true", help="Do not drop degenerate rows (or their pair partners).")
-    parser.add_argument(
-        "--shuffle-labels",
-        action="store_true",
-        help="Permute labels within prompt groups. Every setting must land at chance; this is "
-        "the primary check that grouped_folds and the index are not leaking. Writes to "
-        "probes_shuffled/ so it cannot overwrite real results.",
-    )
-    parser.add_argument("--rebuild-summary", action="store_true", help="Re-aggregate summary.json and exit.")
     args = parser.parse_args()
 
     run_dir = common.resolve_run_dir(args.run_name, create=False)
     if not run_dir.exists():
         raise SystemExit(f"no such run: {run_dir}")
-
-    if args.rebuild_summary:
-        summary = rebuild_summary(run_dir)
-        print(f"summary.json rebuilt from {summary['n_rows']} rows")
-        print_gates(summary, shuffled=False)
-        return
 
     meta_path = run_dir / "activations" / "meta.json"
     if not meta_path.exists():
@@ -437,8 +327,7 @@ def main():
     if not available:
         raise SystemExit("no cells with activations to train on")
 
-    out_root = run_dir / ("probes_shuffled" if args.shuffle_labels else "probes")
-    rng = np.random.default_rng(args.seed)
+    out_root = run_dir / "probes"
 
     for slug in available:
         pair = pairs[slug]
@@ -456,16 +345,6 @@ def main():
                 if len(np.unique(y)) < 2:
                     print(f"  {position}_L{layer:02d}: only one class present, skipping")
                     continue
-                if args.shuffle_labels:
-                    # Permute *within* each prompt group, so the group structure
-                    # is preserved and only the label is destroyed.
-                    y = y.copy()
-                    by: dict[str, list[int]] = {}
-                    for i, pid in enumerate(prompt_ids):
-                        by.setdefault(pid, []).append(i)
-                    for idxs in by.values():
-                        y[idxs] = rng.permutation(y[idxs])
-
                 n_pos, n_neg = int((y == 1).sum()), int((y == 0).sum())
                 assert n_pos == n_neg, (
                     f"{slug} {position}_L{layer:02d}: {n_pos} positive vs {n_neg} negative. "
@@ -473,7 +352,6 @@ def main():
                     "partners were dropped inconsistently."
                 )
 
-                cv = fit_cv(X, y, prompt_ids, args.n_folds, args.seed, args.C, args.max_iter)
                 ho = fit_holdout(X, y, prompt_ids, split, args.seed, args.C, args.max_iter)
 
                 row = {
@@ -485,13 +363,7 @@ def main():
                     "layer": layer,
                     "n_pos": n_pos,
                     "n_neg": n_neg,
-                    "n_groups": cv["n_groups"],
                     "n_dropped": n_dropped,
-                    "cv_accuracy": cv["accuracy"],
-                    "cv_ci": [cv["ci_lower"], cv["ci_upper"]],
-                    "cv_auc": cv["auc_roc"],
-                    "cv_auc_ci": [cv["auc_ci_lower"], cv["auc_ci_upper"]],
-                    "train_accuracy": cv["train_accuracy"],
                     "holdout_accuracy": ho["test_accuracy"] if ho else None,
                     "holdout_auc": ho["test_auc"] if ho else None,
                     "holdout_paired_win_rate": ho["test_paired_win_rate"] if ho else None,
@@ -502,9 +374,9 @@ def main():
                     for field in ("coef", "intercept", "mean", "scale", "direction_raw", "proj_std"):
                         arrays[f"{key}__{field}"] = np.asarray(ho[field])
                 print(
-                    f"  {position}_L{layer:02d}: cv_auc {cv['auc_roc']:.3f} "
-                    f"acc {cv['accuracy']:.3f} | holdout auc "
+                    f"  {position}_L{layer:02d}: holdout auc "
                     f"{(ho['test_auc'] if ho and ho['test_auc'] is not None else float('nan')):.3f} "
+                    f"acc {(ho['test_accuracy'] if ho else float('nan')):.3f} "
                     f"paired {(ho['test_paired_win_rate'] if ho else float('nan')):.3f}"
                     + (f" | dropped {n_dropped}" if n_dropped else "")
                 )
@@ -515,17 +387,10 @@ def main():
         if arrays:
             np.savez(cell_dir / "probes.npz", **arrays)
 
-    if args.shuffle_labels:
-        rows = []
-        for path in sorted(out_root.glob("*/metrics.json")):
-            rows.extend(json.loads(path.read_text(encoding="utf-8"))["rows"])
-        print_gates({"rows": rows}, shuffled=True)
-        return
-
     summary = rebuild_summary(run_dir)
     common.write_run_info(run_dir, "train_probes", args, {"cells": available, "n_rows": summary["n_rows"]})
     print(f"\n{summary['n_rows']} probe settings -> {run_dir / 'summary.json'}")
-    print_gates(summary, shuffled=False)
+    print_gates(summary)
 
 
 if __name__ == "__main__":

@@ -1,13 +1,5 @@
 """
-Shared paths, cell/slug bookkeeping and run-metadata helpers for the
-prompt_probes pipeline.
-
-The pipeline trains linear probes to predict *which of a contrastive pair of
-system prompts was in context*, following Natarajan et al. (2026), "One Probe
-Won't Catch Them All" (arXiv 2602.01425). The 14 prompt pairs in
-data/sycophancy_probe_prompt_pairs.json target the 8 cells of the Ye et al.
-(2025) sycophancy taxonomy plus 1 general baseline and 5 non-sycophancy
-controls.
+cell/slug bookkeeping and run-metadata helpers for the prompt_probes pipeline.
 
 Every stage is sharded by cell slug: one prompt pair can be generated,
 extracted and probed end-to-end without touching the other 13. Cross-cell
@@ -35,9 +27,6 @@ USER_PROMPTS_PATH = DATA_DIR / "perez_user_prompts.jsonl"
 
 DEFAULT_MODEL = "meta-llama/Meta-Llama-3-8B-Instruct"
 
-# Slugs are hardcoded rather than derived from the "cell" strings so that
-# rewording a prompt in the JSON can't silently orphan an existing results
-# directory. A hard error here is the intended failure mode.
 CELL_SLUGS = {
     "General (baseline)": "general_baseline",
     "Position-Verifiable / Explicit": "pv_explicit",
@@ -55,25 +44,12 @@ CELL_SLUGS = {
     "Ordinary politeness": "ctrl_politeness",
 }
 
-# The 15th "cell" is not a pair at all: responses generated with no system
-# prompt. It is the Alpaca-control analogue from the paper's section 5.5 --
-# probe logit scales aren't comparable across probes, so scores get reported
-# relative to each probe's median on this neutral set.
+
 NEUTRAL_SLUG = "neutral"
 
 POSITIONS = ("last_prompt", "first5", "response")
 DEFAULT_LAYER_FRACS = (0.25, 0.50, 0.75)
 
-# Label convention, stated once and referenced everywhere: label 1 is the
-# "sycophantic" slot of the pair, label 0 the "non_sycophantic" slot.
-#
-# CAUTION: for pair_type == "control" the label-1 slot holds the *legitimate*
-# behaviour (praise only what merits praise, agree only where the user is
-# right, acknowledge genuine distress, hedge where a matter is genuinely
-# unsettled, ordinary courtesy). A control probe's direction therefore points
-# toward warranted behaviour, NOT toward sycophancy. Reading that sign the
-# wrong way is the easiest route to a wrong conclusion, which is why the
-# record field is called "polarity" and pair_type is carried everywhere.
 POLARITIES = ("sycophantic", "non_sycophantic")
 POLARITY_LABEL = {"sycophantic": 1, "non_sycophantic": 0}
 POLARITY_TAG = {"sycophantic": "pos", "non_sycophantic": "neg"}

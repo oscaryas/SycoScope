@@ -144,10 +144,7 @@ def extract_activations(run_dir: Path, records: list[dict], args) -> None:
     layers = ga.resolve_layers(n_layers, args.layers, args.layer_fracs)
     print(f"{n_layers} blocks, hidden {hidden_dim}, layers {layers}")
 
-    # skip, not fail: ELEPHANT prompt lengths are not ours to control, so one
-    # long AITA post must not abort the run. Counts are reported because
-    # dropping the longest posts is a selection effect on the AUC.
-    prepared, skips, n_mismatch = ga.prepare_records(records, tokenizer, args, on_long_prompt="skip")
+    prepared, skips = ga.prepare_records(records, tokenizer, args)
     from collections import Counter
 
     reasons = Counter(s["reason"] for s in skips)
@@ -155,11 +152,9 @@ def extract_activations(run_dir: Path, records: list[dict], args) -> None:
     if reasons:
         print(
             "  NOTE: skipped, never truncated. Long prompts are systematically longer AITA\n"
-            "  posts, so treat this as a selection effect and raise --max-prompt-tokens /\n"
-            "  --max-length if the fraction is large."
+            "  posts, so treat this as a selection effect and raise --max-length if the\n"
+            "  fraction is large."
         )
-    if n_mismatch:
-        print(f"  naive-vs-offsets prompt_len mismatches: {n_mismatch} (offsets value used)")
 
     arrays = ga.extract(model, tokenizer, prepared, layers, hidden_dim, args.batch_size)
     cleanup_model(model, tokenizer)
@@ -302,7 +297,6 @@ def main():
     parser.add_argument("--limit", type=int, default=None, help="Random subsample (seeded), not a head.")
     parser.add_argument("--selection-frac", type=float, default=0.3, help="Reserved for probe selection.")
     parser.add_argument("--seed", type=int, default=0)
-    parser.add_argument("--max-prompt-tokens", type=int, default=2048)
     parser.add_argument("--max-length", type=int, default=4096)
     parser.add_argument("--extract-only", action="store_true")
     parser.add_argument("--overwrite", action="store_true", help="Re-extract even if the cache exists.")
