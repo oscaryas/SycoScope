@@ -118,6 +118,23 @@ that dataset's output dir and `colab download` it immediately, rather than waiti
 matrix and pulling one big tarball at the end (which is what caused this session's loss risk in
 the first place -- see "The pull-back failure" above for why the old approach doesn't scale).
 
+## A Colab CLI session can still be reclaimed mid-run -- incremental pulls are what saves you
+
+`sycoscope-social-moral` (Qwen3-8B) was silently reclaimed by Colab partway through `ss`
+(`colab exec` started returning `Session '...' appears to be lost (404/401)`), same as the
+original colab-mcp VM in this session's first incident. **This is exactly why the per-dataset
+`colab download` pattern matters**: `oeq` (187/200) had already been pulled and committed before
+the loss, so only the in-flight `ss` run was lost -- not the whole model's queue. Recovery: `colab
+stop` the dead session name (confirms it's gone), `colab new -s sycoscope-qwen8b-v2 --gpu A100`,
+re-clone + re-source secrets (same pattern as before), relaunch with `--datasets
+ss,aita_yta,aita_nta_flip` (skip `oeq`, already safe in git). gemma-4-12B-it's session
+(`sycoscope-gemma`) was unaffected and kept running throughout.
+
+Lesson for future sessions: **treat every Colab CLI session as liable to disappear without
+warning at any time** (not just at the very end of a long run) -- pull each dataset the moment its
+END line appears, don't batch pulls, and don't assume a session that was healthy 5 minutes ago
+still exists.
+
 ## Rerun: two separate Colab CLI sessions (real concurrency, not `--parallel-models`)
 
 Both Colab-allocated A100s this session came back as the **40GB** variant, not the 80GB one prior
