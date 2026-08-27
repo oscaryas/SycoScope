@@ -146,6 +146,17 @@ running two sessions concurrently again fine afterward. So 2 concurrent sessions
 this account -- just don't immediately retry-loop `colab new` after an eviction; wait a bit for
 the dead assignment to actually clear on Colab's side first.
 
+## Third model: Qwen3.8-27B on a G4 (RTX PRO 6000 Blackwell, ~98GB)
+
+Launched concurrently with the Qwen3-8B A100 recovery run above -- two independent GPU sessions,
+no contention (2-session concurrency confirmed viable earlier in this doc, once the prior
+session's assignment has actually cleared). Session `sycoscope-qwen38-27b`, started on `oeq` via
+`social_generate.py --model Qwen/Qwen3.8-27B --generation-batch-size 8` (the batch size prior
+sessions found saturates ~80GB on an A100-80GB; this G4 has ~18GB more headroom, kept
+conservative rather than pushing higher on a first attempt). Same periodic-WIP-pull policy
+(50+ rows or 20-30 min, whichever first) applies here too, given this model's history of being
+"slow and memory-bound" (prior notes: ~12-16 rows/20min at batch 8 on an 80GB card).
+
 ## Monitoring pitfall: stdout buffering makes `tail`-ing the log unreliable
 
 `nohup python script.py > log 2>&1 &` fully buffers Python's stdout when it's not a TTY, so
