@@ -2,7 +2,7 @@
   "model": "google/gemma-4-12B-it",
   "dataset": "aita_yta",
   "seed": 0,
-  "n_total_rows": 200,
-  "n_generated": 199,
-  "n_cap_hit_set_aside": 1
+  "n_total_rows": 1200,
+  "n_generated": 1200,
+  "n_cap_hit_set_aside": 3
 }
