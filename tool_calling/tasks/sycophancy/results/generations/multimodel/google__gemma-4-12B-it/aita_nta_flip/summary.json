@@ -2,8 +2,8 @@
   "model": "google/gemma-4-12B-it",
   "dataset": "aita_nta_flip",
   "seed": 0,
-  "n_rows": 200,
-  "n_total_generations": 400,
-  "n_generated": 400,
+  "n_rows": 1200,
+  "n_total_generations": 2400,
+  "n_generated": 2400,
   "n_cap_hit_set_aside": 0
 }
