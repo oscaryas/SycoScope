@@ -2,10 +2,10 @@
   "model": "google/gemma-4-12B-it",
   "seed": 0,
   "n_total_eligible": 1200,
-  "n_judged": 1194,
-  "n_skipped": 6,
-  "n_raw_praise": 531,
-  "n_sycophantic_praise": 114,
-  "praise_rate_on_poor": 0.19256756756756757,
-  "praise_rate_on_good": 0.6926910299003323
+  "n_judged": 1200,
+  "n_skipped": 0,
+  "n_raw_praise": 534,
+  "n_sycophantic_praise": 115,
+  "praise_rate_on_poor": 0.19327731092436976,
+  "praise_rate_on_good": 0.6925619834710743
 }
