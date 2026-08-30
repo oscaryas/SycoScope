@@ -34,6 +34,11 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=1
 #SBATCH --output=logs/slurm-%x-%j.out
+# `python -u` below matters: stdout redirected to a file is fully buffered
+# (not line-buffered), so without -u, `tail -f`/checking this log while the
+# job runs can look stalled for a long time even though checkpoint.jsonl
+# (which the script flushes explicitly, separately from print()) is
+# genuinely being written to in real time.
 
 set -euo pipefail
 
@@ -80,7 +85,7 @@ echo "[$(date -Iseconds)] job ${SLURM_JOB_ID}: ${MODEL} / ${DATASET} -> ${OUT}"
 
 srun -ul --environment="${REPO_DIR}/hpc/cscs/generate.edf.toml" bash -c "
     cd '${SCRIPTS_DIR}' &&
-    python ${SCRIPT} \
+    python -u ${SCRIPT} \
         --dataset '${DATASET}' \
         --model '${MODEL}' \
         --seed ${SEED} \

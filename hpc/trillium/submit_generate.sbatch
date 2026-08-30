@@ -33,6 +33,11 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=h100:1
 #SBATCH --output=logs/slurm-%x-%j.out
+# `python -u` below matters: stdout redirected to a file is fully buffered
+# (not line-buffered), so without -u, `tail -f`/checking this log while the
+# job runs can look stalled for a long time even though checkpoint.jsonl
+# (which the script flushes explicitly, separately from print()) is
+# genuinely being written to in real time.
 
 set -euo pipefail
 
@@ -90,7 +95,7 @@ apptainer exec --nv \
     -B "${PROJECT}" \
     --env HF_HOME="${HF_HOME}",HF_HUB_OFFLINE=1,TRANSFORMERS_OFFLINE=1,HF_TOKEN="${HF_TOKEN}",ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY}" \
     "${SIF_PATH}" \
-    python "${SCRIPTS_DIR}/${SCRIPT}" \
+    python -u "${SCRIPTS_DIR}/${SCRIPT}" \
         --dataset "${DATASET}" \
         --model "${MODEL}" \
         --seed "${SEED}" \

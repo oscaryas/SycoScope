@@ -1,5 +1,9 @@
 # Running SycoScope generation on SLURM (CSCS Clariden + Compute Canada Trillium)
 
+For Trillium-specific setup/operation detail (cluster facts, submission, a real OOM lesson from
+this session, resume/sync), see `hpc/trillium/README.md`. This doc covers both clusters at a
+higher level and is the canonical source for CSCS Clariden specifics.
+
 Deployment plumbing only -- `social_generate.py` / `moral_generate.py` and the judge scripts are
 unchanged. They already resume by counting lines in `--out` for a given `--seed`, which is exactly
 what makes them safe to run under SLURM's wall-clock limits: a killed job can be resubmitted
