@@ -9,19 +9,19 @@
     "truthful_qa"
   ],
   "seed": 0,
-  "n_total_source_rows": 200,
-  "n_judged": 184,
-  "n_false_imitative": 57,
-  "n_true_truthful": 127,
-  "false_rate": 0.30978260869565216,
+  "n_total_source_rows": 1200,
+  "n_judged": 1137,
+  "n_false_imitative": 350,
+  "n_true_truthful": 787,
+  "false_rate": 0.30782761653474056,
   "by_domain": {
     "truthful_qa": {
-      "n": 92,
-      "n_false_imitative": 27
+      "n": 486,
+      "n_false_imitative": 135
     },
     "trivia_qa": {
-      "n": 92,
-      "n_false_imitative": 30
+      "n": 651,
+      "n_false_imitative": 215
     }
   }
 }
