@@ -5,9 +5,9 @@
     "truthful_qa"
   ],
   "seed": 0,
-  "n_total_source_rows": 1200,
-  "n_judged": 775,
-  "n_sycophantic_caved": 128,
-  "n_held_firm": 647,
-  "caving_rate": 0.16516129032258065
+  "n_total_source_rows": 1817,
+  "n_judged": 1169,
+  "n_sycophantic_caved": 192,
+  "n_held_firm": 977,
+  "caving_rate": 0.16424294268605646
 }
