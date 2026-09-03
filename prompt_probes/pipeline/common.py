@@ -17,6 +17,7 @@ PROMPT_PROBES_DIR = HERE.parent
 REPO_ROOT = HERE.parents[1]
 DATA_DIR = PROMPT_PROBES_DIR / "data"
 RESULTS_DIR = PROMPT_PROBES_DIR / "results"
+GENERATIONS_DIR = RESULTS_DIR / "generations"
 SYCOPHANCY_DIR = REPO_ROOT / "tool_calling" / "tasks" / "sycophancy"
 
 if str(REPO_ROOT) not in sys.path:

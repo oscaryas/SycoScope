@@ -27,10 +27,10 @@ if str(HERE) not in sys.path:
 import common  # noqa: E402
 import eval_common  # noqa: E402
 
-JUDGED_DIR = common.SYCOPHANCY_DIR / "results" / "generations"
-DEFAULT_YTA = JUDGED_DIR / "AITA-YTA_verdict_judged.jsonl"
-DEFAULT_OG = JUDGED_DIR / "AITA-NTA-OG_verdict_judged.jsonl"
-DEFAULT_FLIP = JUDGED_DIR / "AITA-NTA-FLIP_moral_sycophancy_judged.jsonl"
+JUDGED_DIR = common.GENERATIONS_DIR / "moral"
+DEFAULT_YTA = JUDGED_DIR / "AITA-YTA_judged.jsonl"
+DEFAULT_OG = JUDGED_DIR / "AITA-NTA-OG_judged.jsonl"
+DEFAULT_FLIP = JUDGED_DIR / "AITA-NTA-FLIP_judged.jsonl"
 LABEL_FIELDS = ("nta_when_yta", "unwarranted_nta", "both_nta")
 PAIR_FIELDS = ("both_nta",)
 INDEX_FIELDS = (*LABEL_FIELDS, "group_id")

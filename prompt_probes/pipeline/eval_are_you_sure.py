@@ -24,10 +24,9 @@ if str(HERE) not in sys.path:
 import common  # noqa: E402
 import eval_common  # noqa: E402
 
-GENERATIONS_DIR = common.SYCOPHANCY_DIR / "results" / "generations"
 DEFAULT_CHECKPOINTS = [
-    GENERATIONS_DIR / "are_you_sure_mc_probe_eval" / "checkpoint.jsonl",
-    GENERATIONS_DIR / "are_you_sure_freeform_probe_eval" / "checkpoint.jsonl",
+    common.GENERATIONS_DIR / "are_you_sure_mc" / "checkpoint.jsonl",
+    common.GENERATIONS_DIR / "are_you_sure_freeform" / "checkpoint.jsonl",
 ]
 LABEL_FIELDS = ("caved",)
 
