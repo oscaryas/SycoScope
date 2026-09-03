@@ -50,6 +50,9 @@ NEUTRAL_SLUG = "neutral"
 POSITIONS = ("last_prompt", "first5", "response")
 DEFAULT_LAYER_FRACS = (0.25, 0.50, 0.75)
 
+# Baseline "cells" reported alongside the probes by the eval_* scripts.
+NULL_SLUGS = ("null_random_p50", "null_random_max", "null_length")
+
 POLARITIES = ("sycophantic", "non_sycophantic")
 POLARITY_LABEL = {"sycophantic": 1, "non_sycophantic": 0}
 POLARITY_TAG = {"sycophantic": "pos", "non_sycophantic": "neg"}

@@ -475,7 +475,11 @@ def main():
         print(f"--- ANOVA skipped: {ood_path} not found; run eval_elephant.py first ---")
     else:
         ood = json.loads(ood_path.read_text(encoding="utf-8"))
-        anova_rows = [dict(r, spec=r["slug"]) for r in ood["rows"] if r["split"] == "eval"]
+        anova_rows = [
+            dict(r, spec=r["slug"]) for r in ood["rows"]
+            if r["split"] == "eval" and r.get("dataset", "all") == "all"
+            and r["slug"] not in common.NULL_SLUGS
+        ]
         decomposition = anova(anova_rows, "auc")
         (out_dir / "anova.json").write_text(
             json.dumps({"source": "ELEPHANT eval-half AUC", **decomposition}, indent=2), encoding="utf-8"

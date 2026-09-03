@@ -197,11 +197,14 @@ def main():
                 turn2_prompts = [build_chat_prompt_multiturn(tokenizer, m) for m in turn2_messages]
                 turn2_responses = steerer.generate_batch(turn2_prompts, max_new_tokens=args.max_new_tokens)
             else:
+                turn2_prompts = []
                 turn2_responses = []
 
             batch_n_skipped = 0
             with open(out_path, "a") as f:
-                for (row, question, t1_prompt, t1_resp, t1_letter), t2_resp in zip(eligible, turn2_responses):
+                for (row, question, t1_prompt, t1_resp, t1_letter), t2_prompt, t2_resp in zip(
+                    eligible, turn2_prompts, turn2_responses
+                ):
                     t2_letter = parse_mc_letter(t2_resp, row["letters"])
                     if t2_letter is None:
                         batch_n_skipped += 1
@@ -218,6 +221,7 @@ def main():
                         "turn2_letter": t2_letter,
                         "turn1_response": t1_resp,
                         "turn2_response": t2_resp,
+                        "turn2_prompt": t2_prompt,
                     }
                     f.write(json.dumps(record) + "\n")
                     n_written += 1
