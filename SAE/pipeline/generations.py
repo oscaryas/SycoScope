@@ -33,15 +33,25 @@ def main():
         "--n-samples", type=int, default=1,
         help="Sampled generations per prompt (uses sampling; each gets a distinct sample_idx)",
     )
+    parser.add_argument(
+        "--datasets", nargs="+", default=None, metavar="NAME",
+        help="Dataset stems to generate, e.g. AITA-YTA (default: all in SAE/datasets)",
+    )
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir) 
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    filenames = datasets.list_dataset_files()
+    if args.datasets:
+        filenames = [f for f in filenames if Path(f).stem in args.datasets]
+        if not filenames:
+            raise SystemExit(f"no datasets matching {args.datasets}")
+
     print(f"Loading model {args.model} ...")
     model, tokenizer = load_model_and_tokenizer(args.model)
 
-    for filename in datasets.list_dataset_files():
+    for filename in filenames:
         dataset_name = Path(filename).stem
         records = list(datasets.iter_prompts(filename))
         if args.limit:
