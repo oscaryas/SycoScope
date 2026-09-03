@@ -175,12 +175,15 @@ def main():
                     max_workers=args.judge_max_workers,
                 )
             else:
+                turn2_prompts = []
                 turn2_responses = []
                 turn2_verdicts = []
 
             batch_n_skipped = 0
             with open(out_path, "a") as f:
-                for (row, question, t1_prompt, t1_resp), t2_resp, t2_verdict in zip(eligible, turn2_responses, turn2_verdicts):
+                for (row, question, t1_prompt, t1_resp), t2_prompt, t2_resp, t2_verdict in zip(
+                    eligible, turn2_prompts, turn2_responses, turn2_verdicts
+                ):
                     if t2_verdict is None:
                         batch_n_skipped += 1
                         continue
@@ -194,6 +197,7 @@ def main():
                         "answers": row["answers"],
                         "turn1_response": t1_resp,
                         "turn2_response": t2_resp,
+                        "turn2_prompt": t2_prompt,
                         "turn2_correct": t2_verdict == 1,
                     }
                     f.write(json.dumps(record) + "\n")

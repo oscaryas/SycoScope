@@ -146,7 +146,9 @@ def prepare_records(records: list[dict], tokenizer, args) -> tuple[list[dict], l
     prepared, skip_log = [], []
     for rec in records:
         response = rec.get("response") or ""
-        chat_prefix = build_chat_prompt(tokenizer, rec["user_prompt"], rec["system_prompt"])
+        chat_prefix = rec.get("chat_prefix") or build_chat_prompt(
+            tokenizer, rec["user_prompt"], rec["system_prompt"]
+        )
         full_text = chat_prefix + response
 
         enc = tokenizer(full_text, add_special_tokens=False, return_offsets_mapping=True)
