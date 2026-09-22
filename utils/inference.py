@@ -45,6 +45,71 @@ def resolve_terminators(model, tokenizer) -> list[int]:
     return sorted({i for i in ids if isinstance(i, int)})
 
 
+def generate_from_rendered(
+    model,
+    tokenizer,
+    prompts: list[str],
+    max_new_tokens: int = 150,
+    batch_size: int = 8,
+) -> tuple[list[str], list[bool]]:
+    """Greedy, batched generation from prompts that are ALREADY chat-rendered
+    (e.g. from build_chat_prompt / build_chat_prompt_multiturn), including
+    their own BOS -- tokenized with add_special_tokens=False so it isn't
+    doubled. Left-padded and chunked by batch_size for throughput; requires
+    tokenizer.padding_side == "left" (right-padding would corrupt position
+    ids for every prompt but the longest in a chunk under a causal LM).
+
+    Returns (responses, truncated): truncated[i] is True when prompt i's
+    generation hit max_new_tokens without emitting a terminator or pad
+    token -- i.e. that response is incomplete.
+    """
+    if tokenizer.padding_side != "left":
+        raise ValueError(
+            "generate_from_rendered requires tokenizer.padding_side == 'left' for "
+            "correct batched causal-LM generation; got 'right'."
+        )
+    terminators = resolve_terminators(model, tokenizer)
+    pad_id = (
+        tokenizer.pad_token_id
+        if tokenizer.pad_token_id is not None
+        else tokenizer.eos_token_id
+    )
+    responses: list[str] = []
+    truncated: list[bool] = []
+    for chunk in iter_batches(prompts, batch_size):
+        inputs = tokenizer(
+            chunk, return_tensors="pt", padding=True, truncation=True, max_length=1024,
+            add_special_tokens=False,
+        )
+        inputs = {k: v.to(model.device) for k, v in inputs.items()}
+        with torch.no_grad():
+            output_ids = model.generate(
+                **inputs,
+                max_new_tokens=max_new_tokens,
+                do_sample=False,
+                eos_token_id=terminators,
+                pad_token_id=pad_id,
+            )
+        input_len = inputs["input_ids"].shape[1]
+        for i in range(output_ids.shape[0]):
+            new_tokens = output_ids[i, input_len:]
+            is_trunc = (
+                bool(len(new_tokens))
+                and int(new_tokens[-1]) not in terminators
+                and int(new_tokens[-1]) != pad_id
+            )
+            truncated.append(is_trunc)
+            responses.append(tokenizer.decode(new_tokens, skip_special_tokens=True).strip())
+    n_truncated = sum(truncated)
+    if n_truncated:
+        print(
+            f"  WARNING: {n_truncated}/{len(prompts)} generations hit the max_new_tokens="
+            f"{max_new_tokens} cap without an end-of-turn token -- those responses are "
+            "INCOMPLETE (thinking models need a much larger budget)."
+        )
+    return responses, truncated
+
+
 def generate_batch(
     model,
     tokenizer,
