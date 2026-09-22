@@ -40,7 +40,7 @@ def resolve_terminators(model, tokenizer) -> list[int]:
     ids = list(gen_cfg_eos) if isinstance(gen_cfg_eos, (list, tuple)) else ([gen_cfg_eos] if gen_cfg_eos is not None else [])
     ids.append(tokenizer.eos_token_id)
     eot_id = tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    if isinstance(eot_id, int) and eot_id not in (None, tokenizer.unk_token_id):
+    if isinstance(eot_id, int) and eot_id not in (None, getattr(tokenizer, "unk_token_id", None)):
         ids.append(eot_id)
     return sorted({i for i in ids if isinstance(i, int)})
 
@@ -77,10 +77,37 @@ def generate_from_rendered(
     responses: list[str] = []
     truncated: list[bool] = []
     for chunk in iter_batches(prompts, batch_size):
-        inputs = tokenizer(
-            chunk, return_tensors="pt", padding=True, truncation=True, max_length=1024,
-            add_special_tokens=False,
-        )
+        # Prompts here are ALREADY chat-rendered, so their tail carries the
+        # model's own generation-prompt suffix (e.g. Llama-3's
+        # <|start_header_id|>assistant<|end_header_id|>\n\n or Gemma's
+        # <start_of_turn>model). HF's default truncation_side is "right",
+        # which would silently drop that suffix for an over-long prompt and
+        # make the model continue the wrong turn. Force left-truncation for
+        # this call only, and always restore the tokenizer's original
+        # setting afterward so this function doesn't leave the caller's
+        # tokenizer object mutated.
+        original_truncation_side = getattr(tokenizer, "truncation_side", "right")
+        tokenizer.truncation_side = "left"
+        try:
+            inputs = tokenizer(
+                chunk, return_tensors="pt", padding=True, truncation=True, max_length=1024,
+                add_special_tokens=False,
+            )
+        finally:
+            tokenizer.truncation_side = original_truncation_side
+        # A row's attention_mask sums to its own post-truncation token count
+        # (left-padding is 0s, real tokens are 1s). Any row sitting exactly
+        # at max_length either needed truncation or is a very rare prompt
+        # that happens to be exactly max_length tokens long -- either way,
+        # flagging it as "possibly truncated" costs nothing extra (no second
+        # tokenizer call) and errs toward visibility.
+        n_at_cap = int((inputs["attention_mask"].sum(dim=1) == 1024).sum())
+        if n_at_cap:
+            print(
+                f"  WARNING: {n_at_cap}/{len(chunk)} prompts in this batch reached "
+                "max_length=1024 and were LEFT-truncated (earliest tokens dropped so each "
+                "prompt's own generation-prompt suffix is preserved)."
+            )
         inputs = {k: v.to(model.device) for k, v in inputs.items()}
         with torch.no_grad():
             output_ids = model.generate(
@@ -131,11 +158,16 @@ def generate_batch(
         chat_texts, return_tensors="pt", padding=True, add_special_tokens=False
     ).to(model.device)
     terminators = resolve_terminators(model, tokenizer)
+    pad_id = (
+        tokenizer.pad_token_id
+        if tokenizer.pad_token_id is not None
+        else tokenizer.eos_token_id
+    )
 
     gen_kwargs = dict(
         max_new_tokens=max_new_tokens,
         do_sample=do_sample,
-        pad_token_id=tokenizer.pad_token_id,
+        pad_token_id=pad_id,
     )
     if do_sample:
 

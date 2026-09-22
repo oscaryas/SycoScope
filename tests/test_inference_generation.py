@@ -98,6 +98,21 @@ class _BatchTokenizer(_FakeTokenizer):
         return " ".join(str(int(token)) for token in ids if int(token) not in special_ids)
 
 
+class _TruncationTrackingTokenizer(_BatchTokenizer):
+    """Extends _BatchTokenizer to record the truncation_side in effect at
+    each __call__, so tests can assert generate_from_rendered requests
+    left-truncation and restores whatever was there before."""
+
+    def __init__(self):
+        super().__init__()
+        self.truncation_side = "right"
+        self.truncation_side_calls = []
+
+    def __call__(self, *args, **kwargs):
+        self.truncation_side_calls.append(self.truncation_side)
+        return super().__call__(*args, **kwargs)
+
+
 class _FakeGenerateModel(_FakeModel):
     device = torch.device("cpu")
 
@@ -124,6 +139,15 @@ class _FakeGenerateModel(_FakeModel):
         )
         self.cursor += batch_size
         return torch.cat([input_ids, suffix], dim=1)
+
+
+class _RaisingGenerateModel(_FakeGenerateModel):
+    """A model whose generate() always raises, used to prove that
+    generate_from_rendered restores tokenizer.truncation_side even when
+    model.generate blows up."""
+
+    def generate(self, **kwargs):
+        raise RuntimeError("boom")
 
 
 class TestGenerateFromRendered(unittest.TestCase):
@@ -170,6 +194,33 @@ class TestGenerateFromRendered(unittest.TestCase):
             model, self.tok, ["prompt"], max_new_tokens=2, batch_size=1
         )
         self.assertEqual(model.pad_ids, [0])
+
+    def test_left_truncates_rendered_prompt_and_restores_truncation_side(self):
+        # Prompts are already chat-rendered, so the *tail* is the model's
+        # generation-prompt suffix -- right-truncation (HF's default) would
+        # silently drop it. This asserts the tokenizer is actually called
+        # with truncation_side == "left" (not merely that a warning fires),
+        # and that whatever the tokenizer's original setting was is restored
+        # afterward, on the success path.
+        tok = _TruncationTrackingTokenizer()
+        tok.truncation_side = "right"
+        model = _FakeGenerateModel([[4, 0]])
+        self.generate_from_rendered(
+            model, tok, ["<bos>a"], max_new_tokens=2, batch_size=1
+        )
+        self.assertEqual(tok.truncation_side_calls, ["left"])
+        self.assertEqual(tok.truncation_side, "right")
+
+    def test_restores_truncation_side_even_if_generate_raises(self):
+        tok = _TruncationTrackingTokenizer()
+        tok.truncation_side = "right"
+        model = _RaisingGenerateModel([[4, 0]])
+        with self.assertRaises(RuntimeError):
+            self.generate_from_rendered(
+                model, tok, ["<bos>a"], max_new_tokens=2, batch_size=1
+            )
+        self.assertEqual(tok.truncation_side_calls, ["left"])
+        self.assertEqual(tok.truncation_side, "right")
 
 
 if __name__ == "__main__":
