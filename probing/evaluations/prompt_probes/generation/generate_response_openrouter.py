@@ -24,12 +24,12 @@ import os
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-if str(HERE) not in sys.path:
-    sys.path.insert(0, str(HERE))
+REPO_ROOT = Path(__file__).resolve().parents[4]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-import common  # noqa: E402
-from generate_response import (  # noqa: E402
+from probing.utils import common  # noqa: E402
+from probing.evaluations.prompt_probes.generation.generate_response import (  # noqa: E402
     build_work_list,
     classify_degenerate,
     group_key,

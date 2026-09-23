@@ -29,11 +29,11 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-if str(HERE) not in sys.path:
-    sys.path.insert(0, str(HERE))
+REPO_ROOT = Path(__file__).resolve().parents[4]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-import common  # noqa: E402
+from probing.utils import common  # noqa: E402
 from utils.inference import build_chat_prompt, generate_batch, iter_batches  # noqa: E402
 
 # Diagnostics, not labels: they flag individual records and feed a per-cell rate.

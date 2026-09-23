@@ -11,7 +11,7 @@ from pathlib import Path
 import sys
 import time
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(ROOT / "tool_calling/tasks/sycophancy"))
 MODEL = "meta-llama/Llama-3.1-8B-Instruct"
 
