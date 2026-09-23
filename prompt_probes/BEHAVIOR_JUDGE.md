@@ -121,7 +121,7 @@ or estimates the percentage of clustering caused by wording.
 From the repository root, prepare a random held-out pilot **without API calls**:
 
 ```bash
-.venv/bin/python prompt_probes/pipeline/judge_behaviors.py prepare \
+.venv/bin/python probing/evaluations/prompt_probes/judge/judge_behaviors.py prepare \
   --inputs prompt_probes/results/llama31_5k_subset/generations/*.jsonl \
   --prompt-split prompt_probes/results/llama31_5k_subset/prompt_split.json \
   --split test --per-stratum 10 --seed 0 \
@@ -139,7 +139,7 @@ configuration. This sends sampled user/response text to the provider and incurs
 API costs. Start small; no live calls were made when adding this implementation.
 
 ```bash
-.venv/bin/python prompt_probes/pipeline/judge_behaviors.py run \
+.venv/bin/python probing/evaluations/prompt_probes/judge/judge_behaviors.py run \
   --input prompt_probes/results/llama31_5k_subset/analysis/behavior_pilot_v1/blind.jsonl \
   --output prompt_probes/results/llama31_5k_subset/analysis/behavior_pilot_v1/judge_labels.jsonl \
   --model YOUR_JUDGE_MODEL_ID --limit 5
@@ -158,7 +158,7 @@ Human labels can use the same wrapper: `{"id": "b000000", "annotation": {...}}`.
 The annotation schema is specified in the rubric and checked by the script:
 
 ```bash
-.venv/bin/python prompt_probes/pipeline/judge_behaviors.py check \
+.venv/bin/python probing/evaluations/prompt_probes/judge/judge_behaviors.py check \
   --input prompt_probes/results/llama31_5k_subset/analysis/behavior_pilot_v1/blind.jsonl \
   --labels prompt_probes/results/llama31_5k_subset/analysis/behavior_pilot_v1/judge_labels.jsonl
 ```
