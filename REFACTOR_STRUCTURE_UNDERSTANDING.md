@@ -6,9 +6,14 @@ defaulted. Nothing here should be implemented until these are resolved.
 
 ## Resolved so far
 
-- Top-level layout is six siblings: `data/`, `results/`, `utils/`,
-  `evaluations/`, `analyze_probes/`, `probe/` — this **replaces** the
-  earlier "prompt_probes/baseline_probes/evals as top-level dirs" framing.
+- Top-level layout is six siblings nested under one new top-level directory,
+  `probing/`: `probing/data/`, `probing/results/`, `probing/utils/`,
+  `probing/evaluations/`, `probing/analyze_probes/`, `probing/probe/` — this
+  **replaces** the earlier "prompt_probes/baseline_probes/evals as top-level
+  dirs" framing. Nesting under `probing/` (rather than true repo-root
+  siblings) resolves a naming collision: the new probing-scoped `utils/`
+  would otherwise collide with the existing repo-root `utils/`
+  (`inference.py`, `model.py`), which stays exactly where it is, untouched.
 - `evaluations/` splits by probing method, mirroring `results/`:
   `evaluations/{prompt_probes,baseline_probes}/{generation,judge}/`.
 - `SAE/` and `tool_calling/` are not part of the same long-lived development
@@ -185,7 +190,12 @@ Plan, in order:
 ## Other open questions
 
 1. ~~Files inside `SAE/` that count as "the probing"~~ — confirmed: none.
-   `SAE/` stays entirely as-is; nothing moves out of it.
+   No SAE implementation or SAE-probing code moves into the shared probing
+   package. One branch-independence exception is required: the five raw
+   ELEPHANT CSVs currently under `SAE/datasets/` are inputs used by both SAE
+   and tool-calling generation through `utils/datasets.py`, so their canonical
+   copy moves to `probing/data/source/elephant/`. SAE-generated results,
+   activations, trained checkpoints, and the rest of `SAE/` remain SAE-owned.
 2. ~~Is `sypr` → `praise` the correct mapping~~ — confirmed yes.
 3. ~~`across_probes/` scope~~ — confirmed: it may include comparisons of
    prompt_probing vs. baseline_probing against each other, not only
