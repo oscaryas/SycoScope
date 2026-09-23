@@ -19,7 +19,7 @@ import time
 import urllib.error
 import urllib.request
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(ROOT / "tool_calling/tasks/sycophancy"))
 from pipeline_scripts.judges.scoring import _sycon_prompt
 

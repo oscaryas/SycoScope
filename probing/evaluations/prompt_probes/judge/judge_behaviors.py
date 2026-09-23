@@ -10,7 +10,7 @@ from pathlib import Path
 import random
 import sys
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[4]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from utils.llm_judge import call_judge, parse_json_response
