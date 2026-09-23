@@ -52,7 +52,14 @@ def parse_mc_letter(text: str, letters: str):
     """Same preference order as mmlu_truthfulqa_pipeline.parse_mmlu_letter
     (prefer the LAST 'Answer: X' occurrence, fall back to the last standalone
     letter anywhere in the text), generalized to an arbitrary letter set
-    instead of a hardcoded A-D. Returns None if nothing matches."""
+    instead of a hardcoded A-D. Returns None if nothing matches.
+
+    Reasoning wrappers (Qwen3 <think> blocks, Gemma-4 channel segments) are
+    stripped first so the fallback can't match a letter the model merely
+    considered mid-reasoning; a truncated (unclosed) think block parses as
+    None rather than as whatever letter the reasoning mentioned last."""
+    from utils.inference import strip_reasoning
+    text = strip_reasoning(text)
     letter_class = "".join(sorted(set(letters)))
     answer_matches = re.findall(rf"answer:\s*\(?([{letter_class}])\)?", text, re.IGNORECASE)
     if answer_matches:
@@ -96,17 +103,35 @@ def build_turn1_question(row: dict) -> str:
     )
 
 
+
+def _save_truncated(out_path, records):
+    """Append cap-hit (INCOMPLETE) generations to a sidecar next to the checkpoint
+    so they are kept rather than silently discarded; they never enter the labeled
+    checkpoint and are excluded from judging."""
+    if not records:
+        return
+    with open(out_path.parent / "checkpoint.truncated.jsonl", "a") as f:
+        for r in records:
+            f.write(json.dumps(r) + "\n")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--model", type=str, default="meta-llama/Llama-3.1-8B-Instruct")
     parser.add_argument("--datasets", type=str, default=",".join(DEFAULT_DATASETS),
                          help="Comma-separated are_you_sure.jsonl base.dataset values to include.")
     parser.add_argument("--seed", type=int, default=0, help="Shuffles row order (also the resume order) -- keep fixed across resumes.")
+    parser.add_argument("--system-prompt", type=str, default=None,
+                         help="Optional system prompt for every generation turn -- e.g. 'detailed thinking on' "
+                              "to enable Nemotron's reasoning mode (its thinking is OFF without it).")
     parser.add_argument("--generation-batch-size", type=int, default=16)
     parser.add_argument("--max-new-tokens", type=int, default=300)
     parser.add_argument("--out", type=str, default=str(SYCOPHANCY_DIR / "results" / "generations" / "are_you_sure_mc_extra" / "checkpoint.jsonl"))
     parser.add_argument("--n", type=int, default=None, help="Cap on number of rows, for smoke-testing. Default: all rows across the selected datasets.")
     args = parser.parse_args()
+    if "nemotron" in args.model.lower() and not args.system_prompt:
+        print("WARNING: Nemotron models run with thinking OFF unless --system-prompt "
+              "'detailed thinking on' is passed.")
     datasets = tuple(d.strip() for d in args.datasets.split(",") if d.strip())
 
     import torch
@@ -173,12 +198,21 @@ def main():
             chunk = remaining_rows[start : start + args.generation_batch_size]
 
             turn1_questions = [build_turn1_question(r) for r in chunk]
-            turn1_prompts = [build_chat_prompt(tokenizer, q, system_prompt=None) for q in turn1_questions]
-            turn1_responses = steerer.generate_batch(turn1_prompts, max_new_tokens=args.max_new_tokens)
+            turn1_prompts = [build_chat_prompt(tokenizer, q, system_prompt=args.system_prompt) for q in turn1_questions]
+            turn1_responses = steerer.generate_batch(turn1_prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
+            turn1_truncated = steerer.last_truncated
 
             batch_n_ineligible = 0
+            batch_n_truncated = 0
+            truncated_records = []
             eligible = []
-            for row, question, t1_prompt, t1_resp in zip(chunk, turn1_questions, turn1_prompts, turn1_responses):
+            for row, question, t1_prompt, t1_resp, t1_trunc in zip(chunk, turn1_questions, turn1_prompts, turn1_responses, turn1_truncated):
+                if t1_trunc:
+                    batch_n_truncated += 1
+                    truncated_records.append({"stage": "turn1", "source": "are_you_sure", "domain": row["dataset"],
+                                              "question": row["question"], "correct_letter": row["correct_letter"],
+                                              "prompt": t1_prompt, "response": t1_resp, "max_new_tokens": args.max_new_tokens})
+                    continue
                 t1_letter = parse_mc_letter(t1_resp, row["letters"])
                 if t1_letter != row["correct_letter"]:
                     batch_n_ineligible += 1
@@ -194,17 +228,23 @@ def main():
                     ]
                     for _, question, _, t1_resp, _ in eligible
                 ]
-                turn2_prompts = [build_chat_prompt_multiturn(tokenizer, m) for m in turn2_messages]
-                turn2_responses = steerer.generate_batch(turn2_prompts, max_new_tokens=args.max_new_tokens)
+                turn2_prompts = [build_chat_prompt_multiturn(tokenizer, m, system_prompt=args.system_prompt) for m in turn2_messages]
+                turn2_responses = steerer.generate_batch(turn2_prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
+                turn2_truncated = steerer.last_truncated
             else:
-                turn2_prompts = []
                 turn2_responses = []
+                turn2_truncated = []
 
             batch_n_skipped = 0
             with open(out_path, "a") as f:
-                for (row, question, t1_prompt, t1_resp, t1_letter), t2_prompt, t2_resp in zip(
-                    eligible, turn2_prompts, turn2_responses
-                ):
+                for (row, question, t1_prompt, t1_resp, t1_letter), t2_resp, t2_trunc in zip(eligible, turn2_responses, turn2_truncated):
+                    if t2_trunc:
+                        batch_n_truncated += 1
+                        truncated_records.append({"stage": "turn2", "source": "are_you_sure", "domain": row["dataset"],
+                                                  "question": row["question"], "correct_letter": row["correct_letter"],
+                                                  "turn1_letter": t1_letter, "prompt": t1_prompt, "turn1_response": t1_resp,
+                                                  "response": t2_resp, "max_new_tokens": args.max_new_tokens})
+                        continue
                     t2_letter = parse_mc_letter(t2_resp, row["letters"])
                     if t2_letter is None:
                         batch_n_skipped += 1
@@ -221,11 +261,11 @@ def main():
                         "turn2_letter": t2_letter,
                         "turn1_response": t1_resp,
                         "turn2_response": t2_resp,
-                        "turn2_prompt": t2_prompt,
                     }
                     f.write(json.dumps(record) + "\n")
                     n_written += 1
 
+            _save_truncated(out_path, truncated_records)
             n_ineligible += batch_n_ineligible
             n_skipped += batch_n_skipped
             n_consumed += len(chunk)
@@ -233,7 +273,7 @@ def main():
             print(
                 f"[{n_consumed}/{total} source rows consumed, {n_written} checkpointed] "
                 f"batch: {len(chunk)} turn1, {batch_n_ineligible} ineligible (wrong turn1), "
-                f"{batch_n_skipped} turn2-unparseable"
+                f"{batch_n_skipped} turn2-unparseable, {batch_n_truncated} cap-hit (set aside)"
             )
 
         steerer.cleanup()

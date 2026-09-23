@@ -84,6 +84,11 @@ class ActivationSteerer:
         self.tokenizer = tokenizer
         self.model_config = model_config
         self.handles = []
+        # Model-agnostic end-of-turn terminators -- shared with the sampled
+        # utils.inference.generate_batch path so both generation routes stop
+        # identically for every registered model family.
+        from utils.inference import resolve_terminators
+        self.terminators = resolve_terminators(model, tokenizer)
 
     def attach(self, component: str, layer: int, vector: torch.Tensor, alpha: float, head: int = None):
         device = next(self.model.parameters()).device
@@ -129,21 +134,32 @@ class ActivationSteerer:
             raise ValueError(f"component must be 'mha', 'mlp', or 'residual', got {component!r}")
 
     def generate(self, prompt: str, max_new_tokens: int = 150) -> str:
-        inputs = self.tokenizer(prompt, return_tensors="pt", truncation=True, max_length=1024)
+        """Greedy generation from a FULLY RENDERED chat prompt (including BOS,
+        e.g. from build_chat_prompt) -- tokenized with add_special_tokens=False
+        so the template's own <|begin_of_text|> isn't doubled."""
+        inputs = self.tokenizer(
+            prompt, return_tensors="pt", truncation=True, max_length=1024, add_special_tokens=False,
+        )
         inputs = {k: v.to(self.model.device) for k, v in inputs.items()}
         with torch.no_grad():
             output_ids = self.model.generate(
                 **inputs,
                 max_new_tokens=max_new_tokens,
                 do_sample=False,
+                eos_token_id=self.terminators,
                 pad_token_id=self.tokenizer.pad_token_id or self.tokenizer.eos_token_id,
             )
         new_tokens = output_ids[0][inputs["input_ids"].shape[1] :]
+        if len(new_tokens) and int(new_tokens[-1]) not in self.terminators:
+            print(f"  WARNING: generation hit the max_new_tokens={max_new_tokens} cap "
+                  "without emitting an end-of-turn token -- response is INCOMPLETE "
+                  "(thinking models need a much larger budget).")
         return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
 
     def generate_batch(self, prompts: list, max_new_tokens: int = 150, batch_size: int = 8) -> list:
         """
-        Same greedy, already-chat-formatted-prompt contract as generate(), but
+        Same greedy, fully-rendered-chat-prompt contract as generate() (prompts
+        must already include BOS; tokenized with add_special_tokens=False), but
         left-padded and chunked by batch_size for throughput. Requires
         tokenizer.padding_side == "left" (set by utils.model.load_model_and_tokenizer)
         -- right-padding would corrupt position ids for every prompt but the
@@ -156,10 +172,13 @@ class ActivationSteerer:
             )
         pad_id = self.tokenizer.pad_token_id or self.tokenizer.eos_token_id
         responses = []
+        truncated = []
+        n_truncated = 0
         for start in range(0, len(prompts), batch_size):
             chunk = prompts[start : start + batch_size]
             inputs = self.tokenizer(
                 chunk, return_tensors="pt", padding=True, truncation=True, max_length=1024,
+                add_special_tokens=False,
             )
             inputs = {k: v.to(self.model.device) for k, v in inputs.items()}
             with torch.no_grad():
@@ -167,12 +186,26 @@ class ActivationSteerer:
                     **inputs,
                     max_new_tokens=max_new_tokens,
                     do_sample=False,
+                    eos_token_id=self.terminators,
                     pad_token_id=pad_id,
                 )
             input_len = inputs["input_ids"].shape[1]
             for i in range(output_ids.shape[0]):
                 new_tokens = output_ids[i, input_len:]
+                # A finished row ends with an end-of-turn token, or right-pad
+                # after it; a row still mid-generation at the cap ends with an
+                # ordinary token -- that response is incomplete.
+                is_trunc = bool(len(new_tokens)) and int(new_tokens[-1]) not in self.terminators and int(new_tokens[-1]) != pad_id
+                n_truncated += is_trunc
+                truncated.append(is_trunc)
                 responses.append(self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip())
+        if n_truncated:
+            print(f"  WARNING: {n_truncated}/{len(prompts)} generations hit the max_new_tokens={max_new_tokens} "
+                  "cap without an end-of-turn token -- those responses are INCOMPLETE "
+                  "(thinking models need a much larger budget).")
+        # Per-row flags for the last call, so callers can set cap-hit rows aside
+        # (see scripts/*_generate.py -> checkpoint.truncated.jsonl).
+        self.last_truncated = truncated
         return responses
 
     def cleanup(self):

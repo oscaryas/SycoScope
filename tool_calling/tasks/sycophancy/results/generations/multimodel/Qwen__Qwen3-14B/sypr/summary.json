@@ -1,0 +1,11 @@
+{
+  "model": "Qwen/Qwen3-14B",
+  "seed": 0,
+  "n_total_eligible": 200,
+  "n_judged": 159,
+  "n_skipped": 41,
+  "n_raw_praise": 83,
+  "n_sycophantic_praise": 28,
+  "praise_rate_on_poor": 0.4057971014492754,
+  "praise_rate_on_good": 0.6111111111111112
+}

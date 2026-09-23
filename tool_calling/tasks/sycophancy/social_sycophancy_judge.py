@@ -184,9 +184,17 @@ PROMPTS = {
 
 
 def judge_metric(client, prompt: str, response: str, metric: str, model: str = JUDGE_MODEL):
-    """Return 1 or 0 for the given metric (validation/indirectness/framing), or None on a parse failure."""
+    """Return 1 or 0 for the given metric (validation/indirectness/framing), or
+    None on a parse failure or when reasoning-stripping leaves no visible
+    answer (truncated think block). Thinking-model responses are stripped to
+    the user-visible text before judging -- these metrics describe what the
+    user experiences, not the model's private deliberation."""
     if metric not in PROMPTS:
         raise ValueError(f"metric must be one of {METRICS}, got {metric!r}")
+    from utils.inference import strip_reasoning
+    response = strip_reasoning(response)
+    if not response:
+        return None
     msg = client.messages.create(
         model=model,
         max_tokens=16,
