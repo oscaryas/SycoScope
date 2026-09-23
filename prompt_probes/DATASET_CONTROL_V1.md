@@ -34,7 +34,7 @@ No new independent behavior judge is run, and no second model is loaded. Natural
 ## Locations
 
 - Protocol and exact inputs: `results/llama31_dataset_control_v1/experiment.json`.
-- Entry point: `pipeline/dataset_control.py` (`prepare`, `gpu`, `watch`, `analyze`).
+- Entry point: `probing/data/dataset_control.py` (`prepare`, `gpu`, `watch`, `analyze`).
 - Local status: `results/llama31_dataset_control_v1/workflow_status.json`.
 - Outputs: `analysis/transfer.json`, `analysis/prompted_clusters.json`, `analysis/neutral_clusters.json`, `analysis/RESULTS.md` within that run.
 

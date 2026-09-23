@@ -50,12 +50,12 @@ Locations and commands
 ----------------------
 
 - Paraphrases: data/sycophancy_probe_prompt_pairs_paraphrase_v1.json
-- Entry point: pipeline/prompt_wording_control.py
+- Entry point: probing/data/prompt_wording_control.py
 - Frozen manifest: results/llama31_prompt_wording_control_v1/experiment.json
-- Prepare: python pipeline/prompt_wording_control.py prepare
+- Prepare: python probing/data/prompt_wording_control.py prepare
 - Generate/extract on the pinned model host:
-  python pipeline/prompt_wording_control.py gpu --model-path /workspace/syconbench_model
+  python probing/data/prompt_wording_control.py gpu --model-path /workspace/syconbench_model
 - Analyze after the activation caches are local:
-  python pipeline/prompt_wording_control.py analyze
+  python probing/data/prompt_wording_control.py analyze
 - Or supervise, download, checksum, and analyze a remote run:
-  python pipeline/prompt_wording_control.py watch --host HOST --port PORT
+  python probing/data/prompt_wording_control.py watch --host HOST --port PORT
