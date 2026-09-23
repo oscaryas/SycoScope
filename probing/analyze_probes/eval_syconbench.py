@@ -13,10 +13,10 @@ from pathlib import Path
 import random
 import sys
 
-HERE = Path(__file__).resolve().parent
-if str(HERE) not in sys.path:
-    sys.path.insert(0, str(HERE))
-import common
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+from probing.utils import common
 
 SETTINGS = ("debate", "ethical", "false_presupposition")
 LABEL_FIELDS = tuple(f"{setting}_{target}" for setting in SETTINGS
@@ -116,7 +116,7 @@ def inventory(records):
 
 def main():
     # Lazy import keeps normalization usable without model/scoring dependencies.
-    import eval_common
+    from probing.analyze_probes import eval_common
     parser = argparse.ArgumentParser(description=__doc__)
     eval_common.add_common_args(parser)
     parser.set_defaults(model=MODEL, layers=[0, 4, 8, 12, 16, 20, 24, 28], batch_size=1,

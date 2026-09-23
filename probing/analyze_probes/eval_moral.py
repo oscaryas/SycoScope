@@ -20,12 +20,12 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-if str(HERE) not in sys.path:
-    sys.path.insert(0, str(HERE))
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-import common  # noqa: E402
-import eval_common  # noqa: E402
+from probing.utils import common  # noqa: E402
+from probing.analyze_probes import eval_common  # noqa: E402
 
 JUDGED_DIR = common.GENERATIONS_DIR / "moral"
 DEFAULT_YTA = JUDGED_DIR / "AITA-YTA_judged.jsonl"

@@ -219,8 +219,8 @@ class TestApplyProbeParity(unittest.TestCase):
     """
 
     def test_matches_sklearn_decision_function(self):
-        import analyze_probes as ap
-        import train_probes as tp
+        from probing.analyze_probes import analyze_probes as ap
+        from probing.probe import train_probes as tp
 
         rng = np.random.default_rng(0)
         X = rng.normal(size=(80, 16))
