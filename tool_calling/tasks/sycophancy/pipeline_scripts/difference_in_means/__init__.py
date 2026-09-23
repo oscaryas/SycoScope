@@ -1,1 +1,0 @@
-"""Difference-in-means entrypoints."""
