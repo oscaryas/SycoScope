@@ -5,7 +5,7 @@ trained on ONE cell's system prompt (e.g. pv_implicit) also separate
 sycophantic/non_sycophantic responses generated under a DIFFERENT cell's
 system prompt (e.g. ctrl_obsequiousness)? Tests cross-system-prompt
 generalization within the same synthetic contrastive-pair design, as opposed
-to eval_moral.py/eval_elephant.py's generalization to naturalistic AITA data.
+to eval_moral.py/eval_social_sycophancy.py's generalization to naturalistic AITA data.
 
 Records are built from the ~500-prompt held-out sample (cross_cell_holdout_prompt_ids.json,
 drawn from the 3000 prompt_ids NOT in the 2000-prompt training pool) across ALL

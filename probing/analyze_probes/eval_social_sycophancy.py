@@ -8,10 +8,10 @@ probe x position x layer x metric combination then scores as a dot product.
 
 Usage:
     # one GPU pass, cached thereafter
-    python eval_elephant.py --run-name main --extract-only
+    python eval_social_sycophancy.py --run-name main --extract-only
 
     # scoring only, CPU
-    python eval_elephant.py --run-name main
+    python eval_social_sycophancy.py --run-name main
 """
 import argparse
 import random
