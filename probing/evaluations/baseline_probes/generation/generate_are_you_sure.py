@@ -24,16 +24,28 @@ for candidate in (REPO_ROOT, SYCOPHANCY_DIR, SCRIPTS_DIR):
     if str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from are_you_sure_freeform_generate import (  # noqa: E402
-    DEFAULT_DATASETS as FREEFORM_DATASETS,
-    build_turn1_question as build_freeform_question,
-    load_are_you_sure_freeform_rows,
-)
-from are_you_sure_mc_generate import (  # noqa: E402
-    DEFAULT_DATASETS as MCQ_DATASETS,
-    build_turn1_question as build_mcq_question,
-    load_are_you_sure_mc_rows,
-)
+try:
+    # Both remain absent on branches without tool_calling/ (SAE, and
+    # eventually main) -- importing this module for its argparse surface
+    # (e.g. --help, or a smoke-test import) still works, but actually running
+    # generation requires a tool_calling-carrying branch (building-agent).
+    from are_you_sure_freeform_generate import (  # noqa: E402
+        DEFAULT_DATASETS as FREEFORM_DATASETS,
+        build_turn1_question as build_freeform_question,
+        load_are_you_sure_freeform_rows,
+    )
+    from are_you_sure_mc_generate import (  # noqa: E402
+        DEFAULT_DATASETS as MCQ_DATASETS,
+        build_turn1_question as build_mcq_question,
+        load_are_you_sure_mc_rows,
+    )
+except ModuleNotFoundError:
+    FREEFORM_DATASETS = ("trivia_qa", "truthful_qa")  # mirrored from are_you_sure_freeform_generate.py
+    MCQ_DATASETS = ("math_mc_cot", "aqua_mc", "truthful_qa_mc")  # mirrored from are_you_sure_mc_generate.py
+    build_freeform_question = None
+    load_are_you_sure_freeform_rows = None
+    build_mcq_question = None
+    load_are_you_sure_mc_rows = None
 from probing.utils.baseline_probes_common import seed_everything, write_jsonl  # noqa: E402
 from probing.evaluations.baseline_probes.generation.common import (  # noqa: E402
     add_generation_args, generate_via_openrouter_with_finish_reasons, write_metadata,

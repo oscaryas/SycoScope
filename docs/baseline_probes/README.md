@@ -22,8 +22,12 @@ Generation goes through [OpenRouter](https://openrouter.ai) rather than loading 
 Examples:
 
 ```bash
+# --input points at an ELEPHANT-format JSONL of raw prompts (e.g. OEQ.jsonl);
+# on this branch, source one from probing/data/source/elephant/ or another
+# ELEPHANT-format export. SAE/results/OEQ.jsonl is application-owned and only
+# exists on the `SAE` branch.
 python pipeline_scripts/generations/generate_sae.py \
-  --input ../../../SAE/results/OEQ.jsonl --dataset-name OEQ --dataset-type social \
+  --input results/generations/oeq-input.jsonl --dataset-name OEQ --dataset-type social \
   --model meta-llama/llama-3.1-8b-instruct --output results/generations/oeq.jsonl
 python pipeline_scripts/judges/judge_social.py \
   --input results/generations/oeq.jsonl --output results/judges/oeq.jsonl
