@@ -45,9 +45,11 @@ from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import ( 
     iter_dataset_records,
 )
 
-# SAE/ is removed from this branch (see repo split); --steered-dir is a
-# required override once SAE/results/steered_responses/ no longer exists here.
-DEFAULT_STEERED_DIR = REPO_ROOT / "SAE" / "results" / "steered_responses"
+# SAE/ is removed from this branch (see repo split); --steered-dir is now a
+# required argument with no default (it used to default into the now-removed
+# SAE/results/steered_responses/). Pass e.g.
+# `--steered-dir <repo>/SAE/results/steered_responses` on a checkout that
+# still has SAE/ (a different branch) to reproduce the old default.
 DEFAULT_OUTPUT_DIR = SYCOPHANCY_DIR / "results" / "steered_judged"
 DEFAULT_RUNS = ("coeff_0", "coeff_2")
 DATASET = "AITA-YTA"
@@ -124,7 +126,7 @@ def summarize(output_path: Path) -> dict:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--steered-dir", type=Path, default=DEFAULT_STEERED_DIR)
+    parser.add_argument("--steered-dir", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--runs", nargs="+", default=list(DEFAULT_RUNS))
     parser.add_argument("--limit", type=int, default=None, help="Records per cell (default: all)")
