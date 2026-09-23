@@ -55,12 +55,27 @@ from probing.probe.baseline_probes import (
     save_probe_results,
     load_probe_results,
 )
-from social_sycophancy_judge import generate_social_sycophancy_labels, build_labeled_text
-from cross_dataset_generalization import (
-    DEFAULT_ALPHAS as ALPHAS,
-    CROSS_DATASETS,
-    run_generalization_sweep,
+from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import (
+    generate_social_sycophancy_labels, build_labeled_text, DEFAULT_RESULTS_DIR,
 )
+try:
+    # cross_dataset_generalization.py depends on the live-steering machinery
+    # elsewhere in tool_calling/tasks/sycophancy/, so it stays application-
+    # owned there (building-agent only) rather than moving into probing/ --
+    # see the plan's "Files that remain application-owned on building-agent".
+    # On branches without tool_calling/ (SAE, and eventually main), this
+    # module is simply absent; importing oeq_probe_pipeline for its helpers
+    # (e.g. from tests) still works, but actually running its cross-dataset
+    # sweep requires a tool_calling-carrying branch.
+    from cross_dataset_generalization import (
+        DEFAULT_ALPHAS as ALPHAS,
+        CROSS_DATASETS,
+        run_generalization_sweep,
+    )
+except ModuleNotFoundError:
+    ALPHAS = [-20.0, -5.0, 0.0, 5.0, 20.0]  # cross_dataset_generalization.py's DEFAULT_ALPHAS, mirrored
+    CROSS_DATASETS = ["AITA-NTA-FLIP", "AITA-NTA-OG", "AITA-YTA", "OEQ", "SS"]  # mirrored likewise
+    run_generalization_sweep = None
 
 BALANCE_METHODS = ["undersample", "upweight"]
 
@@ -72,7 +87,9 @@ BALANCE_METHODS = ["undersample", "upweight"]
 # ---------------------------------------------------------------------------
 
 def build_labels(tokenizer, n_label: int) -> dict:
-    result = generate_social_sycophancy_labels(tokenizer, metric="validation", n_examples=n_label)
+    result = generate_social_sycophancy_labels(
+        tokenizer, metric="validation", n_examples=n_label, input_path=DEFAULT_RESULTS_DIR / "OEQ.jsonl"
+    )
     n_pos = sum(r["label"] == 1 for r in result["records"])
     n_neg = len(result["records"]) - n_pos
     result["n_pos"] = n_pos
