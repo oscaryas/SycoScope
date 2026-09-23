@@ -1,0 +1,185 @@
+#!/usr/bin/env python3
+"""
+Full-dataset SyPR generation + judging: every one of the ~10,800 label-eligible
+rows (see sypr_data.all_eligible_indices), not a stratified sample. Same
+generate -> judge -> label path as sypr_data.generate_and_label_sypr /
+sypr_praise_count.py, but checkpointed to a JSONL file so a crash mid-run only
+loses the batch in flight, not hours of prior progress -- rerunning the same
+command resumes automatically from wherever the checkpoint left off.
+
+Usage:
+    python -m probing.steering.generation.sypr_praise_full_generate \
+        --model meta-llama/Llama-3.1-8B-Instruct \
+        --out probing/data/meta-llama__Llama-3.1-8B-Instruct/sypr/checkpoint.jsonl
+
+    # smoke test (small, fast, no GPU required):
+    python -m probing.steering.generation.sypr_praise_full_generate --n 8 --out /tmp/smoke.jsonl
+"""
+import argparse
+import json
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve()
+REPO_ROOT = HERE.parents[3]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+
+
+def _save_truncated(out_path, records):
+    """Append cap-hit (INCOMPLETE) generations to a sidecar next to the checkpoint
+    so they are kept rather than silently discarded; they never enter the labeled
+    checkpoint and are excluded from judging."""
+    if not records:
+        return
+    with open(out_path.parent / "checkpoint.truncated.jsonl", "a") as f:
+        for r in records:
+            f.write(json.dumps(r) + "\n")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--model", type=str, default="meta-llama/Llama-3.1-8B-Instruct")
+    parser.add_argument("--seed", type=int, default=0, help="Shuffles row order (also the resume order) -- keep fixed across resumes.")
+    parser.add_argument("--system-prompt", type=str, default=None,
+                         help="Optional system prompt for every generation turn -- e.g. 'detailed thinking on' "
+                              "to enable Nemotron's reasoning mode (its thinking is OFF without it).")
+    parser.add_argument("--generation-batch-size", type=int, default=16)
+    parser.add_argument("--max-new-tokens", type=int, default=200)
+    parser.add_argument("--judge-max-workers", type=int, default=16)
+    parser.add_argument("--out", type=str, required=True,
+                         help="Output checkpoint path, e.g. "
+                              "probing/data/<model_slug>/sypr/checkpoint.jsonl")
+    parser.add_argument("--n", type=int, default=None, help="Cap on number of rows, for smoke-testing. Default: all label-eligible rows.")
+    args = parser.parse_args()
+    if "nemotron" in args.model.lower() and not args.system_prompt:
+        print("WARNING: Nemotron models run with thinking OFF unless --system-prompt "
+              "'detailed thinking on' is passed.")
+
+    import torch
+    from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
+    from utils.model_registry import get_model_config
+    from probing.steering.activation_steering import ActivationSteerer
+    from utils.inference import build_chat_prompt_multiturn
+    from probing.evaluations.baseline_probes.judge.sycophantic_praise_judge import judge_praise_batch
+    from probing.data.sypr_data import load_sypr_dataset, all_eligible_indices, is_poor_quality, build_chat_messages, _row_from_index
+
+    out_path = Path(args.out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    print("Loading SyPR dataset...")
+    dataset = load_sypr_dataset()
+
+    import random
+
+    indices = all_eligible_indices(dataset)
+    random.Random(args.seed).shuffle(indices)
+    if args.n is not None:
+        indices = indices[: args.n]
+    total = len(indices)
+    print(f"{total} label-eligible rows to process (seed={args.seed}).")
+
+    already_done = 0
+    if out_path.exists():
+        with open(out_path) as f:
+            already_done = sum(1 for _ in f)
+        print(f"Resuming: {already_done}/{total} rows already checkpointed at {out_path}.")
+
+    remaining_indices = indices[already_done:]
+    if not remaining_indices:
+        print("Nothing left to do -- checkpoint already covers all requested rows.")
+    else:
+        if torch.cuda.is_available():
+            device_map = "auto"
+        elif torch.backends.mps.is_available():
+            device_map = {"": "mps"}
+        else:
+            device_map = {"": "cpu"}
+
+        print(f"Loading {args.model} (device_map={device_map})...")
+        model, tokenizer = load_model_and_tokenizer(args.model, device_map=device_map)
+        model_config = get_model_config(args.model)
+        steerer = ActivationSteerer(model, tokenizer, model_config)
+
+        n_written = already_done
+        with open(out_path, "a") as f:
+            for start in range(0, len(remaining_indices), args.generation_batch_size):
+                chunk_indices = remaining_indices[start : start + args.generation_batch_size]
+                rows = [_row_from_index(dataset, i) for i in chunk_indices]
+                prompts = [build_chat_prompt_multiturn(tokenizer, build_chat_messages(r), system_prompt=args.system_prompt) for r in rows]
+                responses = steerer.generate_batch(prompts, max_new_tokens=args.max_new_tokens, batch_size=args.generation_batch_size)
+                truncated = steerer.last_truncated
+                for row, prompt, response in zip(rows, prompts, responses):
+                    row["prompt"] = prompt
+                    row["response"] = response
+
+                # Set cap-hit rows aside before judging (they are INCOMPLETE).
+                truncated_records = [
+                    {"stage": "response", "source": "sypr", "domain": row["domain"], "utterance_text": row["utterance_text"],
+                     "is_poor_quality": is_poor_quality(row), "prompt": row["prompt"], "response": row["response"],
+                     "max_new_tokens": args.max_new_tokens}
+                    for row, trunc in zip(rows, truncated) if trunc
+                ]
+                _save_truncated(out_path, truncated_records)
+                n_truncated_this_batch = len(truncated_records)
+                rows = [row for row, trunc in zip(rows, truncated) if not trunc]
+
+                verdicts = judge_praise_batch(rows, max_workers=args.judge_max_workers)
+                for row, verdict in zip(rows, verdicts):
+                    row["praised"] = verdict
+
+                n_skipped_this_batch = 0
+                for row in rows:
+                    if row["praised"] is None:
+                        n_skipped_this_batch += 1
+                        continue
+                    record = {
+                        "text": row["prompt"] + row["response"],
+                        "label": 1 if (row["praised"] == 1 and is_poor_quality(row)) else 0,
+                        "domain": row["domain"],
+                        "utterance_text": row["utterance_text"],
+                        "response": row["response"],
+                        "prompt": row["prompt"],
+                        "is_poor_quality": is_poor_quality(row),
+                        "praised": row["praised"],
+                    }
+                    f.write(json.dumps(record) + "\n")
+                    n_written += 1
+                f.flush()
+                print(f"[{n_written}/{total}] checkpointed ({len(rows) + n_truncated_this_batch} generated, "
+                      f"{n_skipped_this_batch} judge-skipped, {n_truncated_this_batch} cap-hit set aside this batch)")
+
+        steerer.cleanup()
+        cleanup_model(model, tokenizer)
+        print(f"Done. {n_written}/{total} rows written to {out_path}.")
+
+    records = [json.loads(line) for line in open(out_path)]
+    n_judged = len(records)
+    n_pos = sum(r["label"] == 1 for r in records)
+    n_raw_praise = sum(r["praised"] == 1 for r in records)
+    n_poor = sum(r["is_poor_quality"] for r in records)
+    n_good = n_judged - n_poor
+    praise_rate_on_poor = sum(r["praised"] == 1 for r in records if r["is_poor_quality"]) / n_poor if n_poor else 0.0
+    praise_rate_on_good = sum(r["praised"] == 1 for r in records if not r["is_poor_quality"]) / n_good if n_good else 0.0
+
+    summary = {
+        "model": args.model,
+        "seed": args.seed,
+        "n_total_eligible": total,
+        "n_judged": n_judged,
+        "n_skipped": total - n_judged,
+        "n_raw_praise": n_raw_praise,
+        "n_sycophantic_praise": n_pos,
+        "praise_rate_on_poor": praise_rate_on_poor,
+        "praise_rate_on_good": praise_rate_on_good,
+    }
+    summary_path = out_path.parent / "summary.json"
+    with open(summary_path, "w") as f:
+        json.dump(summary, f, indent=2)
+    print(json.dumps(summary, indent=2))
+    print(f"Summary written to {summary_path}")
+
+
+if __name__ == "__main__":
+    main()
