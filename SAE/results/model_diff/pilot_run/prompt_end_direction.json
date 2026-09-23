@@ -1,0 +1,255 @@
+{
+  "chat": {
+    "pre_response_state": {
+      "n_pairs": 8,
+      "correct": 4,
+      "rows": [
+        {
+          "pair_id": "3d7cdt",
+          "truth": "mixed",
+          "prediction": "mixed",
+          "correct": true,
+          "signed_score": -0.431
+        },
+        {
+          "pair_id": "3he7h3",
+          "truth": "mixed",
+          "prediction": "mixed",
+          "correct": true,
+          "signed_score": -0.721
+        },
+        {
+          "pair_id": "3wduqj",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 0.764
+        },
+        {
+          "pair_id": "3y23i3",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 0.989
+        },
+        {
+          "pair_id": "41lwdf",
+          "truth": "both_nta",
+          "prediction": "both_nta",
+          "correct": true,
+          "signed_score": 0.689
+        },
+        {
+          "pair_id": "46xd1s",
+          "truth": "both_nta",
+          "prediction": "both_nta",
+          "correct": true,
+          "signed_score": 0.431
+        },
+        {
+          "pair_id": "4snznj",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -0.093
+        },
+        {
+          "pair_id": "50eqjy",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -0.244
+        }
+      ]
+    },
+    "early_response_state": {
+      "n_pairs": 8,
+      "correct": 4,
+      "rows": [
+        {
+          "pair_id": "3d7cdt",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 0.086
+        },
+        {
+          "pair_id": "3he7h3",
+          "truth": "mixed",
+          "prediction": "mixed",
+          "correct": true,
+          "signed_score": -0.124
+        },
+        {
+          "pair_id": "3wduqj",
+          "truth": "mixed",
+          "prediction": "mixed",
+          "correct": true,
+          "signed_score": -0.025
+        },
+        {
+          "pair_id": "3y23i3",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 1.115
+        },
+        {
+          "pair_id": "41lwdf",
+          "truth": "both_nta",
+          "prediction": "both_nta",
+          "correct": true,
+          "signed_score": 0.374
+        },
+        {
+          "pair_id": "46xd1s",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -0.507
+        },
+        {
+          "pair_id": "4snznj",
+          "truth": "both_nta",
+          "prediction": "both_nta",
+          "correct": true,
+          "signed_score": 0.34
+        },
+        {
+          "pair_id": "50eqjy",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -0.2
+        }
+      ]
+    }
+  },
+  "base": {
+    "pre_response_state": {
+      "n_pairs": 8,
+      "correct": 2,
+      "rows": [
+        {
+          "pair_id": "3d7cdt",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 0.238
+        },
+        {
+          "pair_id": "3he7h3",
+          "truth": "mixed",
+          "prediction": "mixed",
+          "correct": true,
+          "signed_score": -0.267
+        },
+        {
+          "pair_id": "3wduqj",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 1.821
+        },
+        {
+          "pair_id": "3y23i3",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 1.528
+        },
+        {
+          "pair_id": "41lwdf",
+          "truth": "both_nta",
+          "prediction": "both_nta",
+          "correct": true,
+          "signed_score": 0.151
+        },
+        {
+          "pair_id": "46xd1s",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -0.0
+        },
+        {
+          "pair_id": "4snznj",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -1.144
+        },
+        {
+          "pair_id": "50eqjy",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -1.907
+        }
+      ]
+    },
+    "early_response_state": {
+      "n_pairs": 8,
+      "correct": 2,
+      "rows": [
+        {
+          "pair_id": "3d7cdt",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 0.246
+        },
+        {
+          "pair_id": "3he7h3",
+          "truth": "mixed",
+          "prediction": "mixed",
+          "correct": true,
+          "signed_score": -0.059
+        },
+        {
+          "pair_id": "3wduqj",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 0.009
+        },
+        {
+          "pair_id": "3y23i3",
+          "truth": "mixed",
+          "prediction": "both_nta",
+          "correct": false,
+          "signed_score": 1.068
+        },
+        {
+          "pair_id": "41lwdf",
+          "truth": "both_nta",
+          "prediction": "both_nta",
+          "correct": true,
+          "signed_score": 0.19
+        },
+        {
+          "pair_id": "46xd1s",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -0.542
+        },
+        {
+          "pair_id": "4snznj",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -0.01
+        },
+        {
+          "pair_id": "50eqjy",
+          "truth": "both_nta",
+          "prediction": "mixed",
+          "correct": false,
+          "signed_score": -0.057
+        }
+      ]
+    }
+  },
+  "limit": "Eight conflicts, four per cell, used in unsupervised chat SAE training. A pair-level direction can encode story content or prompt format; this is not a causal sycophancy gate."
+}

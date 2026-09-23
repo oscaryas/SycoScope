@@ -1,0 +1,10 @@
+{
+  "model": "claude-sonnet-5",
+  "budget_usd": 49.75,
+  "accounted_usd": 4.337001999999812,
+  "known_cost_usd": 4.337002,
+  "n_conversations": 500,
+  "n_fully_judged": 498,
+  "n_valid_turns": 2490,
+  "n_unknown_outcome": 0
+}

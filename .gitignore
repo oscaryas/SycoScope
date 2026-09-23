@@ -3,36 +3,61 @@ __pycache__/
 .venv/
 .env
 .DS_Store
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+*.log
 SAE/results/activations/
 SAE/notebooks/
 SAE/results/runs/
 tool_calling/tasks/sycophancy/runs/
 
-# Large generated data/weights stay local-only going forward -- doesn't
-# affect files already tracked (e.g. some older results/*.jsonl), only
-# blocks new ones like this session's SyPR/social/mixture outputs from
-# being accidentally committed.
-tool_calling/tasks/sycophancy/results/**/*.pt
-tool_calling/tasks/sycophancy/results/**/*.pth
-tool_calling/tasks/sycophancy/results/**/*.jsonl
+# Activation arrays and disposable rendered outputs stay local. Generated
+# JSONL, compressed generation checkpoints, and model/probe checkpoints are
+# intentionally versioned so long-running experiments remain resumable.
+tool_calling/tasks/sycophancy/results/**/*.npy
+tool_calling/tasks/sycophancy/results/**/*.npz
+tool_calling/tasks/sycophancy/results/**/*.png
 
-# Keep the tracked-markdown surface to README/CLAUDE/AGENTS only. Existing
-# tracked files (e.g. tool_calling/tasks/*/skills/*.md) are unaffected --
-# gitignore only blocks new/untracked paths from being added.
-*.md
-!/README.md
-!/CLAUDE.md
-!/AGENTS.md
+# Redundant local decompressed copy of a checkpoint already tracked as
+# checkpoint.jsonl.gz (byte-identical once decompressed) -- over GitHub's
+# 100MB push limit and adds nothing the .gz doesn't already have.
+tool_calling/tasks/sycophancy/results/generations/sypr_praise_llama31_full/checkpoint.jsonl
 
-# prompt_probes: generated data and probe weights stay local. The small
-# provenance/metrics artifacts (run_info.json, meta.json, summary.json,
-# analysis/*.json) stay tracked, matching the pattern in 075c614.
+# Local handoff/session notes are not project documentation. Do not ignore
+# Markdown globally: architecture plans, runbooks, and package READMEs should
+# remain visible to Git review.
+SESSION_SUMMARY.md
+
+# prompt_probes: activation arrays and rendered report assets stay local.
+# Generated JSONL, probe checkpoints, and compact provenance/metrics artifacts
+# (run_info.json, meta.json, summary.json, analysis/*.json) stay tracked.
 prompt_probes/results/**/*.npz
 prompt_probes/results/**/*.npy
-prompt_probes/results/**/*.pt
-prompt_probes/results/**/*.pth
 prompt_probes/results/**/*.csv
 prompt_probes/results/**/*.png
+prompt_probes/results/**/*.html
+prompt_probes/results/**/*.css
+prompt_probes/results/**/*.js
+prompt_probes/results/**/*.lock
 prompt_probes/data/perez_raw/
 prompt_probes/data/perez_user_prompts.jsonl
 .ipynb_checkpoints/
+
+# SAE activation arrays and tabular analysis exports stay local. Trained
+# checkpoints and generated JSONL are intentionally versioned.
+SAE/results/**/*.npy
+SAE/results/**/*.npz
+SAE/results/**/*.parquet
+SAE/results/**/*.lock
+SAE/results/**/*.metadata
+SAE/results/**/.cache/
+
+# Claude Code local overrides (not shared)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock

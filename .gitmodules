@@ -1,0 +1,3 @@
+[submodule "third_party/SYCON-Bench"]
+	path = third_party/SYCON-Bench
+	url = https://github.com/JiseungHong/SYCON-Bench.git

@@ -43,6 +43,12 @@ CELL_SLUGS = {
     "Appropriate emotional support": "ctrl_emotional_support",
     "Calibrated hedging": "ctrl_calibrated_hedging",
     "Ordinary politeness": "ctrl_politeness",
+    "Pure sycophancy": "ctrl_pure_sycophancy",
+    "Obsequiousness": "ctrl_obsequiousness",
+    "Excitement": "ctrl_excitement",
+    "Evasive hedging": "ctrl_evasive_hedging",
+    "Affiliation": "ctrl_affiliation",
+    "Inauthenticity": "ctrl_inauthenticity",
 }
 
 

@@ -1,0 +1,49 @@
+"""Model set for the steering-persona-space experiment.
+
+Three ~7-8B chat models chosen for parity with the prior project's baselines:
+the baselines for llama8b, qwen7b, dolphin8b already live in
+$PRIOR_DATA_ROOT/{llama-3.1-8b, qwen2.5-7b, dolphin3-llama3.1-8b}/.
+
+Each entry has the same keys as the prior project + a `baseline_data` field
+giving the ABSOLUTE path to the prior repo's per-model dir (symlinked under
+data/baseline/<tag>/).
+"""
+import os
+from pathlib import Path
+
+# we had already the assistant axis pipeline on these three models (UNSTEERED) and their results live in a different folder
+# we link it here
+PRIOR_DATA_ROOT = Path(os.environ.get(
+    "PRIOR_DATA_ROOT", "/jumbo/lisp/paulcherian/persona-space-comparison/data"
+))
+
+# define define the models and where we are going to extract from 
+MODELS: dict[str, dict] = {
+    "llama8b": {
+        "model_id":   "meta-llama/Llama-3.1-8B-Instruct",
+        "path":       "llama-3.1-8b",
+        "layer":      16,           # N/2 for 32-layer Llama-3.1
+        "hidden_dim": 4096,
+        "color":      "#ff7f0e",
+        "display":    "Llama-3.1-8B",
+        "baseline_data": PRIOR_DATA_ROOT / "llama-3.1-8b",
+    },
+    "qwen7b": {
+        "model_id":   "Qwen/Qwen2.5-7B-Instruct",
+        "path":       "qwen2.5-7b",
+        "layer":      14,           # N/2 for 28-layer Qwen-2.5-7B
+        "hidden_dim": 3584,
+        "color":      "#17becf",
+        "display":    "Qwen-2.5-7B",
+        "baseline_data": PRIOR_DATA_ROOT / "qwen2.5-7b",
+    },
+    "dolphin8b": {
+        "model_id":   "cognitivecomputations/Dolphin3.0-Llama3.1-8B",
+        "path":       "dolphin3-llama3.1-8b",
+        "layer":      16,           # N/2 for 32-layer Llama-3.1 base
+        "hidden_dim": 4096,
+        "color":      "#8c564b",
+        "display":    "Dolphin3-Llama3.1-8B",
+        "baseline_data": PRIOR_DATA_ROOT / "dolphin3-llama3.1-8b",
+    },
+}

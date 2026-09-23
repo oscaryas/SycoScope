@@ -45,7 +45,7 @@ def extract_activations(out_dir: Path, records: list[dict], index_fields, args) 
     out_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"Loading {args.model} ...")
-    model, tokenizer = load_model_and_tokenizer(args.model)
+    model, tokenizer = load_model_and_tokenizer(getattr(args, "model_path", None) or args.model)
     tokenizer.padding_side = "right"
     n_layers = model.config.num_hidden_layers
     hidden_dim = model.config.hidden_size

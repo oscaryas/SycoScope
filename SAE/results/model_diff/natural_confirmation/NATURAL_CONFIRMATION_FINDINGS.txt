@@ -1,0 +1,79 @@
+Natural AITA confirmation result (2026-09-15)
+
+The 150 independently community-labeled January-March 2025 AITA posts
+produce a strong base/chat behavioral difference at the first verdict. The
+base model changes its verdict with the narrator's appended assessment much
+more often than the chat model. This does not yet qualify as a causal-gate or
+SAE-feature target: label-conditioned errors and appropriate-agreement losses
+show that the chat model often sticks to a verdict bias rather than
+selectively correcting a false narrator claim.
+
+Data integrity: 75 NTA and 75 YTA unique source IDs, balanced 120-group
+screening and 30-group locked slices. The source flair matches >=70% of at
+least 40 explicit verdict comments per post. No old AITA ID matches; maximum
+selected-to-old text similarity 0.5392. The 450 unchanged/right/wrong prompt
+variants each received two no-system few-shot orders in both official Llama-3
+models: 900 scored cases per model. All 900 prompt-token hashes and candidate
+token IDs match base/chat, and host/local output checksums match. Base/chat
+greedy verdict starts were valid in 899/900 and 900/900 cases respectively;
+complete-token candidate choices match those starts in 895/900 and 887/900.
+
+All-post results, with 95% conflict-ID bootstrap intervals on paired
+chat-minus-base differences:
+
+                                  YTA then NTA       NTA then YTA
+  Neutral community-label accuracy
+    chat / base                      71.3% / 60.0%      64.7% / 52.7%
+  False agreement with narrator
+    chat / base                      24.0% / 76.7%      36.0% / 80.0%
+    paired difference                -52.7 pp           -44.0 pp
+    95% interval                     [-61.3,-43.3]     [-54.7,-32.0]
+  Warranted agreement
+    chat / base                      59.3% / 86.0%      60.7% / 84.7%
+    paired difference                -26.7 pp           -24.0 pp
+    95% interval                     [-36.0,-18.0]     [-34.7,-13.3]
+  Right=NTA and wrong=YTA on same post
+    chat / base                       4.7% / 64.7%       6.0% / 66.0%
+
+The 30 locked posts retain a negative chat-minus-base aggregate false-
+agreement difference of -43.3 pp under both orders; bootstrap intervals are
+[-63.3,-23.3] and [-63.3,-20.0] pp. Their warranted-agreement gap also
+persists. This is a small locked sanity slice, not the final SAE test set.
+
+The aggregate is substantially confounded by verdict bias. Under NTA-then-
+YTA examples, the base neutral verdict is YTA on 100% of community-YTA posts
+but NTA on only 5.3% of community-NTA posts. Chat does the opposite: neutral
+NTA accuracy 88.0%, YTA accuracy 41.3%. On community-YTA posts in this order,
+chat falsely agrees with a right/NTA claim 65.3% versus base 62.7% (paired
+difference +2.7 pp, interval [-13.3,+17.3]), while appropriate agreement
+with a wrong/YTA claim falls to 32.0% versus base 98.7%. The locked YTA
+subslice likewise has 66.7% false agreement in each model under this order.
+Under YTA-then-NTA examples, chat's false-agreement advantage appears in
+both community-label classes, but it still loses appropriate agreement,
+especially on NTA posts (49.3% versus base 90.7%).
+
+The continuous stance effect reinforces the concern: the right-minus-wrong
+NTA-vs-YTA log-odds shift is positive for base (+1.07 and +1.41 nats), but
+slightly negative for chat (-0.36 and -0.26 nats). Chat's rare hard verdict
+flips are not a calibrated selection of when the narrator is correct. The
+two exemplar orders were balanced in class count, yet their ordering and
+content matter greatly. These results meet the engineering and gross
+behavioral-screen goal, but fail the predeclared requirement of label-wise
+robustness plus preserved warranted agreement for a gate claim.
+
+Next experiment: isolate verdict-prior and exemplar effects before choosing
+an SAE feature. Use prompt-format controls with more counterbalanced examples
+and a no-example verdict cue, then independently rate the appropriateness of
+the minimally stance-edited versions. Preserve the existing 150 IDs as a
+diagnostic set; obtain a separate fresh held-out set before any feature or
+intervention claim. The community label is an external opinion distribution,
+not objective moral truth, and the appended claims were not separately
+human-rated. First-verdict candidate scores/greedy starts do not measure
+response quality or prove a latent mechanism.
+
+Files: cases.jsonl, manifest.jsonl, selection_audit.json,
+NATURAL_CONFIRMATION_PROTOCOL.txt, base.jsonl, chat.jsonl, paired_audit.json.
+The manifest SHA-256 is c6946df2abeca761885e2689a8589d060e768557bdd8eb697c8f2460853bb93d.
+The base/chat score SHA-256 values are
+ba00db855f9bc29bd460747c2496a1795035f018918177b129cd27ab4396a573
+and 1566da8829dc716a1f0baac8dd23fbd6854a257e3f6522f4412dd6d39bb96449.

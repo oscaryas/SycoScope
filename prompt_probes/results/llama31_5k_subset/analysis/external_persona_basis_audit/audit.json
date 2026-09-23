@@ -1,0 +1,71 @@
+{
+  "status": "blocked_unverified_extraction_layer",
+  "projection_analysis_run": false,
+  "model_id_documented": "meta-llama/Llama-3.1-8B-Instruct",
+  "checkpoint_revision_documented": null,
+  "source_layer_index": null,
+  "compatible_local_activation_key": null,
+  "source_pooling_documented": "mean over assistant response tokens",
+  "basis_shape": [
+    4096,
+    3
+  ],
+  "orthonormality_max_abs_error": 1.1100226182669815e-08,
+  "role_count": 275,
+  "role_variance_fraction_per_pc": [
+    0.27582991123199463,
+    0.16833454370498657,
+    0.07037618011236191
+  ],
+  "role_variance_fraction_top3": 0.5145406126976013,
+  "pc1_cosine_with_source_default_minus_role_axis": 0.8178068399429321,
+  "basis_source_label": "data/baseline/llama8b/vectors  (prior project, mean-over-assistant-token extraction)",
+  "sources": {
+    "llama8b_basis.pt": {
+      "url": "https://huggingface.co/datasets/pandaman007/steered-persona-space/resolve/98ae1b599e8ed1ae6952d83167ea4e4ba42111ce/pca_basis/llama8b_basis.pt",
+      "sha256": "327d15905d1840ff4c1501e8522d3b9948282fc69f8aeb02d2b1b7a5fe5eb09f",
+      "bytes": 100055
+    },
+    "dataset_README.md": {
+      "url": "https://huggingface.co/datasets/pandaman007/steered-persona-space/resolve/98ae1b599e8ed1ae6952d83167ea4e4ba42111ce/README.md",
+      "sha256": "d510c29c454d359822b77905c59350b4a2db1f93cc11bae5e2a00b6c05489d26",
+      "bytes": 8152
+    },
+    "dataset_models.py.txt": {
+      "url": "https://huggingface.co/datasets/pandaman007/steered-persona-space/resolve/98ae1b599e8ed1ae6952d83167ea4e4ba42111ce/configs/models.py",
+      "sha256": "a51c7618d5a19aba114657b595e95a869d1eda9604d2b7962273533619e6cd01",
+      "bytes": 1901
+    },
+    "compute_baseline_pca.py.txt": {
+      "url": "https://raw.githubusercontent.com/pauljCherian/steered-persona-space/c8f975e88b4b4c366befaa59342c4405d7705def/scripts/compute_baseline_pca.py",
+      "sha256": "0e20480df6786076aa05216b026e2ec0f3e0006ad993f38a8be58ec568e4f34a",
+      "bytes": 3206
+    },
+    "baseline_loader.py.txt": {
+      "url": "https://raw.githubusercontent.com/pauljCherian/steered-persona-space/c8f975e88b4b4c366befaa59342c4405d7705def/_common.py",
+      "sha256": "47dba83bd7751f4ab7ae7298f3df5d22a3fd511434a07243a190a8e2936f26f3",
+      "bytes": 5790
+    },
+    "prior_pipeline.sh.txt": {
+      "url": "https://raw.githubusercontent.com/pauljCherian/persona-space-comparison/b94fd93ff532cd51edf93c7b7a3e10c1b526d086/pipeline.sh",
+      "sha256": "abbaf14a6d617b90139cf5878ebe9a2c702c0d0b702239c4089a1616cdc9114f",
+      "bytes": 5628
+    },
+    "prior_models.py.txt": {
+      "url": "https://raw.githubusercontent.com/pauljCherian/persona-space-comparison/b94fd93ff532cd51edf93c7b7a3e10c1b526d086/configs/models.py",
+      "sha256": "64325775411ea3dd70ed8d0ccecdb5b9471264ee78087ab9c471c44e9298882b",
+      "bytes": 1513
+    }
+  },
+  "blockers": [
+    "The basis artifact has no extraction layer or model revision metadata.",
+    "The layer=16 in the steered-project config describes its new runner; its baseline loader reads precomputed vectors without selecting or checking a layer.",
+    "The public prior-project configuration covers different model sizes and does not contain the Llama-3.1-8B run configuration."
+  ],
+  "method_limitations": [
+    "Only three PCs are supplied, capturing 51.45% of source role-vector variance; not a full persona-space basis.",
+    "The public prior pipeline omits the role-expression judge/filter, unlike Lu et al.; the exact Llama-8B run logs are unavailable in the audited materials.",
+    "The supplied PCA basis was selected by its authors for stronger PC1 alignment with the Assistant Axis; it is not a neutral estimate of every aspect of personality.",
+    "The public alpha=0 role vectors in the steering archive use last-token pooling, so they are not replacements for the response-mean role vectors that produced this basis."
+  ]
+}

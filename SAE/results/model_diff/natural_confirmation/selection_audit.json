@@ -1,0 +1,25 @@
+{
+  "source_revision": "cb4c298cbfa93ce9cdf56685f12a55b0a6928110",
+  "source_rows": 2939,
+  "old_texts": 6773,
+  "exclusion": {
+    "weak_community_label": 1114,
+    "verdict_leakage": 12,
+    "removed_or_link": 1
+  },
+  "eligible_after_similarity": {
+    "NTA": 517,
+    "YTA": 87
+  },
+  "selected_groups": 150,
+  "manifest_rows": 450,
+  "split_groups": {
+    "screen": 120,
+    "locked": 30
+  },
+  "label_groups": {
+    "NTA": 75,
+    "YTA": 75
+  },
+  "max_prior_similarity": 0.5392
+}

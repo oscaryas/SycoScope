@@ -146,9 +146,16 @@ def prepare_records(records: list[dict], tokenizer, args) -> tuple[list[dict], l
     prepared, skip_log = [], []
     for rec in records:
         response = rec.get("response") or ""
-        chat_prefix = rec.get("chat_prefix") or build_chat_prompt(
-            tokenizer, rec["user_prompt"], rec["system_prompt"]
-        )
+        if rec.get("chat_messages") is not None:
+            # Multi-turn OOD records contain only the history BEFORE this answer.
+            # Render with the same tokenizer as extraction; never append future turns.
+            chat_prefix = tokenizer.apply_chat_template(
+                rec["chat_messages"], tokenize=False, add_generation_prompt=True
+            )
+        else:
+            chat_prefix = rec.get("chat_prefix") or build_chat_prompt(
+                tokenizer, rec["user_prompt"], rec["system_prompt"]
+            )
         full_text = chat_prefix + response
 
         enc = tokenizer(full_text, add_special_tokens=False, return_offsets_mapping=True)

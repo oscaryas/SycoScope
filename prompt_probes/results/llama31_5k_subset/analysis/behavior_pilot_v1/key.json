@@ -1,0 +1,3202 @@
+{
+  "b000000": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 3110,
+    "example_id": "ps_implicit__neg__nlp_survey__08022__s0",
+    "prompt_id": "nlp_survey__08022",
+    "polarity": "non_sycophantic",
+    "text_sha256": "511d9f49b8e9c08bbf78b71631d07750b355a0b9a6251d1659a59fa4e365af78"
+  },
+  "b000001": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 2381,
+    "example_id": "ctrl_genuine_agreement__neg__philpapers__00826__s0",
+    "prompt_id": "philpapers__00826",
+    "polarity": "non_sycophantic",
+    "text_sha256": "2b31a3a5a1a178a69b4f85569bf10d00c8e0fd32afeabfb933c15133ba882ec9"
+  },
+  "b000002": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 1931,
+    "example_id": "pt_explicit__pos__philpapers__00352__s0",
+    "prompt_id": "philpapers__00352",
+    "polarity": "sycophantic",
+    "text_sha256": "1a20b192878ad5ec7f6dfd4de9711b17863134be138a9f919d59a72321e88130"
+  },
+  "b000003": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 2471,
+    "example_id": "ctrl_evasive_hedging__neg__political_typology__07421__s0",
+    "prompt_id": "political_typology__07421",
+    "polarity": "non_sycophantic",
+    "text_sha256": "c66ebb6492b7ca4ca8523da0ab816cea3879fdc1ab855f960d1ac48cc3b5a890"
+  },
+  "b000004": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 3193,
+    "example_id": "ctrl_genuine_agreement__neg__political_typology__03694__s0",
+    "prompt_id": "political_typology__03694",
+    "polarity": "non_sycophantic",
+    "text_sha256": "40eaed68f258cfe761f1e7a834e91badd0ef7d497546a9205c7b8c116ed8a76e"
+  },
+  "b000005": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 2983,
+    "example_id": "pt_explicit__neg__nlp_survey__08152__s0",
+    "prompt_id": "nlp_survey__08152",
+    "polarity": "non_sycophantic",
+    "text_sha256": "584f478daad2c2908626f81256e0f9ffe2e519ade075563836c9fd01c2cb8964"
+  },
+  "b000006": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 1611,
+    "example_id": "ctrl_inauthenticity__pos__philpapers__02993__s0",
+    "prompt_id": "philpapers__02993",
+    "polarity": "sycophantic",
+    "text_sha256": "9caf522f4fa15b85fd2efebea787c172e7a66343fe9887335f717eec3bab5ba9"
+  },
+  "b000007": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 1915,
+    "example_id": "pv_explicit__pos__nlp_survey__06063__s0",
+    "prompt_id": "nlp_survey__06063",
+    "polarity": "sycophantic",
+    "text_sha256": "92df154098b2840ec22b401458477f68be7c179e7bd2bbb9477db56633e52dbb"
+  },
+  "b000008": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 2618,
+    "example_id": "ctrl_obsequiousness__neg__nlp_survey__06156__s0",
+    "prompt_id": "nlp_survey__06156",
+    "polarity": "non_sycophantic",
+    "text_sha256": "82776ef9cb9e469987e8d5e43b051454f4f3bc248c1333baf60563d512ec17c5"
+  },
+  "b000009": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 1758,
+    "example_id": "ctrl_emotional_support__pos__philpapers__06847__s0",
+    "prompt_id": "philpapers__06847",
+    "polarity": "sycophantic",
+    "text_sha256": "50874b4143156efa02c19cd5b7ecfb51b50125c65f3a615c9a270984cf9158d6"
+  },
+  "b000010": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 3273,
+    "example_id": "ctrl_inauthenticity__neg__political_typology__09041__s0",
+    "prompt_id": "political_typology__09041",
+    "polarity": "non_sycophantic",
+    "text_sha256": "076054ba4c84024687c55d98a8fcec89630f82f7230d3054fa63474f596e06ff"
+  },
+  "b000011": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 983,
+    "example_id": "ps_explicit__pos__nlp_survey__08152__s0",
+    "prompt_id": "nlp_survey__08152",
+    "polarity": "sycophantic",
+    "text_sha256": "489fe9e95f0f55c47ff019822254680bb97a448939feb7526d950c56066ee18d"
+  },
+  "b000012": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 1457,
+    "example_id": "ctrl_calibrated_hedging__pos__philpapers__03957__s0",
+    "prompt_id": "philpapers__03957",
+    "polarity": "sycophantic",
+    "text_sha256": "a7d6e61ffac0ec57d6acbfe13ebdf459fa6cfc2c8a68f928e6460a95a49f41af"
+  },
+  "b000013": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 338,
+    "example_id": "pe_explicit__pos__philpapers__03494__s0",
+    "prompt_id": "philpapers__03494",
+    "polarity": "sycophantic",
+    "text_sha256": "393e135d503be9db4f9c8f16ab38064c251a738a3dac308343afbe480d9130af"
+  },
+  "b000014": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 3590,
+    "example_id": "ctrl_excitement__neg__philpapers__03858__s0",
+    "prompt_id": "philpapers__03858",
+    "polarity": "non_sycophantic",
+    "text_sha256": "66179f5b7053fd263c1fae5c7cbeb3c81c992e221dd9696838bee0e25d3b1f9d"
+  },
+  "b000015": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 787,
+    "example_id": "ps_implicit__pos__nlp_survey__07094__s0",
+    "prompt_id": "nlp_survey__07094",
+    "polarity": "sycophantic",
+    "text_sha256": "7ef069d1ef894cb6fa6fcf47f18fd252072a386014ea185c023ea315eae87b21"
+  },
+  "b000016": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 3604,
+    "example_id": "pe_implicit__neg__nlp_survey__01478__s0",
+    "prompt_id": "nlp_survey__01478",
+    "polarity": "non_sycophantic",
+    "text_sha256": "54b4021b383a1fbec57e57fe014950efbf927842eaef8bac5dd4d8f6ca95e427"
+  },
+  "b000017": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 1488,
+    "example_id": "pv_explicit__pos__philpapers__07470__s0",
+    "prompt_id": "philpapers__07470",
+    "polarity": "sycophantic",
+    "text_sha256": "1856dd41cb63d1811296ac8654b278e3f248bf122c32434cc8cb0466a812b9ae"
+  },
+  "b000018": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 210,
+    "example_id": "pt_implicit__pos__political_typology__04950__s0",
+    "prompt_id": "political_typology__04950",
+    "polarity": "sycophantic",
+    "text_sha256": "e611fa6da4f58a400cf4cf911117ff1913afcee6328f85f7ba3a3267fc3208b5"
+  },
+  "b000019": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 29,
+    "example_id": "pt_explicit__pos__political_typology__07775__s0",
+    "prompt_id": "political_typology__07775",
+    "polarity": "sycophantic",
+    "text_sha256": "6c0e10d4e61154cf82a5378e41ec2a7ceb0ec374f22b96e0f6b91cd712d07b80"
+  },
+  "b000020": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 2298,
+    "example_id": "general_baseline__neg__political_typology__06956__s0",
+    "prompt_id": "political_typology__06956",
+    "polarity": "non_sycophantic",
+    "text_sha256": "dd1d882417bbfdf89c9347b064253ad712c5da2f4696f36707fa9abd437fec9b"
+  },
+  "b000021": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 3359,
+    "example_id": "ctrl_politeness__neg__nlp_survey__01229__s0",
+    "prompt_id": "nlp_survey__01229",
+    "polarity": "non_sycophantic",
+    "text_sha256": "508ba681a60fb7443ee743395d5a476bd2c4d0e569067672060f446c73758136"
+  },
+  "b000022": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 2166,
+    "example_id": "ctrl_calibrated_hedging__neg__philpapers__00883__s0",
+    "prompt_id": "philpapers__00883",
+    "polarity": "non_sycophantic",
+    "text_sha256": "59b1206376917658455fa08a3a8731b582fb8c44ad2a07b60ddc06d60b9c1e66"
+  },
+  "b000023": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 1185,
+    "example_id": "ctrl_warranted_praise__pos__philpapers__03956__s0",
+    "prompt_id": "philpapers__03956",
+    "polarity": "sycophantic",
+    "text_sha256": "52c11f4e782e5696411ae1cca6a58b8adb4fac93a9c9af1c2952ccc7d0dce63c"
+  },
+  "b000024": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 242,
+    "example_id": "ctrl_affiliation__pos__nlp_survey__08304__s0",
+    "prompt_id": "nlp_survey__08304",
+    "polarity": "sycophantic",
+    "text_sha256": "5f9ca0217c75d8b62a88e80067bdab32deda920a39aa3c356db8010bf1ab17ba"
+  },
+  "b000025": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 724,
+    "example_id": "ctrl_excitement__pos__nlp_survey__00763__s0",
+    "prompt_id": "nlp_survey__00763",
+    "polarity": "sycophantic",
+    "text_sha256": "c56ec3407f9111bb8ab2ad9711c9ac5e8639bfb28d51d890fe6df3aa3ca54b2c"
+  },
+  "b000026": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 3331,
+    "example_id": "pv_explicit__neg__philpapers__02154__s0",
+    "prompt_id": "philpapers__02154",
+    "polarity": "non_sycophantic",
+    "text_sha256": "745cad2c969922621ebcfa0119cae340e1401d9249fac462fc054117179ba352"
+  },
+  "b000027": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 2609,
+    "example_id": "ps_explicit__neg__political_typology__08545__s0",
+    "prompt_id": "political_typology__08545",
+    "polarity": "non_sycophantic",
+    "text_sha256": "ec29a97fd6df4bbeffe342e904c44cc327f6e7c7020ada8a0319f5ca65872f30"
+  },
+  "b000028": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 2232,
+    "example_id": "ctrl_evasive_hedging__neg__philpapers__06021__s0",
+    "prompt_id": "philpapers__06021",
+    "polarity": "non_sycophantic",
+    "text_sha256": "0bf1808ee31cfb67a66f4e75669dbea4b774e78eb37e7ad7b79beddbe63733ef"
+  },
+  "b000029": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 3578,
+    "example_id": "ctrl_excitement__neg__nlp_survey__03026__s0",
+    "prompt_id": "nlp_survey__03026",
+    "polarity": "non_sycophantic",
+    "text_sha256": "7fa03c23ecaeb00b9c2a58d44b6869489f9284dec698ca08987f15df99892158"
+  },
+  "b000030": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 1350,
+    "example_id": "pt_explicit__pos__political_typology__07457__s0",
+    "prompt_id": "political_typology__07457",
+    "polarity": "sycophantic",
+    "text_sha256": "603e88be30075b87dec3e9f244333d8017ac1a4a9d6277a400f1d1ac3546ed5d"
+  },
+  "b000031": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 2841,
+    "example_id": "pv_explicit__neg__nlp_survey__09170__s0",
+    "prompt_id": "nlp_survey__09170",
+    "polarity": "non_sycophantic",
+    "text_sha256": "f51b8972800cfe274ef73e0ef873d45a3ebbb10e3f0e0b0535935480b0d14e31"
+  },
+  "b000032": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 2403,
+    "example_id": "ps_implicit__neg__political_typology__09413__s0",
+    "prompt_id": "political_typology__09413",
+    "polarity": "non_sycophantic",
+    "text_sha256": "a2ac88792c723f6ec5a39cba372fc42238f1ae062d7d1088ca56eb428a3a2fce"
+  },
+  "b000033": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 3119,
+    "example_id": "ctrl_evasive_hedging__neg__philpapers__03616__s0",
+    "prompt_id": "philpapers__03616",
+    "polarity": "non_sycophantic",
+    "text_sha256": "15fb4a621159912d294c63b900d2a186ad5398a029f6508e75bdd931eae2839f"
+  },
+  "b000034": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 3036,
+    "example_id": "ctrl_affiliation__neg__nlp_survey__03895__s0",
+    "prompt_id": "nlp_survey__03895",
+    "polarity": "non_sycophantic",
+    "text_sha256": "5a7269d8014dadab3f4417040384aa2844d1dff6f02b48cd3f9a92df9154d9b3"
+  },
+  "b000035": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 2563,
+    "example_id": "ctrl_evasive_hedging__neg__philpapers__04034__s0",
+    "prompt_id": "philpapers__04034",
+    "polarity": "non_sycophantic",
+    "text_sha256": "6697c24cf4b07f2d1aaf63bb8a416c1a4c090e451552bf2f05a462c643120d18"
+  },
+  "b000036": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 2943,
+    "example_id": "ctrl_warranted_praise__neg__philpapers__06286__s0",
+    "prompt_id": "philpapers__06286",
+    "polarity": "non_sycophantic",
+    "text_sha256": "959bfa0b289a79b09e39ec3c9d71c0a24f498aa19f5cd15b4553a0798f6c30fb"
+  },
+  "b000037": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 2404,
+    "example_id": "general_baseline__neg__nlp_survey__07359__s0",
+    "prompt_id": "nlp_survey__07359",
+    "polarity": "non_sycophantic",
+    "text_sha256": "98dc9d4e22e898b7cf6730a36c98d22df3eff44cdba81896b2936a369ab79a9a"
+  },
+  "b000038": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 3676,
+    "example_id": "pv_implicit__neg__nlp_survey__09863__s0",
+    "prompt_id": "nlp_survey__09863",
+    "polarity": "non_sycophantic",
+    "text_sha256": "6ee496ed2ffb88cf309038d3f0de0745c650e844f8909619e3035c566f8ce872"
+  },
+  "b000039": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 781,
+    "example_id": "ctrl_evasive_hedging__pos__philpapers__03209__s0",
+    "prompt_id": "philpapers__03209",
+    "polarity": "sycophantic",
+    "text_sha256": "73a6ab49b6f7fbe91f8c227edf9bcec6e0da090df27a579cd46cf034a42fb656"
+  },
+  "b000040": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 1689,
+    "example_id": "pe_implicit__pos__nlp_survey__07982__s0",
+    "prompt_id": "nlp_survey__07982",
+    "polarity": "sycophantic",
+    "text_sha256": "fe2195405f404ce3c296fe6a6b533daacb326c4ce6f741214544a1e07ceb52f1"
+  },
+  "b000041": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 2565,
+    "example_id": "ps_explicit__neg__nlp_survey__06877__s0",
+    "prompt_id": "nlp_survey__06877",
+    "polarity": "non_sycophantic",
+    "text_sha256": "85e757856a3f1558a3c1778519b07c9d8d126529befc2616d36abb087eb08303"
+  },
+  "b000042": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 2927,
+    "example_id": "ps_explicit__neg__philpapers__07313__s0",
+    "prompt_id": "philpapers__07313",
+    "polarity": "non_sycophantic",
+    "text_sha256": "60f488520d30f1f77069628bfab202f97e544d11c62bef0b09f9a5561a74d77c"
+  },
+  "b000043": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 210,
+    "example_id": "ctrl_evasive_hedging__pos__political_typology__04950__s0",
+    "prompt_id": "political_typology__04950",
+    "polarity": "sycophantic",
+    "text_sha256": "fcd120019ce56efefac48b87e9a8970ca1d6996fb2f8307d6a420bdc7acbac1f"
+  },
+  "b000044": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 1842,
+    "example_id": "pt_explicit__pos__philpapers__03559__s0",
+    "prompt_id": "philpapers__03559",
+    "polarity": "sycophantic",
+    "text_sha256": "e5dc8223bf5bc2dd4dc4e26930d3bb39aa886afa46027be56179d1a8e3183672"
+  },
+  "b000045": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 3682,
+    "example_id": "pv_explicit__neg__philpapers__08896__s0",
+    "prompt_id": "philpapers__08896",
+    "polarity": "non_sycophantic",
+    "text_sha256": "018e31637d6da86891b83694f433901d33879e18b60b6fadeb68f9559122ff4d"
+  },
+  "b000046": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 84,
+    "example_id": "pv_explicit__pos__nlp_survey__09204__s0",
+    "prompt_id": "nlp_survey__09204",
+    "polarity": "sycophantic",
+    "text_sha256": "5a8df295d56628df8974df405a2cfa2e6b8d090c0b907d2699240b6734cd7484"
+  },
+  "b000047": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 1665,
+    "example_id": "ctrl_obsequiousness__pos__nlp_survey__03252__s0",
+    "prompt_id": "nlp_survey__03252",
+    "polarity": "sycophantic",
+    "text_sha256": "85738a893d137095a53de714f9c257ee4b6accb322a93c045702d61f19a2c2a6"
+  },
+  "b000048": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 3024,
+    "example_id": "pt_explicit__neg__political_typology__03951__s0",
+    "prompt_id": "political_typology__03951",
+    "polarity": "non_sycophantic",
+    "text_sha256": "62b7865bdc074b728c02e7ddb8ccee5cf47ecc6edb32f783e423bc2b14875369"
+  },
+  "b000049": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 2258,
+    "example_id": "pt_implicit__neg__political_typology__07949__s0",
+    "prompt_id": "political_typology__07949",
+    "polarity": "non_sycophantic",
+    "text_sha256": "caabc9750c7dd9f6da6bdcc97b2646b1703d0c727ed7bd64aa64f3a455c20f5c"
+  },
+  "b000050": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 1061,
+    "example_id": "ctrl_calibrated_hedging__pos__philpapers__00897__s0",
+    "prompt_id": "philpapers__00897",
+    "polarity": "sycophantic",
+    "text_sha256": "42d4ddecc0179a8097c0481ae848adec48ca2b6c8658b11d92dfef46baa9fd70"
+  },
+  "b000051": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 3855,
+    "example_id": "pt_explicit__neg__philpapers__05814__s0",
+    "prompt_id": "philpapers__05814",
+    "polarity": "non_sycophantic",
+    "text_sha256": "7f5fa3fe3ab42cca9985f9ca7e2393c92049fc7c4874fb87e4e13a6f344111f0"
+  },
+  "b000052": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 299,
+    "example_id": "ctrl_politeness__pos__nlp_survey__00361__s0",
+    "prompt_id": "nlp_survey__00361",
+    "polarity": "sycophantic",
+    "text_sha256": "02b7ae6aa72a288f4238a5431fdbc88d30a68b0f8f6f4eae8281a076b6988948"
+  },
+  "b000053": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 3599,
+    "example_id": "pv_implicit__neg__philpapers__06542__s0",
+    "prompt_id": "philpapers__06542",
+    "polarity": "non_sycophantic",
+    "text_sha256": "12e092947f8b01f68d6449074fb66f6ee498deec517c728ceb708765b4460e05"
+  },
+  "b000054": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 1188,
+    "example_id": "general_baseline__pos__philpapers__08782__s0",
+    "prompt_id": "philpapers__08782",
+    "polarity": "sycophantic",
+    "text_sha256": "2ab8109d61688e2e1d76f763e478a7725b011627e1db2b3b959eb46df5e636be"
+  },
+  "b000055": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 2211,
+    "example_id": "pt_explicit__neg__philpapers__05174__s0",
+    "prompt_id": "philpapers__05174",
+    "polarity": "non_sycophantic",
+    "text_sha256": "e0b770ce8a5d0165910a7b38bc08cdffc22f64df218ba913d76bdb52c2045483"
+  },
+  "b000056": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 3194,
+    "example_id": "ctrl_emotional_support__neg__nlp_survey__03990__s0",
+    "prompt_id": "nlp_survey__03990",
+    "polarity": "non_sycophantic",
+    "text_sha256": "ff17eb7550887478ec65d8f67d1da3fdb1cfbae4d0196d1efe6ad730cea4ca8b"
+  },
+  "b000057": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 775,
+    "example_id": "ctrl_calibrated_hedging__pos__nlp_survey__05839__s0",
+    "prompt_id": "nlp_survey__05839",
+    "polarity": "sycophantic",
+    "text_sha256": "5e8b47517cc3cbf9493bd3f1d3b290db0aff8db877d17a496525c55c9c252920"
+  },
+  "b000058": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 803,
+    "example_id": "ctrl_emotional_support__pos__political_typology__05771__s0",
+    "prompt_id": "political_typology__05771",
+    "polarity": "sycophantic",
+    "text_sha256": "137b2c34dc24ed82d257da8114af7ced6f16fb87e5aa53f0124ef5a62f71bae7"
+  },
+  "b000059": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 1,
+    "example_id": "ps_implicit__pos__nlp_survey__03085__s0",
+    "prompt_id": "nlp_survey__03085",
+    "polarity": "sycophantic",
+    "text_sha256": "bab0272b8c846365fc4aae2f2894618169fd56fe09595b215cc03413a00abad1"
+  },
+  "b000060": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 1684,
+    "example_id": "ctrl_pure_sycophancy__pos__nlp_survey__03133__s0",
+    "prompt_id": "nlp_survey__03133",
+    "polarity": "sycophantic",
+    "text_sha256": "6b8feb1297991ada1df820be781e49cd143eb769150f297d8623b7823952a054"
+  },
+  "b000061": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 1188,
+    "example_id": "ctrl_calibrated_hedging__pos__philpapers__08782__s0",
+    "prompt_id": "philpapers__08782",
+    "polarity": "sycophantic",
+    "text_sha256": "b09d0a1b9874a7eaa6e9c53d6e75da576d1920b0dcf06e7c625f99268b815603"
+  },
+  "b000062": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 3350,
+    "example_id": "ps_implicit__neg__political_typology__07457__s0",
+    "prompt_id": "political_typology__07457",
+    "polarity": "non_sycophantic",
+    "text_sha256": "122240608d860c5823da89cda15fd8608346204235d6353a14bbf5e35ae10829"
+  },
+  "b000063": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 2051,
+    "example_id": "ctrl_pure_sycophancy__neg__nlp_survey__07710__s0",
+    "prompt_id": "nlp_survey__07710",
+    "polarity": "non_sycophantic",
+    "text_sha256": "bf06337a622cb73e27dfc14ca52ad9b16d4b34bd9518aadeddfad08f2e3ca3ea"
+  },
+  "b000064": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 3451,
+    "example_id": "ctrl_excitement__neg__nlp_survey__00442__s0",
+    "prompt_id": "nlp_survey__00442",
+    "polarity": "non_sycophantic",
+    "text_sha256": "6551e6a23f6ff2b1bf0199124e8aac43bfbe5c21a493d8fcd3485d95c9349b38"
+  },
+  "b000065": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 2440,
+    "example_id": "ctrl_obsequiousness__neg__nlp_survey__00740__s0",
+    "prompt_id": "nlp_survey__00740",
+    "polarity": "non_sycophantic",
+    "text_sha256": "5aa280c84f541c062e9292e608bbc46e119914767e5a451ac3b057307c4536ca"
+  },
+  "b000066": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 2505,
+    "example_id": "ctrl_warranted_praise__neg__philpapers__01228__s0",
+    "prompt_id": "philpapers__01228",
+    "polarity": "non_sycophantic",
+    "text_sha256": "08dcd7eee572d8d8a2fc93a5846816c2e56cd9a187b58a4013e5fd2f637db7d4"
+  },
+  "b000067": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 3673,
+    "example_id": "ctrl_politeness__neg__philpapers__03599__s0",
+    "prompt_id": "philpapers__03599",
+    "polarity": "non_sycophantic",
+    "text_sha256": "152db713170327df5258b05184140045b77f1e78d4a0ff0bd61261d91144f6be"
+  },
+  "b000068": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 2310,
+    "example_id": "ctrl_pure_sycophancy__neg__political_typology__00525__s0",
+    "prompt_id": "political_typology__00525",
+    "polarity": "non_sycophantic",
+    "text_sha256": "baff89aabf2686dfb39a125ee73049a44502f76fdab4941074a4348eda8a32dc"
+  },
+  "b000069": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 3578,
+    "example_id": "ctrl_warranted_praise__neg__nlp_survey__03026__s0",
+    "prompt_id": "nlp_survey__03026",
+    "polarity": "non_sycophantic",
+    "text_sha256": "5c4f2064e5288cff1e965a35b159c11c9a402a1cefc2cdfb670131a019b9616d"
+  },
+  "b000070": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 2469,
+    "example_id": "ctrl_politeness__neg__philpapers__01840__s0",
+    "prompt_id": "philpapers__01840",
+    "polarity": "non_sycophantic",
+    "text_sha256": "f7ae365fc8442f9eefe91c27b1e6bc3d3ed3f87dd065ef8fdf87b057ff6d5a10"
+  },
+  "b000071": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 210,
+    "example_id": "pe_implicit__pos__political_typology__04950__s0",
+    "prompt_id": "political_typology__04950",
+    "polarity": "sycophantic",
+    "text_sha256": "a8f0b4ad58616e96b9f3f0ef09039c344cdfc5a5bcb5bb907585fc3c05256639"
+  },
+  "b000072": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 1794,
+    "example_id": "ctrl_inauthenticity__pos__philpapers__02279__s0",
+    "prompt_id": "philpapers__02279",
+    "polarity": "sycophantic",
+    "text_sha256": "27c18441f6fa7c7bd6ce34d742d1a93b79338258432e8dcd83c735816546a4cf"
+  },
+  "b000073": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 452,
+    "example_id": "pv_implicit__pos__philpapers__09739__s0",
+    "prompt_id": "philpapers__09739",
+    "polarity": "sycophantic",
+    "text_sha256": "43940e68fb9e286eb928399cadf6edb7dd95a9566bf937a55e213a593516983c"
+  },
+  "b000074": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 3842,
+    "example_id": "ctrl_pure_sycophancy__neg__philpapers__03559__s0",
+    "prompt_id": "philpapers__03559",
+    "polarity": "non_sycophantic",
+    "text_sha256": "fbdbbd884912d1f5cd28f781ca50a911683dc98e28c8fc8e91f8a7c81306dbcf"
+  },
+  "b000075": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 2694,
+    "example_id": "ctrl_obsequiousness__neg__philpapers__07430__s0",
+    "prompt_id": "philpapers__07430",
+    "polarity": "non_sycophantic",
+    "text_sha256": "b93903cc12064382509e78e6097826639b2a304696268fb6d4e401f85a0bda8f"
+  },
+  "b000076": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 343,
+    "example_id": "pv_implicit__pos__philpapers__03250__s0",
+    "prompt_id": "philpapers__03250",
+    "polarity": "sycophantic",
+    "text_sha256": "7c8b53440fbc78426fa0258e55a4181916b2df014a0d1a17d6e38c265f712489"
+  },
+  "b000077": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 1676,
+    "example_id": "ctrl_calibrated_hedging__pos__nlp_survey__09863__s0",
+    "prompt_id": "nlp_survey__09863",
+    "polarity": "sycophantic",
+    "text_sha256": "1db89c5b870032bf6c92c4ca2abf8c05ede9dff4127f403944f22a332f7a226a"
+  },
+  "b000078": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 2803,
+    "example_id": "ctrl_excitement__neg__political_typology__05771__s0",
+    "prompt_id": "political_typology__05771",
+    "polarity": "non_sycophantic",
+    "text_sha256": "0b31432a5467358e3eb1a7a5f3ef038d92b427c52dd16251ec44f9d53610e726"
+  },
+  "b000079": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 2032,
+    "example_id": "ctrl_obsequiousness__neg__nlp_survey__02065__s0",
+    "prompt_id": "nlp_survey__02065",
+    "polarity": "non_sycophantic",
+    "text_sha256": "96256843ad852f552cf6af0bab29390bae3a3a9995515d6f67e6eb42edf760dd"
+  },
+  "b000080": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 1069,
+    "example_id": "ctrl_pure_sycophancy__pos__philpapers__04143__s0",
+    "prompt_id": "philpapers__04143",
+    "polarity": "sycophantic",
+    "text_sha256": "786ae8b7afad71363caa4f3c6bc4c7b9426ef172143595d03b537162a13ec822"
+  },
+  "b000081": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 3765,
+    "example_id": "general_baseline__neg__philpapers__02844__s0",
+    "prompt_id": "philpapers__02844",
+    "polarity": "non_sycophantic",
+    "text_sha256": "ffefff1158c2959327aba51518c53e01f84cfb995ff826a6e5e4f1ac9ae255e4"
+  },
+  "b000082": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 2166,
+    "example_id": "ctrl_politeness__neg__philpapers__00883__s0",
+    "prompt_id": "philpapers__00883",
+    "polarity": "non_sycophantic",
+    "text_sha256": "8481482ac4888ad96429b4b4e9373169d272e1165e63e15119c2e09270cd30bd"
+  },
+  "b000083": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 816,
+    "example_id": "pe_explicit__pos__nlp_survey__04290__s0",
+    "prompt_id": "nlp_survey__04290",
+    "polarity": "sycophantic",
+    "text_sha256": "074f59572f860c1a618e7296c0b4dbe3b4b94bf83aeece879ca5393f8acfdfcd"
+  },
+  "b000084": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 609,
+    "example_id": "pe_explicit__pos__political_typology__08545__s0",
+    "prompt_id": "political_typology__08545",
+    "polarity": "sycophantic",
+    "text_sha256": "56e9d9e1708e5c11a968345546f7de84dc8a202ff6000cc7c3aebb87d445f440"
+  },
+  "b000085": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 469,
+    "example_id": "ctrl_excitement__pos__philpapers__01840__s0",
+    "prompt_id": "philpapers__01840",
+    "polarity": "sycophantic",
+    "text_sha256": "39890675a41bf80e5b2756bbddcfb6cc86dbbf8acd2d1a39878e8e3aed0d79b8"
+  },
+  "b000086": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 428,
+    "example_id": "ctrl_warranted_praise__pos__political_typology__03688__s0",
+    "prompt_id": "political_typology__03688",
+    "polarity": "sycophantic",
+    "text_sha256": "a134c120dfc6b791d26410bda9484538eb43fa5e45dbfcc9074c053e868742a2"
+  },
+  "b000087": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 2800,
+    "example_id": "ctrl_calibrated_hedging__neg__political_typology__03614__s0",
+    "prompt_id": "political_typology__03614",
+    "polarity": "non_sycophantic",
+    "text_sha256": "b692f731c68657b0cdeb8d81c76f517049b895deecd774f82d7db94f3f869187"
+  },
+  "b000088": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 3947,
+    "example_id": "ctrl_affiliation__neg__philpapers__08799__s0",
+    "prompt_id": "philpapers__08799",
+    "polarity": "non_sycophantic",
+    "text_sha256": "45c55d9a4babad72b3ea2d1c397a6f01011192c06f1decf605292be5e70b1048"
+  },
+  "b000089": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 3590,
+    "example_id": "ctrl_calibrated_hedging__neg__philpapers__03858__s0",
+    "prompt_id": "philpapers__03858",
+    "polarity": "non_sycophantic",
+    "text_sha256": "fec61c8e428e3202e1e18b60749a93e7316ecea5e8512589fcd25a8b9ac4f41b"
+  },
+  "b000090": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 816,
+    "example_id": "ctrl_inauthenticity__pos__nlp_survey__04290__s0",
+    "prompt_id": "nlp_survey__04290",
+    "polarity": "sycophantic",
+    "text_sha256": "b3f904f5d5c5641cda144083e6c507aa16ddcd56a7f0897bc0f73f543b150878"
+  },
+  "b000091": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 2749,
+    "example_id": "pt_implicit__neg__political_typology__05258__s0",
+    "prompt_id": "political_typology__05258",
+    "polarity": "non_sycophantic",
+    "text_sha256": "d1cf0e0b48a7d54c542fc1fa718dfe69db3382ac145e3cfa22edf5f9740d1bc7"
+  },
+  "b000092": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 3119,
+    "example_id": "ps_explicit__neg__philpapers__03616__s0",
+    "prompt_id": "philpapers__03616",
+    "polarity": "non_sycophantic",
+    "text_sha256": "d968a8c6c25ab03b4f57f1435391a9c2d5b174af42ac1fc48da9a0b3eed9b9cb"
+  },
+  "b000093": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 1798,
+    "example_id": "ps_explicit__pos__nlp_survey__01249__s0",
+    "prompt_id": "nlp_survey__01249",
+    "polarity": "sycophantic",
+    "text_sha256": "afd432e36ce6a85a835a610703d6bdd976650d12e223bf4201c6f50edef9106d"
+  },
+  "b000094": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 2456,
+    "example_id": "pt_implicit__neg__political_typology__07820__s0",
+    "prompt_id": "political_typology__07820",
+    "polarity": "non_sycophantic",
+    "text_sha256": "729bacb4b31c88f597242dd527c88ea57f0ad3c16971a8b577586a4997dcd5fe"
+  },
+  "b000095": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 158,
+    "example_id": "ctrl_pure_sycophancy__pos__nlp_survey__08388__s0",
+    "prompt_id": "nlp_survey__08388",
+    "polarity": "sycophantic",
+    "text_sha256": "4acefd7c5fedee289859b0e81c8cfd01942f8b6fcc95bbad42013aac66f76754"
+  },
+  "b000096": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 389,
+    "example_id": "pv_implicit__pos__nlp_survey__03961__s0",
+    "prompt_id": "nlp_survey__03961",
+    "polarity": "sycophantic",
+    "text_sha256": "9e957ba93295ce87c9da98e681969214f39c47bb1acde395d9e9cd83e29f6528"
+  },
+  "b000097": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 3451,
+    "example_id": "ctrl_emotional_support__neg__nlp_survey__00442__s0",
+    "prompt_id": "nlp_survey__00442",
+    "polarity": "non_sycophantic",
+    "text_sha256": "9a19eb556f038eb75fe795c19f246378d6902a438360b02c59be1b1e0c7d097b"
+  },
+  "b000098": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 2829,
+    "example_id": "general_baseline__neg__philpapers__09859__s0",
+    "prompt_id": "philpapers__09859",
+    "polarity": "non_sycophantic",
+    "text_sha256": "0dd0c8c7c188e5ef59ca9279d8cdfa9165c948a506874d5550ca2f3ea2fed500"
+  },
+  "b000099": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 1041,
+    "example_id": "ctrl_obsequiousness__pos__philpapers__08577__s0",
+    "prompt_id": "philpapers__08577",
+    "polarity": "sycophantic",
+    "text_sha256": "d4e652d0f6f32462b99e1f11bbdaadd3d791a76a7b6dc94b0072f619cfd7ccad"
+  },
+  "b000100": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 1506,
+    "example_id": "ctrl_excitement__pos__political_typology__01370__s0",
+    "prompt_id": "political_typology__01370",
+    "polarity": "sycophantic",
+    "text_sha256": "664c103d741cc533d9a1853e7d31b2d59128ce02501e6a650041e8a4ff83e216"
+  },
+  "b000101": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 2454,
+    "example_id": "ctrl_warranted_praise__neg__political_typology__09409__s0",
+    "prompt_id": "political_typology__09409",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1efc4b6d5ad527203ea18210926ea6d6b75cf74e445a60375d5bdeda77d8e553"
+  },
+  "b000102": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 1694,
+    "example_id": "pt_implicit__pos__political_typology__09887__s0",
+    "prompt_id": "political_typology__09887",
+    "polarity": "sycophantic",
+    "text_sha256": "e7ef7c60b448f2e4f6f8f36e9d740d65017e3f21286eb13c8954453bff882fca"
+  },
+  "b000103": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 763,
+    "example_id": "general_baseline__pos__nlp_survey__08437__s0",
+    "prompt_id": "nlp_survey__08437",
+    "polarity": "sycophantic",
+    "text_sha256": "91ca7771ebfefc472a21a771c7eb5259aa6477d0065b6f14fb9624e9b934f1e2"
+  },
+  "b000104": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 3866,
+    "example_id": "ctrl_obsequiousness__neg__nlp_survey__06551__s0",
+    "prompt_id": "nlp_survey__06551",
+    "polarity": "non_sycophantic",
+    "text_sha256": "7b22a80fd6bb5f673d4ef24c41b04104533184f2cf4081b5954daca70f8f292c"
+  },
+  "b000105": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 3092,
+    "example_id": "ctrl_excitement__neg__philpapers__03558__s0",
+    "prompt_id": "philpapers__03558",
+    "polarity": "non_sycophantic",
+    "text_sha256": "fdc9c14e180ed023c4c5f94c9f6f6cd0c6783eacde6c482f820531bdef0732bd"
+  },
+  "b000106": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 2561,
+    "example_id": "ctrl_obsequiousness__neg__political_typology__06592__s0",
+    "prompt_id": "political_typology__06592",
+    "polarity": "non_sycophantic",
+    "text_sha256": "9d3a1bfa93e12c054cac731766462284b7524c7851bc184e3d9893f245b468ab"
+  },
+  "b000107": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 618,
+    "example_id": "ctrl_emotional_support__pos__nlp_survey__06156__s0",
+    "prompt_id": "nlp_survey__06156",
+    "polarity": "sycophantic",
+    "text_sha256": "34578d4ea1aac614cc95fe6852f8dd6b0590ddca1833bdabecc018d417d59302"
+  },
+  "b000108": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 2136,
+    "example_id": "ps_implicit__neg__nlp_survey__05449__s0",
+    "prompt_id": "nlp_survey__05449",
+    "polarity": "non_sycophantic",
+    "text_sha256": "78a6088ea84514b7c7f70dfc0e4aea0adf999e1ff0ff50ee698880f68c8b3fa2"
+  },
+  "b000109": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 2083,
+    "example_id": "ctrl_affiliation__neg__philpapers__04251__s0",
+    "prompt_id": "philpapers__04251",
+    "polarity": "non_sycophantic",
+    "text_sha256": "15044918fcf3391d659eb9fc1a3ee8391dddd5e6f8b294e948bcea4c5c957180"
+  },
+  "b000110": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 615,
+    "example_id": "ctrl_excitement__pos__political_typology__09944__s0",
+    "prompt_id": "political_typology__09944",
+    "polarity": "sycophantic",
+    "text_sha256": "4231067c247bb4791543e339acf39a8591c12460cdfd641546ab9380c9f4e891"
+  },
+  "b000111": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 530,
+    "example_id": "pv_implicit__pos__political_typology__01393__s0",
+    "prompt_id": "political_typology__01393",
+    "polarity": "sycophantic",
+    "text_sha256": "6e4429ced6e9341ef70ee693747fcb09b58a80e5c993e9f93516a608876d6425"
+  },
+  "b000112": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 2412,
+    "example_id": "general_baseline__neg__philpapers__05041__s0",
+    "prompt_id": "philpapers__05041",
+    "polarity": "non_sycophantic",
+    "text_sha256": "eedb3d2ea9fe88289b811b58eb4dafd5543dbab9acca45c094573fc18f5d7221"
+  },
+  "b000113": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 3681,
+    "example_id": "pv_implicit__neg__political_typology__06120__s0",
+    "prompt_id": "political_typology__06120",
+    "polarity": "non_sycophantic",
+    "text_sha256": "ef5d1d36b560c94f30b703737f4e7cc5e2a33e73c020362c4916302ffb57b4d3"
+  },
+  "b000114": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 2404,
+    "example_id": "ps_explicit__neg__nlp_survey__07359__s0",
+    "prompt_id": "nlp_survey__07359",
+    "polarity": "non_sycophantic",
+    "text_sha256": "aacc353179f83ee5385374c97708a154412c230af24dfadd7977b6c21994f34e"
+  },
+  "b000115": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 1240,
+    "example_id": "pe_explicit__pos__philpapers__07225__s0",
+    "prompt_id": "philpapers__07225",
+    "polarity": "sycophantic",
+    "text_sha256": "af1bfb02e34e1e98984bbc65ce51f977e8a4184bfca45b1c1fe1eedbb71fbb59"
+  },
+  "b000116": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 1967,
+    "example_id": "ps_explicit__pos__political_typology__04119__s0",
+    "prompt_id": "political_typology__04119",
+    "polarity": "sycophantic",
+    "text_sha256": "c45bcdbc28b7c443e2a7079fcab0ce098bb4f04cfa92a14f55bf4ef6f6d8c0eb"
+  },
+  "b000117": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 1291,
+    "example_id": "ctrl_affiliation__pos__political_typology__07592__s0",
+    "prompt_id": "political_typology__07592",
+    "polarity": "sycophantic",
+    "text_sha256": "0ff899e72c20d1ab31a26ce79baa186138ba298a18d05a6dec114bafa262ab07"
+  },
+  "b000118": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 1253,
+    "example_id": "ctrl_inauthenticity__pos__political_typology__03532__s0",
+    "prompt_id": "political_typology__03532",
+    "polarity": "sycophantic",
+    "text_sha256": "c8fa202ae63d0223f585d6153a1eb51411a9f8bc6e2ac2a47884a3f4c4158923"
+  },
+  "b000119": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 1344,
+    "example_id": "ctrl_genuine_agreement__pos__political_typology__05407__s0",
+    "prompt_id": "political_typology__05407",
+    "polarity": "sycophantic",
+    "text_sha256": "012f7105810a371eeb0e7073618ea95596baed02bd2074b06133050ff6051ba5"
+  },
+  "b000120": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 1687,
+    "example_id": "general_baseline__pos__political_typology__00583__s0",
+    "prompt_id": "political_typology__00583",
+    "polarity": "sycophantic",
+    "text_sha256": "06588cb492bc814431e679b8e622f8596a3cd7b6152172c654269f5c0d47d505"
+  },
+  "b000121": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 1302,
+    "example_id": "ctrl_evasive_hedging__pos__nlp_survey__03543__s0",
+    "prompt_id": "nlp_survey__03543",
+    "polarity": "sycophantic",
+    "text_sha256": "8543dafb55745e0e7cc0775ef6f903d45178ca65d7886174ba7a9306e41f5633"
+  },
+  "b000122": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 943,
+    "example_id": "ctrl_genuine_agreement__pos__philpapers__06286__s0",
+    "prompt_id": "philpapers__06286",
+    "polarity": "sycophantic",
+    "text_sha256": "4aa2eef40d5a86dfc1a34a5d051bf3db3ba9028e651716366500c87114037db6"
+  },
+  "b000123": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 1611,
+    "example_id": "ctrl_emotional_support__pos__philpapers__02993__s0",
+    "prompt_id": "philpapers__02993",
+    "polarity": "sycophantic",
+    "text_sha256": "e58bceb0741367d718d5e3891679833a5a18e02d23dac95a8f991775f3a4dde4"
+  },
+  "b000124": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 486,
+    "example_id": "pe_implicit__pos__philpapers__03887__s0",
+    "prompt_id": "philpapers__03887",
+    "polarity": "sycophantic",
+    "text_sha256": "fc1f143626cba6a654be44d3f64dd78d01ab5cb1ae62b0248d9b60a900065d8f"
+  },
+  "b000125": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 1491,
+    "example_id": "general_baseline__pos__political_typology__06164__s0",
+    "prompt_id": "political_typology__06164",
+    "polarity": "sycophantic",
+    "text_sha256": "1afd794df502671ddef404d69636c73d6a92e4fa5b61af92259e5c88b2fc7fbb"
+  },
+  "b000126": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 3767,
+    "example_id": "ctrl_inauthenticity__neg__philpapers__04452__s0",
+    "prompt_id": "philpapers__04452",
+    "polarity": "non_sycophantic",
+    "text_sha256": "686c75e1aab8c44b4cb69f486c9c8e946cc3470997f59dab8e9241cd6038ba3b"
+  },
+  "b000127": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 1806,
+    "example_id": "ctrl_evasive_hedging__pos__philpapers__05402__s0",
+    "prompt_id": "philpapers__05402",
+    "polarity": "sycophantic",
+    "text_sha256": "e2b67e48879245830357d29874effd63e83e1f0a3dfd21b5fe37420e93a87c45"
+  },
+  "b000128": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 2315,
+    "example_id": "ctrl_genuine_agreement__neg__nlp_survey__06273__s0",
+    "prompt_id": "nlp_survey__06273",
+    "polarity": "non_sycophantic",
+    "text_sha256": "a4fd085db9f3569f335b0423563155c32e168b3c96a3c0b5013c5a35c9145b07"
+  },
+  "b000129": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 2,
+    "example_id": "pt_explicit__pos__political_typology__09177__s0",
+    "prompt_id": "political_typology__09177",
+    "polarity": "sycophantic",
+    "text_sha256": "3a2fc604b1aa1c70a75243cf69b118883640998101d21da3fb28dae4a998a48f"
+  },
+  "b000130": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 2023,
+    "example_id": "pe_explicit__neg__political_typology__08764__s0",
+    "prompt_id": "political_typology__08764",
+    "polarity": "non_sycophantic",
+    "text_sha256": "37e3faf7dc4cdd34f55ff06edaeb7710e5d4933e734e674426149e49d55858ba"
+  },
+  "b000131": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 732,
+    "example_id": "pv_implicit__pos__political_typology__03580__s0",
+    "prompt_id": "political_typology__03580",
+    "polarity": "sycophantic",
+    "text_sha256": "d352dde7c43da9caeca81cf77753bdc3b2cca2ebed8cb7bb3812fe8f0b525b75"
+  },
+  "b000132": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 2701,
+    "example_id": "pv_explicit__neg__philpapers__04562__s0",
+    "prompt_id": "philpapers__04562",
+    "polarity": "non_sycophantic",
+    "text_sha256": "871b8d8eeba27747103159c3856ff4222ebcd235ee15d33aecfa028019787f66"
+  },
+  "b000133": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 3248,
+    "example_id": "ctrl_affiliation__neg__nlp_survey__09678__s0",
+    "prompt_id": "nlp_survey__09678",
+    "polarity": "non_sycophantic",
+    "text_sha256": "c766273d7312c668c332293f818dbc60b40d24f370174ad28dcafffb41b301d7"
+  },
+  "b000134": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 2864,
+    "example_id": "pe_implicit__neg__political_typology__09246__s0",
+    "prompt_id": "political_typology__09246",
+    "polarity": "non_sycophantic",
+    "text_sha256": "ef1e095255db22cde116634ba043b85b4f4074435cdd60289f7d41a5aebe56ae"
+  },
+  "b000135": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 3510,
+    "example_id": "ctrl_inauthenticity__neg__political_typology__07851__s0",
+    "prompt_id": "political_typology__07851",
+    "polarity": "non_sycophantic",
+    "text_sha256": "e2cf88fa0537fa2c4f6848a1df00536afbfb161ccb73b141df1c2acb2a42f020"
+  },
+  "b000136": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 875,
+    "example_id": "ctrl_affiliation__pos__political_typology__00663__s0",
+    "prompt_id": "political_typology__00663",
+    "polarity": "sycophantic",
+    "text_sha256": "6549a0123122f0524fa42bab840ba8f4e1ffe0f8f8a5f25e3e3b5cb19c1ba728"
+  },
+  "b000137": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 1517,
+    "example_id": "ctrl_affiliation__pos__nlp_survey__01058__s0",
+    "prompt_id": "nlp_survey__01058",
+    "polarity": "sycophantic",
+    "text_sha256": "2ce965b7442e7933d1211975d24e77988722bd0c4141c5ae21938f6cdcd5d620"
+  },
+  "b000138": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 934,
+    "example_id": "pe_implicit__pos__philpapers__01223__s0",
+    "prompt_id": "philpapers__01223",
+    "polarity": "sycophantic",
+    "text_sha256": "90a6380c94182450b8c2731d89ac392c527cdaa538ede1e6b4aa8cf780edce29"
+  },
+  "b000139": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 882,
+    "example_id": "pv_explicit__pos__philpapers__08097__s0",
+    "prompt_id": "philpapers__08097",
+    "polarity": "sycophantic",
+    "text_sha256": "95ab407fd937403aee7e4a827532fad1c231e706a95c91cac4cfacf33c2c6bfd"
+  },
+  "b000140": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 1346,
+    "example_id": "ctrl_genuine_agreement__pos__political_typology__09846__s0",
+    "prompt_id": "political_typology__09846",
+    "polarity": "sycophantic",
+    "text_sha256": "646dd44c1a21a96addd36c228309f293c2a005a142cfd9144f50e2ed6f9778a5"
+  },
+  "b000141": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 3163,
+    "example_id": "pe_explicit__neg__political_typology__07493__s0",
+    "prompt_id": "political_typology__07493",
+    "polarity": "non_sycophantic",
+    "text_sha256": "ecb6546c0742c4998c2aef18b647566eb319c601044e067eca0a42ec3d13c760"
+  },
+  "b000142": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 457,
+    "example_id": "ctrl_excitement__pos__nlp_survey__04283__s0",
+    "prompt_id": "nlp_survey__04283",
+    "polarity": "sycophantic",
+    "text_sha256": "4469eba065bc8c7b755d2a97745719fac21d242f0dbde003d35809f12fbf9259"
+  },
+  "b000143": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 2298,
+    "example_id": "pt_implicit__neg__political_typology__06956__s0",
+    "prompt_id": "political_typology__06956",
+    "polarity": "non_sycophantic",
+    "text_sha256": "120c57832287c9dbe9f604ad8011a55e7bebedbdc7ad0b30d782e117037bfdfb"
+  },
+  "b000144": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 3710,
+    "example_id": "ctrl_genuine_agreement__neg__nlp_survey__02586__s0",
+    "prompt_id": "nlp_survey__02586",
+    "polarity": "non_sycophantic",
+    "text_sha256": "be5eb200dc8e86e674790cd3971b2b89df56e4d81911a3262cb077f781e8ad83"
+  },
+  "b000145": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 457,
+    "example_id": "ctrl_politeness__pos__nlp_survey__04283__s0",
+    "prompt_id": "nlp_survey__04283",
+    "polarity": "sycophantic",
+    "text_sha256": "a066e2dc065a8406a9e6442ec0aa41a48c15c779b818c6874bc20ba7d5b5e301"
+  },
+  "b000146": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 3843,
+    "example_id": "ctrl_emotional_support__neg__political_typology__08335__s0",
+    "prompt_id": "political_typology__08335",
+    "polarity": "non_sycophantic",
+    "text_sha256": "6dcdc14c4048f164b2e21cd5a8a13bbee206ec5c80f664c34bc564ee4d1bb493"
+  },
+  "b000147": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 2660,
+    "example_id": "pe_explicit__neg__philpapers__06713__s0",
+    "prompt_id": "philpapers__06713",
+    "polarity": "non_sycophantic",
+    "text_sha256": "9bc475ea2526ae86fffe455cec389b730ca66e1816c32940739b0aedd931cde5"
+  },
+  "b000148": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 1125,
+    "example_id": "pt_implicit__pos__nlp_survey__01812__s0",
+    "prompt_id": "nlp_survey__01812",
+    "polarity": "sycophantic",
+    "text_sha256": "64c112599ef4cd157133d7f52518265267f33be2410999fa4826b5bf347b89c6"
+  },
+  "b000149": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 135,
+    "example_id": "ctrl_obsequiousness__pos__political_typology__07753__s0",
+    "prompt_id": "political_typology__07753",
+    "polarity": "sycophantic",
+    "text_sha256": "7140dac23f8a4386ff844323d2923f1a93106c574f8caf5d230512f065c83526"
+  },
+  "b000150": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 3352,
+    "example_id": "general_baseline__neg__philpapers__07886__s0",
+    "prompt_id": "philpapers__07886",
+    "polarity": "non_sycophantic",
+    "text_sha256": "2ea3917ef29f67af053a3a88fc4d647e6652b28b353bd63713dd59ced56dc094"
+  },
+  "b000151": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 853,
+    "example_id": "ctrl_pure_sycophancy__pos__philpapers__03960__s0",
+    "prompt_id": "philpapers__03960",
+    "polarity": "sycophantic",
+    "text_sha256": "477ce842c7752d5ed98f596a3721be569250a87d349a5c8ad1a80a5c85553f5a"
+  },
+  "b000152": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 1,
+    "example_id": "pe_implicit__pos__nlp_survey__03085__s0",
+    "prompt_id": "nlp_survey__03085",
+    "polarity": "sycophantic",
+    "text_sha256": "8b4b2e3fccad73d31cf26fa4e30be8fea6e4fc01529b729abcfe65ff025ce124"
+  },
+  "b000153": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 471,
+    "example_id": "pt_explicit__pos__political_typology__07421__s0",
+    "prompt_id": "political_typology__07421",
+    "polarity": "sycophantic",
+    "text_sha256": "3f8cb2a5c1b0c5d9e430dbccea631f213d7845d2d835aaa6ae80ecde3b13f2e9"
+  },
+  "b000154": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 2719,
+    "example_id": "ctrl_excitement__neg__political_typology__00874__s0",
+    "prompt_id": "political_typology__00874",
+    "polarity": "non_sycophantic",
+    "text_sha256": "57df4b5a8e4c5c8c7801a22140a00baaf9dc478677879dd8a3e3a58149033404"
+  },
+  "b000155": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 51,
+    "example_id": "ctrl_politeness__pos__nlp_survey__07710__s0",
+    "prompt_id": "nlp_survey__07710",
+    "polarity": "sycophantic",
+    "text_sha256": "11cef5f14b2791884d9e534cd7d6169ceeef3adebf8f2714f9cd3842ed3e374f"
+  },
+  "b000156": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 1763,
+    "example_id": "pt_explicit__pos__philpapers__04412__s0",
+    "prompt_id": "philpapers__04412",
+    "polarity": "sycophantic",
+    "text_sha256": "f4d5ff5c93d7e52d2e7131fcb1782bdeaab0bb7c8d88dd45c381075d2865f57d"
+  },
+  "b000157": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 3773,
+    "example_id": "ctrl_calibrated_hedging__neg__philpapers__06036__s0",
+    "prompt_id": "philpapers__06036",
+    "polarity": "non_sycophantic",
+    "text_sha256": "2078bc82f264854add18a3cca5023284b8cb60e707f5cfadbedc43ee814db1c2"
+  },
+  "b000158": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 2029,
+    "example_id": "pt_explicit__neg__political_typology__07775__s0",
+    "prompt_id": "political_typology__07775",
+    "polarity": "non_sycophantic",
+    "text_sha256": "d6f1dc1c0a9d176a8fc0440eec359b2d66a11d9dcb02b5926424e6e368d0777b"
+  },
+  "b000159": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 1594,
+    "example_id": "ctrl_politeness__pos__philpapers__05798__s0",
+    "prompt_id": "philpapers__05798",
+    "polarity": "sycophantic",
+    "text_sha256": "00e6de2d6e5db4ec066748dcd43a90c8b52b556420aa5233036832cdf7319ea7"
+  },
+  "b000160": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 2977,
+    "example_id": "ctrl_emotional_support__neg__political_typology__05620__s0",
+    "prompt_id": "political_typology__05620",
+    "polarity": "non_sycophantic",
+    "text_sha256": "be3eafc8aa2e0dcf32f402b4e5b91e84b1d1b9a1ed189f3e38bff92cbc0138b8"
+  },
+  "b000161": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 2232,
+    "example_id": "ctrl_excitement__neg__philpapers__06021__s0",
+    "prompt_id": "philpapers__06021",
+    "polarity": "non_sycophantic",
+    "text_sha256": "5bc5c1984302859aa20115b38fe5fda3aff818d87463ada601ac03fed4853aef"
+  },
+  "b000162": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 2471,
+    "example_id": "ctrl_obsequiousness__neg__political_typology__07421__s0",
+    "prompt_id": "political_typology__07421",
+    "polarity": "non_sycophantic",
+    "text_sha256": "c9e6685541ce1b2119cc9c84c555f24cbe48e688a66dd2cba7e5304bfa49f4aa"
+  },
+  "b000163": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 3859,
+    "example_id": "ctrl_calibrated_hedging__neg__political_typology__02531__s0",
+    "prompt_id": "political_typology__02531",
+    "polarity": "non_sycophantic",
+    "text_sha256": "9dc1466b99be8559cfa278b501e30a76e5f17ef80716409365b386df6e8909a3"
+  },
+  "b000164": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 1953,
+    "example_id": "pe_explicit__pos__political_typology__04791__s0",
+    "prompt_id": "political_typology__04791",
+    "polarity": "sycophantic",
+    "text_sha256": "3fae83a2c3577b1e372887c9a6f75cd5c1c7da7b940e60553beeb31a39492b0b"
+  },
+  "b000165": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 3590,
+    "example_id": "ctrl_politeness__neg__philpapers__03858__s0",
+    "prompt_id": "philpapers__03858",
+    "polarity": "non_sycophantic",
+    "text_sha256": "dbf0ce124d93e715ae06e83ec97ae0e3efb53df5214e9bad5e3024c85744950e"
+  },
+  "b000166": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 1022,
+    "example_id": "ps_explicit__pos__philpapers__00616__s0",
+    "prompt_id": "philpapers__00616",
+    "polarity": "sycophantic",
+    "text_sha256": "27ccb6c0ecbb76f2913bef16f034477e6ff2f82425abf0c16618df9d0102c030"
+  },
+  "b000167": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 1501,
+    "example_id": "ctrl_obsequiousness__pos__nlp_survey__04838__s0",
+    "prompt_id": "nlp_survey__04838",
+    "polarity": "sycophantic",
+    "text_sha256": "d70c5d94438d2eb901e259c290b80365e85425d2341a88eecec280eea2af4bc5"
+  },
+  "b000168": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 1302,
+    "example_id": "general_baseline__pos__nlp_survey__03543__s0",
+    "prompt_id": "nlp_survey__03543",
+    "polarity": "sycophantic",
+    "text_sha256": "e6a06e170fd91f1d078167613dd732624c8882f1169d6bf7b6300a988dd6cf77"
+  },
+  "b000169": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 1034,
+    "example_id": "ps_explicit__pos__political_typology__05426__s0",
+    "prompt_id": "political_typology__05426",
+    "polarity": "sycophantic",
+    "text_sha256": "a41a12f33bee062a2b865c07c33c14dec171c67ccfdeef9f347d4abe745b38b6"
+  },
+  "b000170": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 1958,
+    "example_id": "ctrl_warranted_praise__pos__nlp_survey__04013__s0",
+    "prompt_id": "nlp_survey__04013",
+    "polarity": "sycophantic",
+    "text_sha256": "d7f06536cfcb77e33d13eb4a505c9f5fa6e65312c30a8a14504e3242c99b9acf"
+  },
+  "b000171": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 3217,
+    "example_id": "ctrl_pure_sycophancy__neg__political_typology__06278__s0",
+    "prompt_id": "political_typology__06278",
+    "polarity": "non_sycophantic",
+    "text_sha256": "36d3c74b9e39af9a2e67044234fda0351cda0c740c390c24028388855485652e"
+  },
+  "b000172": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 2557,
+    "example_id": "ctrl_inauthenticity__neg__philpapers__07991__s0",
+    "prompt_id": "philpapers__07991",
+    "polarity": "non_sycophantic",
+    "text_sha256": "71bdfbd0ba163e7de0c0145de204e32de14d93256a9e23a5f3be82d272e7098c"
+  },
+  "b000173": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 2251,
+    "example_id": "ctrl_calibrated_hedging__neg__nlp_survey__07266__s0",
+    "prompt_id": "nlp_survey__07266",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1424de13fc4224ceb9f893fbdcbca4017a3a9cca51629ba5b84c516752fb00d7"
+  },
+  "b000174": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 559,
+    "example_id": "ctrl_affiliation__pos__philpapers__01598__s0",
+    "prompt_id": "philpapers__01598",
+    "polarity": "sycophantic",
+    "text_sha256": "4e0cb703af54224322164ea552f945b5ef644a61ff4385fc7595f6bf4d7ec391"
+  },
+  "b000175": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 700,
+    "example_id": "ctrl_genuine_agreement__pos__nlp_survey__02728__s0",
+    "prompt_id": "nlp_survey__02728",
+    "polarity": "sycophantic",
+    "text_sha256": "dc5e66f20148dd86d916691e28ed29a4229ca909f37d265421662e02a10b66aa"
+  },
+  "b000176": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 2660,
+    "example_id": "general_baseline__neg__philpapers__06713__s0",
+    "prompt_id": "philpapers__06713",
+    "polarity": "non_sycophantic",
+    "text_sha256": "4b6ec5a068c9d031ab2a59e78365d0931d6afd4a00a9bf8637069275906c6133"
+  },
+  "b000177": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 606,
+    "example_id": "ctrl_genuine_agreement__pos__political_typology__00912__s0",
+    "prompt_id": "political_typology__00912",
+    "polarity": "sycophantic",
+    "text_sha256": "eae40f0dc2fdcdf5524c817388ee17ec02476c732e1036108a30a7415b3ff7f3"
+  },
+  "b000178": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 561,
+    "example_id": "ctrl_obsequiousness__pos__political_typology__06592__s0",
+    "prompt_id": "political_typology__06592",
+    "polarity": "sycophantic",
+    "text_sha256": "8bab1f76409030f5fcad3c0a8f4578db2f7e632292c720d2e5848ba970c5487f"
+  },
+  "b000179": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 3778,
+    "example_id": "pt_implicit__neg__political_typology__06115__s0",
+    "prompt_id": "political_typology__06115",
+    "polarity": "non_sycophantic",
+    "text_sha256": "60c12706c7a7dcfe7086df12dd9c8ee2c1245ba22852ff9acb8a475638997066"
+  },
+  "b000180": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 3767,
+    "example_id": "ctrl_genuine_agreement__neg__philpapers__04452__s0",
+    "prompt_id": "philpapers__04452",
+    "polarity": "non_sycophantic",
+    "text_sha256": "d7016942ac184592bedf4881aef0f680484cb715ce19956d566dce529bc656b0"
+  },
+  "b000181": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 933,
+    "example_id": "ctrl_excitement__pos__philpapers__04470__s0",
+    "prompt_id": "philpapers__04470",
+    "polarity": "sycophantic",
+    "text_sha256": "78629bb07876392891b50e4a5850dfdb35ec7d76b6edac957942f67f69329d63"
+  },
+  "b000182": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 523,
+    "example_id": "ctrl_calibrated_hedging__pos__philpapers__06089__s0",
+    "prompt_id": "philpapers__06089",
+    "polarity": "sycophantic",
+    "text_sha256": "ef43e0c06ddf282934abffa1cf587db309c008aebfd719c844ddebbb13647c74"
+  },
+  "b000183": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 493,
+    "example_id": "ctrl_politeness__pos__philpapers__07442__s0",
+    "prompt_id": "philpapers__07442",
+    "polarity": "sycophantic",
+    "text_sha256": "94c07412714081518f7f3a1a66a3029f4d77d50f171d51e13f982a76dc76038c"
+  },
+  "b000184": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 3689,
+    "example_id": "pv_explicit__neg__nlp_survey__07982__s0",
+    "prompt_id": "nlp_survey__07982",
+    "polarity": "non_sycophantic",
+    "text_sha256": "e6dad34b920b2ac58c306047c320b89ea581267c8b30d24ab2793f4630d07747"
+  },
+  "b000185": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 3762,
+    "example_id": "pe_implicit__neg__nlp_survey__09631__s0",
+    "prompt_id": "nlp_survey__09631",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1b7b52fbf19e5cd2c1d98db57d886c620d4d6a852d4b09e393ae0fc850ac0064"
+  },
+  "b000186": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 1022,
+    "example_id": "ps_implicit__pos__philpapers__00616__s0",
+    "prompt_id": "philpapers__00616",
+    "polarity": "sycophantic",
+    "text_sha256": "3c56ec945d69d6c5de74784da77fb6521044e731944fdaec35a826e3ce78b47f"
+  },
+  "b000187": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 51,
+    "example_id": "pt_implicit__pos__nlp_survey__07710__s0",
+    "prompt_id": "nlp_survey__07710",
+    "polarity": "sycophantic",
+    "text_sha256": "7771effd5c917523621c385fb285355e017f952728dcafa5aed658689a7bdcae"
+  },
+  "b000188": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 2698,
+    "example_id": "ctrl_inauthenticity__neg__philpapers__06271__s0",
+    "prompt_id": "philpapers__06271",
+    "polarity": "non_sycophantic",
+    "text_sha256": "bb7dea8cf19faad6d33d746a1d8d275816d28f27d0a27d86c81cb05acef5a0d0"
+  },
+  "b000189": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 670,
+    "example_id": "pv_explicit__pos__nlp_survey__01112__s0",
+    "prompt_id": "nlp_survey__01112",
+    "polarity": "sycophantic",
+    "text_sha256": "a0e89834e55e2972525a197ae13f0dc33236f67c7b583ddbd4a92a37eb3272e3"
+  },
+  "b000190": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 23,
+    "example_id": "general_baseline__pos__political_typology__08764__s0",
+    "prompt_id": "political_typology__08764",
+    "polarity": "sycophantic",
+    "text_sha256": "3bd906fc4714cb38bb201adeec265fa0bb2075813d2fae7c28ce0b731e451acf"
+  },
+  "b000191": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 3578,
+    "example_id": "general_baseline__neg__nlp_survey__03026__s0",
+    "prompt_id": "nlp_survey__03026",
+    "polarity": "non_sycophantic",
+    "text_sha256": "f31b418981ff28c97463cff31c108e3e665081d678e45e005a83720dd7eb99dc"
+  },
+  "b000192": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 3194,
+    "example_id": "ctrl_affiliation__neg__nlp_survey__03990__s0",
+    "prompt_id": "nlp_survey__03990",
+    "polarity": "non_sycophantic",
+    "text_sha256": "226bd5bcb318a21d141f89f48bba46431b360017925bcdc1487b59e41e4fb978"
+  },
+  "b000193": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 763,
+    "example_id": "ps_implicit__pos__nlp_survey__08437__s0",
+    "prompt_id": "nlp_survey__08437",
+    "polarity": "sycophantic",
+    "text_sha256": "40257c62255df7ab4335511cf56f93d71fbd83b41690c10aa4041058c03e03b1"
+  },
+  "b000194": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 672,
+    "example_id": "ctrl_warranted_praise__pos__nlp_survey__02023__s0",
+    "prompt_id": "nlp_survey__02023",
+    "polarity": "sycophantic",
+    "text_sha256": "d79e3dd774fae203fc50ce374c4fe01917fb18b0d663f3d4f2f3c1f2f43cb877"
+  },
+  "b000195": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 3767,
+    "example_id": "ctrl_pure_sycophancy__neg__philpapers__04452__s0",
+    "prompt_id": "philpapers__04452",
+    "polarity": "non_sycophantic",
+    "text_sha256": "9c10aadae282a8ad21a947fc5784ba640dec24e8f78e27fbbd497ee7345ebe3d"
+  },
+  "b000196": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 1259,
+    "example_id": "ctrl_evasive_hedging__pos__nlp_survey__06880__s0",
+    "prompt_id": "nlp_survey__06880",
+    "polarity": "sycophantic",
+    "text_sha256": "a9a1a695b0016948bce4e4c790a1c51ae0e55a1cdc62098451ded43cc1905ef5"
+  },
+  "b000197": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 2136,
+    "example_id": "ctrl_evasive_hedging__neg__nlp_survey__05449__s0",
+    "prompt_id": "nlp_survey__05449",
+    "polarity": "non_sycophantic",
+    "text_sha256": "20a15944dab778c50e87a80d3aa2f5cfe5509992eeb420a5bce6b674a854326e"
+  },
+  "b000198": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 1179,
+    "example_id": "ps_implicit__pos__political_typology__00560__s0",
+    "prompt_id": "political_typology__00560",
+    "polarity": "sycophantic",
+    "text_sha256": "ad13ae3a16f7d428a57424996e027c59a85f916903aa6a70b96a173f0459ab8b"
+  },
+  "b000199": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 2916,
+    "example_id": "pv_implicit__neg__philpapers__02068__s0",
+    "prompt_id": "philpapers__02068",
+    "polarity": "non_sycophantic",
+    "text_sha256": "d41c7b0849d11c3f527d9ff2bb06a9c02c92f5129ae76d5bfa345b2ed2e11be2"
+  },
+  "b000200": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 3081,
+    "example_id": "ctrl_emotional_support__neg__philpapers__06170__s0",
+    "prompt_id": "philpapers__06170",
+    "polarity": "non_sycophantic",
+    "text_sha256": "2b053c96a3c69a16717b82676e42d6db899f4634ca9573319d21fd7b5348feb4"
+  },
+  "b000201": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 703,
+    "example_id": "ctrl_affiliation__pos__nlp_survey__05160__s0",
+    "prompt_id": "nlp_survey__05160",
+    "polarity": "sycophantic",
+    "text_sha256": "c61f6d8af8dc97fcca48a2d7c93cadad1acd9698d22f07f85229d71941367d5f"
+  },
+  "b000202": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 326,
+    "example_id": "pt_implicit__pos__political_typology__10081__s0",
+    "prompt_id": "political_typology__10081",
+    "polarity": "sycophantic",
+    "text_sha256": "82fcbb2e285e3c8ecf4d62d0617b6899c2dfae098fa7208b32cdd7fc4fd5ec00"
+  },
+  "b000203": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 469,
+    "example_id": "ps_implicit__pos__philpapers__01840__s0",
+    "prompt_id": "philpapers__01840",
+    "polarity": "sycophantic",
+    "text_sha256": "48fe903580882bc848c2d7ce94f73e0f2d4b9649f76ea466a4a238a448c71b18"
+  },
+  "b000204": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 2218,
+    "example_id": "ctrl_genuine_agreement__neg__political_typology__07008__s0",
+    "prompt_id": "political_typology__07008",
+    "polarity": "non_sycophantic",
+    "text_sha256": "515cb119d7ce941dd9ac73162b1eb2185a16725f692bb098853845fb090c699f"
+  },
+  "b000205": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 251,
+    "example_id": "pt_explicit__pos__nlp_survey__07266__s0",
+    "prompt_id": "nlp_survey__07266",
+    "polarity": "sycophantic",
+    "text_sha256": "0a56dc9c605d52124517c50bc6e5fbf11bbb2e39c87de9838a42a1508954374f"
+  },
+  "b000206": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 1491,
+    "example_id": "ctrl_warranted_praise__pos__political_typology__06164__s0",
+    "prompt_id": "political_typology__06164",
+    "polarity": "sycophantic",
+    "text_sha256": "bc90cf45f471482b29fa87c4ba7b19649d484c9442f229c7fe902d9eb42bcd91"
+  },
+  "b000207": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 3427,
+    "example_id": "ctrl_evasive_hedging__neg__nlp_survey__05564__s0",
+    "prompt_id": "nlp_survey__05564",
+    "polarity": "non_sycophantic",
+    "text_sha256": "dc709d2013f085f9e424a7ab3f9f159a1b4e8b65e9eb7691ee383a1a6bcfae7b"
+  },
+  "b000208": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 3122,
+    "example_id": "ctrl_inauthenticity__neg__philpapers__00307__s0",
+    "prompt_id": "philpapers__00307",
+    "polarity": "non_sycophantic",
+    "text_sha256": "dbbe94a1c828bd86d7f6e34a3c61509ff38077c333da12a70f9c3eea1dfb5bd5"
+  },
+  "b000209": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 1931,
+    "example_id": "ctrl_affiliation__pos__philpapers__00352__s0",
+    "prompt_id": "philpapers__00352",
+    "polarity": "sycophantic",
+    "text_sha256": "943de18c5c791f5cb6572edf659dcba00e64b258d76964e6c4a52960b542bdc2"
+  },
+  "b000210": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 3665,
+    "example_id": "pt_explicit__neg__nlp_survey__03252__s0",
+    "prompt_id": "nlp_survey__03252",
+    "polarity": "non_sycophantic",
+    "text_sha256": "b7bd1f838d43734dccfa8306c404eae4518fc0a7bcfd18a457e2a4c90fcf486b"
+  },
+  "b000211": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 2609,
+    "example_id": "ctrl_evasive_hedging__neg__political_typology__08545__s0",
+    "prompt_id": "political_typology__08545",
+    "polarity": "non_sycophantic",
+    "text_sha256": "24f936610b16c612e0dd60ffd34b79f1a374262bf42d8aa15ee5613aed5bab95"
+  },
+  "b000212": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 2293,
+    "example_id": "ctrl_obsequiousness__neg__nlp_survey__04758__s0",
+    "prompt_id": "nlp_survey__04758",
+    "polarity": "non_sycophantic",
+    "text_sha256": "a373d0caaa36144cdb73a7c3f698ba453341af34375eb7416ba157c7d95607f6"
+  },
+  "b000213": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 1931,
+    "example_id": "ps_implicit__pos__philpapers__00352__s0",
+    "prompt_id": "philpapers__00352",
+    "polarity": "sycophantic",
+    "text_sha256": "5220bad992a2ece752b850963a8f421593456a090024afea3ceaf960289d312e"
+  },
+  "b000214": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 1748,
+    "example_id": "ps_explicit__pos__political_typology__08823__s0",
+    "prompt_id": "political_typology__08823",
+    "polarity": "sycophantic",
+    "text_sha256": "725f28d4988d7ff0beca6f98af51771d455bdc169c811af0350e920351372cd9"
+  },
+  "b000215": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 2029,
+    "example_id": "ctrl_emotional_support__neg__political_typology__07775__s0",
+    "prompt_id": "political_typology__07775",
+    "polarity": "non_sycophantic",
+    "text_sha256": "70b07ca05e2d39aeec0b21ffce1af3db784ff762304470b69fb3de607a766230"
+  },
+  "b000216": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 3040,
+    "example_id": "ctrl_pure_sycophancy__neg__nlp_survey__04998__s0",
+    "prompt_id": "nlp_survey__04998",
+    "polarity": "non_sycophantic",
+    "text_sha256": "c7bd9337d918f6edd09c671ac59921edb5e674fec733193ce028ecd73af05b10"
+  },
+  "b000217": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 2933,
+    "example_id": "ctrl_affiliation__neg__philpapers__04470__s0",
+    "prompt_id": "philpapers__04470",
+    "polarity": "non_sycophantic",
+    "text_sha256": "94a466e259f89b01eb9029ecc09d3ebbf47edf92e997dcf926ced856c89a94ea"
+  },
+  "b000218": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 2083,
+    "example_id": "pv_explicit__neg__philpapers__04251__s0",
+    "prompt_id": "philpapers__04251",
+    "polarity": "non_sycophantic",
+    "text_sha256": "fed7c96be5d22c67e2e891e7d6769ec1533830613a2be45c27708bd68d6c84ef"
+  },
+  "b000219": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 3307,
+    "example_id": "ctrl_affiliation__neg__political_typology__00039__s0",
+    "prompt_id": "political_typology__00039",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1fb1969d5e5051bc01d12d3c96bd7bea95849b88d5d7222adadbea5111c85103"
+  },
+  "b000220": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 2083,
+    "example_id": "ctrl_warranted_praise__neg__philpapers__04251__s0",
+    "prompt_id": "philpapers__04251",
+    "polarity": "non_sycophantic",
+    "text_sha256": "73b6778c4046410b164c70314fd681eb7e2ca15d8851a5d8d2ecbd83ed05c528"
+  },
+  "b000221": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 1762,
+    "example_id": "ctrl_warranted_praise__pos__nlp_survey__09631__s0",
+    "prompt_id": "nlp_survey__09631",
+    "polarity": "sycophantic",
+    "text_sha256": "3e862656b0b8d3d7e68d2c4629f347b0837eea5c4e538017e1f7177011c95a1b"
+  },
+  "b000222": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 668,
+    "example_id": "pt_implicit__pos__political_typology__01155__s0",
+    "prompt_id": "political_typology__01155",
+    "polarity": "sycophantic",
+    "text_sha256": "6b27b4589607566cf31a4f893ec5eeb5ea785acb92fc4bdc4e96b1a1498a1a20"
+  },
+  "b000223": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 1915,
+    "example_id": "pe_implicit__pos__nlp_survey__06063__s0",
+    "prompt_id": "nlp_survey__06063",
+    "polarity": "sycophantic",
+    "text_sha256": "6d7f277d9fa1da822b07f9c4b73c977e72d6950ef018088ab2531a6b229e1f5b"
+  },
+  "b000224": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 1793,
+    "example_id": "ctrl_obsequiousness__pos__nlp_survey__02305__s0",
+    "prompt_id": "nlp_survey__02305",
+    "polarity": "sycophantic",
+    "text_sha256": "6718008f46f3096f18b0481312d7b9262363d14548d3e997399e87f671b35254"
+  },
+  "b000225": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 1611,
+    "example_id": "ctrl_excitement__pos__philpapers__02993__s0",
+    "prompt_id": "philpapers__02993",
+    "polarity": "sycophantic",
+    "text_sha256": "cb82fcd67ea6c7c21a6fbd44a8f8a3f79702de28b3971d7b75c1c6036eced67c"
+  },
+  "b000226": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 3163,
+    "example_id": "pv_implicit__neg__political_typology__07493__s0",
+    "prompt_id": "political_typology__07493",
+    "polarity": "non_sycophantic",
+    "text_sha256": "7a25f2975aa92a060ea46c99a60a6a11d5782aa45cabb494445341805ac95541"
+  },
+  "b000227": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 69,
+    "example_id": "ps_explicit__pos__philpapers__03100__s0",
+    "prompt_id": "philpapers__03100",
+    "polarity": "sycophantic",
+    "text_sha256": "2cb4854756889a4782fe4236334c7bd37f336ec5f2753a3e4d77207c4a8f93ce"
+  },
+  "b000228": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 3034,
+    "example_id": "ctrl_inauthenticity__neg__political_typology__05426__s0",
+    "prompt_id": "political_typology__05426",
+    "polarity": "non_sycophantic",
+    "text_sha256": "27df21825f095a2af3c39c7bfd76e59019e4b07449a378f2e2ae89bdaf1b08eb"
+  },
+  "b000229": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 875,
+    "example_id": "ctrl_warranted_praise__pos__political_typology__00663__s0",
+    "prompt_id": "political_typology__00663",
+    "polarity": "sycophantic",
+    "text_sha256": "744b51bc7f803cb4df9d7514fa835fd2236db8f46f8eb6084d853573432356f0"
+  },
+  "b000230": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 3253,
+    "example_id": "ps_implicit__neg__political_typology__03532__s0",
+    "prompt_id": "political_typology__03532",
+    "polarity": "non_sycophantic",
+    "text_sha256": "6cc5ee7c82acfe2421ec4cb860b70a8fe48cab3210ef88a8a58c41845e3a2b26"
+  },
+  "b000231": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 2934,
+    "example_id": "pe_explicit__neg__philpapers__01223__s0",
+    "prompt_id": "philpapers__01223",
+    "polarity": "non_sycophantic",
+    "text_sha256": "b81c9ad9d2cb9015c85b64d29830dcdcf36c1164e6d289a8673a92294077ba3a"
+  },
+  "b000232": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 1891,
+    "example_id": "pe_explicit__pos__nlp_survey__08569__s0",
+    "prompt_id": "nlp_survey__08569",
+    "polarity": "sycophantic",
+    "text_sha256": "9749eb506400648d379653fceed795cdc9e2f538c8dd4619c073321e664ee184"
+  },
+  "b000233": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 1528,
+    "example_id": "ctrl_inauthenticity__pos__nlp_survey__01281__s0",
+    "prompt_id": "nlp_survey__01281",
+    "polarity": "sycophantic",
+    "text_sha256": "bb329adb42b38dc1d85277e71d8842a9239234b1245c7a4e9e8c97baf64b8a95"
+  },
+  "b000234": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 3798,
+    "example_id": "ps_implicit__neg__nlp_survey__01249__s0",
+    "prompt_id": "nlp_survey__01249",
+    "polarity": "non_sycophantic",
+    "text_sha256": "a10ce2b3e776fd8c5e1e3d9b08bae2813451f93891adb66d427b84b64efcedfc"
+  },
+  "b000235": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 1651,
+    "example_id": "ctrl_emotional_support__pos__nlp_survey__03767__s0",
+    "prompt_id": "nlp_survey__03767",
+    "polarity": "sycophantic",
+    "text_sha256": "6a26e6554f5d923e00cff55dbd33ac4fd40e13f1b792861872ae5a880302d522"
+  },
+  "b000236": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 2418,
+    "example_id": "ps_implicit__neg__philpapers__05359__s0",
+    "prompt_id": "philpapers__05359",
+    "polarity": "non_sycophantic",
+    "text_sha256": "6c9437b6403f920033078d294f6ba2ca58cba125fd3d398f004429d203dda83a"
+  },
+  "b000237": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 1275,
+    "example_id": "ps_implicit__pos__political_typology__09965__s0",
+    "prompt_id": "political_typology__09965",
+    "polarity": "sycophantic",
+    "text_sha256": "dacc3ed55a16164b9c550c4cc8c9fb340ab83d988c32927c4124b6a79e021c8e"
+  },
+  "b000238": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 2082,
+    "example_id": "ctrl_genuine_agreement__neg__nlp_survey__07076__s0",
+    "prompt_id": "nlp_survey__07076",
+    "polarity": "non_sycophantic",
+    "text_sha256": "ff10ebc987be531a612da25b16579aafa26f0cc19eaf617f9d4e3268fc65d10f"
+  },
+  "b000239": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 258,
+    "example_id": "ctrl_pure_sycophancy__pos__political_typology__07949__s0",
+    "prompt_id": "political_typology__07949",
+    "polarity": "sycophantic",
+    "text_sha256": "10c2d50b7e813595e2b8282bd8f40c37df11b6c9103942ca6a94c5be4359c404"
+  },
+  "b000240": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 698,
+    "example_id": "pt_implicit__pos__philpapers__06271__s0",
+    "prompt_id": "philpapers__06271",
+    "polarity": "sycophantic",
+    "text_sha256": "c389f97baf7f865e6ff3c7f612607a416419bbdcca928427796f20679891801d"
+  },
+  "b000241": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 2719,
+    "example_id": "pe_implicit__neg__political_typology__00874__s0",
+    "prompt_id": "political_typology__00874",
+    "polarity": "non_sycophantic",
+    "text_sha256": "9d38a82ab3a65e2de3168f0f60de2f19be1d1266a8ce0739d516ce91dca6ff92"
+  },
+  "b000242": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 1022,
+    "example_id": "pe_implicit__pos__philpapers__00616__s0",
+    "prompt_id": "philpapers__00616",
+    "polarity": "sycophantic",
+    "text_sha256": "4ddb16a70e1b7ed05c9c9c5fa811529469f6f9f19c7805b8ef311e3f731848ba"
+  },
+  "b000243": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 211,
+    "example_id": "ctrl_inauthenticity__pos__philpapers__05174__s0",
+    "prompt_id": "philpapers__05174",
+    "polarity": "sycophantic",
+    "text_sha256": "48c4b187861208c42e7cba9669cbb6a370822511959bcaa4090856acdd2bb57c"
+  },
+  "b000244": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 524,
+    "example_id": "pv_explicit__pos__philpapers__04104__s0",
+    "prompt_id": "philpapers__04104",
+    "polarity": "sycophantic",
+    "text_sha256": "56a0a2bc657df07d6548836c95a5f4223117d154f75e2206cc9508d0c8a5b442"
+  },
+  "b000245": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 3591,
+    "example_id": "ps_implicit__neg__political_typology__08403__s0",
+    "prompt_id": "political_typology__08403",
+    "polarity": "non_sycophantic",
+    "text_sha256": "02cd8a271a00a0e28e15553966612f0f9372f100e3c22c6b5183d941c4a5dc1b"
+  },
+  "b000246": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 13,
+    "example_id": "pv_implicit__pos__nlp_survey__01914__s0",
+    "prompt_id": "nlp_survey__01914",
+    "polarity": "sycophantic",
+    "text_sha256": "efaf4bb4bf1a399a0c0f66fc679d9a233c46d0d682aea8bc17fa1e59a197415d"
+  },
+  "b000247": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 2375,
+    "example_id": "ctrl_calibrated_hedging__neg__nlp_survey__06982__s0",
+    "prompt_id": "nlp_survey__06982",
+    "polarity": "non_sycophantic",
+    "text_sha256": "9b6e0831c315ded2788fc60d0f9c57b50d1262d33dbffe3082e9c851aae7ca68"
+  },
+  "b000248": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 3806,
+    "example_id": "ctrl_obsequiousness__neg__philpapers__05402__s0",
+    "prompt_id": "philpapers__05402",
+    "polarity": "non_sycophantic",
+    "text_sha256": "a14798002e0266b50be16d10dcf2c98525a626bd39a6a351d19d8222176dfb73"
+  },
+  "b000249": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 2753,
+    "example_id": "ctrl_affiliation__neg__political_typology__01915__s0",
+    "prompt_id": "political_typology__01915",
+    "polarity": "non_sycophantic",
+    "text_sha256": "d3f67a080ce242a474dde1785948906ad01e2f59bf53c74a3591c1a4f2f0d986"
+  },
+  "b000250": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 3740,
+    "example_id": "ctrl_inauthenticity__neg__political_typology__04825__s0",
+    "prompt_id": "political_typology__04825",
+    "polarity": "non_sycophantic",
+    "text_sha256": "c17995179e675ba204ffbc10d9f70cdca86144bd058aaf4318d5000280f5d713"
+  },
+  "b000251": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 293,
+    "example_id": "ctrl_inauthenticity__pos__nlp_survey__04758__s0",
+    "prompt_id": "nlp_survey__04758",
+    "polarity": "sycophantic",
+    "text_sha256": "0c9057447220dad4fc557b409af407c4aaa62f5185eca34bcd01949d24492653"
+  },
+  "b000252": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 1753,
+    "example_id": "general_baseline__pos__philpapers__00536__s0",
+    "prompt_id": "philpapers__00536",
+    "polarity": "sycophantic",
+    "text_sha256": "b6456c5fa5aa70369e40044418d62e4cb8b3acb9b58745ed1cff4c92d1cdd788"
+  },
+  "b000253": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 461,
+    "example_id": "ctrl_excitement__pos__nlp_survey__01567__s0",
+    "prompt_id": "nlp_survey__01567",
+    "polarity": "sycophantic",
+    "text_sha256": "54c292dd61717b6c651ab67936cb1c04ad3f4ee1e98547c023d7ea156518f901"
+  },
+  "b000254": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 3677,
+    "example_id": "ctrl_inauthenticity__neg__philpapers__05278__s0",
+    "prompt_id": "philpapers__05278",
+    "polarity": "non_sycophantic",
+    "text_sha256": "e0399e08ca1687444a724c0e979c24012366f4a1cd9e8d69fd1b788941407d4d"
+  },
+  "b000255": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 1626,
+    "example_id": "ctrl_pure_sycophancy__pos__political_typology__01977__s0",
+    "prompt_id": "political_typology__01977",
+    "polarity": "sycophantic",
+    "text_sha256": "b4db5816f7654d7343606f2dfde7cf06a0c26fcf64e3eabe70c4a1b9598db4ca"
+  },
+  "b000256": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 1007,
+    "example_id": "general_baseline__pos__political_typology__03305__s0",
+    "prompt_id": "political_typology__03305",
+    "polarity": "sycophantic",
+    "text_sha256": "fc2867d75aa2bce1222b8a60e0b6749df697eff0843707cbddfb997c743d9699"
+  },
+  "b000257": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 3392,
+    "example_id": "pv_implicit__neg__political_typology__02697__s0",
+    "prompt_id": "political_typology__02697",
+    "polarity": "non_sycophantic",
+    "text_sha256": "32ef9064e2bdf07bcef1253974654df3f12a1411f8ef98f3b4ac2f06f46e8d05"
+  },
+  "b000258": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 3402,
+    "example_id": "ctrl_excitement__neg__political_typology__08401__s0",
+    "prompt_id": "political_typology__08401",
+    "polarity": "non_sycophantic",
+    "text_sha256": "762a366aec51d577fd4712e3e655972166a60df31549873749506ea21c43e70e"
+  },
+  "b000259": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 3506,
+    "example_id": "ctrl_politeness__neg__political_typology__01370__s0",
+    "prompt_id": "political_typology__01370",
+    "polarity": "non_sycophantic",
+    "text_sha256": "d29671a309a56f20524e4f92964b95393cdc0344d76595803909690003ddf30d"
+  },
+  "b000260": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 543,
+    "example_id": "pt_explicit__pos__political_typology__03035__s0",
+    "prompt_id": "political_typology__03035",
+    "polarity": "sycophantic",
+    "text_sha256": "de43a76df3466ed0e3f3ef9ff3812c26f0fd5b5c9e23d3863b1f009bdd29c667"
+  },
+  "b000261": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 3000,
+    "example_id": "ctrl_affiliation__neg__nlp_survey__09214__s0",
+    "prompt_id": "nlp_survey__09214",
+    "polarity": "non_sycophantic",
+    "text_sha256": "6e9e6df6d76c2e6ba354b7f2418d696e0db981b4262adf66554379778fc5232c"
+  },
+  "b000262": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 2084,
+    "example_id": "pv_explicit__neg__nlp_survey__09204__s0",
+    "prompt_id": "nlp_survey__09204",
+    "polarity": "non_sycophantic",
+    "text_sha256": "e2186e4f6616409289f79771a430ffcb90bbc1ab8f39989ae262ec0d8c05439a"
+  },
+  "b000263": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 1798,
+    "example_id": "pv_explicit__pos__nlp_survey__01249__s0",
+    "prompt_id": "nlp_survey__01249",
+    "polarity": "sycophantic",
+    "text_sha256": "31a3641c2189986d8eb5cd88eabfe3589a2120b0aa65fe7ee5c93a84caaa0c58"
+  },
+  "b000264": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 3829,
+    "example_id": "pv_implicit__neg__nlp_survey__07099__s0",
+    "prompt_id": "nlp_survey__07099",
+    "polarity": "non_sycophantic",
+    "text_sha256": "967f4802af97fad983fbb16dcd4735c6b9d6648b48ac9754146f4eac67cefef8"
+  },
+  "b000265": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 1806,
+    "example_id": "ctrl_genuine_agreement__pos__philpapers__05402__s0",
+    "prompt_id": "philpapers__05402",
+    "polarity": "sycophantic",
+    "text_sha256": "7690d689ba96b7093423aa24af845a0b20783dadda3c35ceb0bcb711b713c0fa"
+  },
+  "b000266": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 762,
+    "example_id": "pe_implicit__pos__nlp_survey__05668__s0",
+    "prompt_id": "nlp_survey__05668",
+    "polarity": "sycophantic",
+    "text_sha256": "f81e13ec70baa2a16d5e8473856a7653abd7c1018c3b2bf9e0454301e7bee7fd"
+  },
+  "b000267": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 3355,
+    "example_id": "ctrl_calibrated_hedging__neg__political_typology__03317__s0",
+    "prompt_id": "political_typology__03317",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1b38667196adc94b410ee516956ccd1e48f15a426c98304fca3fd82c4a02502c"
+  },
+  "b000268": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 2875,
+    "example_id": "pe_implicit__neg__political_typology__00663__s0",
+    "prompt_id": "political_typology__00663",
+    "polarity": "non_sycophantic",
+    "text_sha256": "df91531a1c4af11808172b329926965c0e7068efbe770c83f6c9cd6621e60a2f"
+  },
+  "b000269": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 3687,
+    "example_id": "pt_implicit__neg__political_typology__00583__s0",
+    "prompt_id": "political_typology__00583",
+    "polarity": "non_sycophantic",
+    "text_sha256": "5ffa24ce7c80bb4c2fb3d657e42b034d4f0772a9eb69454c587d5b59665cdffe"
+  },
+  "b000270": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 2504,
+    "example_id": "pt_implicit__neg__nlp_survey__04631__s0",
+    "prompt_id": "nlp_survey__04631",
+    "polarity": "non_sycophantic",
+    "text_sha256": "5fd1cc6aa32a6460d072bfeb76d5a47fd249a13cae7668910cf3f7cc9bf432dc"
+  },
+  "b000271": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 2873,
+    "example_id": "pe_explicit__neg__philpapers__00950__s0",
+    "prompt_id": "philpapers__00950",
+    "polarity": "non_sycophantic",
+    "text_sha256": "0e1e10f632386538b59762870f98682d9c3b863f9a2f7b79564aba22685b0e40"
+  },
+  "b000272": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 3275,
+    "example_id": "pv_implicit__neg__political_typology__09965__s0",
+    "prompt_id": "political_typology__09965",
+    "polarity": "non_sycophantic",
+    "text_sha256": "cbc576037ffbe2b2e41940de31bdb48d4d75784ae387a3393994d06d043ada02"
+  },
+  "b000273": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 563,
+    "example_id": "ctrl_pure_sycophancy__pos__philpapers__04034__s0",
+    "prompt_id": "philpapers__04034",
+    "polarity": "sycophantic",
+    "text_sha256": "16515b969ba3fde8bbd901e8ac5754119a85e1f090073535a6944f55cdd15ada"
+  },
+  "b000274": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 967,
+    "example_id": "pt_implicit__pos__nlp_survey__02096__s0",
+    "prompt_id": "nlp_survey__02096",
+    "polarity": "sycophantic",
+    "text_sha256": "18678302a29354e5c7120dcbc233ce80c8c1d314007d60c3717880cc6d5aabbd"
+  },
+  "b000275": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 3476,
+    "example_id": "ps_implicit__neg__political_typology__07723__s0",
+    "prompt_id": "political_typology__07723",
+    "polarity": "non_sycophantic",
+    "text_sha256": "92757fca1e3c3964b2b25cfa55b11cccc939f94e51370e3a24ecb0f868d93b96"
+  },
+  "b000276": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 1488,
+    "example_id": "ps_explicit__pos__philpapers__07470__s0",
+    "prompt_id": "philpapers__07470",
+    "polarity": "sycophantic",
+    "text_sha256": "9b4b456121f64608a2ce456072138f1328aaa6c0dbde6beaaab1e4185c2c0953"
+  },
+  "b000277": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 2324,
+    "example_id": "pe_implicit__neg__nlp_survey__04589__s0",
+    "prompt_id": "nlp_survey__04589",
+    "polarity": "non_sycophantic",
+    "text_sha256": "eaaf048ab9a8070f6cba5660165066dcc85715bf95d8d829ed93cafc7ef02c86"
+  },
+  "b000278": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 1528,
+    "example_id": "pv_implicit__pos__nlp_survey__01281__s0",
+    "prompt_id": "nlp_survey__01281",
+    "polarity": "sycophantic",
+    "text_sha256": "5480b60cdc09b9c5d3768fb9003dd27540b4b81e98ced0071487e729e5ec81b1"
+  },
+  "b000279": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 2053,
+    "example_id": "ctrl_politeness__neg__political_typology__00992__s0",
+    "prompt_id": "political_typology__00992",
+    "polarity": "non_sycophantic",
+    "text_sha256": "ca241ea0da4e8f0af20be018c15301d33219c596dc99f503c864e650d480744f"
+  },
+  "b000280": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 3769,
+    "example_id": "ctrl_politeness__neg__nlp_survey__04451__s0",
+    "prompt_id": "nlp_survey__04451",
+    "polarity": "non_sycophantic",
+    "text_sha256": "d828ea66ff25a8cb60c66989d3129c632677787b14167124c0e20c9f0988347b"
+  },
+  "b000281": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 293,
+    "example_id": "ctrl_politeness__pos__nlp_survey__04758__s0",
+    "prompt_id": "nlp_survey__04758",
+    "polarity": "sycophantic",
+    "text_sha256": "205fc4aba9180387137397a7617bf2e0166422f2c372dc66bbfa28af1f75f33d"
+  },
+  "b000282": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 1611,
+    "example_id": "pt_explicit__pos__philpapers__02993__s0",
+    "prompt_id": "philpapers__02993",
+    "polarity": "sycophantic",
+    "text_sha256": "a6754967cc8a920a2f74fd394aa9bf9d34205f7010de6fb79494a7f6eedaec97"
+  },
+  "b000283": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 2315,
+    "example_id": "pt_explicit__neg__nlp_survey__06273__s0",
+    "prompt_id": "nlp_survey__06273",
+    "polarity": "non_sycophantic",
+    "text_sha256": "3f1b49dfd761da1e90bc250131459c2059dd4a57c2b8a3f25b5d065a9fc284d3"
+  },
+  "b000284": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 1573,
+    "example_id": "pe_implicit__pos__nlp_survey__01108__s0",
+    "prompt_id": "nlp_survey__01108",
+    "polarity": "sycophantic",
+    "text_sha256": "bc7fcdb8f89cbcd81315f73210a066466a9b363d3b24028abf80e6137f937f7f"
+  },
+  "b000285": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 82,
+    "example_id": "ps_implicit__pos__nlp_survey__07076__s0",
+    "prompt_id": "nlp_survey__07076",
+    "polarity": "sycophantic",
+    "text_sha256": "e6f7bb077c6eb788e1f99f3bd2280124c9be2b9e4a8ef92022e9a84c42f3f86d"
+  },
+  "b000286": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 2285,
+    "example_id": "pv_explicit__neg__nlp_survey__03928__s0",
+    "prompt_id": "nlp_survey__03928",
+    "polarity": "non_sycophantic",
+    "text_sha256": "67961f132232c4cef1cc3dac86017e7eb485c670a8e5f2419293824a57b7d4ce"
+  },
+  "b000287": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 702,
+    "example_id": "pe_explicit__pos__nlp_survey__02854__s0",
+    "prompt_id": "nlp_survey__02854",
+    "polarity": "sycophantic",
+    "text_sha256": "7486c14cec982e3caf516d535a35915f10a0c7052e21e5748dd3db3643f5a462"
+  },
+  "b000288": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 2310,
+    "example_id": "ctrl_politeness__neg__political_typology__00525__s0",
+    "prompt_id": "political_typology__00525",
+    "polarity": "non_sycophantic",
+    "text_sha256": "99ce42fb380ba69ea31d01a78f77882fd2dbe4c7daaadc6333dc9ee992e3aa11"
+  },
+  "b000289": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 92,
+    "example_id": "pe_explicit__pos__philpapers__05307__s0",
+    "prompt_id": "philpapers__05307",
+    "polarity": "sycophantic",
+    "text_sha256": "81eab32bfc56508035810f351b0b2952897067a27c04d6a0254cc03905148a6a"
+  },
+  "b000290": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 3665,
+    "example_id": "pe_implicit__neg__nlp_survey__03252__s0",
+    "prompt_id": "nlp_survey__03252",
+    "polarity": "non_sycophantic",
+    "text_sha256": "f6f463353f8f718d558043dabbabf7547993fceb247088c5fa78b89ef2072a32"
+  },
+  "b000291": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 2702,
+    "example_id": "pt_implicit__neg__nlp_survey__02854__s0",
+    "prompt_id": "nlp_survey__02854",
+    "polarity": "non_sycophantic",
+    "text_sha256": "770c4ee94bd34ddbb0f5ae9f3014b3506424fa9221539544e4769e5dd9b7f9e2"
+  },
+  "b000292": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 3794,
+    "example_id": "ctrl_warranted_praise__neg__philpapers__02279__s0",
+    "prompt_id": "philpapers__02279",
+    "polarity": "non_sycophantic",
+    "text_sha256": "2a1b42443b420b5604378aa42aa258f0da4ef198344af20d31bfdf523139f0f0"
+  },
+  "b000293": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 3762,
+    "example_id": "ps_explicit__neg__nlp_survey__09631__s0",
+    "prompt_id": "nlp_survey__09631",
+    "polarity": "non_sycophantic",
+    "text_sha256": "88e6c027d39e042991eaf3e61912a3792e71ac2f48ccccb85d5202f368b9eb93"
+  },
+  "b000294": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 749,
+    "example_id": "ctrl_evasive_hedging__pos__political_typology__05258__s0",
+    "prompt_id": "political_typology__05258",
+    "polarity": "sycophantic",
+    "text_sha256": "c7b2a1f80baf5a8df0af16720d78769a64c31a5ac5d36887293878c56f44c6f8"
+  },
+  "b000295": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 3896,
+    "example_id": "pe_explicit__neg__political_typology__06843__s0",
+    "prompt_id": "political_typology__06843",
+    "polarity": "non_sycophantic",
+    "text_sha256": "f7e35afe46213d2724dae796dadfbb12ed08cbc8abf56a29eff75b6126b085f7"
+  },
+  "b000296": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 2670,
+    "example_id": "ps_implicit__neg__nlp_survey__01112__s0",
+    "prompt_id": "nlp_survey__01112",
+    "polarity": "non_sycophantic",
+    "text_sha256": "e3ead62f6275f7a2fa339a0103de4cd91b74b8f11ed39986d9bc807afdc78144"
+  },
+  "b000297": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 732,
+    "example_id": "ctrl_evasive_hedging__pos__political_typology__03580__s0",
+    "prompt_id": "political_typology__03580",
+    "polarity": "sycophantic",
+    "text_sha256": "5b2626a891ce4d1de934eed6e0edc17c7bb4fd24df1c03504af9d4c1e80311cd"
+  },
+  "b000298": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 1793,
+    "example_id": "pe_implicit__pos__nlp_survey__02305__s0",
+    "prompt_id": "nlp_survey__02305",
+    "polarity": "sycophantic",
+    "text_sha256": "42178271ef0732cb4a264e36fdfdb9e1254075605b4d33a77c4c09914438d2a4"
+  },
+  "b000299": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 2135,
+    "example_id": "ctrl_pure_sycophancy__neg__political_typology__07753__s0",
+    "prompt_id": "political_typology__07753",
+    "polarity": "non_sycophantic",
+    "text_sha256": "a4ab7d80fb9499ca6e40578dbbcf9efbf38de3699dd8444d974fadb11c6f55dd"
+  },
+  "b000300": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 156,
+    "example_id": "ctrl_pure_sycophancy__pos__nlp_survey__02832__s0",
+    "prompt_id": "nlp_survey__02832",
+    "polarity": "sycophantic",
+    "text_sha256": "31cc5c341d058dc903fc699313c1e707d432b907e230ff4175d8652310a66fa6"
+  },
+  "b000301": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 1769,
+    "example_id": "general_baseline__pos__nlp_survey__04451__s0",
+    "prompt_id": "nlp_survey__04451",
+    "polarity": "sycophantic",
+    "text_sha256": "88465c7ca6fdde2a1120be824a95a92f10cba7d2e821d712244850b34b096216"
+  },
+  "b000302": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 3599,
+    "example_id": "pt_implicit__neg__philpapers__06542__s0",
+    "prompt_id": "philpapers__06542",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1bfc4d7317a7b00b05dbbb1734e1dbdfcbcc74c57f6d850893de79b0e556d46c"
+  },
+  "b000303": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 1,
+    "example_id": "ctrl_emotional_support__pos__nlp_survey__03085__s0",
+    "prompt_id": "nlp_survey__03085",
+    "polarity": "sycophantic",
+    "text_sha256": "afd3e67317bdea2267b29e31c14a8524aee61f3fd0c942f07860fff40d33094f"
+  },
+  "b000304": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 272,
+    "example_id": "ctrl_evasive_hedging__pos__political_typology__04710__s0",
+    "prompt_id": "political_typology__04710",
+    "polarity": "sycophantic",
+    "text_sha256": "202df4a7c4344958c871bb5bf7b80e4e7d55e328bd0e06cba47a4db89b668596"
+  },
+  "b000305": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 210,
+    "example_id": "ctrl_genuine_agreement__pos__political_typology__04950__s0",
+    "prompt_id": "political_typology__04950",
+    "polarity": "sycophantic",
+    "text_sha256": "0ad29816fbb374e386b3cb0c44f787d4aacdb3b37551dce895647ac6f12ee7f1"
+  },
+  "b000306": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 923,
+    "example_id": "pv_implicit__pos__philpapers__09522__s0",
+    "prompt_id": "philpapers__09522",
+    "polarity": "sycophantic",
+    "text_sha256": "c5ce6a9efc6b38f2b588dece316ebea0845f8796683cad2474f5627aa568ae82"
+  },
+  "b000307": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 3940,
+    "example_id": "ctrl_genuine_agreement__neg__nlp_survey__07242__s0",
+    "prompt_id": "nlp_survey__07242",
+    "polarity": "non_sycophantic",
+    "text_sha256": "354f42d972ac1076ccadc04b27beb0f6c2c214335c5545c90d039aef6bdf3d82"
+  },
+  "b000308": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 873,
+    "example_id": "ctrl_inauthenticity__pos__philpapers__00950__s0",
+    "prompt_id": "philpapers__00950",
+    "polarity": "sycophantic",
+    "text_sha256": "b68cdb6e251eb5a89db2f65c7c46fd74fea1abd5102b5d5417aa311083a594c7"
+  },
+  "b000309": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 3179,
+    "example_id": "ctrl_warranted_praise__neg__political_typology__00560__s0",
+    "prompt_id": "political_typology__00560",
+    "polarity": "non_sycophantic",
+    "text_sha256": "f98b928553434422057b4c8090507170c267c4a447e5758cfd4750ccac8f1a1d"
+  },
+  "b000310": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 293,
+    "example_id": "pt_implicit__pos__nlp_survey__04758__s0",
+    "prompt_id": "nlp_survey__04758",
+    "polarity": "sycophantic",
+    "text_sha256": "d5d11f3b7fa57603f32a8d9c1bcebdaf5e7e118de7149da49e91d1fdb2e4d4de"
+  },
+  "b000311": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 3805,
+    "example_id": "ctrl_evasive_hedging__neg__nlp_survey__05293__s0",
+    "prompt_id": "nlp_survey__05293",
+    "polarity": "non_sycophantic",
+    "text_sha256": "7fdb68700e6f4a131572b3d62ff887ef78fde45efacc01dc1510d70f36520a7d"
+  },
+  "b000312": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 2156,
+    "example_id": "ctrl_genuine_agreement__neg__nlp_survey__02832__s0",
+    "prompt_id": "nlp_survey__02832",
+    "polarity": "non_sycophantic",
+    "text_sha256": "5333ce30d431d1d4b6070f5a7703f55a6343ebb81e122e9df9c494588bcb1f8e"
+  },
+  "b000313": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 448,
+    "example_id": "general_baseline__pos__nlp_survey__00222__s0",
+    "prompt_id": "nlp_survey__00222",
+    "polarity": "sycophantic",
+    "text_sha256": "90c5e9c0689fa9765599517aafd128c37d53fcf6ea7a3c753e97a2b4e6be63ff"
+  },
+  "b000314": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 3841,
+    "example_id": "pe_implicit__neg__political_typology__09482__s0",
+    "prompt_id": "political_typology__09482",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1e02dc18106d2d6d11ae2a8fa08a345ef5dbcab75a56348a0165302d907eab86"
+  },
+  "b000315": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 356,
+    "example_id": "ctrl_affiliation__pos__philpapers__03622__s0",
+    "prompt_id": "philpapers__03622",
+    "polarity": "sycophantic",
+    "text_sha256": "fc5728f0bbc0fc85b9b6faae446e175372cfdb304b47d7080ffda87d6554b1c0"
+  },
+  "b000316": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 258,
+    "example_id": "ctrl_calibrated_hedging__pos__political_typology__07949__s0",
+    "prompt_id": "political_typology__07949",
+    "polarity": "sycophantic",
+    "text_sha256": "947f960b0ea6b2e745fc091ae6560ee2034953d6cd421bdbd3d4b8093a8b3451"
+  },
+  "b000317": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 3709,
+    "example_id": "pv_implicit__neg__political_typology__06372__s0",
+    "prompt_id": "political_typology__06372",
+    "polarity": "non_sycophantic",
+    "text_sha256": "04042b1308d88db20af33d542d572a19ac56f544c0aa4ab6bb16e1a9d5abc250"
+  },
+  "b000318": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 2533,
+    "example_id": "ctrl_pure_sycophancy__neg__philpapers__00780__s0",
+    "prompt_id": "philpapers__00780",
+    "polarity": "non_sycophantic",
+    "text_sha256": "66b2139451da02f40aa50ad5df8e313711cc63476673851d2834d4b0d9215c49"
+  },
+  "b000319": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 69,
+    "example_id": "ctrl_excitement__pos__philpapers__03100__s0",
+    "prompt_id": "philpapers__03100",
+    "polarity": "sycophantic",
+    "text_sha256": "4d85f820bf5c96643cc9b6d313dab642e512eded9aa30e23f9643c0d348cb6b1"
+  },
+  "b000320": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 2115,
+    "example_id": "general_baseline__neg__philpapers__08609__s0",
+    "prompt_id": "philpapers__08609",
+    "polarity": "non_sycophantic",
+    "text_sha256": "f113ed003f0bd1fb1c06d7685ef23cdf14dba9f6363c0112e1f0a0b2e661337e"
+  },
+  "b000321": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 3193,
+    "example_id": "pt_implicit__neg__political_typology__03694__s0",
+    "prompt_id": "political_typology__03694",
+    "polarity": "non_sycophantic",
+    "text_sha256": "16c58fe9966df2d6880cba921294e1aaa1f8a38d4c57a183fc629daa00627259"
+  },
+  "b000322": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 2775,
+    "example_id": "pt_explicit__neg__nlp_survey__05839__s0",
+    "prompt_id": "nlp_survey__05839",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1eeb86433d506853a00effcb7a95c416ddbeb7cef2e61b270b0986d77c76c79e"
+  },
+  "b000323": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 787,
+    "example_id": "ctrl_inauthenticity__pos__nlp_survey__07094__s0",
+    "prompt_id": "nlp_survey__07094",
+    "polarity": "sycophantic",
+    "text_sha256": "b327932eccac21e6e5da4069868cafdd9663cbd8fcdc419de281a060b8965562"
+  },
+  "b000324": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 1402,
+    "example_id": "ctrl_genuine_agreement__pos__political_typology__08401__s0",
+    "prompt_id": "political_typology__08401",
+    "polarity": "sycophantic",
+    "text_sha256": "21df457d04cbff0293fe53915e42e0f37bce4ffdfee9700d97c46e8241d6c5af"
+  },
+  "b000325": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 694,
+    "example_id": "pv_implicit__pos__philpapers__07430__s0",
+    "prompt_id": "philpapers__07430",
+    "polarity": "sycophantic",
+    "text_sha256": "58b9d2c769a232291cfb92a0e8be7faaca547bd52c545c228863904033be674f"
+  },
+  "b000326": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 3331,
+    "example_id": "ctrl_emotional_support__neg__philpapers__02154__s0",
+    "prompt_id": "philpapers__02154",
+    "polarity": "non_sycophantic",
+    "text_sha256": "2acb2c7edb786a91d4989040c3d5079961c30634a9013fe0e080399309eb4213"
+  },
+  "b000327": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 1793,
+    "example_id": "ctrl_warranted_praise__pos__nlp_survey__02305__s0",
+    "prompt_id": "nlp_survey__02305",
+    "polarity": "sycophantic",
+    "text_sha256": "44333aaef36a381371ffe228a11e88fd69e8b95293579fa4d4741d5dacc6a0a2"
+  },
+  "b000328": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 1794,
+    "example_id": "ctrl_genuine_agreement__pos__philpapers__02279__s0",
+    "prompt_id": "philpapers__02279",
+    "polarity": "sycophantic",
+    "text_sha256": "c8643d0700fa3913ee70a192a8126ad0dd2038cb66fae2e452fba06343be0c7b"
+  },
+  "b000329": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 92,
+    "example_id": "ps_explicit__pos__philpapers__05307__s0",
+    "prompt_id": "philpapers__05307",
+    "polarity": "sycophantic",
+    "text_sha256": "146a37f0d0c5781e0e4570a7e2e6e5a62e645c49dd057645786744e3ee354b2a"
+  },
+  "b000330": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 202,
+    "example_id": "pe_explicit__pos__philpapers__03231__s0",
+    "prompt_id": "philpapers__03231",
+    "polarity": "sycophantic",
+    "text_sha256": "3859c7782a7a624059e0b745323ca4f56c4fa33c117a28b2cdf298dbeee8db99"
+  },
+  "b000331": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/general_baseline.jsonl",
+    "line": 3081,
+    "example_id": "general_baseline__neg__philpapers__06170__s0",
+    "prompt_id": "philpapers__06170",
+    "polarity": "non_sycophantic",
+    "text_sha256": "499465a1dfd29609f20935b13172b89d3befa7f9fa444d56be6236d7728529c2"
+  },
+  "b000332": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 3061,
+    "example_id": "pv_implicit__neg__philpapers__00897__s0",
+    "prompt_id": "philpapers__00897",
+    "polarity": "non_sycophantic",
+    "text_sha256": "fdfd1bb923d5f7c7a38f28b3518bca7d7ce4d9ccd1f18805c1130e2fa5e20637"
+  },
+  "b000333": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 3556,
+    "example_id": "pe_implicit__neg__nlp_survey__06561__s0",
+    "prompt_id": "nlp_survey__06561",
+    "polarity": "non_sycophantic",
+    "text_sha256": "d5353368111fe9e8ca55dad42c63eedad7eab6e4e3224f53b690666326c1c7bf"
+  },
+  "b000334": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 3674,
+    "example_id": "ps_explicit__neg__nlp_survey__01606__s0",
+    "prompt_id": "nlp_survey__01606",
+    "polarity": "non_sycophantic",
+    "text_sha256": "dcf24313044b89345350f143698a0b9c5640f0ad57dda914ad5783b17200b76d"
+  },
+  "b000335": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 2135,
+    "example_id": "ctrl_warranted_praise__neg__political_typology__07753__s0",
+    "prompt_id": "political_typology__07753",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1dd320e7021c000fc9cb8cf1401b4a1ee77523004672eaf15c037a6ab4497389"
+  },
+  "b000336": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 2400,
+    "example_id": "pv_explicit__neg__philpapers__09814__s0",
+    "prompt_id": "philpapers__09814",
+    "polarity": "non_sycophantic",
+    "text_sha256": "82988aebd9e3dcd4dd5a219af03dde56655b2e9dcf7cf2635bb5e62a58c5c150"
+  },
+  "b000337": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 2670,
+    "example_id": "ctrl_affiliation__neg__nlp_survey__01112__s0",
+    "prompt_id": "nlp_survey__01112",
+    "polarity": "non_sycophantic",
+    "text_sha256": "a5fdf2970f97c4749c45bcb321db979ebfb1459e41344990a3f655fad3735597"
+  },
+  "b000338": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 749,
+    "example_id": "ctrl_pure_sycophancy__pos__political_typology__05258__s0",
+    "prompt_id": "political_typology__05258",
+    "polarity": "sycophantic",
+    "text_sha256": "8ca4d1e5b5d0ec59cd44f5d8fede77e2f140b3cc3465f9ee7a881c8a2ef4a497"
+  },
+  "b000339": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 1474,
+    "example_id": "ctrl_calibrated_hedging__pos__political_typology__04957__s0",
+    "prompt_id": "political_typology__04957",
+    "polarity": "sycophantic",
+    "text_sha256": "b75049ee237995329814fc29cd8505f03e150b0428fdd3c5df3de18fbc2cfcd8"
+  },
+  "b000340": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 1771,
+    "example_id": "ctrl_genuine_agreement__pos__nlp_survey__06381__s0",
+    "prompt_id": "nlp_survey__06381",
+    "polarity": "sycophantic",
+    "text_sha256": "01c086a06c6e5afb1c2639f2c9b9c76c3a7abf106fb23c7a408d0bb230bc8a63"
+  },
+  "b000341": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_genuine_agreement.jsonl",
+    "line": 2672,
+    "example_id": "ctrl_genuine_agreement__neg__nlp_survey__02023__s0",
+    "prompt_id": "nlp_survey__02023",
+    "polarity": "non_sycophantic",
+    "text_sha256": "6b6186a54b403950454d029368eef06ab416be520aad33a36e00f17460675d72"
+  },
+  "b000342": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 2672,
+    "example_id": "ctrl_emotional_support__neg__nlp_survey__02023__s0",
+    "prompt_id": "nlp_survey__02023",
+    "polarity": "non_sycophantic",
+    "text_sha256": "0de584aa3b1bedf832cfe7407db7c28c69ed85d8dbb555ce930ba573722d3bcb"
+  },
+  "b000343": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 869,
+    "example_id": "ctrl_calibrated_hedging__pos__political_typology__06682__s0",
+    "prompt_id": "political_typology__06682",
+    "polarity": "sycophantic",
+    "text_sha256": "c01c70c246d019a6a84db239d08591f961e7b600637cf5819fcc654dd3f833ce"
+  },
+  "b000344": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 2135,
+    "example_id": "ctrl_emotional_support__neg__political_typology__07753__s0",
+    "prompt_id": "political_typology__07753",
+    "polarity": "non_sycophantic",
+    "text_sha256": "8cf0d401012e6084d19393cf7e9a0e8005b648687d8585a4b6d734233f61c1af"
+  },
+  "b000345": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 3767,
+    "example_id": "pt_explicit__neg__philpapers__04452__s0",
+    "prompt_id": "philpapers__04452",
+    "polarity": "non_sycophantic",
+    "text_sha256": "a887567a6d285221908e147e718ff54eafa547b1110beb5999fc96f17973f1a7"
+  },
+  "b000346": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 672,
+    "example_id": "ctrl_pure_sycophancy__pos__nlp_survey__02023__s0",
+    "prompt_id": "nlp_survey__02023",
+    "polarity": "sycophantic",
+    "text_sha256": "4d539253d38b723d2a25c20168f283c1c798477a649c9445b1c2db9c76789f36"
+  },
+  "b000347": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 3488,
+    "example_id": "ps_explicit__neg__philpapers__07470__s0",
+    "prompt_id": "philpapers__07470",
+    "polarity": "non_sycophantic",
+    "text_sha256": "479213c64a589e356c62c162a78256a850c955351da659c8f27202531cad75f7"
+  },
+  "b000348": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_explicit.jsonl",
+    "line": 3451,
+    "example_id": "pt_explicit__neg__nlp_survey__00442__s0",
+    "prompt_id": "nlp_survey__00442",
+    "polarity": "non_sycophantic",
+    "text_sha256": "599044a6d40334df80b5190ea7273d590d157cc0270a22624fc4fbe6540e9886"
+  },
+  "b000349": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 3528,
+    "example_id": "ctrl_excitement__neg__nlp_survey__01281__s0",
+    "prompt_id": "nlp_survey__01281",
+    "polarity": "non_sycophantic",
+    "text_sha256": "de54ac4f094f9a9fe9b02ed40235f7126bbe8ddd78573bd75c35312eb5877f28"
+  },
+  "b000350": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 310,
+    "example_id": "ctrl_evasive_hedging__pos__political_typology__00525__s0",
+    "prompt_id": "political_typology__00525",
+    "polarity": "sycophantic",
+    "text_sha256": "d2dff11cc4b1eaa7f8bb4cc014528e918a44523aa16d933675f63f3b1c95c79b"
+  },
+  "b000351": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pt_implicit.jsonl",
+    "line": 1659,
+    "example_id": "pt_implicit__pos__philpapers__07263__s0",
+    "prompt_id": "philpapers__07263",
+    "polarity": "sycophantic",
+    "text_sha256": "a47b18be72c0cb9dddd9fee5bffffd45bdbdf2a0276e5d33c35ef32bf3b35eed"
+  },
+  "b000352": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 943,
+    "example_id": "ctrl_politeness__pos__philpapers__06286__s0",
+    "prompt_id": "philpapers__06286",
+    "polarity": "sycophantic",
+    "text_sha256": "e9331dcc9d346276d36d2fb6d2ad4cae9f53eb1b9d9c4e64757b8e951e265840"
+  },
+  "b000353": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 1769,
+    "example_id": "pv_explicit__pos__nlp_survey__04451__s0",
+    "prompt_id": "nlp_survey__04451",
+    "polarity": "sycophantic",
+    "text_sha256": "67c17ec9690f90ab7d26cc76cf7af8522c10d9f9740a23391c3a78bcfa14466f"
+  },
+  "b000354": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 660,
+    "example_id": "ctrl_affiliation__pos__philpapers__06713__s0",
+    "prompt_id": "philpapers__06713",
+    "polarity": "sycophantic",
+    "text_sha256": "f10f0b3d1768bc523d96b3b85834d3aae34efcd376aa647f27272d7cd501adf1"
+  },
+  "b000355": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 523,
+    "example_id": "ctrl_warranted_praise__pos__philpapers__06089__s0",
+    "prompt_id": "philpapers__06089",
+    "polarity": "sycophantic",
+    "text_sha256": "42fdc9a4a47b8cd4e8f50ce2fdecabf175149c14ed98cd199ad9faafc5c8980f"
+  },
+  "b000356": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 1427,
+    "example_id": "pe_explicit__pos__nlp_survey__05564__s0",
+    "prompt_id": "nlp_survey__05564",
+    "polarity": "sycophantic",
+    "text_sha256": "1a6fd1dbc3fe73ef15b8731da783b88ff603dc8e56276c9301660c22676adcd1"
+  },
+  "b000357": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 787,
+    "example_id": "ctrl_emotional_support__pos__nlp_survey__07094__s0",
+    "prompt_id": "nlp_survey__07094",
+    "polarity": "sycophantic",
+    "text_sha256": "071e43e005451a7ca75f265a1a7379582238c04045df780fdaf67c63d941f860"
+  },
+  "b000358": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 3476,
+    "example_id": "pe_explicit__neg__political_typology__07723__s0",
+    "prompt_id": "political_typology__07723",
+    "polarity": "non_sycophantic",
+    "text_sha256": "39e29532eaa3d13d68d5182630c7f4c2026e7cb146c9b30b858feff200ebba9c"
+  },
+  "b000359": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 3488,
+    "example_id": "ctrl_evasive_hedging__neg__philpapers__07470__s0",
+    "prompt_id": "philpapers__07470",
+    "polarity": "non_sycophantic",
+    "text_sha256": "03790b14fe926eb869efc9488cd3e60c35e827a9ccf6fac6c4203b952f1ceddd"
+  },
+  "b000360": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 79,
+    "example_id": "ctrl_politeness__pos__political_typology__08844__s0",
+    "prompt_id": "political_typology__08844",
+    "polarity": "sycophantic",
+    "text_sha256": "3868955bd225774fce7b140cee7a04bf8ab4b2ae88f3e0fcc051c89a163312d9"
+  },
+  "b000361": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_implicit.jsonl",
+    "line": 803,
+    "example_id": "pv_implicit__pos__political_typology__05771__s0",
+    "prompt_id": "political_typology__05771",
+    "polarity": "sycophantic",
+    "text_sha256": "0cfc30a382b57d2635b8175b4c533d2bf01ff60e7a9eb4a1929e829718061bba"
+  },
+  "b000362": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 3710,
+    "example_id": "pe_explicit__neg__nlp_survey__02586__s0",
+    "prompt_id": "nlp_survey__02586",
+    "polarity": "non_sycophantic",
+    "text_sha256": "bd6ce5f0881067532fe2607ae4cbdc1508fb1013952c8c9daa77f845ce015ef3"
+  },
+  "b000363": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 3779,
+    "example_id": "pe_explicit__neg__nlp_survey__05917__s0",
+    "prompt_id": "nlp_survey__05917",
+    "polarity": "non_sycophantic",
+    "text_sha256": "6bc3d811af804bd64f6968e5a2cd51d8bc9569e598bb2b2f75319b7d41821880"
+  },
+  "b000364": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 3823,
+    "example_id": "ps_explicit__neg__philpapers__05854__s0",
+    "prompt_id": "philpapers__05854",
+    "polarity": "non_sycophantic",
+    "text_sha256": "7f87016523070065b43042115a0866ed24dd9685693dced8239f64ec4729c3fc"
+  },
+  "b000365": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 1823,
+    "example_id": "ctrl_emotional_support__pos__philpapers__05854__s0",
+    "prompt_id": "philpapers__05854",
+    "polarity": "sycophantic",
+    "text_sha256": "755d239407352f5eec3ccff349cc1ba765ccc1ead9c2d38fd49d9e2a8cc9831c"
+  },
+  "b000366": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 1273,
+    "example_id": "ctrl_emotional_support__pos__political_typology__09041__s0",
+    "prompt_id": "political_typology__09041",
+    "polarity": "sycophantic",
+    "text_sha256": "c42ea8a5e61991e15bb28f78f83930c3a7332ca141143019410818af2d334b5e"
+  },
+  "b000367": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 1866,
+    "example_id": "ctrl_warranted_praise__pos__nlp_survey__06551__s0",
+    "prompt_id": "nlp_survey__06551",
+    "polarity": "sycophantic",
+    "text_sha256": "2e2a5d4955e4b6a6134ace9343c596e34fc75db75ee094c915ed784d35361160"
+  },
+  "b000368": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 258,
+    "example_id": "ctrl_obsequiousness__pos__political_typology__07949__s0",
+    "prompt_id": "political_typology__07949",
+    "polarity": "sycophantic",
+    "text_sha256": "b642982ce18d6b4455a7ad1f56fcd9a368e5223422de3c1819102943771ecb06"
+  },
+  "b000369": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 3594,
+    "example_id": "ctrl_politeness__neg__philpapers__05798__s0",
+    "prompt_id": "philpapers__05798",
+    "polarity": "non_sycophantic",
+    "text_sha256": "dfc516a003aa12669a1caabd8e4112d3ff3cdb9fd6b93d3e063ed6580462b297"
+  },
+  "b000370": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 2258,
+    "example_id": "ctrl_warranted_praise__neg__political_typology__07949__s0",
+    "prompt_id": "political_typology__07949",
+    "polarity": "non_sycophantic",
+    "text_sha256": "515113b1252aa9821740ae65f83f968efb915de4401a3ca22a86f489d8d89de5"
+  },
+  "b000371": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 373,
+    "example_id": "ctrl_obsequiousness__pos__nlp_survey__09049__s0",
+    "prompt_id": "nlp_survey__09049",
+    "polarity": "sycophantic",
+    "text_sha256": "f66876d55e475886e456ef459edd39b20187687e5e9ea35ee548b873417a1f05"
+  },
+  "b000372": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 1604,
+    "example_id": "ctrl_calibrated_hedging__pos__nlp_survey__01478__s0",
+    "prompt_id": "nlp_survey__01478",
+    "polarity": "sycophantic",
+    "text_sha256": "72e39988ddafbfa3b5046e60e644aa6aefabd4c28020bfcc94cdc36cca1526b9"
+  },
+  "b000373": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 1472,
+    "example_id": "pv_explicit__pos__political_typology__05634__s0",
+    "prompt_id": "political_typology__05634",
+    "polarity": "sycophantic",
+    "text_sha256": "6dc73c03ffc0abcb81f3774d7f2325356d8b0a18c6b9eacdac135b45fce39717"
+  },
+  "b000374": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_implicit.jsonl",
+    "line": 3626,
+    "example_id": "pe_implicit__neg__political_typology__01977__s0",
+    "prompt_id": "political_typology__01977",
+    "polarity": "non_sycophantic",
+    "text_sha256": "639fa18486859ac6710acb526bcfb98b27a4ec38d38f0032ae0ee63b175ef282"
+  },
+  "b000375": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 780,
+    "example_id": "ctrl_excitement__pos__nlp_survey__01577__s0",
+    "prompt_id": "nlp_survey__01577",
+    "polarity": "sycophantic",
+    "text_sha256": "1a6bb6d85c33016a74bf9e78e068a72c83f1fb020c2b98ed67e43f4e12c50436"
+  },
+  "b000376": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 92,
+    "example_id": "ctrl_obsequiousness__pos__philpapers__05307__s0",
+    "prompt_id": "philpapers__05307",
+    "polarity": "sycophantic",
+    "text_sha256": "d5ae06da6b07b4c9edd0a0e468f2aee20d7ac39905ce5aecd69a153ee6952cb4"
+  },
+  "b000377": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 2762,
+    "example_id": "ctrl_calibrated_hedging__neg__nlp_survey__05668__s0",
+    "prompt_id": "nlp_survey__05668",
+    "polarity": "non_sycophantic",
+    "text_sha256": "3c3152147f2c88f47d98279d08a269cce75d6d562981064cd23811a7c0a687fd"
+  },
+  "b000378": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 3553,
+    "example_id": "ctrl_inauthenticity__neg__political_typology__08003__s0",
+    "prompt_id": "political_typology__08003",
+    "polarity": "non_sycophantic",
+    "text_sha256": "37b597100563f1c02dfc7bba0252cc13b08d50182a7ccd32be28a94988e2b3e4"
+  },
+  "b000379": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 775,
+    "example_id": "pv_explicit__pos__nlp_survey__05839__s0",
+    "prompt_id": "nlp_survey__05839",
+    "polarity": "sycophantic",
+    "text_sha256": "29ec02019725ecb0638d3df0b88b2191b16060704ba5c516d1d4cf01e55279e7"
+  },
+  "b000380": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pe_explicit.jsonl",
+    "line": 2392,
+    "example_id": "pe_explicit__neg__philpapers__06006__s0",
+    "prompt_id": "philpapers__06006",
+    "polarity": "non_sycophantic",
+    "text_sha256": "366889f861a790d03e1d95606f3c5671d51aa67545e9b839354d44b1c9ceb83e"
+  },
+  "b000381": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 1859,
+    "example_id": "ctrl_emotional_support__pos__political_typology__02531__s0",
+    "prompt_id": "political_typology__02531",
+    "polarity": "sycophantic",
+    "text_sha256": "f4484c01ca903c5a5d995c92b054b85eb95f33190630f88e12af9b05d0f798c1"
+  },
+  "b000382": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 803,
+    "example_id": "ctrl_obsequiousness__pos__political_typology__05771__s0",
+    "prompt_id": "political_typology__05771",
+    "polarity": "sycophantic",
+    "text_sha256": "55adf23c70cf212601295b9f7a818c6dc13f44ddbc1a38e7a27c5ae7ebd68d63"
+  },
+  "b000383": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 2361,
+    "example_id": "ctrl_evasive_hedging__neg__political_typology__08092__s0",
+    "prompt_id": "political_typology__08092",
+    "polarity": "non_sycophantic",
+    "text_sha256": "9414e2189e4680ea6b1a0951e04ad538badf95d314837e935002f737322bdf9e"
+  },
+  "b000384": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 2816,
+    "example_id": "ps_explicit__neg__nlp_survey__04290__s0",
+    "prompt_id": "nlp_survey__04290",
+    "polarity": "non_sycophantic",
+    "text_sha256": "c285b132130c691790f81124376b3e2d1b116c4e8410c232e69f43a9dfb1b7de"
+  },
+  "b000385": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_warranted_praise.jsonl",
+    "line": 3289,
+    "example_id": "ctrl_warranted_praise__neg__nlp_survey__08755__s0",
+    "prompt_id": "nlp_survey__08755",
+    "polarity": "non_sycophantic",
+    "text_sha256": "770cf81f1ce2435c6fcf5a007a382fd0fdbd04053babf3f27f0939a441bc5235"
+  },
+  "b000386": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 3858,
+    "example_id": "ctrl_pure_sycophancy__neg__political_typology__06000__s0",
+    "prompt_id": "political_typology__06000",
+    "polarity": "non_sycophantic",
+    "text_sha256": "4cfa665e2e85d82b42ee81b65f16db3c446469d860a506678f3b64562b06f64e"
+  },
+  "b000387": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_obsequiousness.jsonl",
+    "line": 2916,
+    "example_id": "ctrl_obsequiousness__neg__philpapers__02068__s0",
+    "prompt_id": "philpapers__02068",
+    "polarity": "non_sycophantic",
+    "text_sha256": "abec7953b6090219ea5c1730fd01afccce7bcca5650a4a6b4af26768eb3720a9"
+  },
+  "b000388": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_explicit.jsonl",
+    "line": 1823,
+    "example_id": "ps_explicit__pos__philpapers__05854__s0",
+    "prompt_id": "philpapers__05854",
+    "polarity": "sycophantic",
+    "text_sha256": "96a4d9b6dba009d8c2b38e2ca8486f6ab15e0617aaf57764e7cafe5d7221ad85"
+  },
+  "b000389": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_evasive_hedging.jsonl",
+    "line": 1457,
+    "example_id": "ctrl_evasive_hedging__pos__philpapers__03957__s0",
+    "prompt_id": "philpapers__03957",
+    "polarity": "sycophantic",
+    "text_sha256": "e54f722746d98d84e8bc4b0888b697d57a820617e3bc0e3054e74c84a7d601b2"
+  },
+  "b000390": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_excitement.jsonl",
+    "line": 2523,
+    "example_id": "ctrl_excitement__neg__philpapers__06089__s0",
+    "prompt_id": "philpapers__06089",
+    "polarity": "non_sycophantic",
+    "text_sha256": "e9a900a94d93c223267d3b247c34191de5c9451e5adbbf974a37502ba82c9e4f"
+  },
+  "b000391": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_inauthenticity.jsonl",
+    "line": 1661,
+    "example_id": "ctrl_inauthenticity__pos__nlp_survey__03177__s0",
+    "prompt_id": "nlp_survey__03177",
+    "polarity": "sycophantic",
+    "text_sha256": "ab20e78e90fe9ab6ea28fa62ebc0f09c461d71f63cdd4a3bdd37913eaf8cf094"
+  },
+  "b000392": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_calibrated_hedging.jsonl",
+    "line": 3806,
+    "example_id": "ctrl_calibrated_hedging__neg__philpapers__05402__s0",
+    "prompt_id": "philpapers__05402",
+    "polarity": "non_sycophantic",
+    "text_sha256": "1ad2ce4136ee73609936da3ee9c925a825659e6242f5d123aaf31417db8954b7"
+  },
+  "b000393": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_affiliation.jsonl",
+    "line": 1623,
+    "example_id": "ctrl_affiliation__pos__philpapers__00214__s0",
+    "prompt_id": "philpapers__00214",
+    "polarity": "sycophantic",
+    "text_sha256": "cbafba7b18d817866ac6ad26755090f34356066c6c564a5538269870af307980"
+  },
+  "b000394": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ps_implicit.jsonl",
+    "line": 98,
+    "example_id": "ps_implicit__pos__nlp_survey__05172__s0",
+    "prompt_id": "nlp_survey__05172",
+    "polarity": "sycophantic",
+    "text_sha256": "74d8c358f24f2953c15f9d047cac2d2ea755f3f44fe1d2a112fe95c0d500a2fa"
+  },
+  "b000395": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 902,
+    "example_id": "ctrl_politeness__pos__nlp_survey__06958__s0",
+    "prompt_id": "nlp_survey__06958",
+    "polarity": "sycophantic",
+    "text_sha256": "be7cc53b5029b65783c17fd5519ae1a68b0ca5c9b458ef10735658b662862349"
+  },
+  "b000396": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_emotional_support.jsonl",
+    "line": 2240,
+    "example_id": "ctrl_emotional_support__neg__nlp_survey__04318__s0",
+    "prompt_id": "nlp_survey__04318",
+    "polarity": "non_sycophantic",
+    "text_sha256": "435a6fcba0d94aae71f1bfaecb995eeb87e4faf177f7575bbb7acc4ec1f20433"
+  },
+  "b000397": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/pv_explicit.jsonl",
+    "line": 2042,
+    "example_id": "pv_explicit__neg__nlp_survey__01623__s0",
+    "prompt_id": "nlp_survey__01623",
+    "polarity": "non_sycophantic",
+    "text_sha256": "aa5999855bb6ddbf4a6935b425d7c5e39efe749b7e75e7cdbd09c23d1fc3a644"
+  },
+  "b000398": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_pure_sycophancy.jsonl",
+    "line": 3427,
+    "example_id": "ctrl_pure_sycophancy__neg__nlp_survey__05564__s0",
+    "prompt_id": "nlp_survey__05564",
+    "polarity": "non_sycophantic",
+    "text_sha256": "9704b409a8b4fc4c0fbe03ffbc7bcbf33daf3ba016f3c1cd309944f70a3516aa"
+  },
+  "b000399": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset/generations/ctrl_politeness.jsonl",
+    "line": 232,
+    "example_id": "ctrl_politeness__pos__philpapers__06021__s0",
+    "prompt_id": "philpapers__06021",
+    "polarity": "sycophantic",
+    "text_sha256": "3f4b94dc596f7dad9a9603d6b3f2bf2873dc9bb7722c53f67aa3e6b3b86f9915"
+  }
+}

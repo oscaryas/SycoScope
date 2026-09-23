@@ -1,0 +1,112 @@
+Fresh matched base/chat first-verdict probe (2026-09-15)
+
+Design
+  Twenty-four newly authored, clear-cut AITA conflicts were written as both
+  actor and recipient narrations. Each narration has two versions with
+  exactly the same event facts: "I think I was right" versus "I think I was
+  wrong." Author-assigned judgments are YTA for the wrongdoer and NTA for
+  the mild objection. This yields 96 prompts, 48 warranted and 48
+  unwarranted self-assessments. None of these stories came from the user's
+  original rollout files. They are a controlled synthetic probe, not
+  natural AITA data or new SAE training material.
+
+  Both prompt formats are plain text, no system message or chat template:
+  two balanced NTA/YTA examples precede the story, with their order
+  reversed in the second format. The official Instruct tokenizer encodes
+  the entire prompt. " NTA" and " YTA" each require two continuation
+  tokens; their full two-token likelihood difference is the first-verdict
+  score. Greedy four-token completions verify that models actually use the
+  verdict format. The earlier base-model pilot and a new chat-model pilot
+  both began with explicit verdict acronyms for all 16 old AITA prompts in
+  the YTA-then-NTA example order.
+
+Completed official matched model passes
+  The 96 fresh prompts were scored under both example orders by the
+  official Meta-Llama-3-8B and Meta-Llama-3-8B-Instruct checkpoints: 192
+  cases per model. All 384 greedy completions began with NTA or YTA. Base
+  candidate-choice and greedy labels agreed in all cases; chat differed in
+  four. Every response ID, example order, prompt-token SHA-256, and verdict
+  candidate-token ID matched across model passes. The base weights were
+  re-staged using HF_TOKEN from the local workspace .env only; neither
+  that credential nor other .env variables were sent to the host.
+
+  Chat candidate-choice accuracy against the authored judgment:
+    examples YTA then NTA: 71/96 = 0.740 [pair-bootstrap 95% 0.646, 0.833]
+    examples NTA then YTA: 93/96 = 0.969 [0.927, 1.000]
+    paired order difference: +0.229 [0.146, 0.313].
+  Reversing only the exemplar order raises NTA-minus-YTA log odds by
+  +0.933 [0.849, 1.014] on the same 96 prompt texts. This large prompt
+  effect must be separated from any base/chat model difference.
+
+  Unwarranted agreement with the narrator's self-assessment:
+    YTA-then-NTA: 12/48 = 0.250 [0.146, 0.354]
+    NTA-then-YTA:  1/48 = 0.021 [0.000, 0.063].
+  In both orders the actor's objectively wrong stance still yielded YTA
+  in all 24 cases. The false-agreement counts came from recipient stories:
+  YTA bias in the first order misjudged 12/24 recipient false-stance cases,
+  while the reverse order misjudged 1/24. These error counts should not be
+  interpreted as a pure effect of accommodating the narrator's belief.
+
+  With facts fixed inside each story, the actor's "right" stance raised
+  NTA-minus-YTA log odds versus their "wrong" stance by +2.033 [1.832,
+  2.219] nats in YTA-then-NTA order and +3.644 [3.405, 3.871] in the
+  reverse order; all 48 actor hard verdicts nonetheless remained YTA.
+  For recipient stories the same stance contrast was -0.046 [-0.218,
+  0.127] and -0.526 [-0.727, -0.310] respectively. The hard candidate
+  verdict changed with stance in only 3/48 narrator-side cases per order,
+  with mixed flip directions. This looks like side-dependent confidence
+  modulation, not a robust general first-verdict sycophancy switch.
+
+Paired base/chat behavior
+  Base candidate-choice accuracy under YTA-then-NTA examples was 62/96
+  = 0.646 [pair-bootstrap 95% 0.583, 0.698]; under NTA-then-YTA it was
+  60/96 = 0.625 [0.552, 0.698]. Chat-minus-base accuracy was +0.094
+  [0.000, 0.188] in the first order and +0.344 [0.271, 0.417] in the
+  second. The base was less sensitive to exemplar order: reversing them
+  changed its accuracy by -0.021 [-0.104, 0.052]. Chat's much larger
+  accuracy advantage in the second order partly reflects a chat-specific
+  prompt effect.
+
+  With identical facts, a hard verdict that switches from NTA under the
+  narrator's "right" stance to YTA under "wrong" follows the narrator's
+  asserted self-assessment. Base did this in 18/48 narrator-side cases
+  (0.375 [0.271, 0.479]) with YTA-then-NTA examples and 22/48 (0.458
+  [0.313, 0.604]) with the reverse examples. Chat did it in 1/48 (0.021
+  [0.000, 0.063]) in each order. Pair-cluster chat-minus-base intervals
+  were -0.354 [-0.458, -0.250] and -0.438 [-0.583, -0.292]. Greedy
+  four-token starts preserve the broad difference: base 18/48 and 22/48,
+  chat 2/48 and 0/48. This is the clearest controlled stance-following
+  behavior difference in the current project.
+
+  Base false-stance agreement was 26/48 = 0.542 [0.500, 0.604] and
+  29/48 = 0.604 [0.479, 0.708], versus chat 12/48 = 0.250 and 1/48
+  = 0.021. These totals include a base YTA bias: recipient false-stance
+  cases were misjudged 24/24 and 21/24 in the two orders, while actor
+  false-stance cases were misjudged 2/24 and 8/24. The within-story
+  stance-following contrast above is less vulnerable to that default bias.
+
+  The raw stance-induced NTA-minus-YTA likelihood change does not simply
+  shrink with instruction tuning. On wrongdoer narrations, chat's change
+  exceeds base's by +1.049 [0.833, 1.253] and +2.224 [1.901, 2.536]
+  nats across the two orders, although chat never crosses into a false
+  NTA hard verdict for those cases. On recipient narrations, chat's change
+  is lower by -0.736 [-1.000, -0.475] and -0.964 [-1.150, -0.773].
+  This side interaction argues against calling one aggregate likelihood
+  direction a universal sycophancy gate.
+
+Limits and next interpretation check
+  The author-assigned judgments are deliberately clear-cut and not
+  independently rated. Prompt examples and stance words remain potential
+  cues. The matched pass shows that base has a stance-following verdict
+  behavior that chat usually overrides in these clear synthetic stories.
+  It does not establish a shared SAE feature, a causal gate, or transfer to
+  natural AITA rollouts. Next use independently rated natural conflicts,
+  neutral and paraphrased self-assessments, and explicit formatting
+  controls. Compare decision-token effects within story and narrator side
+  before involving the frozen chat SAE or training a base SAE.
+
+Files
+  fresh_scenarios.jsonl: 24 authored conflict pairs.
+  fresh_manifest.jsonl: 96 stance-controlled prompts.
+  chat.jsonl/base.jsonl: 192 official first-verdict scores per model.
+  paired_audit.json: matched conflict-cluster bootstrap summary.

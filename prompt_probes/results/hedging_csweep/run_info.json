@@ -1,0 +1,23 @@
+{
+  "train_probes": {
+    "args": {
+      "run_name": "hedging_csweep",
+      "cells": [
+        "ctrl_calibrated_hedging"
+      ],
+      "positions": null,
+      "layers": null,
+      "test_frac": 0.2,
+      "C": 100.0,
+      "max_iter": 2000,
+      "seed": 0,
+      "keep_degenerate": false
+    },
+    "code_version": "907b8e6-dirty",
+    "created_at": "2026-09-14T02:56:32+00:00",
+    "cells": [
+      "ctrl_calibrated_hedging"
+    ],
+    "n_rows": 120
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "layer_convention": "hidden_states[layer + 1]",
+  "layers": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28
+  ],
+  "layer_fracs": [
+    0.0,
+    0.125,
+    0.25,
+    0.375,
+    0.5,
+    0.625,
+    0.75,
+    0.875
+  ],
+  "n_layers": 32,
+  "hidden_size": 4096,
+  "positions": [
+    "last_prompt",
+    "first5",
+    "response"
+  ],
+  "dtype": "float32",
+  "max_length": 4096,
+  "cells": [
+    "general_baseline",
+    "pv_implicit",
+    "pe_implicit",
+    "ctrl_pure_sycophancy",
+    "ctrl_obsequiousness"
+  ],
+  "tokenizer_name_or_path": "meta-llama/Llama-3.1-8B-Instruct",
+  "code_version": "unknown",
+  "created_at": "2026-09-13T18:32:19+00:00",
+  "script_args": {
+    "run_name": "llama31_5k_subset",
+    "model": "meta-llama/Llama-3.1-8B-Instruct",
+    "cells": [
+      "general_baseline",
+      "pv_implicit",
+      "pe_implicit",
+      "ctrl_pure_sycophancy",
+      "ctrl_obsequiousness"
+    ],
+    "layers": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      28
+    ],
+    "layer_fracs": null,
+    "batch_size": 16,
+    "max_length": 4096,
+    "overwrite": false
+  },
+  "n_examples": 20000,
+  "n_skipped": 0
+}

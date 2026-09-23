@@ -1,0 +1,5494 @@
+{
+  "manifest": {
+    "run": "/Users/oscar/Desktop/SycoScope-1/prompt_probes/results/llama31_5k_subset",
+    "dataset": "original Perez prompt pool",
+    "model": "meta-llama/Llama-3.1-8B-Instruct",
+    "position": "response",
+    "layer_convention": "zero-based transformer block; hidden_states[layer + 1]",
+    "selection": "frozen original probe holdout; no activation-based selection",
+    "question_ids": [
+      "nlp_survey__00222",
+      "nlp_survey__00229",
+      "nlp_survey__00361",
+      "nlp_survey__00368",
+      "nlp_survey__00442",
+      "nlp_survey__00516",
+      "nlp_survey__00740",
+      "nlp_survey__00763",
+      "nlp_survey__01058",
+      "nlp_survey__01108",
+      "nlp_survey__01112",
+      "nlp_survey__01229",
+      "nlp_survey__01249",
+      "nlp_survey__01281",
+      "nlp_survey__01439",
+      "nlp_survey__01478",
+      "nlp_survey__01511",
+      "nlp_survey__01534",
+      "nlp_survey__01567",
+      "nlp_survey__01577",
+      "nlp_survey__01606",
+      "nlp_survey__01623",
+      "nlp_survey__01683",
+      "nlp_survey__01812",
+      "nlp_survey__01914",
+      "nlp_survey__01985",
+      "nlp_survey__02023",
+      "nlp_survey__02065",
+      "nlp_survey__02096",
+      "nlp_survey__02148",
+      "nlp_survey__02192",
+      "nlp_survey__02209",
+      "nlp_survey__02305",
+      "nlp_survey__02417",
+      "nlp_survey__02586",
+      "nlp_survey__02619",
+      "nlp_survey__02698",
+      "nlp_survey__02728",
+      "nlp_survey__02745",
+      "nlp_survey__02832",
+      "nlp_survey__02854",
+      "nlp_survey__03022",
+      "nlp_survey__03026",
+      "nlp_survey__03085",
+      "nlp_survey__03133",
+      "nlp_survey__03177",
+      "nlp_survey__03252",
+      "nlp_survey__03461",
+      "nlp_survey__03538",
+      "nlp_survey__03543",
+      "nlp_survey__03548",
+      "nlp_survey__03668",
+      "nlp_survey__03682",
+      "nlp_survey__03767",
+      "nlp_survey__03895",
+      "nlp_survey__03926",
+      "nlp_survey__03928",
+      "nlp_survey__03961",
+      "nlp_survey__03990",
+      "nlp_survey__04013",
+      "nlp_survey__04222",
+      "nlp_survey__04231",
+      "nlp_survey__04283",
+      "nlp_survey__04290",
+      "nlp_survey__04303",
+      "nlp_survey__04318",
+      "nlp_survey__04379",
+      "nlp_survey__04451",
+      "nlp_survey__04589",
+      "nlp_survey__04631",
+      "nlp_survey__04758",
+      "nlp_survey__04825",
+      "nlp_survey__04838",
+      "nlp_survey__04965",
+      "nlp_survey__04998",
+      "nlp_survey__05061",
+      "nlp_survey__05160",
+      "nlp_survey__05172",
+      "nlp_survey__05293",
+      "nlp_survey__05355",
+      "nlp_survey__05367",
+      "nlp_survey__05449",
+      "nlp_survey__05564",
+      "nlp_survey__05668",
+      "nlp_survey__05797",
+      "nlp_survey__05839",
+      "nlp_survey__05872",
+      "nlp_survey__05917",
+      "nlp_survey__06009",
+      "nlp_survey__06063",
+      "nlp_survey__06156",
+      "nlp_survey__06164",
+      "nlp_survey__06189",
+      "nlp_survey__06226",
+      "nlp_survey__06273",
+      "nlp_survey__06274",
+      "nlp_survey__06318",
+      "nlp_survey__06381",
+      "nlp_survey__06551",
+      "nlp_survey__06561",
+      "nlp_survey__06622",
+      "nlp_survey__06638",
+      "nlp_survey__06649",
+      "nlp_survey__06655",
+      "nlp_survey__06877",
+      "nlp_survey__06880",
+      "nlp_survey__06958",
+      "nlp_survey__06982",
+      "nlp_survey__07076",
+      "nlp_survey__07094",
+      "nlp_survey__07099",
+      "nlp_survey__07242",
+      "nlp_survey__07266",
+      "nlp_survey__07359",
+      "nlp_survey__07710",
+      "nlp_survey__07953",
+      "nlp_survey__07982",
+      "nlp_survey__07989",
+      "nlp_survey__08022",
+      "nlp_survey__08050",
+      "nlp_survey__08152",
+      "nlp_survey__08304",
+      "nlp_survey__08388",
+      "nlp_survey__08437",
+      "nlp_survey__08493",
+      "nlp_survey__08569",
+      "nlp_survey__08714",
+      "nlp_survey__08740",
+      "nlp_survey__08755",
+      "nlp_survey__08775",
+      "nlp_survey__08988",
+      "nlp_survey__09049",
+      "nlp_survey__09052",
+      "nlp_survey__09170",
+      "nlp_survey__09204",
+      "nlp_survey__09214",
+      "nlp_survey__09596",
+      "nlp_survey__09631",
+      "nlp_survey__09670",
+      "nlp_survey__09678",
+      "nlp_survey__09863",
+      "philpapers__00063",
+      "philpapers__00212",
+      "philpapers__00214",
+      "philpapers__00307",
+      "philpapers__00314",
+      "philpapers__00352",
+      "philpapers__00417",
+      "philpapers__00504",
+      "philpapers__00536",
+      "philpapers__00614",
+      "philpapers__00616",
+      "philpapers__00780",
+      "philpapers__00826",
+      "philpapers__00883",
+      "philpapers__00897",
+      "philpapers__00950",
+      "philpapers__01223",
+      "philpapers__01228",
+      "philpapers__01292",
+      "philpapers__01598",
+      "philpapers__01834",
+      "philpapers__01840",
+      "philpapers__02068",
+      "philpapers__02128",
+      "philpapers__02154",
+      "philpapers__02279",
+      "philpapers__02346",
+      "philpapers__02354",
+      "philpapers__02384",
+      "philpapers__02485",
+      "philpapers__02786",
+      "philpapers__02844",
+      "philpapers__02896",
+      "philpapers__02976",
+      "philpapers__02993",
+      "philpapers__03067",
+      "philpapers__03100",
+      "philpapers__03172",
+      "philpapers__03187",
+      "philpapers__03197",
+      "philpapers__03209",
+      "philpapers__03231",
+      "philpapers__03243",
+      "philpapers__03250",
+      "philpapers__03272",
+      "philpapers__03494",
+      "philpapers__03558",
+      "philpapers__03559",
+      "philpapers__03599",
+      "philpapers__03616",
+      "philpapers__03622",
+      "philpapers__03754",
+      "philpapers__03858",
+      "philpapers__03887",
+      "philpapers__03888",
+      "philpapers__03956",
+      "philpapers__03957",
+      "philpapers__03960",
+      "philpapers__04034",
+      "philpapers__04104",
+      "philpapers__04143",
+      "philpapers__04251",
+      "philpapers__04412",
+      "philpapers__04452",
+      "philpapers__04470",
+      "philpapers__04476",
+      "philpapers__04562",
+      "philpapers__04611",
+      "philpapers__04915",
+      "philpapers__05041",
+      "philpapers__05174",
+      "philpapers__05278",
+      "philpapers__05307",
+      "philpapers__05359",
+      "philpapers__05402",
+      "philpapers__05422",
+      "philpapers__05500",
+      "philpapers__05556",
+      "philpapers__05604",
+      "philpapers__05798",
+      "philpapers__05814",
+      "philpapers__05854",
+      "philpapers__06006",
+      "philpapers__06021",
+      "philpapers__06036",
+      "philpapers__06039",
+      "philpapers__06063",
+      "philpapers__06089",
+      "philpapers__06110",
+      "philpapers__06170",
+      "philpapers__06267",
+      "philpapers__06271",
+      "philpapers__06286",
+      "philpapers__06542",
+      "philpapers__06631",
+      "philpapers__06682",
+      "philpapers__06713",
+      "philpapers__06732",
+      "philpapers__06790",
+      "philpapers__06847",
+      "philpapers__07129",
+      "philpapers__07225",
+      "philpapers__07229",
+      "philpapers__07263",
+      "philpapers__07313",
+      "philpapers__07430",
+      "philpapers__07442",
+      "philpapers__07470",
+      "philpapers__07576",
+      "philpapers__07680",
+      "philpapers__07886",
+      "philpapers__07991",
+      "philpapers__08097",
+      "philpapers__08189",
+      "philpapers__08577",
+      "philpapers__08609",
+      "philpapers__08670",
+      "philpapers__08720",
+      "philpapers__08782",
+      "philpapers__08799",
+      "philpapers__08896",
+      "philpapers__09079",
+      "philpapers__09468",
+      "philpapers__09522",
+      "philpapers__09536",
+      "philpapers__09739",
+      "philpapers__09814",
+      "philpapers__09825",
+      "philpapers__09859",
+      "political_typology__00039",
+      "political_typology__00294",
+      "political_typology__00525",
+      "political_typology__00560",
+      "political_typology__00583",
+      "political_typology__00612",
+      "political_typology__00632",
+      "political_typology__00663",
+      "political_typology__00874",
+      "political_typology__00912",
+      "political_typology__00930",
+      "political_typology__00992",
+      "political_typology__01155",
+      "political_typology__01370",
+      "political_typology__01393",
+      "political_typology__01580",
+      "political_typology__01608",
+      "political_typology__01636",
+      "political_typology__01652",
+      "political_typology__01831",
+      "political_typology__01832",
+      "political_typology__01854",
+      "political_typology__01915",
+      "political_typology__01924",
+      "political_typology__01944",
+      "political_typology__01977",
+      "political_typology__02115",
+      "political_typology__02531",
+      "political_typology__02607",
+      "political_typology__02697",
+      "political_typology__02869",
+      "political_typology__02947",
+      "political_typology__02981",
+      "political_typology__03035",
+      "political_typology__03066",
+      "political_typology__03304",
+      "political_typology__03305",
+      "political_typology__03317",
+      "political_typology__03443",
+      "political_typology__03532",
+      "political_typology__03580",
+      "political_typology__03614",
+      "political_typology__03635",
+      "political_typology__03688",
+      "political_typology__03694",
+      "political_typology__03850",
+      "political_typology__03951",
+      "political_typology__03972",
+      "political_typology__04119",
+      "political_typology__04209",
+      "political_typology__04217",
+      "political_typology__04226",
+      "political_typology__04350",
+      "political_typology__04550",
+      "political_typology__04710",
+      "political_typology__04714",
+      "political_typology__04773",
+      "political_typology__04791",
+      "political_typology__04792",
+      "political_typology__04825",
+      "political_typology__04864",
+      "political_typology__04870",
+      "political_typology__04950",
+      "political_typology__04957",
+      "political_typology__04961",
+      "political_typology__04986",
+      "political_typology__05063",
+      "political_typology__05099",
+      "political_typology__05110",
+      "political_typology__05258",
+      "political_typology__05407",
+      "political_typology__05426",
+      "political_typology__05587",
+      "political_typology__05620",
+      "political_typology__05634",
+      "political_typology__05771",
+      "political_typology__06000",
+      "political_typology__06037",
+      "political_typology__06080",
+      "political_typology__06115",
+      "political_typology__06120",
+      "political_typology__06164",
+      "political_typology__06278",
+      "political_typology__06342",
+      "political_typology__06372",
+      "political_typology__06592",
+      "political_typology__06619",
+      "political_typology__06639",
+      "political_typology__06682",
+      "political_typology__06843",
+      "political_typology__06956",
+      "political_typology__07008",
+      "political_typology__07421",
+      "political_typology__07457",
+      "political_typology__07493",
+      "political_typology__07592",
+      "political_typology__07640",
+      "political_typology__07723",
+      "political_typology__07753",
+      "political_typology__07775",
+      "political_typology__07820",
+      "political_typology__07851",
+      "political_typology__07855",
+      "political_typology__07949",
+      "political_typology__08003",
+      "political_typology__08043",
+      "political_typology__08092",
+      "political_typology__08335",
+      "political_typology__08401",
+      "political_typology__08403",
+      "political_typology__08491",
+      "political_typology__08545",
+      "political_typology__08699",
+      "political_typology__08764",
+      "political_typology__08823",
+      "political_typology__08844",
+      "political_typology__09041",
+      "political_typology__09125",
+      "political_typology__09177",
+      "political_typology__09246",
+      "political_typology__09266",
+      "political_typology__09409",
+      "political_typology__09413",
+      "political_typology__09482",
+      "political_typology__09821",
+      "political_typology__09846",
+      "political_typology__09887",
+      "political_typology__09944",
+      "political_typology__09965",
+      "political_typology__10081"
+    ],
+    "n_questions": 400,
+    "conditions": [
+      "general_baseline/sycophantic",
+      "general_baseline/non_sycophantic",
+      "pv_explicit/sycophantic",
+      "pv_explicit/non_sycophantic",
+      "pv_implicit/sycophantic",
+      "pv_implicit/non_sycophantic",
+      "ps_explicit/sycophantic",
+      "ps_explicit/non_sycophantic",
+      "ps_implicit/sycophantic",
+      "ps_implicit/non_sycophantic",
+      "pt_explicit/sycophantic",
+      "pt_explicit/non_sycophantic",
+      "pt_implicit/sycophantic",
+      "pt_implicit/non_sycophantic",
+      "pe_explicit/sycophantic",
+      "pe_explicit/non_sycophantic",
+      "pe_implicit/sycophantic",
+      "pe_implicit/non_sycophantic",
+      "ctrl_warranted_praise/sycophantic",
+      "ctrl_warranted_praise/non_sycophantic",
+      "ctrl_genuine_agreement/sycophantic",
+      "ctrl_genuine_agreement/non_sycophantic",
+      "ctrl_emotional_support/sycophantic",
+      "ctrl_emotional_support/non_sycophantic",
+      "ctrl_calibrated_hedging/sycophantic",
+      "ctrl_calibrated_hedging/non_sycophantic",
+      "ctrl_politeness/sycophantic",
+      "ctrl_politeness/non_sycophantic",
+      "ctrl_pure_sycophancy/sycophantic",
+      "ctrl_pure_sycophancy/non_sycophantic",
+      "ctrl_obsequiousness/sycophantic",
+      "ctrl_obsequiousness/non_sycophantic",
+      "ctrl_excitement/sycophantic",
+      "ctrl_excitement/non_sycophantic",
+      "ctrl_evasive_hedging/sycophantic",
+      "ctrl_evasive_hedging/non_sycophantic",
+      "ctrl_affiliation/sycophantic",
+      "ctrl_affiliation/non_sycophantic",
+      "ctrl_inauthenticity/sycophantic",
+      "ctrl_inauthenticity/non_sycophantic"
+    ],
+    "n_responses": 16000,
+    "nonrepetitive_complete_question_ids": [
+      "nlp_survey__00222",
+      "nlp_survey__00229",
+      "nlp_survey__00361",
+      "nlp_survey__00368",
+      "nlp_survey__00442",
+      "nlp_survey__00516",
+      "nlp_survey__00740",
+      "nlp_survey__00763",
+      "nlp_survey__01058",
+      "nlp_survey__01108",
+      "nlp_survey__01112",
+      "nlp_survey__01229",
+      "nlp_survey__01249",
+      "nlp_survey__01281",
+      "nlp_survey__01439",
+      "nlp_survey__01478",
+      "nlp_survey__01511",
+      "nlp_survey__01534",
+      "nlp_survey__01567",
+      "nlp_survey__01577",
+      "nlp_survey__01606",
+      "nlp_survey__01683",
+      "nlp_survey__01812",
+      "nlp_survey__01914",
+      "nlp_survey__01985",
+      "nlp_survey__02023",
+      "nlp_survey__02065",
+      "nlp_survey__02096",
+      "nlp_survey__02148",
+      "nlp_survey__02192",
+      "nlp_survey__02209",
+      "nlp_survey__02305",
+      "nlp_survey__02417",
+      "nlp_survey__02586",
+      "nlp_survey__02619",
+      "nlp_survey__02698",
+      "nlp_survey__02728",
+      "nlp_survey__02745",
+      "nlp_survey__02832",
+      "nlp_survey__02854",
+      "nlp_survey__03022",
+      "nlp_survey__03026",
+      "nlp_survey__03085",
+      "nlp_survey__03133",
+      "nlp_survey__03177",
+      "nlp_survey__03252",
+      "nlp_survey__03461",
+      "nlp_survey__03538",
+      "nlp_survey__03543",
+      "nlp_survey__03548",
+      "nlp_survey__03668",
+      "nlp_survey__03682",
+      "nlp_survey__03767",
+      "nlp_survey__03895",
+      "nlp_survey__03926",
+      "nlp_survey__03928",
+      "nlp_survey__03961",
+      "nlp_survey__03990",
+      "nlp_survey__04013",
+      "nlp_survey__04222",
+      "nlp_survey__04231",
+      "nlp_survey__04283",
+      "nlp_survey__04290",
+      "nlp_survey__04303",
+      "nlp_survey__04318",
+      "nlp_survey__04379",
+      "nlp_survey__04451",
+      "nlp_survey__04589",
+      "nlp_survey__04631",
+      "nlp_survey__04758",
+      "nlp_survey__04825",
+      "nlp_survey__04838",
+      "nlp_survey__04965",
+      "nlp_survey__04998",
+      "nlp_survey__05061",
+      "nlp_survey__05160",
+      "nlp_survey__05172",
+      "nlp_survey__05293",
+      "nlp_survey__05355",
+      "nlp_survey__05367",
+      "nlp_survey__05449",
+      "nlp_survey__05564",
+      "nlp_survey__05668",
+      "nlp_survey__05797",
+      "nlp_survey__05839",
+      "nlp_survey__05872",
+      "nlp_survey__05917",
+      "nlp_survey__06009",
+      "nlp_survey__06063",
+      "nlp_survey__06156",
+      "nlp_survey__06164",
+      "nlp_survey__06189",
+      "nlp_survey__06226",
+      "nlp_survey__06273",
+      "nlp_survey__06274",
+      "nlp_survey__06318",
+      "nlp_survey__06381",
+      "nlp_survey__06561",
+      "nlp_survey__06622",
+      "nlp_survey__06638",
+      "nlp_survey__06649",
+      "nlp_survey__06655",
+      "nlp_survey__06877",
+      "nlp_survey__06880",
+      "nlp_survey__06958",
+      "nlp_survey__06982",
+      "nlp_survey__07076",
+      "nlp_survey__07094",
+      "nlp_survey__07099",
+      "nlp_survey__07242",
+      "nlp_survey__07266",
+      "nlp_survey__07359",
+      "nlp_survey__07710",
+      "nlp_survey__07953",
+      "nlp_survey__07982",
+      "nlp_survey__07989",
+      "nlp_survey__08022",
+      "nlp_survey__08050",
+      "nlp_survey__08152",
+      "nlp_survey__08304",
+      "nlp_survey__08388",
+      "nlp_survey__08437",
+      "nlp_survey__08493",
+      "nlp_survey__08569",
+      "nlp_survey__08714",
+      "nlp_survey__08740",
+      "nlp_survey__08755",
+      "nlp_survey__08775",
+      "nlp_survey__08988",
+      "nlp_survey__09049",
+      "nlp_survey__09052",
+      "nlp_survey__09170",
+      "nlp_survey__09204",
+      "nlp_survey__09214",
+      "nlp_survey__09596",
+      "nlp_survey__09670",
+      "nlp_survey__09678",
+      "nlp_survey__09863",
+      "philpapers__00063",
+      "philpapers__00212",
+      "philpapers__00214",
+      "philpapers__00307",
+      "philpapers__00314",
+      "philpapers__00417",
+      "philpapers__00504",
+      "philpapers__00536",
+      "philpapers__00614",
+      "philpapers__00616",
+      "philpapers__00780",
+      "philpapers__00826",
+      "philpapers__00883",
+      "philpapers__00897",
+      "philpapers__00950",
+      "philpapers__01223",
+      "philpapers__01228",
+      "philpapers__01292",
+      "philpapers__01598",
+      "philpapers__01834",
+      "philpapers__02068",
+      "philpapers__02128",
+      "philpapers__02154",
+      "philpapers__02279",
+      "philpapers__02346",
+      "philpapers__02354",
+      "philpapers__02384",
+      "philpapers__02485",
+      "philpapers__02844",
+      "philpapers__02896",
+      "philpapers__02976",
+      "philpapers__02993",
+      "philpapers__03067",
+      "philpapers__03100",
+      "philpapers__03187",
+      "philpapers__03197",
+      "philpapers__03209",
+      "philpapers__03231",
+      "philpapers__03243",
+      "philpapers__03250",
+      "philpapers__03272",
+      "philpapers__03494",
+      "philpapers__03558",
+      "philpapers__03559",
+      "philpapers__03599",
+      "philpapers__03616",
+      "philpapers__03622",
+      "philpapers__03754",
+      "philpapers__03858",
+      "philpapers__03888",
+      "philpapers__03956",
+      "philpapers__03957",
+      "philpapers__03960",
+      "philpapers__04034",
+      "philpapers__04104",
+      "philpapers__04143",
+      "philpapers__04251",
+      "philpapers__04412",
+      "philpapers__04452",
+      "philpapers__04476",
+      "philpapers__04562",
+      "philpapers__04611",
+      "philpapers__04915",
+      "philpapers__05041",
+      "philpapers__05174",
+      "philpapers__05278",
+      "philpapers__05307",
+      "philpapers__05359",
+      "philpapers__05402",
+      "philpapers__05500",
+      "philpapers__05556",
+      "philpapers__05798",
+      "philpapers__05814",
+      "philpapers__05854",
+      "philpapers__06006",
+      "philpapers__06021",
+      "philpapers__06036",
+      "philpapers__06039",
+      "philpapers__06063",
+      "philpapers__06089",
+      "philpapers__06110",
+      "philpapers__06170",
+      "philpapers__06267",
+      "philpapers__06271",
+      "philpapers__06286",
+      "philpapers__06631",
+      "philpapers__06682",
+      "philpapers__06713",
+      "philpapers__06732",
+      "philpapers__06790",
+      "philpapers__07129",
+      "philpapers__07225",
+      "philpapers__07229",
+      "philpapers__07313",
+      "philpapers__07430",
+      "philpapers__07442",
+      "philpapers__07470",
+      "philpapers__07576",
+      "philpapers__07680",
+      "philpapers__07886",
+      "philpapers__08097",
+      "philpapers__08189",
+      "philpapers__08577",
+      "philpapers__08609",
+      "philpapers__08720",
+      "philpapers__08782",
+      "philpapers__08799",
+      "philpapers__08896",
+      "philpapers__09079",
+      "philpapers__09468",
+      "philpapers__09522",
+      "philpapers__09536",
+      "philpapers__09739",
+      "philpapers__09814",
+      "philpapers__09825",
+      "philpapers__09859",
+      "political_typology__00039",
+      "political_typology__00294",
+      "political_typology__00525",
+      "political_typology__00560",
+      "political_typology__00583",
+      "political_typology__00612",
+      "political_typology__00663",
+      "political_typology__00874",
+      "political_typology__00912",
+      "political_typology__00930",
+      "political_typology__00992",
+      "political_typology__01155",
+      "political_typology__01370",
+      "political_typology__01393",
+      "political_typology__01580",
+      "political_typology__01608",
+      "political_typology__01636",
+      "political_typology__01652",
+      "political_typology__01831",
+      "political_typology__01832",
+      "political_typology__01854",
+      "political_typology__01915",
+      "political_typology__01924",
+      "political_typology__01944",
+      "political_typology__01977",
+      "political_typology__02115",
+      "political_typology__02531",
+      "political_typology__02607",
+      "political_typology__02697",
+      "political_typology__02869",
+      "political_typology__02947",
+      "political_typology__02981",
+      "political_typology__03035",
+      "political_typology__03066",
+      "political_typology__03304",
+      "political_typology__03317",
+      "political_typology__03443",
+      "political_typology__03532",
+      "political_typology__03580",
+      "political_typology__03614",
+      "political_typology__03635",
+      "political_typology__03688",
+      "political_typology__03694",
+      "political_typology__03850",
+      "political_typology__03951",
+      "political_typology__03972",
+      "political_typology__04119",
+      "political_typology__04209",
+      "political_typology__04217",
+      "political_typology__04226",
+      "political_typology__04350",
+      "political_typology__04550",
+      "political_typology__04710",
+      "political_typology__04714",
+      "political_typology__04773",
+      "political_typology__04791",
+      "political_typology__04792",
+      "political_typology__04825",
+      "political_typology__04864",
+      "political_typology__04870",
+      "political_typology__04950",
+      "political_typology__04957",
+      "political_typology__04961",
+      "political_typology__04986",
+      "political_typology__05063",
+      "political_typology__05099",
+      "political_typology__05110",
+      "political_typology__05258",
+      "political_typology__05407",
+      "political_typology__05587",
+      "political_typology__05620",
+      "political_typology__05634",
+      "political_typology__05771",
+      "political_typology__06000",
+      "political_typology__06037",
+      "political_typology__06080",
+      "political_typology__06115",
+      "political_typology__06120",
+      "political_typology__06164",
+      "political_typology__06278",
+      "political_typology__06342",
+      "political_typology__06372",
+      "political_typology__06592",
+      "political_typology__06619",
+      "political_typology__06639",
+      "political_typology__06682",
+      "political_typology__06843",
+      "political_typology__06956",
+      "political_typology__07008",
+      "political_typology__07421",
+      "political_typology__07457",
+      "political_typology__07493",
+      "political_typology__07592",
+      "political_typology__07640",
+      "political_typology__07723",
+      "political_typology__07753",
+      "political_typology__07775",
+      "political_typology__07820",
+      "political_typology__07851",
+      "political_typology__07855",
+      "political_typology__07949",
+      "political_typology__08043",
+      "political_typology__08092",
+      "political_typology__08335",
+      "political_typology__08401",
+      "political_typology__08403",
+      "political_typology__08491",
+      "political_typology__08545",
+      "political_typology__08699",
+      "political_typology__08764",
+      "political_typology__08844",
+      "political_typology__09041",
+      "political_typology__09125",
+      "political_typology__09177",
+      "political_typology__09246",
+      "political_typology__09266",
+      "political_typology__09409",
+      "political_typology__09413",
+      "political_typology__09482",
+      "political_typology__09821",
+      "political_typology__09846",
+      "political_typology__09887",
+      "political_typology__09944",
+      "political_typology__09965",
+      "political_typology__10081"
+    ],
+    "flags": {
+      "general_baseline/sycophantic": {
+        "unflagged": 364,
+        "refusal": 27,
+        "too_short": 9
+      },
+      "general_baseline/non_sycophantic": {
+        "unflagged": 371,
+        "refusal": 22,
+        "too_short": 7
+      },
+      "pv_explicit/sycophantic": {
+        "unflagged": 381,
+        "too_short": 19
+      },
+      "pv_explicit/non_sycophantic": {
+        "unflagged": 397,
+        "refusal": 3
+      },
+      "pv_implicit/sycophantic": {
+        "unflagged": 399,
+        "repetitive": 1
+      },
+      "pv_implicit/non_sycophantic": {
+        "unflagged": 390,
+        "refusal": 7,
+        "too_short": 3
+      },
+      "ps_explicit/sycophantic": {
+        "unflagged": 400
+      },
+      "ps_explicit/non_sycophantic": {
+        "unflagged": 395,
+        "refusal": 4,
+        "too_short": 1
+      },
+      "ps_implicit/sycophantic": {
+        "unflagged": 400
+      },
+      "ps_implicit/non_sycophantic": {
+        "unflagged": 380,
+        "truncated": 2,
+        "repetitive": 12,
+        "too_short": 3,
+        "refusal": 3
+      },
+      "pt_explicit/sycophantic": {
+        "unflagged": 390,
+        "refusal": 8,
+        "too_short": 2
+      },
+      "pt_explicit/non_sycophantic": {
+        "unflagged": 357,
+        "refusal": 30,
+        "too_short": 12,
+        "repetitive": 1
+      },
+      "pt_implicit/sycophantic": {
+        "unflagged": 380,
+        "refusal": 13,
+        "too_short": 7
+      },
+      "pt_implicit/non_sycophantic": {
+        "unflagged": 385,
+        "refusal": 11,
+        "too_short": 4
+      },
+      "pe_explicit/sycophantic": {
+        "unflagged": 391,
+        "refusal": 7,
+        "too_short": 2
+      },
+      "pe_explicit/non_sycophantic": {
+        "unflagged": 395,
+        "refusal": 5
+      },
+      "pe_implicit/sycophantic": {
+        "unflagged": 397,
+        "too_short": 2,
+        "refusal": 1
+      },
+      "pe_implicit/non_sycophantic": {
+        "unflagged": 377,
+        "repetitive": 2,
+        "refusal": 14,
+        "too_short": 7
+      },
+      "ctrl_warranted_praise/sycophantic": {
+        "unflagged": 397,
+        "refusal": 1,
+        "too_short": 2
+      },
+      "ctrl_warranted_praise/non_sycophantic": {
+        "unflagged": 397,
+        "refusal": 3
+      },
+      "ctrl_genuine_agreement/sycophantic": {
+        "unflagged": 399,
+        "refusal": 1
+      },
+      "ctrl_genuine_agreement/non_sycophantic": {
+        "unflagged": 374,
+        "refusal": 23,
+        "repetitive": 1,
+        "too_short": 2
+      },
+      "ctrl_emotional_support/sycophantic": {
+        "unflagged": 394,
+        "refusal": 3,
+        "too_short": 3
+      },
+      "ctrl_emotional_support/non_sycophantic": {
+        "unflagged": 393,
+        "repetitive": 3,
+        "refusal": 3,
+        "too_short": 1
+      },
+      "ctrl_calibrated_hedging/sycophantic": {
+        "refusal": 21,
+        "unflagged": 359,
+        "too_short": 20
+      },
+      "ctrl_calibrated_hedging/non_sycophantic": {
+        "unflagged": 384,
+        "refusal": 12,
+        "too_short": 3,
+        "repetitive": 1
+      },
+      "ctrl_politeness/sycophantic": {
+        "unflagged": 389,
+        "refusal": 7,
+        "too_short": 4
+      },
+      "ctrl_politeness/non_sycophantic": {
+        "too_short": 51,
+        "unflagged": 345,
+        "refusal": 4
+      },
+      "ctrl_pure_sycophancy/sycophantic": {
+        "unflagged": 396,
+        "refusal": 4
+      },
+      "ctrl_pure_sycophancy/non_sycophantic": {
+        "unflagged": 398,
+        "refusal": 2
+      },
+      "ctrl_obsequiousness/sycophantic": {
+        "unflagged": 379,
+        "refusal": 17,
+        "too_short": 3,
+        "repetitive": 1
+      },
+      "ctrl_obsequiousness/non_sycophantic": {
+        "unflagged": 387,
+        "refusal": 11,
+        "too_short": 2
+      },
+      "ctrl_excitement/sycophantic": {
+        "unflagged": 400
+      },
+      "ctrl_excitement/non_sycophantic": {
+        "unflagged": 386,
+        "too_short": 9,
+        "refusal": 5
+      },
+      "ctrl_evasive_hedging/sycophantic": {
+        "too_short": 15,
+        "unflagged": 359,
+        "refusal": 26
+      },
+      "ctrl_evasive_hedging/non_sycophantic": {
+        "unflagged": 381,
+        "too_short": 4,
+        "refusal": 15
+      },
+      "ctrl_affiliation/sycophantic": {
+        "unflagged": 396,
+        "refusal": 3,
+        "repetitive": 1
+      },
+      "ctrl_affiliation/non_sycophantic": {
+        "unflagged": 389,
+        "refusal": 8,
+        "too_short": 3
+      },
+      "ctrl_inauthenticity/sycophantic": {
+        "unflagged": 396,
+        "too_short": 1,
+        "refusal": 3
+      },
+      "ctrl_inauthenticity/non_sycophantic": {
+        "unflagged": 390,
+        "refusal": 7,
+        "too_short": 3
+      }
+    },
+    "split_sha256": "e3e42e8ac7ad014f63688db9bcfa296d37beeffa884b43d5dbcc6ed690e32a02",
+    "source_indices": {
+      "general_baseline": {
+        "index_sha256": "6a7b7137faa467d80eb98165f0d9a083b995be79610fdf4d119dcd82d690ba01",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/general_baseline.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789325051250000000
+      },
+      "pv_explicit": {
+        "index_sha256": "37c887cf23a171ef258e1469ed1fd67b60575398f6f2164f9b8ef94dd79354e8",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/pv_explicit.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789348397850000000
+      },
+      "pv_implicit": {
+        "index_sha256": "8459685fed3cebaa21edf17782b7ad342ea6812635c94aa2b650f470a2c1dcb9",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/pv_implicit.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789325128390000000
+      },
+      "ps_explicit": {
+        "index_sha256": "02effb43c985d519c2e5dcef3326b4f101ec8779c24bdd1645f4d5f290784b5d",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ps_explicit.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789348702270000000
+      },
+      "ps_implicit": {
+        "index_sha256": "592be96e00f401706deb6ef8f66009f1dc49d60ef20310babfa5cc75d8a2d6c0",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ps_implicit.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789349489650000000
+      },
+      "pt_explicit": {
+        "index_sha256": "dacb4641a2319e6c54edce8ddd1a4dfa10c94523354f0bb8e7474724dddcb1ec",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/pt_explicit.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789349731030000000
+      },
+      "pt_implicit": {
+        "index_sha256": "c909c446d8c088c311ac144f102d3dc3c83e5343a8ed1293f92467075add85f5",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/pt_implicit.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789350752990000000
+      },
+      "pe_explicit": {
+        "index_sha256": "2e5a33bbda529d787dc197415155fd13e405dcab92882c816eacf45fce8c618b",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/pe_explicit.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789351532660000000
+      },
+      "pe_implicit": {
+        "index_sha256": "9f1cdc108bac0b489c25ba2d32adeed7e2020c5c025f7bd70f41f11daab6d44a",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/pe_implicit.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789325207750000000
+      },
+      "ctrl_warranted_praise": {
+        "index_sha256": "03b453af64dc0898f363bb3c92d998a2d3655b013783aa15d3dc2af24f3577f0",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_warranted_praise.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789351764950000000
+      },
+      "ctrl_genuine_agreement": {
+        "index_sha256": "4c5e783c9ce59a578625dbec4756d11e9219ad6bd72e5945a0d6220b181d51b4",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_genuine_agreement.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789352565880000000
+      },
+      "ctrl_emotional_support": {
+        "index_sha256": "19cde8d0a6cecb653cef05340cbae3ae1bc6cdd2cbe8c628dbcf9c73b817cebe",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_emotional_support.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789352810690000000
+      },
+      "ctrl_calibrated_hedging": {
+        "index_sha256": "f6dd3e54ce05c0ec829cff55c8da748ca8d6363fef51ef5531579ffa68b30bbb",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_calibrated_hedging.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789353099720000000
+      },
+      "ctrl_politeness": {
+        "index_sha256": "ccfee66f1298d5c46cbd2c16c46bf21d1e08db49f53277ac9c13b3099464bc03",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_politeness.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789356864800000000
+      },
+      "ctrl_pure_sycophancy": {
+        "index_sha256": "82119afec75d2d81fc1fbd6a096ad7d878d80cc52f4abff7ff654f1f4f535363",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_pure_sycophancy.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789325284270000000
+      },
+      "ctrl_obsequiousness": {
+        "index_sha256": "7b58aab69d68f77a8065b1cc277c0821a0743776da7cf85952fed82aa5f47566",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_obsequiousness.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789325362060000000
+      },
+      "ctrl_excitement": {
+        "index_sha256": "14e9fa0a718d03bfe580498b1652bc2e3b166709f2d5b7f6b4a7f22ea96309f3",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_excitement.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789356971820000000
+      },
+      "ctrl_evasive_hedging": {
+        "index_sha256": "7054ef8267885791ca5434d1cc3dba326b729a93c3b6c0528c8fb2a629690580",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_evasive_hedging.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789357464800000000
+      },
+      "ctrl_affiliation": {
+        "index_sha256": "d88a2d7b0b2ea907d3db7476e6ea8420a285235d300c01ea4dde39940ba77353",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_affiliation.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789359152160000000
+      },
+      "ctrl_inauthenticity": {
+        "index_sha256": "19d09916524e76c39fc9417337329b462097ecc822b11419e8c1186a8645cc39",
+        "index_rows": 4000,
+        "npz_resolved_path": "/Volumes/Expansion/sycoscope/results/llama31_5k_subset/activations/ctrl_inauthenticity.npz",
+        "npz_bytes": 1572870182,
+        "npz_mtime_ns": 1789359513820000000
+      }
+    },
+    "primary_filter": "all nonempty cached responses, including repetitive/refusal/short/truncated",
+    "scaling": "raw activation coordinates, float64 sums of squares; no standardization",
+    "neutral_condition": "absent; compares 40 inducing strings, not system versus no system",
+    "created_at": "2026-09-16T14:05:19.613066+00:00"
+  },
+  "layers": {
+    "response_L00": {
+      "primary": {
+        "n_system_conditions": 40,
+        "n_questions": 400,
+        "hidden_size": 4096,
+        "total_ss": 212.64812241208,
+        "ss": {
+          "system": 25.378522319624167,
+          "question": 76.71723017945459,
+          "interaction_and_generation_noise": 110.55236991300123
+        },
+        "pct": {
+          "system": 11.934515119039903,
+          "question": 36.077078560227385,
+          "interaction_and_generation_noise": 51.98840632073271
+        },
+        "condition_contribution_pct_of_total": [
+          0.1279886950024369,
+          0.17950711669791058,
+          0.2775230073712764,
+          0.06209936653872686,
+          0.09772579283444675,
+          0.07552489671233412,
+          0.15807919633558618,
+          0.11582542828530488,
+          0.29279376470918944,
+          0.49212679473602444,
+          0.3093492786975842,
+          0.14101510735075098,
+          0.08581097249366518,
+          0.11594212343647442,
+          0.19531260710116552,
+          0.1160326864563809,
+          0.2495787014701863,
+          0.1642759907956496,
+          0.09518005736839587,
+          0.28714065055967286,
+          0.07661868968472274,
+          0.18660993214281715,
+          0.10902206864308524,
+          0.24038806619050274,
+          0.08631657720652847,
+          0.29225419554934023,
+          0.03263441016723022,
+          0.6389123183004158,
+          0.6151985121128115,
+          0.0739812512836772,
+          0.49101773178448027,
+          0.044358610989462845,
+          1.85941052079789,
+          0.03650204079237136,
+          0.22526765725943707,
+          0.04458155852710806,
+          2.5806646851528425,
+          0.12212248622580277,
+          0.4861440859092992,
+          0.053677485366913975
+        ]
+      },
+      "bootstrap": {
+        "n_boot": 200,
+        "seed": 20260916,
+        "method": "question-cluster percentile bootstrap; all systems retained together",
+        "pct_95_interval": {
+          "system": [
+            11.618916868042469,
+            12.553559074874858
+          ],
+          "question": [
+            34.917054248831114,
+            37.1894762765223
+          ],
+          "interaction_and_generation_noise": [
+            50.46802422360771,
+            53.1676058679443
+          ]
+        }
+      },
+      "nonrepetitive_complete_questions": {
+        "n_system_conditions": 40,
+        "n_questions": 379,
+        "hidden_size": 4096,
+        "total_ss": 200.73778599778404,
+        "ss": {
+          "system": 24.32153745081247,
+          "question": 71.99158267532887,
+          "interaction_and_generation_noise": 104.42466587164267
+        },
+        "pct": {
+          "system": 12.116073378970592,
+          "question": 35.86349342127525,
+          "interaction_and_generation_noise": 52.020433199754144
+        },
+        "condition_contribution_pct_of_total": [
+          0.12737869941386643,
+          0.1814902645628611,
+          0.2852331393071129,
+          0.06185443134217972,
+          0.09593842880063594,
+          0.07716047213244373,
+          0.1593673388421479,
+          0.11727922648013744,
+          0.29409916941991626,
+          0.5039913854283763,
+          0.3230277619123455,
+          0.1420867034889764,
+          0.08614357677349517,
+          0.11897579030561095,
+          0.20150000991336348,
+          0.11562872718621972,
+          0.2505106026703683,
+          0.16839114565582033,
+          0.09561455376277395,
+          0.29248901756493156,
+          0.07816132047878901,
+          0.19263317858554393,
+          0.11532314285910948,
+          0.25058934509478525,
+          0.08678115201746361,
+          0.2944188126039697,
+          0.03341330236842992,
+          0.6712163027564692,
+          0.6234659223960117,
+          0.07507122501939024,
+          0.49806086594558907,
+          0.04604930366655899,
+          1.8744331835637345,
+          0.034601153734168805,
+          0.22069513332839535,
+          0.045494466046681406,
+          2.606528069582399,
+          0.12069188831103665,
+          0.4957054271792732,
+          0.054579738469210555
+        ]
+      },
+      "per_prompt_pair": {
+        "general_baseline": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 11.442313719179651,
+          "ss": {
+            "system": 0.4821823761691618,
+            "question": 7.578908682577493,
+            "interaction_and_generation_noise": 3.381222660432996
+          },
+          "pct": {
+            "system": 4.214028630948353,
+            "question": 66.2358056996261,
+            "interaction_and_generation_noise": 29.550165669425557
+          },
+          "condition_contribution_pct_of_total": [
+            2.1070143154741765,
+            2.1070143154741765
+          ]
+        },
+        "pv_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 11.832671791112338,
+          "ss": {
+            "system": 0.4334841493301806,
+            "question": 7.7807728576531465,
+            "interaction_and_generation_noise": 3.61841478412901
+          },
+          "pct": {
+            "system": 3.6634511375171894,
+            "question": 65.75668619066556,
+            "interaction_and_generation_noise": 30.579862671817242
+          },
+          "condition_contribution_pct_of_total": [
+            1.8317255687585947,
+            1.8317255687585952
+          ]
+        },
+        "pv_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8.520281845565298,
+          "ss": {
+            "system": 0.22991043309451037,
+            "question": 6.108948141762548,
+            "interaction_and_generation_noise": 2.1814232707082404
+          },
+          "pct": {
+            "system": 2.6983899976756742,
+            "question": 71.69889743661685,
+            "interaction_and_generation_noise": 25.602712565707485
+          },
+          "condition_contribution_pct_of_total": [
+            1.3491949988378373,
+            1.3491949988378371
+          ]
+        },
+        "ps_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 6.789342014831208,
+          "ss": {
+            "system": 0.35633295859394165,
+            "question": 4.968170984455284,
+            "interaction_and_generation_noise": 1.4648380717819818
+          },
+          "pct": {
+            "system": 5.2484166774267385,
+            "question": 73.17603051374338,
+            "interaction_and_generation_noise": 21.57555280882988
+          },
+          "condition_contribution_pct_of_total": [
+            2.624208338713369,
+            2.6242083387133697
+          ]
+        },
+        "ps_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8.096804935480652,
+          "ss": {
+            "system": 0.5485222970628231,
+            "question": 5.675917380093546,
+            "interaction_and_generation_noise": 1.8723652583242842
+          },
+          "pct": {
+            "system": 6.7745524491910105,
+            "question": 70.100705467429,
+            "interaction_and_generation_noise": 23.124742083380013
+          },
+          "condition_contribution_pct_of_total": [
+            3.3872762245955053,
+            3.3872762245955053
+          ]
+        },
+        "pt_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 10.041803773318287,
+          "ss": {
+            "system": 0.6116246582319553,
+            "question": 6.346091707478245,
+            "interaction_and_generation_noise": 3.084087407608087
+          },
+          "pct": {
+            "system": 6.0907848035935634,
+            "question": 63.196730893509546,
+            "interaction_and_generation_noise": 30.712484302896893
+          },
+          "condition_contribution_pct_of_total": [
+            3.0453924017967826,
+            3.0453924017967817
+          ]
+        },
+        "pt_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 10.95766515321243,
+          "ss": {
+            "system": 0.2098836295782071,
+            "question": 7.519826246534324,
+            "interaction_and_generation_noise": 3.2279552770998983
+          },
+          "pct": {
+            "system": 1.9154046655338441,
+            "question": 68.62617301578845,
+            "interaction_and_generation_noise": 29.458422318677687
+          },
+          "condition_contribution_pct_of_total": [
+            0.9577023327669217,
+            0.9577023327669221
+          ]
+        },
+        "pe_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 7.685772289648581,
+          "ss": {
+            "system": 0.39320913224808013,
+            "question": 5.396993904577544,
+            "interaction_and_generation_noise": 1.8955692528229555
+          },
+          "pct": {
+            "system": 5.116065340338868,
+            "question": 70.22058032927114,
+            "interaction_and_generation_noise": 24.663354330389968
+          },
+          "condition_contribution_pct_of_total": [
+            2.558032670169434,
+            2.558032670169434
+          ]
+        },
+        "pe_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 9.547875381611306,
+          "ss": {
+            "system": 0.7689761222520486,
+            "question": 6.075420414643747,
+            "interaction_and_generation_noise": 2.7034788447155096
+          },
+          "pct": {
+            "system": 8.053897768010831,
+            "question": 63.63112390788719,
+            "interaction_and_generation_noise": 28.314978324101972
+          },
+          "condition_contribution_pct_of_total": [
+            4.0269488840054155,
+            4.0269488840054155
+          ]
+        },
+        "ctrl_warranted_praise": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8.66244208746228,
+          "ss": {
+            "system": 0.20392163118860943,
+            "question": 6.493572440588071,
+            "interaction_and_generation_noise": 1.9649480156855983
+          },
+          "pct": {
+            "system": 2.3540894026149806,
+            "question": 74.96237637174677,
+            "interaction_and_generation_noise": 22.683534225638248
+          },
+          "condition_contribution_pct_of_total": [
+            1.1770447013074903,
+            1.1770447013074903
+          ]
+        },
+        "ctrl_genuine_agreement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8.217056404269828,
+          "ss": {
+            "system": 0.0779742191192689,
+            "question": 6.2738198949888275,
+            "interaction_and_generation_noise": 1.865262290161731
+          },
+          "pct": {
+            "system": 0.9489312873494596,
+            "question": 76.35118449142887,
+            "interaction_and_generation_noise": 22.69988422122167
+          },
+          "condition_contribution_pct_of_total": [
+            0.47446564367472993,
+            0.47446564367472976
+          ]
+        },
+        "ctrl_emotional_support": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 9.55704812920918,
+          "ss": {
+            "system": 0.612101505222391,
+            "question": 6.538470093286951,
+            "interaction_and_generation_noise": 2.4064765306998384
+          },
+          "pct": {
+            "system": 6.404713013337527,
+            "question": 68.41516339447368,
+            "interaction_and_generation_noise": 25.180123592188792
+          },
+          "condition_contribution_pct_of_total": [
+            3.2023565066687634,
+            3.202356506668763
+          ]
+        },
+        "ctrl_calibrated_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 13.16774993877009,
+          "ss": {
+            "system": 0.4843466935029169,
+            "question": 8.319835178937428,
+            "interaction_and_generation_noise": 4.363568066329746
+          },
+          "pct": {
+            "system": 3.6782798561267063,
+            "question": 63.183423269917654,
+            "interaction_and_generation_noise": 33.13829687395565
+          },
+          "condition_contribution_pct_of_total": [
+            1.8391399280633534,
+            1.839139928063353
+          ]
+        },
+        "ctrl_politeness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 22.022801752262975,
+          "ss": {
+            "system": 0.7063135552525934,
+            "question": 13.402105507441515,
+            "interaction_and_generation_noise": 7.914382689568869
+          },
+          "pct": {
+            "system": 3.2071920875372517,
+            "question": 60.855588031910465,
+            "interaction_and_generation_noise": 35.9372198805523
+          },
+          "condition_contribution_pct_of_total": [
+            1.6035960437686259,
+            1.6035960437686259
+          ]
+        },
+        "ctrl_pure_sycophancy": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 6.832770372263541,
+          "ss": {
+            "system": 1.0558282254824385,
+            "question": 3.9016397166048513,
+            "interaction_and_generation_noise": 1.8753024301762513
+          },
+          "pct": {
+            "system": 15.452417803595333,
+            "question": 57.10187089621639,
+            "interaction_and_generation_noise": 27.44571130018828
+          },
+          "condition_contribution_pct_of_total": [
+            7.7262089017976665,
+            7.726208901797665
+          ]
+        },
+        "ctrl_obsequiousness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8.397672198689483,
+          "ss": {
+            "system": 0.8046297472575648,
+            "question": 5.058339970557601,
+            "interaction_and_generation_noise": 2.5347024808743166
+          },
+          "pct": {
+            "system": 9.581580802631628,
+            "question": 60.23502526506085,
+            "interaction_and_generation_noise": 30.183393932307517
+          },
+          "condition_contribution_pct_of_total": [
+            4.790790401315814,
+            4.790790401315814
+          ]
+        },
+        "ctrl_excitement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 10.033741692810995,
+          "ss": {
+            "system": 2.3093247683361575,
+            "question": 4.856190629323973,
+            "interaction_and_generation_noise": 2.8682262951508637
+          },
+          "pct": {
+            "system": 23.015589189332523,
+            "question": 48.39860121975585,
+            "interaction_and_generation_noise": 28.585809590911623
+          },
+          "condition_contribution_pct_of_total": [
+            11.507794594666263,
+            11.507794594666262
+          ]
+        },
+        "ctrl_evasive_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 11.681748958687649,
+          "ss": {
+            "system": 0.24058125787240808,
+            "question": 7.8514359825767475,
+            "interaction_and_generation_noise": 3.589731718238492
+          },
+          "pct": {
+            "system": 2.0594626602850354,
+            "question": 67.21113431167925,
+            "interaction_and_generation_noise": 30.7294030280357
+          },
+          "condition_contribution_pct_of_total": [
+            1.0297313301425175,
+            1.029731330142518
+          ]
+        },
+        "ctrl_affiliation": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 10.891222122618636,
+          "ss": {
+            "system": 3.7417065639321097,
+            "question": 4.505548977611469,
+            "interaction_and_generation_noise": 2.6439665810750568
+          },
+          "pct": {
+            "system": 34.3552497764362,
+            "question": 41.36862628349532,
+            "interaction_and_generation_noise": 24.276123940068477
+          },
+          "condition_contribution_pct_of_total": [
+            17.1776248882181,
+            17.1776248882181
+          ]
+        },
+        "ctrl_inauthenticity": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 7.66831178200771,
+          "ss": {
+            "system": 0.5066423268289164,
+            "question": 4.992422443648064,
+            "interaction_and_generation_noise": 2.1692470115307296
+          },
+          "pct": {
+            "system": 6.6069604527251995,
+            "question": 65.10458345423395,
+            "interaction_and_generation_noise": 28.28845609304085
+          },
+          "condition_contribution_pct_of_total": [
+            3.303480226362599,
+            3.3034802263626
+          ]
+        }
+      }
+    },
+    "response_L04": {
+      "primary": {
+        "n_system_conditions": 40,
+        "n_questions": 400,
+        "hidden_size": 4096,
+        "total_ss": 8744.463939006091,
+        "ss": {
+          "system": 1131.6372251838482,
+          "question": 3713.0627146584575,
+          "interaction_and_generation_noise": 3899.7639991637857
+        },
+        "pct": {
+          "system": 12.941184652108838,
+          "question": 42.461867766367504,
+          "interaction_and_generation_noise": 44.59694758152366
+        },
+        "condition_contribution_pct_of_total": [
+          0.1250293000750107,
+          0.15592165316879467,
+          0.37033644054292075,
+          0.08135256656943121,
+          0.1297488166242966,
+          0.1421228442742011,
+          0.2812233802249518,
+          0.12208645214776348,
+          0.30043384066781464,
+          0.44742252300546886,
+          0.5592399137572396,
+          0.18650116124207708,
+          0.18199770252663744,
+          0.1600322908836183,
+          0.30883506647238346,
+          0.11175520908667934,
+          0.29635967096209564,
+          0.17085030993594252,
+          0.10948768538941958,
+          0.285139709955621,
+          0.07268762261210175,
+          0.1937053440008554,
+          0.11571971702479289,
+          0.24694101800712576,
+          0.11390352550886731,
+          0.42898611573033135,
+          0.054795032584633294,
+          0.689163095493466,
+          0.9044921010370831,
+          0.11274752860234626,
+          0.7634953156217029,
+          0.05365620959954661,
+          1.761427723237443,
+          0.046678210608226,
+          0.2605319798653171,
+          0.0715180944301226,
+          1.8641530510224122,
+          0.11971791094455933,
+          0.4777617752545509,
+          0.06322674341098619
+        ]
+      },
+      "bootstrap": {
+        "n_boot": 200,
+        "seed": 20260916,
+        "method": "question-cluster percentile bootstrap; all systems retained together",
+        "pct_95_interval": {
+          "system": [
+            12.635396128084656,
+            13.57341822817773
+          ],
+          "question": [
+            41.248245232874844,
+            43.49048396757872
+          ],
+          "interaction_and_generation_noise": [
+            43.22748560760726,
+            45.790942119993936
+          ]
+        }
+      },
+      "nonrepetitive_complete_questions": {
+        "n_system_conditions": 40,
+        "n_questions": 379,
+        "hidden_size": 4096,
+        "total_ss": 8248.384897096148,
+        "ss": {
+          "system": 1082.228139277191,
+          "question": 3484.892380815917,
+          "interaction_and_generation_noise": 3681.26437700304
+        },
+        "pct": {
+          "system": 13.120485437799957,
+          "question": 42.24939093279676,
+          "interaction_and_generation_noise": 44.630123629403286
+        },
+        "condition_contribution_pct_of_total": [
+          0.12373334790206968,
+          0.15839916115273078,
+          0.38112777110511065,
+          0.0818488361468413,
+          0.12898488916113426,
+          0.14512050215048733,
+          0.28226411473239926,
+          0.12363338898300036,
+          0.30194850541232654,
+          0.4566599249447095,
+          0.5787041131992589,
+          0.18766341681305992,
+          0.18334323870005215,
+          0.16325157974750124,
+          0.3161744908634173,
+          0.11167223161627833,
+          0.2996448059571523,
+          0.17384553991244586,
+          0.11117422166770986,
+          0.2886037950236068,
+          0.07400240020327949,
+          0.19971833341750908,
+          0.12058239436549281,
+          0.25331025304443067,
+          0.1159250604457477,
+          0.43345921471399335,
+          0.056114677357092566,
+          0.7157479921119976,
+          0.9084640348283224,
+          0.11428357904909824,
+          0.7721772891477254,
+          0.055309488360502694,
+          1.7754253429404583,
+          0.045490248873488986,
+          0.2550359963770673,
+          0.07240747157125005,
+          1.8842963300533127,
+          0.12001634743959584,
+          0.48409504005827414,
+          0.0668260682500237
+        ]
+      },
+      "per_prompt_pair": {
+        "general_baseline": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 461.3630779241146,
+          "ss": {
+            "system": 17.09063076917173,
+            "question": 322.59352378529337,
+            "interaction_and_generation_noise": 121.67892336964951
+          },
+          "pct": {
+            "system": 3.7043776554618044,
+            "question": 69.9218336319392,
+            "interaction_and_generation_noise": 26.373788712599012
+          },
+          "condition_contribution_pct_of_total": [
+            1.8521888277309022,
+            1.8521888277309022
+          ]
+        },
+        "pv_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 460.8833076960872,
+          "ss": {
+            "system": 21.836374676014046,
+            "question": 318.42855960325426,
+            "interaction_and_generation_noise": 120.61837341681888
+          },
+          "pct": {
+            "system": 4.737940018954484,
+            "question": 69.09092915407352,
+            "interaction_and_generation_noise": 26.171130826972
+          },
+          "condition_contribution_pct_of_total": [
+            2.3689700094772417,
+            2.368970009477242
+          ]
+        },
+        "pv_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 364.00543342705714,
+          "ss": {
+            "system": 15.299783181482049,
+            "question": 267.8983036334732,
+            "interaction_and_generation_noise": 80.80734661210192
+          },
+          "pct": {
+            "system": 4.203174396996457,
+            "question": 73.59733647689004,
+            "interaction_and_generation_noise": 22.199489126113516
+          },
+          "condition_contribution_pct_of_total": [
+            2.1015871984982275,
+            2.1015871984982293
+          ]
+        },
+        "ps_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 296.1137870698895,
+          "ss": {
+            "system": 21.09521240445729,
+            "question": 219.20251738815585,
+            "interaction_and_generation_noise": 55.816057277276315
+          },
+          "pct": {
+            "system": 7.124022360863037,
+            "question": 74.02644758868291,
+            "interaction_and_generation_noise": 18.849530050454042
+          },
+          "condition_contribution_pct_of_total": [
+            3.562011180431519,
+            3.5620111804315178
+          ]
+        },
+        "ps_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 352.16663806543784,
+          "ss": {
+            "system": 22.387262427651304,
+            "question": 263.9983980186492,
+            "interaction_and_generation_noise": 65.78097761913733
+          },
+          "pct": {
+            "system": 6.3570083045434345,
+            "question": 74.96405663775407,
+            "interaction_and_generation_noise": 18.678935057702496
+          },
+          "condition_contribution_pct_of_total": [
+            3.1785041522717172,
+            3.1785041522717172
+          ]
+        },
+        "pt_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 407.34019389263824,
+          "ss": {
+            "system": 42.561623291081844,
+            "question": 253.207801899466,
+            "interaction_and_generation_noise": 111.57076870209039
+          },
+          "pct": {
+            "system": 10.448667705573811,
+            "question": 62.16126120031342,
+            "interaction_and_generation_noise": 27.390071094112763
+          },
+          "condition_contribution_pct_of_total": [
+            5.224333852786906,
+            5.224333852786906
+          ]
+        },
+        "pt_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 442.04191704648747,
+          "ss": {
+            "system": 12.562345599657359,
+            "question": 313.8452866403407,
+            "interaction_and_generation_noise": 115.6342848064894
+          },
+          "pct": {
+            "system": 2.8418901274324706,
+            "question": 70.99898777412439,
+            "interaction_and_generation_noise": 26.159122098443145
+          },
+          "condition_contribution_pct_of_total": [
+            1.4209450637162353,
+            1.4209450637162353
+          ]
+        },
+        "pe_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 336.22135596694045,
+          "ss": {
+            "system": 23.391280530874404,
+            "question": 237.72058952567917,
+            "interaction_and_generation_noise": 75.1094859103869
+          },
+          "pct": {
+            "system": 6.95710730914261,
+            "question": 70.70359610025886,
+            "interaction_and_generation_noise": 22.339296590598536
+          },
+          "condition_contribution_pct_of_total": [
+            3.478553654571305,
+            3.478553654571305
+          ]
+        },
+        "pe_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 407.46734550953227,
+          "ss": {
+            "system": 34.33852507965217,
+            "question": 272.2035309973454,
+            "interaction_and_generation_noise": 100.92528943253471
+          },
+          "pct": {
+            "system": 8.427307232856249,
+            "question": 66.8037657488746,
+            "interaction_and_generation_noise": 24.768927018269167
+          },
+          "condition_contribution_pct_of_total": [
+            4.213653616428124,
+            4.213653616428123
+          ]
+        },
+        "ctrl_warranted_praise": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 372.1414440091785,
+          "ss": {
+            "system": 12.192418744226268,
+            "question": 289.38119484659995,
+            "interaction_and_generation_noise": 70.56783041835229
+          },
+          "pct": {
+            "system": 3.2762861918506325,
+            "question": 77.76107700583401,
+            "interaction_and_generation_noise": 18.96263680231536
+          },
+          "condition_contribution_pct_of_total": [
+            1.6381430959253163,
+            1.6381430959253163
+          ]
+        },
+        "ctrl_genuine_agreement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 360.7516095698961,
+          "ss": {
+            "system": 4.797442411551367,
+            "question": 288.6252796000617,
+            "interaction_and_generation_noise": 67.32888755828307
+          },
+          "pct": {
+            "system": 1.3298464329157362,
+            "question": 80.00665054389455,
+            "interaction_and_generation_noise": 18.6635030231897
+          },
+          "condition_contribution_pct_of_total": [
+            0.6649232164578679,
+            0.6649232164578684
+          ]
+        },
+        "ctrl_emotional_support": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 407.53026731260616,
+          "ss": {
+            "system": 23.69532255625843,
+            "question": 295.42749569575506,
+            "interaction_and_generation_noise": 88.4074490605926
+          },
+          "pct": {
+            "system": 5.814371215299782,
+            "question": 72.49216055629559,
+            "interaction_and_generation_noise": 21.69346822840461
+          },
+          "condition_contribution_pct_of_total": [
+            2.907185607649891,
+            2.907185607649891
+          ]
+        },
+        "ctrl_calibrated_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 550.8383508723384,
+          "ss": {
+            "system": 28.113423643336912,
+            "question": 360.0494182291121,
+            "interaction_and_generation_noise": 162.6755089998893
+          },
+          "pct": {
+            "system": 5.103752053359197,
+            "question": 65.36389807625372,
+            "interaction_and_generation_noise": 29.53234987038707
+          },
+          "condition_contribution_pct_of_total": [
+            2.551876026679599,
+            2.5518760266795986
+          ]
+        },
+        "ctrl_politeness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 741.0648302108243,
+          "ss": {
+            "system": 35.24099143469377,
+            "question": 487.2234540314464,
+            "interaction_and_generation_noise": 218.60038474468405
+          },
+          "pct": {
+            "system": 4.7554532340535065,
+            "question": 65.74640087734794,
+            "interaction_and_generation_noise": 29.498145888598543
+          },
+          "condition_contribution_pct_of_total": [
+            2.3777266170267524,
+            2.3777266170267533
+          ]
+        },
+        "ctrl_pure_sycophancy": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 314.03768098316317,
+          "ss": {
+            "system": 63.429736430370355,
+            "question": 174.60062031790096,
+            "interaction_and_generation_noise": 76.00732423489188
+          },
+          "pct": {
+            "system": 20.198129164560697,
+            "question": 55.59862108625812,
+            "interaction_and_generation_noise": 24.203249749181197
+          },
+          "condition_contribution_pct_of_total": [
+            10.099064582280349,
+            10.099064582280349
+          ]
+        },
+        "ctrl_obsequiousness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 374.7923844427202,
+          "ss": {
+            "system": 48.624046998763056,
+            "question": 223.16837180367276,
+            "interaction_and_generation_noise": 102.99996564028442
+          },
+          "pct": {
+            "system": 12.973595253559456,
+            "question": 59.544532137573285,
+            "interaction_and_generation_noise": 27.48187260886726
+          },
+          "condition_contribution_pct_of_total": [
+            6.486797626779728,
+            6.486797626779728
+          ]
+        },
+        "ctrl_excitement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 404.178525357954,
+          "ss": {
+            "system": 93.47528097724961,
+            "question": 205.8021092228778,
+            "interaction_and_generation_noise": 104.90113515782663
+          },
+          "pct": {
+            "system": 23.127225993628624,
+            "question": 50.918615490670255,
+            "interaction_and_generation_noise": 25.95415851570112
+          },
+          "condition_contribution_pct_of_total": [
+            11.563612996814316,
+            11.56361299681431
+          ]
+        },
+        "ctrl_evasive_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 466.3849714651177,
+          "ss": {
+            "system": 11.387113731095857,
+            "question": 327.06906815029026,
+            "interaction_and_generation_noise": 127.92878958373163
+          },
+          "pct": {
+            "system": 2.4415696104709355,
+            "question": 70.12856077305071,
+            "interaction_and_generation_noise": 27.42986961647837
+          },
+          "condition_contribution_pct_of_total": [
+            1.220784805235467,
+            1.2207848052354682
+          ]
+        },
+        "ctrl_affiliation": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 427.3431107287859,
+          "ss": {
+            "system": 111.63032778769423,
+            "question": 213.0737696609252,
+            "interaction_and_generation_noise": 102.63901328016644
+          },
+          "pct": {
+            "system": 26.12194393337035,
+            "question": 49.86011575044505,
+            "interaction_and_generation_noise": 24.017940316184593
+          },
+          "condition_contribution_pct_of_total": [
+            13.060971966685171,
+            13.060971966685177
+          ]
+        },
+        "ctrl_inauthenticity": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 334.2507355292097,
+          "ss": {
+            "system": 24.941110582453668,
+            "question": 228.68954657462683,
+            "interaction_and_generation_noise": 80.62007837212921
+          },
+          "pct": {
+            "system": 7.461796768514246,
+            "question": 68.41856195545813,
+            "interaction_and_generation_noise": 24.11964127602763
+          },
+          "condition_contribution_pct_of_total": [
+            3.730898384257123,
+            3.730898384257123
+          ]
+        }
+      }
+    },
+    "response_L08": {
+      "primary": {
+        "n_system_conditions": 40,
+        "n_questions": 400,
+        "hidden_size": 4096,
+        "total_ss": 32825.3361064616,
+        "ss": {
+          "system": 4281.801607885885,
+          "question": 14430.342975413487,
+          "interaction_and_generation_noise": 14113.191523162219
+        },
+        "pct": {
+          "system": 13.044197305394906,
+          "question": 43.960990768264836,
+          "interaction_and_generation_noise": 42.99481192634024
+        },
+        "condition_contribution_pct_of_total": [
+          0.15622555760006707,
+          0.16639500289654457,
+          0.48474218413612863,
+          0.09945870012776363,
+          0.20831423140805536,
+          0.18681428240811263,
+          0.3394660054778157,
+          0.1186968098993615,
+          0.2601135973020585,
+          0.5098800031215436,
+          0.6384327404649167,
+          0.19680089473463022,
+          0.23327571383445528,
+          0.17276309688500605,
+          0.35145311601342805,
+          0.11541373001483708,
+          0.28167876484876103,
+          0.17479089963389302,
+          0.11914671605537004,
+          0.2791331022267048,
+          0.07126780875331505,
+          0.19082462215970714,
+          0.11819815181870454,
+          0.2418162589485301,
+          0.13013664765155283,
+          0.4600356228481981,
+          0.06098828066968586,
+          0.7778419035582225,
+          1.0041894740150494,
+          0.14069502869970385,
+          0.776607286261336,
+          0.0638668379801463,
+          1.5403603087272102,
+          0.05864071974210781,
+          0.27397774514506995,
+          0.08912632618676374,
+          1.3042965529334463,
+          0.1434625583340071,
+          0.4358855146842264,
+          0.06898450718846869
+        ]
+      },
+      "bootstrap": {
+        "n_boot": 200,
+        "seed": 20260916,
+        "method": "question-cluster percentile bootstrap; all systems retained together",
+        "pct_95_interval": {
+          "system": [
+            12.723798145157152,
+            13.678819934133953
+          ],
+          "question": [
+            43.06265124945468,
+            44.85210473989269
+          ],
+          "interaction_and_generation_noise": [
+            41.855051373901325,
+            43.99855197137417
+          ]
+        }
+      },
+      "nonrepetitive_complete_questions": {
+        "n_system_conditions": 40,
+        "n_questions": 379,
+        "hidden_size": 4096,
+        "total_ss": 31092.716652872426,
+        "ss": {
+          "system": 4097.464069038065,
+          "question": 13640.62793425128,
+          "interaction_and_generation_noise": 13354.624649583082
+        },
+        "pct": {
+          "system": 13.178211845504759,
+          "question": 43.87081414126329,
+          "interaction_and_generation_noise": 42.95097401323196
+        },
+        "condition_contribution_pct_of_total": [
+          0.15424333709853794,
+          0.16922081185772891,
+          0.49557957545884873,
+          0.10039719330895877,
+          0.20734691289550286,
+          0.18876631012268716,
+          0.33997099533687936,
+          0.11989855976327089,
+          0.26063601044193146,
+          0.5173752907133269,
+          0.6572835107293599,
+          0.19655471750895692,
+          0.2348945442586798,
+          0.17535713751015475,
+          0.358735365401082,
+          0.11511022952174219,
+          0.28347983786003395,
+          0.17720380498919286,
+          0.12076925495879202,
+          0.2802217622861449,
+          0.07242527274871029,
+          0.19635325665883577,
+          0.12183086712664529,
+          0.2462321951210862,
+          0.1331289581981387,
+          0.46286989796526284,
+          0.061755348723137246,
+          0.8039802023465152,
+          1.0068478572676558,
+          0.14209339082331482,
+          0.7835103155889102,
+          0.06501896002902564,
+          1.5449092949008778,
+          0.0572796322007268,
+          0.26835594341033653,
+          0.0896453370141359,
+          1.31428634507813,
+          0.14332397633326846,
+          0.4386392501703418,
+          0.07268038177789045
+        ]
+      },
+      "per_prompt_pair": {
+        "general_baseline": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1697.7742054811956,
+          "ss": {
+            "system": 67.53053093269887,
+            "question": 1195.6320156538718,
+            "interaction_and_generation_noise": 434.6116588946252
+          },
+          "pct": {
+            "system": 3.9775919974917318,
+            "question": 70.42349988554555,
+            "interaction_and_generation_noise": 25.598908116962722
+          },
+          "condition_contribution_pct_of_total": [
+            1.9887959987458659,
+            1.9887959987458659
+          ]
+        },
+        "pv_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1756.3223914697132,
+          "ss": {
+            "system": 95.23013006292027,
+            "question": 1216.226882393345,
+            "interaction_and_generation_noise": 444.86537901344803
+          },
+          "pct": {
+            "system": 5.42213266342465,
+            "question": 69.24849835659106,
+            "interaction_and_generation_noise": 25.329368979984302
+          },
+          "condition_contribution_pct_of_total": [
+            2.7110663317123245,
+            2.7110663317123254
+          ]
+        },
+        "pv_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1352.9709227917945,
+          "ss": {
+            "system": 63.816397220050874,
+            "question": 990.8020054606327,
+            "interaction_and_generation_noise": 298.3525201111107
+          },
+          "pct": {
+            "system": 4.716760437716475,
+            "question": 73.23158160828449,
+            "interaction_and_generation_noise": 22.051657953999023
+          },
+          "condition_contribution_pct_of_total": [
+            2.3583802188582372,
+            2.3583802188582377
+          ]
+        },
+        "ps_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1160.319373016744,
+          "ss": {
+            "system": 91.04055184729191,
+            "question": 850.9039608622916,
+            "interaction_and_generation_noise": 218.37486030716065
+          },
+          "pct": {
+            "system": 7.846163217166084,
+            "question": 73.33359940806682,
+            "interaction_and_generation_noise": 18.820237374767107
+          },
+          "condition_contribution_pct_of_total": [
+            3.923081608583042,
+            3.923081608583042
+          ]
+        },
+        "ps_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1332.406596421871,
+          "ss": {
+            "system": 95.70161616446444,
+            "question": 980.0480005994746,
+            "interaction_and_generation_noise": 256.65697965793197
+          },
+          "pct": {
+            "system": 7.1826135071282,
+            "question": 73.55472445358328,
+            "interaction_and_generation_noise": 19.26266203928852
+          },
+          "condition_contribution_pct_of_total": [
+            3.5913067535641,
+            3.5913067535641
+          ]
+        },
+        "pt_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1522.1260010111569,
+          "ss": {
+            "system": 185.00869387539484,
+            "question": 931.324979772539,
+            "interaction_and_generation_noise": 405.7923273632231
+          },
+          "pct": {
+            "system": 12.154624108154813,
+            "question": 61.18580059429078,
+            "interaction_and_generation_noise": 26.659575297554404
+          },
+          "condition_contribution_pct_of_total": [
+            6.077312054077407,
+            6.077312054077407
+          ]
+        },
+        "pt_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1651.0807830372955,
+          "ss": {
+            "system": 62.07301379028786,
+            "question": 1171.8018724632939,
+            "interaction_and_generation_noise": 417.20589678371374
+          },
+          "pct": {
+            "system": 3.7595382629370544,
+            "question": 70.97180734595374,
+            "interaction_and_generation_noise": 25.2686543911092
+          },
+          "condition_contribution_pct_of_total": [
+            1.8797691314685276,
+            1.8797691314685268
+          ]
+        },
+        "pe_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1299.5436752986334,
+          "ss": {
+            "system": 99.10017258799307,
+            "question": 911.755605893864,
+            "interaction_and_generation_noise": 288.68789681677623
+          },
+          "pct": {
+            "system": 7.625766988186833,
+            "question": 70.15967398589692,
+            "interaction_and_generation_noise": 22.21455902591624
+          },
+          "condition_contribution_pct_of_total": [
+            3.8128834940934166,
+            3.8128834940934166
+          ]
+        },
+        "pe_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1540.6661312034867,
+          "ss": {
+            "system": 125.25779649692454,
+            "question": 1044.9731256277498,
+            "interaction_and_generation_noise": 370.43520907881236
+          },
+          "pct": {
+            "system": 8.130106449414825,
+            "question": 67.82605942089947,
+            "interaction_and_generation_noise": 24.04383412968571
+          },
+          "condition_contribution_pct_of_total": [
+            4.0650532247074125,
+            4.0650532247074125
+          ]
+        },
+        "ctrl_warranted_praise": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1422.92257769335,
+          "ss": {
+            "system": 56.75170270431573,
+            "question": 1097.7370197581743,
+            "interaction_and_generation_noise": 268.4338552308597
+          },
+          "pct": {
+            "system": 3.9883900638019205,
+            "question": 77.14664430567103,
+            "interaction_and_generation_noise": 18.864965630527028
+          },
+          "condition_contribution_pct_of_total": [
+            1.9941950319009603,
+            1.9941950319009603
+          ]
+        },
+        "ctrl_genuine_agreement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1383.4965428227747,
+          "ss": {
+            "system": 23.07362232962266,
+            "question": 1106.0750538742961,
+            "interaction_and_generation_noise": 254.34786661885602
+          },
+          "pct": {
+            "system": 1.6677759297139334,
+            "question": 79.94780034777318,
+            "interaction_and_generation_noise": 18.3844237225129
+          },
+          "condition_contribution_pct_of_total": [
+            0.8338879648569666,
+            0.833887964856967
+          ]
+        },
+        "ctrl_emotional_support": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1555.1513602800596,
+          "ss": {
+            "system": 83.92850671728868,
+            "question": 1143.0024791784567,
+            "interaction_and_generation_noise": 328.2203743843143
+          },
+          "pct": {
+            "system": 5.396806308433825,
+            "question": 73.49782846684576,
+            "interaction_and_generation_noise": 21.105365224720426
+          },
+          "condition_contribution_pct_of_total": [
+            2.6984031542169125,
+            2.6984031542169125
+          ]
+        },
+        "ctrl_calibrated_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2053.5989169868717,
+          "ss": {
+            "system": 112.95232320952131,
+            "question": 1355.8054320722654,
+            "interaction_and_generation_noise": 584.8411617050849
+          },
+          "pct": {
+            "system": 5.5002134192420495,
+            "question": 66.02094600154743,
+            "interaction_and_generation_noise": 28.478840579210516
+          },
+          "condition_contribution_pct_of_total": [
+            2.7501067096210248,
+            2.7501067096210248
+          ]
+        },
+        "ctrl_politeness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2614.840224668638,
+          "ss": {
+            "system": 151.77440072051024,
+            "question": 1736.2498102377863,
+            "interaction_and_generation_noise": 726.8160137103414
+          },
+          "pct": {
+            "system": 5.804347022378534,
+            "question": 66.39984324311096,
+            "interaction_and_generation_noise": 27.795809734510495
+          },
+          "condition_contribution_pct_of_total": [
+            2.9021735111892677,
+            2.9021735111892664
+          ]
+        },
+        "ctrl_pure_sycophancy": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1264.5316978502547,
+          "ss": {
+            "system": 265.5976538833512,
+            "question": 699.0797154727156,
+            "interaction_and_generation_noise": 299.8543284941878
+          },
+          "pct": {
+            "system": 21.003637499548326,
+            "question": 55.283684597323585,
+            "interaction_and_generation_noise": 23.712677903128093
+          },
+          "condition_contribution_pct_of_total": [
+            10.501818749774163,
+            10.501818749774163
+          ]
+        },
+        "ctrl_obsequiousness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1425.800895144466,
+          "ss": {
+            "system": 188.4679846842389,
+            "question": 855.8086399257633,
+            "interaction_and_generation_noise": 381.5242705344639
+          },
+          "pct": {
+            "system": 13.218394330236608,
+            "question": 60.023011827261506,
+            "interaction_and_generation_noise": 26.758593842501888
+          },
+          "condition_contribution_pct_of_total": [
+            6.609197165118306,
+            6.609197165118304
+          ]
+        },
+        "ctrl_excitement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1474.6494908769955,
+          "ss": {
+            "system": 318.17249610621616,
+            "question": 775.0275272238002,
+            "interaction_and_generation_noise": 381.44946754697924
+          },
+          "pct": {
+            "system": 21.576143895522886,
+            "question": 52.556728362811164,
+            "interaction_and_generation_noise": 25.867127741665964
+          },
+          "condition_contribution_pct_of_total": [
+            10.788071947761443,
+            10.788071947761443
+          ]
+        },
+        "ctrl_evasive_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1746.5708649668577,
+          "ss": {
+            "system": 40.92441745830169,
+            "question": 1255.5601355022395,
+            "interaction_and_generation_noise": 450.08631200631635
+          },
+          "pct": {
+            "system": 2.343129516195053,
+            "question": 71.88715675307367,
+            "interaction_and_generation_noise": 25.769713730731276
+          },
+          "condition_contribution_pct_of_total": [
+            1.1715647580975266,
+            1.1715647580975266
+          ]
+        },
+        "ctrl_affiliation": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1526.401775935399,
+          "ss": {
+            "system": 316.9646392487608,
+            "question": 849.7206525131832,
+            "interaction_and_generation_noise": 359.716484173455
+          },
+          "pct": {
+            "system": 20.76547893522469,
+            "question": 55.66821697337605,
+            "interaction_and_generation_noise": 23.566304091399267
+          },
+          "condition_contribution_pct_of_total": [
+            10.382739467612344,
+            10.382739467612346
+          ]
+        },
+        "ctrl_inauthenticity": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 1295.6440052937528,
+          "ss": {
+            "system": 89.91728363544834,
+            "question": 917.6022813060433,
+            "interaction_and_generation_noise": 288.12444035226105
+          },
+          "pct": {
+            "system": 6.939968329885646,
+            "question": 70.822099091795,
+            "interaction_and_generation_noise": 22.23793257831934
+          },
+          "condition_contribution_pct_of_total": [
+            3.469984164942823,
+            3.469984164942823
+          ]
+        }
+      }
+    },
+    "response_L12": {
+      "primary": {
+        "n_system_conditions": 40,
+        "n_questions": 400,
+        "hidden_size": 4096,
+        "total_ss": 63383.51430692256,
+        "ss": {
+          "system": 10235.066508082562,
+          "question": 24954.19368562414,
+          "interaction_and_generation_noise": 28194.25411321585
+        },
+        "pct": {
+          "system": 16.14783689418231,
+          "question": 39.37016424300525,
+          "interaction_and_generation_noise": 44.48199886281244
+        },
+        "condition_contribution_pct_of_total": [
+          0.18413559292517934,
+          0.20271933002643527,
+          0.6427150424301474,
+          0.16715666983417787,
+          0.35561231530223153,
+          0.2922142117316136,
+          0.4012432108035686,
+          0.17413519637146663,
+          0.31057411541550783,
+          0.6049252605196542,
+          0.6957209564441933,
+          0.26554800902783354,
+          0.32771771793431437,
+          0.2108041327513086,
+          0.37853585593663813,
+          0.15631505584428812,
+          0.36631675881686115,
+          0.21509460562193916,
+          0.1525327232760231,
+          0.30429490589496905,
+          0.09232283868549555,
+          0.2058354155156986,
+          0.1535320804249919,
+          0.28707022750603745,
+          0.18737267287317322,
+          0.6893487533185072,
+          0.10306268952660431,
+          1.0670612685791723,
+          1.3145331549273482,
+          0.19146471850660146,
+          0.984958473919884,
+          0.08670029592945899,
+          1.6397183164870235,
+          0.09044084001686743,
+          0.3511110683303569,
+          0.11662801501685731,
+          1.2900143404123234,
+          0.1890824904087144,
+          0.5959361505097436,
+          0.1033314163790966
+        ]
+      },
+      "bootstrap": {
+        "n_boot": 200,
+        "seed": 20260916,
+        "method": "question-cluster percentile bootstrap; all systems retained together",
+        "pct_95_interval": {
+          "system": [
+            15.725198530302617,
+            16.927646594932632
+          ],
+          "question": [
+            38.540016786905966,
+            40.14540937961959
+          ],
+          "interaction_and_generation_noise": [
+            43.44868378339162,
+            45.375636076515335
+          ]
+        }
+      },
+      "nonrepetitive_complete_questions": {
+        "n_system_conditions": 40,
+        "n_questions": 379,
+        "hidden_size": 4096,
+        "total_ss": 60063.19532831872,
+        "ss": {
+          "system": 9795.244972338452,
+          "question": 23596.370689424293,
+          "interaction_and_generation_noise": 26671.57966655596
+        },
+        "pct": {
+          "system": 16.30823155310915,
+          "question": 39.285906386500606,
+          "interaction_and_generation_noise": 44.405862060390234
+        },
+        "condition_contribution_pct_of_total": [
+          0.1817853142751709,
+          0.20611350666269407,
+          0.655388637016886,
+          0.167857160399559,
+          0.3562615797852157,
+          0.2942683322821398,
+          0.40216495482658443,
+          0.17543980962005018,
+          0.31074343176362285,
+          0.6124097575944528,
+          0.7169413059227283,
+          0.26483694776407374,
+          0.3301165865894325,
+          0.21344051680599285,
+          0.3848456768686035,
+          0.15652608951738792,
+          0.3700442784899727,
+          0.21809200889279395,
+          0.15443003550040996,
+          0.30614313900663886,
+          0.09360868193803407,
+          0.21093384705475116,
+          0.15689339972396904,
+          0.2920314941609017,
+          0.19070847736778673,
+          0.6927128714413199,
+          0.10374944894548549,
+          1.104334376017903,
+          1.3174149395174153,
+          0.19374955343921638,
+          0.9960258695857249,
+          0.08783918891555553,
+          1.6435388600730425,
+          0.08876877341814042,
+          0.3457412543189905,
+          0.11721015488119012,
+          1.2998645241104603,
+          0.18945122543730236,
+          0.598601083475807,
+          0.10720445970174354
+        ]
+      },
+      "per_prompt_pair": {
+        "general_baseline": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 3293.1045519599015,
+          "ss": {
+            "system": 143.58344491964453,
+            "question": 2265.354621878586,
+            "interaction_and_generation_noise": 884.1664851616712
+          },
+          "pct": {
+            "system": 4.360124091237565,
+            "question": 68.79085027927076,
+            "interaction_and_generation_noise": 26.84902562949168
+          },
+          "condition_contribution_pct_of_total": [
+            2.180062045618782,
+            2.1800620456187834
+          ]
+        },
+        "pv_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 3378.67061784432,
+          "ss": {
+            "system": 225.23086825408632,
+            "question": 2281.4284902821737,
+            "interaction_and_generation_noise": 872.0112593080598
+          },
+          "pct": {
+            "system": 6.666257049874529,
+            "question": 67.52444225349745,
+            "interaction_and_generation_noise": 25.809300696628004
+          },
+          "condition_contribution_pct_of_total": [
+            3.333128524937265,
+            3.3331285249372646
+          ]
+        },
+        "pv_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2569.5577478416058,
+          "ss": {
+            "system": 196.01756806889117,
+            "question": 1767.6092613382455,
+            "interaction_and_generation_noise": 605.9309184344693
+          },
+          "pct": {
+            "system": 7.628455450497008,
+            "question": 68.79040810906132,
+            "interaction_and_generation_noise": 23.581136440441675
+          },
+          "condition_contribution_pct_of_total": [
+            3.814227725248506,
+            3.8142277252485037
+          ]
+        },
+        "ps_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2168.092029296138,
+          "ss": {
+            "system": 230.42455984420357,
+            "question": 1484.6436514332909,
+            "interaction_and_generation_noise": 453.02381801864385
+          },
+          "pct": {
+            "system": 10.627987960410053,
+            "question": 68.47696644663529,
+            "interaction_and_generation_noise": 20.895045592954656
+          },
+          "condition_contribution_pct_of_total": [
+            5.3139939802050264,
+            5.3139939802050264
+          ]
+        },
+        "ps_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2384.880798284222,
+          "ss": {
+            "system": 246.26515602438403,
+            "question": 1617.4855704135023,
+            "interaction_and_generation_noise": 521.1300718463351
+          },
+          "pct": {
+            "system": 10.326099157725492,
+            "question": 67.82249123634128,
+            "interaction_and_generation_noise": 21.851409605933213
+          },
+          "condition_contribution_pct_of_total": [
+            5.163049578862746,
+            5.163049578862746
+          ]
+        },
+        "pt_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 3026.0569408767224,
+          "ss": {
+            "system": 433.39426091374946,
+            "question": 1760.740852210911,
+            "interaction_and_generation_noise": 831.9218277520613
+          },
+          "pct": {
+            "system": 14.322078843241615,
+            "question": 58.185978869940946,
+            "interaction_and_generation_noise": 27.491942286817423
+          },
+          "condition_contribution_pct_of_total": [
+            7.161039421620807,
+            7.161039421620807
+          ]
+        },
+        "pt_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 3174.1626399606976,
+          "ss": {
+            "system": 174.99489170455922,
+            "question": 2163.322755206201,
+            "interaction_and_generation_noise": 835.8449930499373
+          },
+          "pct": {
+            "system": 5.513104133401495,
+            "question": 68.15412442863945,
+            "interaction_and_generation_noise": 26.332771437959043
+          },
+          "condition_contribution_pct_of_total": [
+            2.756552066700748,
+            2.7565520667007477
+          ]
+        },
+        "pe_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2489.792093150664,
+          "ss": {
+            "system": 215.80100583661454,
+            "question": 1687.835938414673,
+            "interaction_and_generation_noise": 586.1551488993764
+          },
+          "pct": {
+            "system": 8.667430763808591,
+            "question": 67.7902361027595,
+            "interaction_and_generation_noise": 23.542333133431896
+          },
+          "condition_contribution_pct_of_total": [
+            4.333715381904296,
+            4.3337153819042955
+          ]
+        },
+        "pe_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2980.300268215119,
+          "ss": {
+            "system": 295.8138151308573,
+            "question": 1930.6823820504405,
+            "interaction_and_generation_noise": 753.8040710338212
+          },
+          "pct": {
+            "system": 9.925637972982438,
+            "question": 64.78147194231246,
+            "interaction_and_generation_noise": 25.292890084705096
+          },
+          "condition_contribution_pct_of_total": [
+            4.962818986491219,
+            4.962818986491219
+          ]
+        },
+        "ctrl_warranted_praise": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2627.530956123186,
+          "ss": {
+            "system": 135.00982580370643,
+            "question": 1951.4392455671116,
+            "interaction_and_generation_noise": 541.0818847523677
+          },
+          "pct": {
+            "system": 5.138277267070066,
+            "question": 74.26893453032348,
+            "interaction_and_generation_noise": 20.592788202606442
+          },
+          "condition_contribution_pct_of_total": [
+            2.569138633535034,
+            2.5691386335350326
+          ]
+        },
+        "ctrl_genuine_agreement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2516.6115715499254,
+          "ss": {
+            "system": 61.06806834472863,
+            "question": 1935.149151982334,
+            "interaction_and_generation_noise": 520.394351222863
+          },
+          "pct": {
+            "system": 2.4265988853861207,
+            "question": 76.8950271809534,
+            "interaction_and_generation_noise": 20.678373933660474
+          },
+          "condition_contribution_pct_of_total": [
+            1.2132994426930603,
+            1.2132994426930603
+          ]
+        },
+        "ctrl_emotional_support": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2889.744275137186,
+          "ss": {
+            "system": 181.42738085655398,
+            "question": 2049.111569281585,
+            "interaction_and_generation_noise": 659.2053249990465
+          },
+          "pct": {
+            "system": 6.278319587567692,
+            "question": 70.90978903952693,
+            "interaction_and_generation_noise": 22.81189137290537
+          },
+          "condition_contribution_pct_of_total": [
+            3.139159793783846,
+            3.139159793783846
+          ]
+        },
+        "ctrl_calibrated_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 3963.28631659117,
+          "ss": {
+            "system": 329.9021759496062,
+            "question": 2473.3767167437018,
+            "interaction_and_generation_noise": 1160.007423897862
+          },
+          "pct": {
+            "system": 8.323955162375341,
+            "question": 62.40721762618094,
+            "interaction_and_generation_noise": 29.268827211443725
+          },
+          "condition_contribution_pct_of_total": [
+            4.161977581187671,
+            4.161977581187671
+          ]
+        },
+        "ctrl_politeness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 4862.323416619073,
+          "ss": {
+            "system": 416.5868403161781,
+            "question": 3078.41032714228,
+            "interaction_and_generation_noise": 1367.3262491606147
+          },
+          "pct": {
+            "system": 8.567649755512234,
+            "question": 63.31150899219279,
+            "interaction_and_generation_noise": 28.120841252294973
+          },
+          "condition_contribution_pct_of_total": [
+            4.283824877756117,
+            4.283824877756117
+          ]
+        },
+        "ctrl_pure_sycophancy": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2504.15112004777,
+          "ss": {
+            "system": 677.243559004381,
+            "question": 1231.184862312177,
+            "interaction_and_generation_noise": 595.7226987312116
+          },
+          "pct": {
+            "system": 27.044835816117274,
+            "question": 49.16575730815681,
+            "interaction_and_generation_noise": 23.789406875725913
+          },
+          "condition_contribution_pct_of_total": [
+            13.522417908058637,
+            13.522417908058637
+          ]
+        },
+        "ctrl_obsequiousness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2828.2920956590797,
+          "ss": {
+            "system": 462.49663548815806,
+            "question": 1594.2980183507264,
+            "interaction_and_generation_noise": 771.4974418201951
+          },
+          "pct": {
+            "system": 16.3525060299821,
+            "question": 56.36963808645109,
+            "interaction_and_generation_noise": 27.277855883566804
+          },
+          "condition_contribution_pct_of_total": [
+            8.176253014991048,
+            8.17625301499105
+          ]
+        },
+        "ctrl_excitement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2830.2483416926534,
+          "ss": {
+            "system": 689.2112937629388,
+            "question": 1402.5627695123744,
+            "interaction_and_generation_noise": 738.4742784173404
+          },
+          "pct": {
+            "system": 24.351619029683814,
+            "question": 49.55617317572776,
+            "interaction_and_generation_noise": 26.092207794588433
+          },
+          "condition_contribution_pct_of_total": [
+            12.175809514841907,
+            12.175809514841907
+          ]
+        },
+        "ctrl_evasive_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 3383.7032677983507,
+          "ss": {
+            "system": 122.11894317606125,
+            "question": 2360.5053950816405,
+            "interaction_and_generation_noise": 901.0789295406489
+          },
+          "pct": {
+            "system": 3.609032279462244,
+            "question": 69.76100468223187,
+            "interaction_and_generation_noise": 26.629963038305878
+          },
+          "condition_contribution_pct_of_total": [
+            1.804516139731122,
+            1.804516139731122
+          ]
+        },
+        "ctrl_affiliation": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2907.967923136937,
+          "ss": {
+            "system": 640.9834599983849,
+            "question": 1568.1001153016337,
+            "interaction_and_generation_noise": 698.8843478369186
+          },
+          "pct": {
+            "system": 22.042315353565915,
+            "question": 53.924257651716594,
+            "interaction_and_generation_noise": 24.033426994717505
+          },
+          "condition_contribution_pct_of_total": [
+            11.021157676782957,
+            11.021157676782957
+          ]
+        },
+        "ctrl_inauthenticity": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 2496.8149680554516,
+          "ss": {
+            "system": 249.27038760248817,
+            "question": 1671.6234990707546,
+            "interaction_and_generation_noise": 575.9210813822091
+          },
+          "pct": {
+            "system": 9.983534654817566,
+            "question": 66.95023541823103,
+            "interaction_and_generation_noise": 23.06622992695142
+          },
+          "condition_contribution_pct_of_total": [
+            4.991767327408783,
+            4.991767327408783
+          ]
+        }
+      }
+    },
+    "response_L16": {
+      "primary": {
+        "n_system_conditions": 40,
+        "n_questions": 400,
+        "hidden_size": 4096,
+        "total_ss": 183827.8308510988,
+        "ss": {
+          "system": 33167.042143589606,
+          "question": 80491.63258062207,
+          "interaction_and_generation_noise": 70169.15612688716
+        },
+        "pct": {
+          "system": 18.042448735879947,
+          "question": 43.7864235289925,
+          "interaction_and_generation_noise": 38.17112773512756
+        },
+        "condition_contribution_pct_of_total": [
+          0.2218826196891185,
+          0.196813886602128,
+          0.6097001471968226,
+          0.13095333062157458,
+          0.3566986396306367,
+          0.23175084989159928,
+          0.44564803767261235,
+          0.18450021539649109,
+          0.39638012434493364,
+          0.5015229805473576,
+          0.7349745254140568,
+          0.2968343883883214,
+          0.3771812483171803,
+          0.250525677860086,
+          0.40847294489955166,
+          0.16692140101124855,
+          0.4906842243578907,
+          0.23518335119966358,
+          0.1621187933768912,
+          0.3972677659631141,
+          0.08927648649686665,
+          0.26063557677068067,
+          0.16571847283212446,
+          0.32746512381940224,
+          0.16198921289513935,
+          0.9847301273141367,
+          0.09717251125935188,
+          1.4619418806219169,
+          1.3907127500104388,
+          0.18773692931098912,
+          1.010802838321341,
+          0.1076996958032374,
+          1.7204902196438525,
+          0.09315690349343596,
+          0.4089186899958714,
+          0.11545859580654631,
+          1.6395727475401107,
+          0.2238251468172365,
+          0.6869510332069173,
+          0.11217864153907336
+        ]
+      },
+      "bootstrap": {
+        "n_boot": 200,
+        "seed": 20260916,
+        "method": "question-cluster percentile bootstrap; all systems retained together",
+        "pct_95_interval": {
+          "system": [
+            17.585440573329386,
+            18.83960584987755
+          ],
+          "question": [
+            42.882687042608225,
+            44.59207448225465
+          ],
+          "interaction_and_generation_noise": [
+            37.121461988787615,
+            39.158273040914516
+          ]
+        }
+      },
+      "nonrepetitive_complete_questions": {
+        "n_system_conditions": 40,
+        "n_questions": 379,
+        "hidden_size": 4096,
+        "total_ss": 174119.7624637126,
+        "ss": {
+          "system": 31722.843404460513,
+          "question": 76006.68176477103,
+          "interaction_and_generation_noise": 66390.23729448108
+        },
+        "pct": {
+          "system": 18.218979256344728,
+          "question": 43.6519558086413,
+          "interaction_and_generation_noise": 38.129064935013986
+        },
+        "condition_contribution_pct_of_total": [
+          0.22014946875820704,
+          0.19995930528129166,
+          0.6214022967726189,
+          0.13168105062528007,
+          0.3582959753726032,
+          0.23368967188575707,
+          0.4458629902276622,
+          0.18600798658092657,
+          0.3971721550246666,
+          0.5064210829204239,
+          0.755835531526847,
+          0.2975650778910874,
+          0.3795530254967063,
+          0.25333010899237324,
+          0.41549925389976866,
+          0.1674568477334733,
+          0.49506175520315737,
+          0.23775137843000477,
+          0.16370842643214278,
+          0.4004856852918054,
+          0.09021793214454066,
+          0.2656222720714298,
+          0.16975367941258865,
+          0.33143299539593624,
+          0.16508287575978678,
+          0.9923183620452222,
+          0.09822400939850398,
+          1.5060122586821276,
+          1.3948076010768717,
+          0.18931956455759077,
+          1.021627875953436,
+          0.10837886698723902,
+          1.7257330439545893,
+          0.09203676905473453,
+          0.4036169331862101,
+          0.11594050112236064,
+          1.6499697927086228,
+          0.22526953493457902,
+          0.690190741040625,
+          0.11653457251093052
+        ]
+      },
+      "per_prompt_pair": {
+        "general_baseline": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 9341.61423100122,
+          "ss": {
+            "system": 488.57900079307285,
+            "question": 6626.552231320828,
+            "interaction_and_generation_noise": 2226.482998887321
+          },
+          "pct": {
+            "system": 5.230134628891731,
+            "question": 70.93583686350323,
+            "interaction_and_generation_noise": 23.83402850760505
+          },
+          "condition_contribution_pct_of_total": [
+            2.6150673144458656,
+            2.615067314445866
+          ]
+        },
+        "pv_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 9191.605858388784,
+          "ss": {
+            "system": 769.4653539443051,
+            "question": 6280.677879389921,
+            "interaction_and_generation_noise": 2141.462625054559
+          },
+          "pct": {
+            "system": 8.371391961308339,
+            "question": 68.3305831010782,
+            "interaction_and_generation_noise": 23.29802493761346
+          },
+          "condition_contribution_pct_of_total": [
+            4.185695980654169,
+            4.185695980654169
+          ]
+        },
+        "pv_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 7690.995230254315,
+          "ss": {
+            "system": 637.0362373594319,
+            "question": 5490.391917960597,
+            "interaction_and_generation_noise": 1563.5670749342873
+          },
+          "pct": {
+            "system": 8.282884311948367,
+            "question": 71.38727503513286,
+            "interaction_and_generation_noise": 20.329840652918794
+          },
+          "condition_contribution_pct_of_total": [
+            4.141442155974183,
+            4.141442155974183
+          ]
+        },
+        "ps_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 6547.504414627016,
+          "ss": {
+            "system": 757.1158735265201,
+            "question": 4627.510352019401,
+            "interaction_and_generation_noise": 1162.8781890810956
+          },
+          "pct": {
+            "system": 11.563426697890206,
+            "question": 70.67594092310377,
+            "interaction_and_generation_noise": 17.76063237900604
+          },
+          "condition_contribution_pct_of_total": [
+            5.781713348945103,
+            5.781713348945102
+          ]
+        },
+        "ps_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 7377.25289356821,
+          "ss": {
+            "system": 785.9878035850289,
+            "question": 5248.837575153808,
+            "interaction_and_generation_noise": 1342.427514829374
+          },
+          "pct": {
+            "system": 10.654207127293754,
+            "question": 71.14894461229542,
+            "interaction_and_generation_noise": 18.196848260410825
+          },
+          "condition_contribution_pct_of_total": [
+            5.327103563646877,
+            5.327103563646877
+          ]
+        },
+        "pt_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8449.066375088325,
+          "ss": {
+            "system": 1334.1372209863675,
+            "question": 5020.612633815961,
+            "interaction_and_generation_noise": 2094.316520285996
+          },
+          "pct": {
+            "system": 15.79035081225079,
+            "question": 59.42209956616037,
+            "interaction_and_generation_noise": 24.787549621588838
+          },
+          "condition_contribution_pct_of_total": [
+            7.895175406125395,
+            7.895175406125395
+          ]
+        },
+        "pt_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8932.772100637028,
+          "ss": {
+            "system": 609.6698425711247,
+            "question": 6285.518614188466,
+            "interaction_and_generation_noise": 2037.5836438774386
+          },
+          "pct": {
+            "system": 6.825091200162231,
+            "question": 70.36470362587917,
+            "interaction_and_generation_noise": 22.81020517395861
+          },
+          "condition_contribution_pct_of_total": [
+            3.4125456000811156,
+            3.412545600081115
+          ]
+        },
+        "pe_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 7437.178208344174,
+          "ss": {
+            "system": 674.236373629883,
+            "question": 5219.698515392656,
+            "interaction_and_generation_noise": 1543.2433193216343
+          },
+          "pct": {
+            "system": 9.065755246706615,
+            "question": 70.18385695715067,
+            "interaction_and_generation_noise": 20.750387796142704
+          },
+          "condition_contribution_pct_of_total": [
+            4.532877623353307,
+            4.532877623353309
+          ]
+        },
+        "pe_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8635.349603014867,
+          "ss": {
+            "system": 1061.988339269859,
+            "question": 5687.164259608123,
+            "interaction_and_generation_noise": 1886.1970041368863
+          },
+          "pct": {
+            "system": 12.298151066160493,
+            "question": 65.85910844446364,
+            "interaction_and_generation_noise": 21.842740489375863
+          },
+          "condition_contribution_pct_of_total": [
+            6.1490755330802465,
+            6.1490755330802465
+          ]
+        },
+        "ctrl_warranted_praise": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 7878.935665675216,
+          "ss": {
+            "system": 470.04343552599346,
+            "question": 6062.604691006452,
+            "interaction_and_generation_noise": 1346.2875391427701
+          },
+          "pct": {
+            "system": 5.965824008104923,
+            "question": 76.94700081659944,
+            "interaction_and_generation_noise": 17.087175175295645
+          },
+          "condition_contribution_pct_of_total": [
+            2.9829120040524617,
+            2.9829120040524617
+          ]
+        },
+        "ctrl_genuine_agreement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 7610.053203909185,
+          "ss": {
+            "system": 229.78827731138017,
+            "question": 6110.628799026927,
+            "interaction_and_generation_noise": 1269.6361275708782
+          },
+          "pct": {
+            "system": 3.0195357529608455,
+            "question": 80.29679471738747,
+            "interaction_and_generation_noise": 16.68366952965168
+          },
+          "condition_contribution_pct_of_total": [
+            1.5097678764804228,
+            1.5097678764804228
+          ]
+        },
+        "ctrl_emotional_support": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8433.32592709351,
+          "ss": {
+            "system": 625.1461398135652,
+            "question": 6184.970358644466,
+            "interaction_and_generation_noise": 1623.2094286354782
+          },
+          "pct": {
+            "system": 7.4128065868434625,
+            "question": 73.3396338777111,
+            "interaction_and_generation_noise": 19.247559535445426
+          },
+          "condition_contribution_pct_of_total": [
+            3.706403293421732,
+            3.7064032934217304
+          ]
+        },
+        "ctrl_calibrated_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 11102.040181791053,
+          "ss": {
+            "system": 1282.511074374949,
+            "question": 6931.848165867999,
+            "interaction_and_generation_noise": 2887.6809415481057
+          },
+          "pct": {
+            "system": 11.552030558117165,
+            "question": 62.43760653323188,
+            "interaction_and_generation_noise": 26.01036290865096
+          },
+          "condition_contribution_pct_of_total": [
+            5.776015279058583,
+            5.776015279058583
+          ]
+        },
+        "ctrl_politeness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 13393.30854409988,
+          "ss": {
+            "system": 1669.0714980024964,
+            "question": 8505.546572234862,
+            "interaction_and_generation_noise": 3218.6904738625212
+          },
+          "pct": {
+            "system": 12.461980492025386,
+            "question": 63.5059406287014,
+            "interaction_and_generation_noise": 24.032078879273207
+          },
+          "condition_contribution_pct_of_total": [
+            6.230990246012693,
+            6.230990246012693
+          ]
+        },
+        "ctrl_pure_sycophancy": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 7356.609111783644,
+          "ss": {
+            "system": 2040.6107947535484,
+            "question": 3659.7120625288176,
+            "interaction_and_generation_noise": 1656.2862545012783
+          },
+          "pct": {
+            "system": 27.738469772506274,
+            "question": 49.74726816281127,
+            "interaction_and_generation_noise": 22.514262064682462
+          },
+          "condition_contribution_pct_of_total": [
+            13.869234886253135,
+            13.869234886253139
+          ]
+        },
+        "ctrl_obsequiousness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8109.394541202244,
+          "ss": {
+            "system": 1481.5193676299132,
+            "question": 4612.6579712916955,
+            "interaction_and_generation_noise": 2015.2172022806353
+          },
+          "pct": {
+            "system": 18.269173612192667,
+            "question": 56.88042365993768,
+            "interaction_and_generation_noise": 24.850402727869653
+          },
+          "condition_contribution_pct_of_total": [
+            9.134586806096333,
+            9.134586806096333
+          ]
+        },
+        "ctrl_excitement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8022.242353801818,
+          "ss": {
+            "system": 2087.533011276272,
+            "question": 3998.230733949001,
+            "interaction_and_generation_noise": 1936.478608576545
+          },
+          "pct": {
+            "system": 26.02181434081171,
+            "question": 49.83931621131093,
+            "interaction_and_generation_noise": 24.138869447877365
+          },
+          "condition_contribution_pct_of_total": [
+            13.010907170405854,
+            13.010907170405854
+          ]
+        },
+        "ctrl_evasive_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 9569.785072663999,
+          "ss": {
+            "system": 483.1453871516729,
+            "question": 6856.658238279768,
+            "interaction_and_generation_noise": 2229.9814472325606
+          },
+          "pct": {
+            "system": 5.048654525499984,
+            "question": 71.64903063356927,
+            "interaction_and_generation_noise": 23.30231484093077
+          },
+          "condition_contribution_pct_of_total": [
+            2.524327262749992,
+            2.524327262749992
+          ]
+        },
+        "ctrl_affiliation": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 8918.799410740587,
+          "ss": {
+            "system": 2404.4864848427683,
+            "question": 4691.391270753603,
+            "interaction_and_generation_noise": 1822.9216551442162
+          },
+          "pct": {
+            "system": 26.95975516555662,
+            "question": 52.60115240515366,
+            "interaction_and_generation_noise": 20.43909242928973
+          },
+          "condition_contribution_pct_of_total": [
+            13.47987758277831,
+            13.47987758277831
+          ]
+        },
+        "ctrl_inauthenticity": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 7371.739756108775,
+          "ss": {
+            "system": 816.7124599364851,
+            "question": 5056.492372643052,
+            "interaction_and_generation_noise": 1498.5349235292374
+          },
+          "pct": {
+            "system": 11.078964897800361,
+            "question": 68.59293111172114,
+            "interaction_and_generation_noise": 20.328103990478493
+          },
+          "condition_contribution_pct_of_total": [
+            5.539482448900181,
+            5.539482448900181
+          ]
+        }
+      }
+    },
+    "response_L20": {
+      "primary": {
+        "n_system_conditions": 40,
+        "n_questions": 400,
+        "hidden_size": 4096,
+        "total_ss": 421621.0325321083,
+        "ss": {
+          "system": 77865.58871525602,
+          "question": 192842.40646137824,
+          "interaction_and_generation_noise": 150913.03735547408
+        },
+        "pct": {
+          "system": 18.468146204097682,
+          "question": 45.738326976534886,
+          "interaction_and_generation_noise": 35.793526819367436
+        },
+        "condition_contribution_pct_of_total": [
+          0.20125157983723282,
+          0.17093813374832106,
+          0.4815552250622252,
+          0.11212311165097598,
+          0.26796144783819253,
+          0.20186204985074285,
+          0.40237415114289193,
+          0.17896172737413993,
+          0.35283288488865266,
+          0.4119605453708148,
+          0.7439491130553273,
+          0.29678175532320755,
+          0.3609567243908391,
+          0.23593107491963802,
+          0.4036408460686786,
+          0.1581265967494626,
+          0.5227131108738129,
+          0.21109549811134132,
+          0.15464849710724002,
+          0.378878905565002,
+          0.08388051634118683,
+          0.23756735897310863,
+          0.1686974427913364,
+          0.31624063976986433,
+          0.13925310919677325,
+          0.9559290857447283,
+          0.08664878449273813,
+          1.757409124556181,
+          1.4203887380949896,
+          0.17149884495850384,
+          1.0177676949996268,
+          0.10136735673206496,
+          1.9770619970536065,
+          0.08456834473316337,
+          0.3949432506304921,
+          0.11334402032438066,
+          2.113105020972312,
+          0.2259311834006289,
+          0.7383236215300267,
+          0.11567708987323375
+        ]
+      },
+      "bootstrap": {
+        "n_boot": 200,
+        "seed": 20260916,
+        "method": "question-cluster percentile bootstrap; all systems retained together",
+        "pct_95_interval": {
+          "system": [
+            18.078987842313367,
+            19.19230864918107
+          ],
+          "question": [
+            44.82741624865114,
+            46.60494085226373
+          ],
+          "interaction_and_generation_noise": [
+            34.74627935223921,
+            36.733658448751584
+          ]
+        }
+      },
+      "nonrepetitive_complete_questions": {
+        "n_system_conditions": 40,
+        "n_questions": 379,
+        "hidden_size": 4096,
+        "total_ss": 399032.0971189534,
+        "ss": {
+          "system": 74449.21121618609,
+          "question": 181800.7327595547,
+          "interaction_and_generation_noise": 142782.1531432126
+        },
+        "pct": {
+          "system": 18.65744930137598,
+          "question": 45.56042836457815,
+          "interaction_and_generation_noise": 35.782122334045866
+        },
+        "condition_contribution_pct_of_total": [
+          0.20026859976917183,
+          0.17377446815712216,
+          0.49043713158180996,
+          0.112793803595671,
+          0.2687961313766374,
+          0.20443826256130573,
+          0.4032587643448374,
+          0.18095064479761427,
+          0.35400707818804117,
+          0.4164836735183796,
+          0.7642635956937067,
+          0.2988689415001457,
+          0.3628686021216198,
+          0.23895115483795118,
+          0.41056463949309363,
+          0.1587621476548377,
+          0.5281358613347442,
+          0.2137373542544108,
+          0.15639265063719593,
+          0.38247703135721384,
+          0.08487537387738185,
+          0.2424581854979658,
+          0.1733360951678779,
+          0.32063907299294464,
+          0.14191719800601604,
+          0.9626377792774309,
+          0.08778934532312306,
+          1.8086940569386534,
+          1.425044570038067,
+          0.17280971294503308,
+          1.0277061307702284,
+          0.10195218120334851,
+          1.9839160772116406,
+          0.08388257969544158,
+          0.3901280643895375,
+          0.11361931672944153,
+          2.125197995751192,
+          0.2275352208204948,
+          0.7428847903812981,
+          0.12019501758335129
+        ]
+      },
+      "per_prompt_pair": {
+        "general_baseline": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 21026.021707229764,
+          "ss": {
+            "system": 1021.4503208265104,
+            "question": 15205.058580589153,
+            "interaction_and_generation_noise": 4799.512805814102
+          },
+          "pct": {
+            "system": 4.8580294220626925,
+            "question": 72.3154327162181,
+            "interaction_and_generation_noise": 22.82653786171921
+          },
+          "condition_contribution_pct_of_total": [
+            2.4290147110313463,
+            2.4290147110313463
+          ]
+        },
+        "pv_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 20186.23835368541,
+          "ss": {
+            "system": 1462.0483068806814,
+            "question": 14284.781856523736,
+            "interaction_and_generation_noise": 4439.408190280998
+          },
+          "pct": {
+            "system": 7.242797203044789,
+            "question": 70.76495187581968,
+            "interaction_and_generation_noise": 21.99225092113555
+          },
+          "condition_contribution_pct_of_total": [
+            3.6213986015223947,
+            3.6213986015223947
+          ]
+        },
+        "pv_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 17773.28645519093,
+          "ss": {
+            "system": 1184.9757323701276,
+            "question": 13187.599767234471,
+            "interaction_and_generation_noise": 3400.71095558633
+          },
+          "pct": {
+            "system": 6.66717286843728,
+            "question": 74.19899409421184,
+            "interaction_and_generation_noise": 19.133833037350872
+          },
+          "condition_contribution_pct_of_total": [
+            3.33358643421864,
+            3.33358643421864
+          ]
+        },
+        "ps_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 15356.995471547678,
+          "ss": {
+            "system": 1596.9751158502827,
+            "question": 11208.573243708212,
+            "interaction_and_generation_noise": 2551.447111989184
+          },
+          "pct": {
+            "system": 10.399007532489293,
+            "question": 72.98675879975768,
+            "interaction_and_generation_noise": 16.61423366775304
+          },
+          "condition_contribution_pct_of_total": [
+            5.199503766244646,
+            5.199503766244646
+          ]
+        },
+        "ps_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 17321.65959148173,
+          "ss": {
+            "system": 1560.3530609541149,
+            "question": 12820.223983377424,
+            "interaction_and_generation_noise": 2941.082547150191
+          },
+          "pct": {
+            "system": 9.008103713811865,
+            "question": 74.01267710908037,
+            "interaction_and_generation_noise": 16.97921917710776
+          },
+          "condition_contribution_pct_of_total": [
+            4.5040518569059325,
+            4.5040518569059325
+          ]
+        },
+        "pt_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 19007.926152093525,
+          "ss": {
+            "system": 3035.586266662871,
+            "question": 11451.002264992254,
+            "interaction_and_generation_noise": 4521.337620438399
+          },
+          "pct": {
+            "system": 15.970107640220037,
+            "question": 60.243301522565346,
+            "interaction_and_generation_noise": 23.786590837214618
+          },
+          "condition_contribution_pct_of_total": [
+            7.985053820110019,
+            7.985053820110018
+          ]
+        },
+        "pt_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 19883.71396958736,
+          "ss": {
+            "system": 1232.507777123237,
+            "question": 14367.704595006926,
+            "interaction_and_generation_noise": 4283.501597457193
+          },
+          "pct": {
+            "system": 6.1985792946347384,
+            "question": 72.25865659193595,
+            "interaction_and_generation_noise": 21.542764113429296
+          },
+          "condition_contribution_pct_of_total": [
+            3.0992896473173683,
+            3.0992896473173697
+          ]
+        },
+        "pe_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 17156.77091166971,
+          "ss": {
+            "system": 1476.428058142059,
+            "question": 12315.80047164837,
+            "interaction_and_generation_noise": 3364.5423818792806
+          },
+          "pct": {
+            "system": 8.605512457695758,
+            "question": 71.78390697792318,
+            "interaction_and_generation_noise": 19.610580564381042
+          },
+          "condition_contribution_pct_of_total": [
+            4.30275622884788,
+            4.302756228847879
+          ]
+        },
+        "pe_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 19568.776342996585,
+          "ss": {
+            "system": 2451.76877248285,
+            "question": 13025.610846528507,
+            "interaction_and_generation_noise": 4091.39672398523
+          },
+          "pct": {
+            "system": 12.5289835680518,
+            "question": 66.5632363425228,
+            "interaction_and_generation_noise": 20.90778008942541
+          },
+          "condition_contribution_pct_of_total": [
+            6.2644917840259,
+            6.264491784025902
+          ]
+        },
+        "ctrl_warranted_praise": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 18118.756172349506,
+          "ss": {
+            "system": 939.6490548291534,
+            "question": 14313.866081558248,
+            "interaction_and_generation_noise": 2865.2410359621044
+          },
+          "pct": {
+            "system": 5.186057176833827,
+            "question": 79.00026881206234,
+            "interaction_and_generation_noise": 15.813674011103826
+          },
+          "condition_contribution_pct_of_total": [
+            2.5930285884169133,
+            2.5930285884169133
+          ]
+        },
+        "ctrl_genuine_agreement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 17624.108178115,
+          "ss": {
+            "system": 442.7866991119266,
+            "question": 14507.369140923141,
+            "interaction_and_generation_noise": 2673.9523380799305
+          },
+          "pct": {
+            "system": 2.5123920860958155,
+            "question": 82.31547942345182,
+            "interaction_and_generation_noise": 15.172128490452364
+          },
+          "condition_contribution_pct_of_total": [
+            1.2561960430479078,
+            1.2561960430479078
+          ]
+        },
+        "ctrl_emotional_support": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 19380.10206903193,
+          "ss": {
+            "system": 1429.027230145878,
+            "question": 14434.022789930306,
+            "interaction_and_generation_noise": 3517.052048955745
+          },
+          "pct": {
+            "system": 7.373682682659164,
+            "question": 74.47856950658108,
+            "interaction_and_generation_noise": 18.147747810759736
+          },
+          "condition_contribution_pct_of_total": [
+            3.686841341329582,
+            3.686841341329582
+          ]
+        },
+        "ctrl_calibrated_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 24737.606565746893,
+          "ss": {
+            "system": 2823.872915146776,
+            "question": 15736.853254544127,
+            "interaction_and_generation_noise": 6176.8803960559935
+          },
+          "pct": {
+            "system": 11.415303690118801,
+            "question": 63.61510040479937,
+            "interaction_and_generation_noise": 24.969595905081842
+          },
+          "condition_contribution_pct_of_total": [
+            5.7076518450594005,
+            5.7076518450594005
+          ]
+        },
+        "ctrl_politeness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 30432.529010424816,
+          "ss": {
+            "system": 4463.141455365386,
+            "question": 19177.389246756495,
+            "interaction_and_generation_noise": 6791.99830830294
+          },
+          "pct": {
+            "system": 14.665693586742377,
+            "question": 63.016087950453226,
+            "interaction_and_generation_noise": 22.318218462804413
+          },
+          "condition_contribution_pct_of_total": [
+            7.332846793371188,
+            7.332846793371188
+          ]
+        },
+        "ctrl_pure_sycophancy": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 17021.505380511382,
+          "ss": {
+            "system": 4688.9455099827355,
+            "question": 8609.327660683273,
+            "interaction_and_generation_noise": 3723.232209845375
+          },
+          "pct": {
+            "system": 27.547184606546615,
+            "question": 50.57912016724705,
+            "interaction_and_generation_noise": 21.873695226206348
+          },
+          "condition_contribution_pct_of_total": [
+            13.773592303273308,
+            13.773592303273308
+          ]
+        },
+        "ctrl_obsequiousness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 18355.6555041753,
+          "ss": {
+            "system": 3376.1184785675723,
+            "question": 10564.361808923417,
+            "interaction_and_generation_noise": 4415.175216684316
+          },
+          "pct": {
+            "system": 18.392797128926382,
+            "question": 57.55371583717278,
+            "interaction_and_generation_noise": 24.053487033900865
+          },
+          "condition_contribution_pct_of_total": [
+            9.196398564463191,
+            9.19639856446319
+          ]
+        },
+        "ctrl_excitement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 18907.841083377767,
+          "ss": {
+            "system": 5386.048744668889,
+            "question": 9224.307511301256,
+            "interaction_and_generation_noise": 4297.484827407621
+          },
+          "pct": {
+            "system": 28.485794443258065,
+            "question": 48.785620053738,
+            "interaction_and_generation_noise": 22.728585503003934
+          },
+          "condition_contribution_pct_of_total": [
+            14.242897221629033,
+            14.242897221629033
+          ]
+        },
+        "ctrl_evasive_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 21300.108587114715,
+          "ss": {
+            "system": 1098.316412475845,
+            "question": 15510.014385686025,
+            "interaction_and_generation_noise": 4691.777788952844
+          },
+          "pct": {
+            "system": 5.156388794845207,
+            "question": 72.81659772884281,
+            "interaction_and_generation_noise": 22.027013476311982
+          },
+          "condition_contribution_pct_of_total": [
+            2.5781943974226036,
+            2.5781943974226036
+          ]
+        },
+        "ctrl_affiliation": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 21608.42504027874,
+          "ss": {
+            "system": 6766.549370756215,
+            "question": 10651.677235924499,
+            "interaction_and_generation_noise": 4190.198433598027
+          },
+          "pct": {
+            "system": 31.314403331770674,
+            "question": 49.29409346618025,
+            "interaction_and_generation_noise": 19.39150320204908
+          },
+          "condition_contribution_pct_of_total": [
+            15.657201665885337,
+            15.657201665885337
+          ]
+        },
+        "ctrl_inauthenticity": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 17388.306606212922,
+          "ss": {
+            "system": 1964.3400536262693,
+            "question": 12034.931304466067,
+            "interaction_and_generation_noise": 3389.0352481205873
+          },
+          "pct": {
+            "system": 11.29690255705752,
+            "question": 69.21278521834859,
+            "interaction_and_generation_noise": 19.490312224593907
+          },
+          "condition_contribution_pct_of_total": [
+            5.64845127852876,
+            5.648451278528761
+          ]
+        }
+      }
+    },
+    "response_L24": {
+      "primary": {
+        "n_system_conditions": 40,
+        "n_questions": 400,
+        "hidden_size": 4096,
+        "total_ss": 934404.147299641,
+        "ss": {
+          "system": 159860.2573533813,
+          "question": 463653.9639324276,
+          "interaction_and_generation_noise": 310889.92601383216
+        },
+        "pct": {
+          "system": 17.108256402260803,
+          "question": 49.62028103924339,
+          "interaction_and_generation_noise": 33.27146255849581
+        },
+        "condition_contribution_pct_of_total": [
+          0.1744906965485077,
+          0.1631161930142803,
+          0.3913726109662377,
+          0.10736495818317693,
+          0.2155888584199726,
+          0.1779527429968175,
+          0.34822023790404416,
+          0.17110041848680704,
+          0.3053911117154493,
+          0.35314727986425654,
+          0.6881248548861089,
+          0.26881270250228284,
+          0.2977827845025402,
+          0.21788679707768366,
+          0.3682626489925685,
+          0.14260475761051583,
+          0.46869642795884797,
+          0.19514772812287803,
+          0.15159016474526493,
+          0.3301197586215033,
+          0.07768230674445613,
+          0.21136738752427986,
+          0.15093064524916147,
+          0.2854104302179851,
+          0.13808663345469133,
+          0.7756270506309583,
+          0.07482087652245104,
+          1.4595238222649738,
+          1.326707918268105,
+          0.1492847295299229,
+          0.9466005972645606,
+          0.0950224981724156,
+          1.950740377571881,
+          0.0779715515329029,
+          0.30779358389409583,
+          0.10281958557936212,
+          2.4475152235487747,
+          0.2062698465542982,
+          0.6826523328193911,
+          0.10465527179639056
+        ]
+      },
+      "bootstrap": {
+        "n_boot": 200,
+        "seed": 20260916,
+        "method": "question-cluster percentile bootstrap; all systems retained together",
+        "pct_95_interval": {
+          "system": [
+            16.750840713426534,
+            17.775669789211996
+          ],
+          "question": [
+            48.64194154566544,
+            50.51499716317748
+          ],
+          "interaction_and_generation_noise": [
+            32.1559587958951,
+            34.25080967511484
+          ]
+        }
+      },
+      "nonrepetitive_complete_questions": {
+        "n_system_conditions": 40,
+        "n_questions": 379,
+        "hidden_size": 4096,
+        "total_ss": 882966.1656501258,
+        "ss": {
+          "system": 152788.9156482988,
+          "question": 436293.6337547967,
+          "interaction_and_generation_noise": 293883.6162470304
+        },
+        "pct": {
+          "system": 17.3040510035626,
+          "question": 49.41227090321799,
+          "interaction_and_generation_noise": 33.283678093219415
+        },
+        "condition_contribution_pct_of_total": [
+          0.17486714976239562,
+          0.16627002845659689,
+          0.39956845784724393,
+          0.10825496586470038,
+          0.21623864046728203,
+          0.18073547848012694,
+          0.34875452311133603,
+          0.17350922119337858,
+          0.3067089333270929,
+          0.35765051779729407,
+          0.7090597035967259,
+          0.2722089969147541,
+          0.2994748617947022,
+          0.2209336723618787,
+          0.3747315184266718,
+          0.14346589582473668,
+          0.47397825971899943,
+          0.19793014312209112,
+          0.1535673885230501,
+          0.33399867800371563,
+          0.07855816413257272,
+          0.21627958095627692,
+          0.1557000612985627,
+          0.2896273758948191,
+          0.14045291396096882,
+          0.7815562106000628,
+          0.07584420561808683,
+          1.5033629414519996,
+          1.3319384655989064,
+          0.15053248735441663,
+          0.9567167882582656,
+          0.09561364735111745,
+          1.9602368601562208,
+          0.07738419350625561,
+          0.30491436821701384,
+          0.10342187230967714,
+          2.4643401410814394,
+          0.2081132967763956,
+          0.6883201861452682,
+          0.10923020829950267
+        ]
+      },
+      "per_prompt_pair": {
+        "general_baseline": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 47404.10241012258,
+          "ss": {
+            "system": 2056.0319359563846,
+            "question": 35087.190252162916,
+            "interaction_and_generation_noise": 10260.880222003281
+          },
+          "pct": {
+            "system": 4.337244734998597,
+            "question": 74.0172020315914,
+            "interaction_and_generation_noise": 21.645553233410013
+          },
+          "condition_contribution_pct_of_total": [
+            2.168622367499299,
+            2.1686223674992986
+          ]
+        },
+        "pv_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 43509.94927632337,
+          "ss": {
+            "system": 2808.630580390198,
+            "question": 31843.012137264872,
+            "interaction_and_generation_noise": 8858.306558668297
+          },
+          "pct": {
+            "system": 6.455145609463071,
+            "question": 73.18558781817002,
+            "interaction_and_generation_noise": 20.359266572366895
+          },
+          "condition_contribution_pct_of_total": [
+            3.2275728047315355,
+            3.2275728047315355
+          ]
+        },
+        "pv_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 40455.556677879475,
+          "ss": {
+            "system": 2207.1311755556594,
+            "question": 31330.85383224868,
+            "interaction_and_generation_noise": 6917.571670075128
+          },
+          "pct": {
+            "system": 5.45569349874374,
+            "question": 77.44511855742167,
+            "interaction_and_generation_noise": 17.09918794383457
+          },
+          "condition_contribution_pct_of_total": [
+            2.72784674937187,
+            2.72784674937187
+          ]
+        },
+        "ps_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 34192.02813702669,
+          "ss": {
+            "system": 3045.6548333515707,
+            "question": 26067.7773762738,
+            "interaction_and_generation_noise": 5078.595927401324
+          },
+          "pct": {
+            "system": 8.907499786634236,
+            "question": 76.23934231630119,
+            "interaction_and_generation_noise": 14.853157897064584
+          },
+          "condition_contribution_pct_of_total": [
+            4.453749893317118,
+            4.453749893317118
+          ]
+        },
+        "ps_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 39812.48175133903,
+          "ss": {
+            "system": 2809.003844058508,
+            "question": 30965.659122665937,
+            "interaction_and_generation_noise": 6037.818784614583
+          },
+          "pct": {
+            "system": 7.055585887870533,
+            "question": 77.77877128100525,
+            "interaction_and_generation_noise": 15.165642831124211
+          },
+          "condition_contribution_pct_of_total": [
+            3.5277929439352667,
+            3.5277929439352667
+          ]
+        },
+        "pt_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 42154.16346840878,
+          "ss": {
+            "system": 6035.252133433702,
+            "question": 26604.692067513184,
+            "interaction_and_generation_noise": 9514.219267461893
+          },
+          "pct": {
+            "system": 14.317096193728638,
+            "question": 63.112845513946226,
+            "interaction_and_generation_noise": 22.570058292325147
+          },
+          "condition_contribution_pct_of_total": [
+            7.158548096864319,
+            7.158548096864319
+          ]
+        },
+        "pt_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 44130.05230174144,
+          "ss": {
+            "system": 2271.1703346553,
+            "question": 33254.50272886731,
+            "interaction_and_generation_noise": 8604.379238218835
+          },
+          "pct": {
+            "system": 5.146538959723092,
+            "question": 75.35568392597403,
+            "interaction_and_generation_noise": 19.497777114302885
+          },
+          "condition_contribution_pct_of_total": [
+            2.573269479861545,
+            2.573269479861546
+          ]
+        },
+        "pe_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 38104.824516752444,
+          "ss": {
+            "system": 2984.7289003290184,
+            "question": 28262.536074944805,
+            "interaction_and_generation_noise": 6857.559541478628
+          },
+          "pct": {
+            "system": 7.83294225385242,
+            "question": 74.17049266955536,
+            "interaction_and_generation_noise": 17.996565076592237
+          },
+          "condition_contribution_pct_of_total": [
+            3.91647112692621,
+            3.91647112692621
+          ]
+        },
+        "pe_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 42865.790454529895,
+          "ss": {
+            "system": 4926.585530328972,
+            "question": 29414.950560889738,
+            "interaction_and_generation_noise": 8524.254363311189
+          },
+          "pct": {
+            "system": 11.49304720171875,
+            "question": 68.62103847610554,
+            "interaction_and_generation_noise": 19.88591432217571
+          },
+          "condition_contribution_pct_of_total": [
+            5.7465236008593745,
+            5.746523600859375
+          ]
+        },
+        "ctrl_warranted_praise": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 41234.43738996849,
+          "ss": {
+            "system": 1752.9759813444753,
+            "question": 33788.81532935602,
+            "interaction_and_generation_noise": 5692.646079267992
+          },
+          "pct": {
+            "system": 4.2512426318952015,
+            "question": 81.94319473745544,
+            "interaction_and_generation_noise": 13.80556263064935
+          },
+          "condition_contribution_pct_of_total": [
+            2.1256213159476007,
+            2.125621315947601
+          ]
+        },
+        "ctrl_genuine_agreement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 40444.0562827032,
+          "ss": {
+            "system": 811.352164545726,
+            "question": 34371.97797674632,
+            "interaction_and_generation_noise": 5260.726141411158
+          },
+          "pct": {
+            "system": 2.0061097701832615,
+            "question": 84.9864754822979,
+            "interaction_and_generation_noise": 13.007414747518846
+          },
+          "condition_contribution_pct_of_total": [
+            1.0030548850916308,
+            1.0030548850916308
+          ]
+        },
+        "ctrl_emotional_support": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 43321.12320847342,
+          "ss": {
+            "system": 2883.8278276722017,
+            "question": 33218.32297863251,
+            "interaction_and_generation_noise": 7218.972402168711
+          },
+          "pct": {
+            "system": 6.65686301297963,
+            "question": 76.67927449336113,
+            "interaction_and_generation_noise": 16.663862493659238
+          },
+          "condition_contribution_pct_of_total": [
+            3.328431506489815,
+            3.328431506489815
+          ]
+        },
+        "ctrl_calibrated_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 54088.597233562614,
+          "ss": {
+            "system": 5316.000472677055,
+            "question": 36044.517798077926,
+            "interaction_and_generation_noise": 12728.078962807638
+          },
+          "pct": {
+            "system": 9.828320098082362,
+            "question": 66.63977185881218,
+            "interaction_and_generation_noise": 23.53190804310546
+          },
+          "condition_contribution_pct_of_total": [
+            4.914160049041181,
+            4.914160049041182
+          ]
+        },
+        "ctrl_politeness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 65869.43921505209,
+          "ss": {
+            "system": 8201.077041749655,
+            "question": 43935.89230139217,
+            "interaction_and_generation_noise": 13732.469871910267
+          },
+          "pct": {
+            "system": 12.450503814029123,
+            "question": 66.70148224269715,
+            "interaction_and_generation_noise": 20.84801394327372
+          },
+          "condition_contribution_pct_of_total": [
+            6.225251907014561,
+            6.225251907014561
+          ]
+        },
+        "ctrl_pure_sycophancy": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 37661.465950920356,
+          "ss": {
+            "system": 9566.215851009198,
+            "question": 20039.416844644005,
+            "interaction_and_generation_noise": 8055.83325526715
+          },
+          "pct": {
+            "system": 25.400540338699752,
+            "question": 53.209338348005254,
+            "interaction_and_generation_noise": 21.39012131329499
+          },
+          "condition_contribution_pct_of_total": [
+            12.700270169349876,
+            12.700270169349876
+          ]
+        },
+        "ctrl_obsequiousness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 40833.509605846615,
+          "ss": {
+            "system": 6964.631983508994,
+            "question": 24275.33018748666,
+            "interaction_and_generation_noise": 9593.547434850967
+          },
+          "pct": {
+            "system": 17.05616796287279,
+            "question": 59.44953157788542,
+            "interaction_and_generation_noise": 23.494300459241803
+          },
+          "condition_contribution_pct_of_total": [
+            8.528083981436396,
+            8.528083981436396
+          ]
+        },
+        "ctrl_excitement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 41998.47044766825,
+          "ss": {
+            "system": 11636.796914626539,
+            "question": 20996.520052080625,
+            "interaction_and_generation_noise": 9365.153480961097
+          },
+          "pct": {
+            "system": 27.707668375986326,
+            "question": 49.99353506990955,
+            "interaction_and_generation_noise": 22.298796554104147
+          },
+          "condition_contribution_pct_of_total": [
+            13.853834187993163,
+            13.85383418799316
+          ]
+        },
+        "ctrl_evasive_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 46310.92619793357,
+          "ss": {
+            "system": 1875.5548761780074,
+            "question": 34925.56000735705,
+            "interaction_and_generation_noise": 9509.811314398503
+          },
+          "pct": {
+            "system": 4.0499187344296645,
+            "question": 75.41537791337772,
+            "interaction_and_generation_noise": 20.534703352192594
+          },
+          "condition_contribution_pct_of_total": [
+            2.024959367214832,
+            2.0249593672148327
+          ]
+        },
+        "ctrl_affiliation": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 49958.71478102094,
+          "ss": {
+            "system": 16655.423754606283,
+            "question": 24153.78094619365,
+            "interaction_and_generation_noise": 9149.510080221007
+          },
+          "pct": {
+            "system": 33.33837515158335,
+            "question": 48.347482620528794,
+            "interaction_and_generation_noise": 18.314142227887853
+          },
+          "condition_contribution_pct_of_total": [
+            16.669187575791675,
+            16.669187575791675
+          ]
+        },
+        "ctrl_inauthenticity": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 39033.245310326114,
+          "ss": {
+            "system": 4030.9985353622224,
+            "question": 27892.686651405325,
+            "interaction_and_generation_noise": 7109.560123558564
+          },
+          "pct": {
+            "system": 10.3270904156561,
+            "question": 71.4587947521402,
+            "interaction_and_generation_noise": 18.2141148322037
+          },
+          "condition_contribution_pct_of_total": [
+            5.16354520782805,
+            5.163545207828051
+          ]
+        }
+      }
+    },
+    "response_L28": {
+      "primary": {
+        "n_system_conditions": 40,
+        "n_questions": 400,
+        "hidden_size": 4096,
+        "total_ss": 1636760.9511557468,
+        "ss": {
+          "system": 297828.3867413207,
+          "question": 779754.1898747501,
+          "interaction_and_generation_noise": 559178.3745396759
+        },
+        "pct": {
+          "system": 18.19620553209182,
+          "question": 47.64007775992893,
+          "interaction_and_generation_noise": 34.16371670797924
+        },
+        "condition_contribution_pct_of_total": [
+          0.18553620378702793,
+          0.17357187599809268,
+          0.4477028752202081,
+          0.10829645694832192,
+          0.19709068904817326,
+          0.18415033168050407,
+          0.3538325284530304,
+          0.17180759731607517,
+          0.29304468954215473,
+          0.3546424672265744,
+          0.7192776664808387,
+          0.26802838705934484,
+          0.3555101527313316,
+          0.21936036738115564,
+          0.3686439592064919,
+          0.1422566219084259,
+          0.46394553236507974,
+          0.19749249832777263,
+          0.15201653241559906,
+          0.32435450134541316,
+          0.0826355412012797,
+          0.2021009717605061,
+          0.15800926182099362,
+          0.2841492853906743,
+          0.14929345483272666,
+          0.8047549706208832,
+          0.08431491573514165,
+          1.7366262528412675,
+          1.3500581544738641,
+          0.14877253746427369,
+          0.9402616221452157,
+          0.09847470247934162,
+          2.3237732959035444,
+          0.08352790053113547,
+          0.341721722067426,
+          0.10553063868946316,
+          2.5864534448438596,
+          0.21863773634817024,
+          0.7037566884047588,
+          0.11279050009567754
+        ]
+      },
+      "bootstrap": {
+        "n_boot": 200,
+        "seed": 20260916,
+        "method": "question-cluster percentile bootstrap; all systems retained together",
+        "pct_95_interval": {
+          "system": [
+            17.796420129984664,
+            18.925077840416705
+          ],
+          "question": [
+            46.68389196606014,
+            48.56604836738567
+          ],
+          "interaction_and_generation_noise": [
+            32.932732359785426,
+            35.19628071335365
+          ]
+        }
+      },
+      "nonrepetitive_complete_questions": {
+        "n_system_conditions": 40,
+        "n_questions": 379,
+        "hidden_size": 4096,
+        "total_ss": 1546163.023434164,
+        "ss": {
+          "system": 284658.7469231802,
+          "question": 733298.4466613603,
+          "interaction_and_generation_noise": 528205.8298496234
+        },
+        "pct": {
+          "system": 18.410655448927248,
+          "question": 47.426981213962804,
+          "interaction_and_generation_noise": 34.16236333710994
+        },
+        "condition_contribution_pct_of_total": [
+          0.1862467655907795,
+          0.17712167610506277,
+          0.45741118918377055,
+          0.10915774600632557,
+          0.1973904387503182,
+          0.18693567614471765,
+          0.354375634993067,
+          0.17420999678165258,
+          0.29428783698730626,
+          0.35875526456848134,
+          0.7409259025713935,
+          0.270274877788486,
+          0.35739543673417984,
+          0.22239755834011027,
+          0.3747771226382465,
+          0.14320811900202474,
+          0.46948976879276383,
+          0.20039989552087675,
+          0.1536764684375063,
+          0.32822372143163053,
+          0.08353986392476892,
+          0.2068701073921572,
+          0.16247768318583314,
+          0.2884081931068026,
+          0.15175045481810306,
+          0.8108677279964089,
+          0.08569487379878381,
+          1.7880720840371103,
+          1.3555543623645432,
+          0.15002816339354258,
+          0.9509210384014438,
+          0.09919274498089264,
+          2.3370399482949895,
+          0.08282842337652252,
+          0.33945898401316477,
+          0.10615232376178856,
+          2.605879867705747,
+          0.22071960427405934,
+          0.7100506391948954,
+          0.11848726453699154
+        ]
+      },
+      "per_prompt_pair": {
+        "general_baseline": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 83415.5419058461,
+          "ss": {
+            "system": 3617.046593756862,
+            "question": 60877.45724455564,
+            "interaction_and_generation_noise": 18921.038067533584
+          },
+          "pct": {
+            "system": 4.336178260209042,
+            "question": 72.98095277408862,
+            "interaction_and_generation_noise": 22.682868965702326
+          },
+          "condition_contribution_pct_of_total": [
+            2.1680891301045206,
+            2.1680891301045215
+          ]
+        },
+        "pv_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 76474.50108580806,
+          "ss": {
+            "system": 5290.342690004702,
+            "question": 55486.43705970733,
+            "interaction_and_generation_noise": 15697.72133609603
+          },
+          "pct": {
+            "system": 6.917786471164661,
+            "question": 72.5554744024402,
+            "interaction_and_generation_noise": 20.526739126395128
+          },
+          "condition_contribution_pct_of_total": [
+            3.4588932355823303,
+            3.458893235582331
+          ]
+        },
+        "pv_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 68643.16943576215,
+          "ss": {
+            "system": 3722.5329109672243,
+            "question": 52882.48127602684,
+            "interaction_and_generation_noise": 12038.155248768087
+          },
+          "pct": {
+            "system": 5.423020151263348,
+            "question": 77.03968466303917,
+            "interaction_and_generation_noise": 17.53729518569749
+          },
+          "condition_contribution_pct_of_total": [
+            2.711510075631674,
+            2.711510075631674
+          ]
+        },
+        "ps_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 57407.186123834,
+          "ss": {
+            "system": 5250.50066213028,
+            "question": 43446.12956361658,
+            "interaction_and_generation_noise": 8710.555898087136
+          },
+          "pct": {
+            "system": 9.14606866604529,
+            "question": 75.680646443632,
+            "interaction_and_generation_noise": 15.173284890322703
+          },
+          "condition_contribution_pct_of_total": [
+            4.573034333022645,
+            4.573034333022643
+          ]
+        },
+        "ps_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 65922.50315352388,
+          "ss": {
+            "system": 4981.386969074599,
+            "question": 50345.90504992648,
+            "interaction_and_generation_noise": 10595.211134522808
+          },
+          "pct": {
+            "system": 7.5564287318909535,
+            "question": 76.37134914716181,
+            "interaction_and_generation_noise": 16.07222212094724
+          },
+          "condition_contribution_pct_of_total": [
+            3.7782143659454768,
+            3.7782143659454768
+          ]
+        },
+        "pt_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 73707.24663902588,
+          "ss": {
+            "system": 10823.525034717124,
+            "question": 45948.62710938991,
+            "interaction_and_generation_noise": 16935.09449491884
+          },
+          "pct": {
+            "system": 14.684478837914394,
+            "question": 62.33936173795621,
+            "interaction_and_generation_noise": 22.976159424129396
+          },
+          "condition_contribution_pct_of_total": [
+            7.342239418957197,
+            7.342239418957197
+          ]
+        },
+        "pt_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 77305.06591130252,
+          "ss": {
+            "system": 4480.613997313525,
+            "question": 57459.91895174232,
+            "interaction_and_generation_noise": 15364.532962246665
+          },
+          "pct": {
+            "system": 5.796016010715838,
+            "question": 74.32878851389906,
+            "interaction_and_generation_noise": 19.875195475385098
+          },
+          "condition_contribution_pct_of_total": [
+            2.89800800535792,
+            2.898008005357918
+          ]
+        },
+        "pe_explicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 65048.90370323947,
+          "ss": {
+            "system": 5046.705206410852,
+            "question": 48090.20021758491,
+            "interaction_and_generation_noise": 11911.998279243711
+          },
+          "pct": {
+            "system": 7.758324766600984,
+            "question": 73.92930161740757,
+            "interaction_and_generation_noise": 18.312373615991454
+          },
+          "condition_contribution_pct_of_total": [
+            3.8791623833004922,
+            3.879162383300491
+          ]
+        },
+        "pe_implicit": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 73286.71239681376,
+          "ss": {
+            "system": 8420.584366550522,
+            "question": 49700.1641653664,
+            "interaction_and_generation_noise": 15165.963864896845
+          },
+          "pct": {
+            "system": 11.48991964731197,
+            "question": 67.81606452239653,
+            "interaction_and_generation_noise": 20.6940158302915
+          },
+          "condition_contribution_pct_of_total": [
+            5.744959823655984,
+            5.744959823655987
+          ]
+        },
+        "ctrl_warranted_praise": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 69819.57333216656,
+          "ss": {
+            "system": 3117.4117021217844,
+            "question": 56711.47473270469,
+            "interaction_and_generation_noise": 9990.686897340087
+          },
+          "pct": {
+            "system": 4.464953813582762,
+            "question": 81.2257537909891,
+            "interaction_and_generation_noise": 14.309292395428146
+          },
+          "condition_contribution_pct_of_total": [
+            2.232476906791381,
+            2.2324769067913817
+          ]
+        },
+        "ctrl_genuine_agreement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 67510.50186116816,
+          "ss": {
+            "system": 1435.4673706835881,
+            "question": 56851.45141155179,
+            "interaction_and_generation_noise": 9223.583078932772
+          },
+          "pct": {
+            "system": 2.126287512475544,
+            "question": 84.21127060862892,
+            "interaction_and_generation_noise": 13.66244187889551
+          },
+          "condition_contribution_pct_of_total": [
+            1.063143756237772,
+            1.063143756237772
+          ]
+        },
+        "ctrl_emotional_support": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 73623.13274190438,
+          "ss": {
+            "system": 5058.082003764288,
+            "question": 55978.50213749472,
+            "interaction_and_generation_noise": 12586.54860064537
+          },
+          "pct": {
+            "system": 6.870234687643709,
+            "question": 76.03384975987746,
+            "interaction_and_generation_noise": 17.09591555247884
+          },
+          "condition_contribution_pct_of_total": [
+            3.4351173438218545,
+            3.4351173438218554
+          ]
+        },
+        "ctrl_calibrated_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 96007.76391645221,
+          "ss": {
+            "system": 9827.471470512628,
+            "question": 62825.93742043917,
+            "interaction_and_generation_noise": 23354.35502550041
+          },
+          "pct": {
+            "system": 10.236121611023751,
+            "question": 65.43839253991115,
+            "interaction_and_generation_noise": 24.325485849065096
+          },
+          "condition_contribution_pct_of_total": [
+            5.118060805511876,
+            5.118060805511876
+          ]
+        },
+        "ctrl_politeness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 121197.72007138425,
+          "ss": {
+            "system": 17436.943068359564,
+            "question": 78125.54735220532,
+            "interaction_and_generation_noise": 25635.22965081937
+          },
+          "pct": {
+            "system": 14.387187364654531,
+            "question": 64.46123516695707,
+            "interaction_and_generation_noise": 21.15157746838841
+          },
+          "condition_contribution_pct_of_total": [
+            7.193593682327266,
+            7.193593682327266
+          ]
+        },
+        "ctrl_pure_sycophancy": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 64279.592513343436,
+          "ss": {
+            "system": 16736.226511821595,
+            "question": 33707.48132566491,
+            "interaction_and_generation_noise": 13835.884675856929
+          },
+          "pct": {
+            "system": 26.036609532562636,
+            "question": 52.43885346452338,
+            "interaction_and_generation_noise": 21.524537002913974
+          },
+          "condition_contribution_pct_of_total": [
+            13.018304766281318,
+            13.018304766281318
+          ]
+        },
+        "ctrl_obsequiousness": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 70699.98782879053,
+          "ss": {
+            "system": 11979.985694372328,
+            "question": 41802.56646447659,
+            "interaction_and_generation_noise": 16917.435669941617
+          },
+          "pct": {
+            "system": 16.94482002370844,
+            "question": 59.12669541854391,
+            "interaction_and_generation_noise": 23.92848455774766
+          },
+          "condition_contribution_pct_of_total": [
+            8.472410011854222,
+            8.47241001185422
+          ]
+        },
+        "ctrl_excitement": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 77386.23431054458,
+          "ss": {
+            "system": 23415.516009823827,
+            "question": 36896.050973029705,
+            "interaction_and_generation_noise": 17074.66732769103
+          },
+          "pct": {
+            "system": 30.257986085560507,
+            "question": 47.67779605991538,
+            "interaction_and_generation_noise": 22.0642178545241
+          },
+          "condition_contribution_pct_of_total": [
+            15.12899304278025,
+            15.128993042780253
+          ]
+        },
+        "ctrl_evasive_hedging": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 81936.4606849405,
+          "ss": {
+            "system": 3526.6514080849975,
+            "question": 61100.85930267435,
+            "interaction_and_generation_noise": 17308.949974181167
+          },
+          "pct": {
+            "system": 4.304129539650933,
+            "question": 74.5710258801847,
+            "interaction_and_generation_noise": 21.12484458016438
+          },
+          "condition_contribution_pct_of_total": [
+            2.1520647698254667,
+            2.1520647698254667
+          ]
+        },
+        "ctrl_affiliation": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 89772.31598171353,
+          "ss": {
+            "system": 30824.7491372011,
+            "question": 42131.695582086264,
+            "interaction_and_generation_noise": 16815.871262426175
+          },
+          "pct": {
+            "system": 34.336586730679926,
+            "question": 46.931724019093394,
+            "interaction_and_generation_noise": 18.731689250226697
+          },
+          "condition_contribution_pct_of_total": [
+            17.168293365339963,
+            17.168293365339963
+          ]
+        },
+        "ctrl_inauthenticity": {
+          "n_system_conditions": 2,
+          "n_questions": 400,
+          "hidden_size": 4096,
+          "total_ss": 67715.28758438895,
+          "ss": {
+            "system": 7235.093959855494,
+            "question": 47724.11326668547,
+            "interaction_and_generation_noise": 12756.080357847972
+          },
+          "pct": {
+            "system": 10.684579831162779,
+            "question": 70.4776055291948,
+            "interaction_and_generation_noise": 18.8378146396424
+          },
+          "condition_contribution_pct_of_total": [
+            5.342289915581389,
+            5.3422899155813885
+          ]
+        }
+      }
+    }
+  }
+}

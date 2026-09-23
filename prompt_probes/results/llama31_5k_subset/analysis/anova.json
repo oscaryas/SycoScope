@@ -1,0 +1,37 @@
+{
+  "source": "ELEPHANT eval-half AUC",
+  "prompt_pair": {
+    "ss": 6.7875099978852695,
+    "pct_variance": 39.59,
+    "df": 19,
+    "n_levels": 20,
+    "F": 51.461,
+    "p": 3.6499443361126207e-146
+  },
+  "layer": {
+    "ss": 0.03567524216572914,
+    "pct_variance": 0.21,
+    "df": 7,
+    "n_levels": 8,
+    "F": 0.734,
+    "p": 0.6430275899180604
+  },
+  "position": {
+    "ss": 0.5248793040660207,
+    "pct_variance": 3.06,
+    "df": 2,
+    "n_levels": 3,
+    "F": 37.805,
+    "p": 1.0147838378609214e-16
+  },
+  "residual": {
+    "ss": 9.795115600541806,
+    "pct_variance": 57.14,
+    "df": 1411
+  },
+  "_meta": {
+    "value_key": "auc",
+    "n_observations": 1440,
+    "ss_total": 17.143180144658825
+  }
+}

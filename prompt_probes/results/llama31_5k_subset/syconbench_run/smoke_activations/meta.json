@@ -1,0 +1,47 @@
+{
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "layers": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28
+  ],
+  "positions": [
+    "last_prompt",
+    "first5",
+    "response"
+  ],
+  "n_records": 10,
+  "n_skipped": 0,
+  "skip_reasons": {},
+  "layer_convention": "hidden_states[layer + 1]",
+  "code_version": "unknown",
+  "created_at": "2026-09-16T03:20:31+00:00",
+  "script_args": {
+    "run_name": "llama31_sycon_smoke",
+    "model": "meta-llama/Llama-3.1-8B-Instruct",
+    "layers": "[0, 4, 8, 12, 16, 20, 24, 28]",
+    "layer_fracs": "None",
+    "positions": "None",
+    "cells": "None",
+    "batch_size": "1",
+    "limit": "None",
+    "selection_frac": "0.3",
+    "seed": "0",
+    "max_length": "8192",
+    "extract_only": "True",
+    "overwrite": "False",
+    "judged": "results/smoke_judged.jsonl",
+    "model_path": "/workspace/syconbench_model",
+    "prepare_only": "False"
+  },
+  "records_sha256": "07710dff103df8f14e85c78db23f6d3a07cd5dab7d3e4116adbd8f0e98f8ee20",
+  "evaluation_selection": {
+    "frac": 0.3,
+    "seed": 0
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "main_contrast": "Original-side NTA, NTA/NTA versus NTA/YTA pairs",
+  "train_n": 446,
+  "validation_n": 112,
+  "train_cells": {
+    "both_nta": 240,
+    "mixed": 206
+  },
+  "validation_cells": {
+    "both_nta": 60,
+    "mixed": 52
+  },
+  "baselines": {
+    "prompt_tfidf": {
+      "validation_auc": 0.5542,
+      "validation_auc_ci95": [
+        0.4493,
+        0.6609
+      ]
+    },
+    "prompt_length": {
+      "validation_auc": 0.4583,
+      "validation_auc_ci95": [
+        0.3486,
+        0.5645
+      ]
+    }
+  },
+  "base": {
+    "pre_response_state": {
+      "validation_auc": 0.4413,
+      "validation_auc_ci95": [
+        0.3369,
+        0.5508
+      ],
+      "validation_accuracy": 0.4732,
+      "direction_norm": 0.3105
+    },
+    "early_response_state": {
+      "validation_auc": 0.5756,
+      "validation_auc_ci95": [
+        0.4763,
+        0.6776
+      ],
+      "validation_accuracy": 0.5625,
+      "direction_norm": 0.2138
+    }
+  },
+  "chat": {
+    "pre_response_state": {
+      "validation_auc": 0.5673,
+      "validation_auc_ci95": [
+        0.4622,
+        0.6709
+      ],
+      "validation_accuracy": 0.5536,
+      "direction_norm": 0.2785
+    },
+    "early_response_state": {
+      "validation_auc": 0.5369,
+      "validation_auc_ci95": [
+        0.4365,
+        0.6427
+      ],
+      "validation_accuracy": 0.5536,
+      "direction_norm": 0.2345
+    }
+  },
+  "limit": "Teacher forcing uses the chat template for both models; prompt-end directions can encode story text. No causal sycophancy claim follows from held-out AUC alone."
+}
