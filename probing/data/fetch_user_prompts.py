@@ -26,11 +26,11 @@ import re
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-if str(HERE) not in sys.path:
-    sys.path.insert(0, str(HERE))
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-import common  # noqa: E402  (sets up REPO_ROOT on sys.path)
+from probing.utils import common  # noqa: E402
 
 # name -> filename in prompt_probes/data/
 SUBSETS = {

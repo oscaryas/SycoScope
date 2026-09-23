@@ -27,14 +27,14 @@ import time
 
 import numpy as np
 
-HERE = Path(__file__).resolve().parent
-if str(HERE) not in sys.path:
-    sys.path.insert(0, str(HERE))
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-import common  # noqa: E402
-import dataset_control as dc  # noqa: E402
-from analyze_probes import apply_probe  # noqa: E402
-from train_probes import fit_probe, safe_auc  # noqa: E402
+from probing.utils import common  # noqa: E402
+from probing.data import dataset_control as dc  # noqa: E402
+from probing.analyze_probes.analyze_probes import apply_probe  # noqa: E402
+from probing.probe.train_probes import fit_probe, safe_auc  # noqa: E402
 
 
 RUN = "llama31_prompt_wording_control_v1"

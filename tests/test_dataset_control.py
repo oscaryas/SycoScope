@@ -4,8 +4,8 @@ import sys
 import tempfile
 import unittest
 
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'prompt_probes/pipeline'))
-import dataset_control as dc
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from probing.data import dataset_control as dc
 
 
 class DatasetControlTests(unittest.TestCase):

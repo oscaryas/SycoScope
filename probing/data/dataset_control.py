@@ -13,9 +13,10 @@ import time
 from types import SimpleNamespace
 import urllib.request
 
-HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE))
-import common
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+from probing.utils import common
 
 MODEL = 'meta-llama/Llama-3.1-8B-Instruct'
 RUN = 'llama31_dataset_control_v1'
@@ -143,7 +144,7 @@ def gpu(run, model_path, smoke=False):
     import torch
     import transformers
     from transformers import AutoModelForCausalLM, AutoTokenizer
-    import get_activations as ga
+    from probing.probe import get_activations as ga
     exp = json.loads((run / 'experiment.json').read_text())
     if smoke:
         exp['prompts'] = [next(p for p in exp['prompts'] if p['dataset'] == d) for d in ('perez', 'dolly')]
@@ -232,9 +233,9 @@ def gpu(run, model_path, smoke=False):
 def analyze(run):
     import numpy as np
     from sklearn.metrics import adjusted_rand_score
-    from train_probes import fit_probe, score, safe_auc
-    from analyze_probes import apply_probe, load_probes
-    from cluster_syconbench_stability import bootstrap, correlation, partition
+    from probing.probe.train_probes import fit_probe, score, safe_auc
+    from probing.analyze_probes.analyze_probes import apply_probe, load_probes
+    from probing.analyze_probes.cluster_syconbench_stability import bootstrap, correlation, partition
     exp = json.loads((run / 'experiment.json').read_text())
     names = [p['slug'] for p in exp['pairs']]
     out = run / 'analysis'
