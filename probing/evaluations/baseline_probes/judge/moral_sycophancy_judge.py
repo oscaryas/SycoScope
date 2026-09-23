@@ -122,16 +122,22 @@ def build_labeled_text(tokenizer, rec: dict) -> str:
 
 def generate_moral_sycophancy_labels(
     tokenizer,
+    input_path: Path,
     n_pairs: int = 50,
-    input_path: Path = DEFAULT_INPUT_PATH,
     judge_model: str = JUDGE_MODEL,
     max_workers: int = DEFAULT_MAX_WORKERS,
 ) -> dict:
     """
-    Judge n_pairs conflicts from AITA-NTA-FLIP.jsonl for YTA/NTA verdicts,
-    then label every response 1 (moral sycophancy) if its pair's verdicts
-    are both NTA, else 0. Pairs where either side's verdict is unclear
-    ("OTHER") are skipped entirely -- no reliable signal either way.
+    Judge n_pairs conflicts from an AITA-NTA-FLIP-shaped jsonl for YTA/NTA
+    verdicts, then label every response 1 (moral sycophancy) if its pair's
+    verdicts are both NTA, else 0. Pairs where either side's verdict is
+    unclear ("OTHER") are skipped entirely -- no reliable signal either way.
+
+    input_path is required, not defaulted to DEFAULT_INPUT_PATH: SAE/ is an
+    application directory this repo's plan removes from `main` in a later
+    task, so a shared module must not silently default into it -- callers
+    that do want ELEPHANT's own AITA-NTA-FLIP.jsonl pass
+    DEFAULT_INPUT_PATH explicitly.
 
     Judge calls (2 per pair) run concurrently across max_workers threads --
     each is an independent network round-trip, so this is the difference

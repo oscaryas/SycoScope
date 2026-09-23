@@ -37,7 +37,6 @@ if str(REPO_ROOT) not in sys.path:
 
 from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import (  # noqa: E402
     DEFAULT_MAX_WORKERS,
-    DEFAULT_RESULTS_DIR,
     JUDGE_MODEL,
     METRICS,
     iter_dataset_records,
@@ -135,12 +134,15 @@ def resume_run(output_path: Path, judge_model: str, max_workers: int):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input-path", type=Path, default=DEFAULT_RESULTS_DIR / "OEQ.jsonl")
-    # Unlike --input-path (which reads from the shared, unmoved SAE/results/
-    # tree), the old default here wrote into tool_calling/tasks/sycophancy's
-    # own application-owned results/generations/ tree -- per this task's
-    # brief, an app-owned output default is not carried forward to this
-    # shared module's new location; callers must pass an explicit path.
+    # Both --input-path (previously defaulted into the shared SAE/results/
+    # tree) and --output-path (previously defaulted into
+    # tool_calling/tasks/sycophancy's own application-owned
+    # results/generations/ tree) are required, not defaulted: SAE/ is an
+    # application directory this repo's plan removes from `main` in a later
+    # task, so a shared module must not silently default into it either --
+    # callers must pass both paths explicitly. Pass
+    # `--input-path <repo>/SAE/results/OEQ.jsonl` to reproduce the old default.
+    parser.add_argument("--input-path", type=Path, required=True)
     parser.add_argument("--output-path", type=Path, required=True)
     parser.add_argument("--n-examples", type=int, default=None, help="Limit to first N records (default: all)")
     parser.add_argument("--judge-model", type=str, default=JUDGE_MODEL)
