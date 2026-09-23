@@ -1,9 +1,0 @@
-{
-  "model": "meta-llama/llama-3.1-8b-instruct",
-  "dataset": "aita_yta",
-  "seed": 0,
-  "backend": "openrouter",
-  "n_total_rows": 2000,
-  "n_generated": 1877,
-  "n_cap_hit_set_aside": 123
-}
