@@ -14,7 +14,7 @@ import subprocess
 import sys
 import time
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[4]
 REMOTE = "/workspace/syconbench_eval"
 RUN_NAME = "llama31_5k_subset"
 RUN = ROOT / "prompt_probes/results" / RUN_NAME
@@ -175,11 +175,11 @@ def main():
     os.environ.update(MPLCONFIGDIR="/private/tmp/sycoscope-sycon-matplotlib",
                       OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1", VECLIB_MAXIMUM_THREADS="1")
     with (work / "evaluation.log").open("w") as log:
-        local("-u", ROOT / "prompt_probes/pipeline/eval_syconbench.py", "--run-name", RUN_NAME,
+        local("-u", ROOT / "probing/analyze_probes/eval_syconbench.py", "--run-name", RUN_NAME,
               "--judged", work / "judge/judged.jsonl", stdout=log)
-        local("-u", ROOT / "prompt_probes/pipeline/eval_matrix.py", "--run-name", RUN_NAME,
+        local("-u", ROOT / "probing/analyze_probes/eval_matrix.py", "--run-name", RUN_NAME,
               "--target", "syconbench", "--n-boot", "1000", stdout=log)
-        local("-u", ROOT / "prompt_probes/pipeline/summarize_syconbench.py", "--run-name", RUN_NAME, stdout=log)
+        local("-u", ROOT / "probing/analyze_probes/summarize_syconbench.py", "--run-name", RUN_NAME, stdout=log)
     status("complete", report=str(RUN / "analysis/syconbench/RESULTS.md"))
 
 
