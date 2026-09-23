@@ -78,7 +78,7 @@ Earlier result files have not been overwritten or recomputed by this change.
 5. Validate/prepare with the evaluator, then upload judged rows and code to Vast.
 
 ```bash
-.venv/bin/python prompt_probes/pipeline/eval_syconbench.py \
+.venv/bin/python probing/analyze_probes/eval_syconbench.py \
   --run-name llama31_5k_subset --judged PATH_TO_JUDGED_JSONL --prepare-only
 ```
 
@@ -86,7 +86,7 @@ Extraction on GPU (the run also needs the original `activations/meta.json` for
 model identity; no training activations or weights of the probes need uploading):
 
 ```bash
-python prompt_probes/pipeline/eval_syconbench.py \
+python probing/analyze_probes/eval_syconbench.py \
   --run-name llama31_5k_subset --judged PATH_TO_JUDGED_JSONL \
   --model-path /workspace/syconbench_model --extract-only --batch-size 4
 ```
@@ -96,11 +96,11 @@ preparation.json,records.jsonl}`. Compare SHA-256 hashes, validate finite arrays
 shape/row alignment, model identity, and question split disjointness before scoring.
 
 ```bash
-.venv/bin/python prompt_probes/pipeline/eval_syconbench.py \
+.venv/bin/python probing/analyze_probes/eval_syconbench.py \
   --run-name llama31_5k_subset --judged PATH_TO_JUDGED_JSONL
-.venv/bin/python prompt_probes/pipeline/eval_matrix.py \
+.venv/bin/python probing/analyze_probes/eval_matrix.py \
   --run-name llama31_5k_subset --target syconbench --n-boot 1000
-.venv/bin/python prompt_probes/pipeline/analyze_probes.py \
+.venv/bin/python probing/analyze_probes/analyze_probes.py \
   --run-name llama31_5k_subset --positions response --cluster-only \
   --cluster-basis eval_syconbench
 ```

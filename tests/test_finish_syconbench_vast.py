@@ -6,8 +6,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "prompt_probes/pipeline"))
-import finish_syconbench_vast as finish
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from probing.evaluations.prompt_probes.generation import finish_syconbench_vast as finish
 
 
 class SupervisorStatusTests(unittest.TestCase):

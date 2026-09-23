@@ -5,9 +5,9 @@ import unittest
 import numpy as np
 from sklearn.metrics import adjusted_rand_score
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "prompt_probes/pipeline"))
-import cluster_syconbench_stability as cluster
-from analyze_probes import cluster_sweep
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from probing.analyze_probes import cluster_syconbench_stability as cluster
+from probing.analyze_probes.analyze_probes import cluster_sweep
 
 
 class ClusterTests(unittest.TestCase):

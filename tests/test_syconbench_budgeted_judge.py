@@ -6,8 +6,8 @@ import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "prompt_probes/pipeline"))
-import judge_syconbench_budgeted as judge
+sys.path.insert(0, str(ROOT))
+from probing.evaluations.prompt_probes.judge import judge_syconbench_budgeted as judge
 
 
 class BudgetTests(unittest.TestCase):

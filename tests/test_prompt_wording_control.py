@@ -6,11 +6,11 @@ import unittest
 
 import numpy as np
 
-PIPELINE = Path(__file__).resolve().parents[1] / "prompt_probes" / "pipeline"
-sys.path.insert(0, str(PIPELINE))
+REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO_ROOT))
 
-import common
-import prompt_wording_control as pwc
+from probing.utils import common
+from probing.data import prompt_wording_control as pwc
 
 
 class PromptWordingControlTests(unittest.TestCase):

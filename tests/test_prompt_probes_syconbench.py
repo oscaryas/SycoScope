@@ -4,11 +4,11 @@ import sys
 import unittest
 from unittest.mock import Mock
 
-PIPELINE = Path(__file__).resolve().parents[1] / "prompt_probes/pipeline"
-sys.path.insert(0, str(PIPELINE))
-import eval_syconbench as sycon
-from eval_common import selection_split, split_key
-import get_activations as ga
+REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO_ROOT))
+from probing.analyze_probes import eval_syconbench as sycon
+from probing.analyze_probes.eval_common import selection_split, split_key
+from probing.probe import get_activations as ga
 
 
 def conversation(judgments=(1, 1, 0, 1, 0)):
