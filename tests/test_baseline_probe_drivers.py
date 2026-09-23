@@ -161,5 +161,71 @@ class DriverImportPathTests(unittest.TestCase):
         self.assertIn("SYCOPHANCY_DIR / \"results\"", source)
 
 
+class BuildLabelsCallSiteTests(unittest.TestCase):
+    """Regression coverage for a bug that slipped past every other test in this
+    file: aita_dim_pipeline.build_labels() and oeq_probe_pipeline.build_labels()
+    called the relocated generate_moral_sycophancy_labels /
+    generate_social_sycophancy_labels without input_path. That parameter is
+    required (no default) on the shared probing.evaluations.baseline_probes.judge
+    versions of these functions (Task 4 of this plan deliberately removed the old
+    silent-default-into-SAE/results/ behavior), so the old tool_calling-local
+    copies' optional input_path let this call pattern work -- but the shared
+    versions raise TypeError: missing 1 required positional argument:
+    'input_path'. That TypeError is only reachable by actually calling
+    build_labels(); compileall, plain import and --help smoke tests never
+    exercise this path. These tests call build_labels() directly (with the
+    judge functions monkeypatched to avoid any real model/anthropic-client
+    dependency) so a future signature change here is caught without a GPU or
+    network access.
+    """
+
+    def test_aita_build_labels_binds_and_passes_default_input_path(self):
+        captured_kwargs = {}
+        real_generate = aita_dim_pipeline.generate_moral_sycophancy_labels
+
+        def fake_generate(*args, **kwargs):
+            # Fails loudly (TypeError) if the call site can't bind against the
+            # REAL shared function's signature -- e.g. a missing input_path.
+            inspect.signature(real_generate).bind(*args, **kwargs)
+            captured_kwargs.update(kwargs)
+            return {"records": [{"label": 1}, {"label": 0}, {"label": 1}]}
+
+        aita_dim_pipeline.generate_moral_sycophancy_labels = fake_generate
+        try:
+            result = aita_dim_pipeline.build_labels(tokenizer=object(), n_examples=3)
+        finally:
+            aita_dim_pipeline.generate_moral_sycophancy_labels = real_generate
+
+        self.assertEqual(captured_kwargs.get("input_path"), aita_dim_pipeline.DEFAULT_INPUT_PATH)
+        self.assertEqual(captured_kwargs.get("n_pairs"), 3)
+        self.assertEqual(result["n_pos"], 2)
+        self.assertEqual(result["n_neg"], 1)
+        self.assertEqual(result["n_judged"], 3)
+
+    def test_oeq_build_labels_binds_and_passes_default_input_path(self):
+        captured_kwargs = {}
+        real_generate = oeq_probe_pipeline.generate_social_sycophancy_labels
+
+        def fake_generate(*args, **kwargs):
+            inspect.signature(real_generate).bind(*args, **kwargs)
+            captured_kwargs.update(kwargs)
+            return {"records": [{"label": 1}, {"label": 0}]}
+
+        oeq_probe_pipeline.generate_social_sycophancy_labels = fake_generate
+        try:
+            result = oeq_probe_pipeline.build_labels(tokenizer=object(), n_label=2)
+        finally:
+            oeq_probe_pipeline.generate_social_sycophancy_labels = real_generate
+
+        self.assertEqual(
+            captured_kwargs.get("input_path"),
+            oeq_probe_pipeline.DEFAULT_RESULTS_DIR / "OEQ.jsonl",
+        )
+        self.assertEqual(captured_kwargs.get("metric"), "validation")
+        self.assertEqual(captured_kwargs.get("n_examples"), 2)
+        self.assertEqual(result["n_pos"], 1)
+        self.assertEqual(result["n_neg"], 1)
+
+
 if __name__ == "__main__":
     unittest.main()

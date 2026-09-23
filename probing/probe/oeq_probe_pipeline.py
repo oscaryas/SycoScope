@@ -56,7 +56,7 @@ from probing.probe.baseline_probes import (
     load_probe_results,
 )
 from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import (
-    generate_social_sycophancy_labels, build_labeled_text,
+    generate_social_sycophancy_labels, build_labeled_text, DEFAULT_RESULTS_DIR,
 )
 try:
     # cross_dataset_generalization.py depends on the live-steering machinery
@@ -87,7 +87,9 @@ BALANCE_METHODS = ["undersample", "upweight"]
 # ---------------------------------------------------------------------------
 
 def build_labels(tokenizer, n_label: int) -> dict:
-    result = generate_social_sycophancy_labels(tokenizer, metric="validation", n_examples=n_label)
+    result = generate_social_sycophancy_labels(
+        tokenizer, metric="validation", n_examples=n_label, input_path=DEFAULT_RESULTS_DIR / "OEQ.jsonl"
+    )
     n_pos = sum(r["label"] == 1 for r in result["records"])
     n_neg = len(result["records"]) - n_pos
     result["n_pos"] = n_pos

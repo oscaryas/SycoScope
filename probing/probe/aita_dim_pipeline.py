@@ -82,7 +82,7 @@ HOME_DATASET = "AITA-NTA-FLIP"
 # ---------------------------------------------------------------------------
 
 def build_labels(tokenizer, n_examples: int) -> dict:
-    result = generate_moral_sycophancy_labels(tokenizer, n_pairs=n_examples)
+    result = generate_moral_sycophancy_labels(tokenizer, input_path=DEFAULT_INPUT_PATH, n_pairs=n_examples)
     n_pos = sum(r["label"] == 1 for r in result["records"])
     result["n_pos"] = n_pos
     result["n_neg"] = len(result["records"]) - n_pos
