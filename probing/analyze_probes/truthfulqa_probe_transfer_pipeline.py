@@ -168,7 +168,7 @@ def bootstrap_auc_ci(y: np.ndarray, scores: np.ndarray, n_bootstrap: int = 1000,
     """Percentile bootstrap CI for a single-shot AUC-ROC point estimate --
     resamples (label, score) pairs together (not scores alone, since AUC is
     a function of the pairing) and recomputes roc_auc_score each draw.
-    Distinct from sycophancy_probes.bootstrap_ci, which bootstraps a 1-D
+    Unlike sycophancy_probes.bootstrap_ci, which bootstraps a 1-D
     array of already-computed per-fold statistics rather than raw examples.
     Returns None if every draw collapses to a single class (tiny/imbalanced
     groups) -- same "no signal" convention as _fold_auc returning None."""
