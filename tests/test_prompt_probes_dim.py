@@ -4,11 +4,11 @@ from pathlib import Path
 
 import numpy as np
 
-PIPELINE = Path(__file__).resolve().parents[1] / "prompt_probes" / "pipeline"
-if str(PIPELINE) not in sys.path:
-    sys.path.insert(0, str(PIPELINE))
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-import train_dim  # noqa: E402
+from probing.probe import train_dim  # noqa: E402
 
 
 class TestPromptProbeDim(unittest.TestCase):
