@@ -6,11 +6,11 @@
 set -e
 cd "$(dirname "$0")"
 
-BASE=../results/llama31_5k_subset
+BASE=../../prompt_probes/results/llama31_5k_subset
 AITA=../../tool_calling/tasks/sycophancy/results/generations/openrouter_llama31
 
 for C in 0.01 0.1 1.0 10.0 100.0; do
-  RUN="../results/llama31_5k_subset_C${C}"
+  RUN="../../prompt_probes/results/llama31_5k_subset_C${C}"
   ln -sfn "../llama31_5k_subset/eval_moral" "$RUN/eval_moral"
   ln -sfn "../llama31_5k_subset/eval_cross_cell" "$RUN/eval_cross_cell"
 
