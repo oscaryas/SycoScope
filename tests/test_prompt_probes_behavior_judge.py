@@ -10,7 +10,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-from prompt_probes.pipeline import judge_behaviors as judge
+from probing.evaluations.prompt_probes.judge import judge_behaviors as judge
 
 
 def annotation():

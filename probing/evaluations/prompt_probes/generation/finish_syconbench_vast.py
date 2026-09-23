@@ -126,11 +126,11 @@ def main():
         status("resuming_saved_judgments", n_conversations=len(generations))
     else:
         status("judging", n_conversations=len(generations))
-        local("-u", ROOT / "prompt_probes/pipeline/judge_syconbench_budgeted.py",
+        local("-u", ROOT / "probing/evaluations/prompt_probes/judge/judge_syconbench_budgeted.py",
               "--input", work / "generations.jsonl", "--output-dir", work / "judge",
               "--env-file", ROOT / ".env", "--budget-usd", "49.75", "--workers", "12")
     upload(work / "judge/judged.jsonl", REMOTE + "/results/judged.jsonl")
-    upload(ROOT / "prompt_probes/pipeline/syconbench_extraction.supervisor.conf",
+    upload(ROOT / "probing/evaluations/prompt_probes/judge/syconbench_extraction.supervisor.conf",
            "/etc/supervisor/conf.d/syconbench_extraction.conf")
     remote("supervisorctl reread && supervisorctl update")
     remote_cache = REMOTE + "/prompt_probes/results/" + RUN_NAME + "/eval_syconbench"
