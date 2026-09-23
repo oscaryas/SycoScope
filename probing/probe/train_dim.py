@@ -22,13 +22,13 @@ from pathlib import Path
 import numpy as np
 from sklearn.metrics import accuracy_score, balanced_accuracy_score
 
-HERE = Path(__file__).resolve().parent
-if str(HERE) not in sys.path:
-    sys.path.insert(0, str(HERE))
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-import common  # noqa: E402
-import get_activations as ga  # noqa: E402
-from train_probes import (  # noqa: E402
+from probing.utils import common  # noqa: E402
+from probing.probe import get_activations as ga  # noqa: E402
+from probing.probe.train_probes import (  # noqa: E402
     load_cell,
     load_or_make_split,
     paired_win_rate,

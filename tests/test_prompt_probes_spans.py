@@ -1,5 +1,5 @@
 """
-Tests for the pure span/layer helpers in prompt_probes/pipeline/get_activations.py.
+Tests for the pure span/layer helpers in probing/probe/get_activations.py.
 
 Two things are worth guarding here. First, resolve_layers and position_spans are
 pure index arithmetic where an off-by-one is invisible in the output but ruins
@@ -16,13 +16,11 @@ import unittest
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-PIPELINE = REPO_ROOT / "prompt_probes" / "pipeline"
-for p in (REPO_ROOT, PIPELINE):
-    if str(p) not in sys.path:
-        sys.path.insert(0, str(p))
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 import numpy as np  # noqa: E402
-import get_activations as ga  # noqa: E402
+from probing.probe import get_activations as ga  # noqa: E402
 
 TOKENIZER_MODEL = "meta-llama/Llama-3.2-1B-Instruct"
 
