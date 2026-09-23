@@ -39,9 +39,7 @@ from probing.evaluations.prompt_probes.generation.generate_response import (  # 
 )
 from utils.inference import iter_batches  # noqa: E402
 
-if str(common.SYCOPHANCY_DIR) not in sys.path:
-    sys.path.insert(0, str(common.SYCOPHANCY_DIR))
-from pipeline_scripts.generations.common import generate_via_openrouter_with_finish_reasons  # noqa: E402
+from probing.evaluations.baseline_probes.generation.common import generate_via_openrouter_with_finish_reasons  # noqa: E402
 
 
 def main():

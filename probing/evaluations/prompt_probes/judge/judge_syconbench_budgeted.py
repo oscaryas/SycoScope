@@ -20,8 +20,9 @@ import urllib.error
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[4]
-sys.path.insert(0, str(ROOT / "tool_calling/tasks/sycophancy"))
-from pipeline_scripts.judges.scoring import _sycon_prompt
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from probing.evaluations.baseline_probes.judge.scoring import _sycon_prompt
 
 MODEL = "claude-sonnet-5"
 INPUT_RATE, OUTPUT_RATE = 2 / 1_000_000, 10 / 1_000_000

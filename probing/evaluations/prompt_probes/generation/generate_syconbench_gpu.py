@@ -12,7 +12,8 @@ import sys
 import time
 
 ROOT = Path(__file__).resolve().parents[4]
-sys.path.insert(0, str(ROOT / "tool_calling/tasks/sycophancy"))
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 MODEL = "meta-llama/Llama-3.1-8B-Instruct"
 
 
@@ -31,7 +32,7 @@ def main():
     parser.add_argument("--limit", type=int)
     args = parser.parse_args()
     if args.export:
-        from pipeline_scripts.generations.generate_syconbench import (
+        from probing.evaluations.baseline_probes.generation.generate_syconbench import (
             DEFAULT_SOURCE, load_debate, load_ethical, load_false_presupposition,
         )
         rows = [r for loader in (load_debate, load_ethical, load_false_presupposition)
