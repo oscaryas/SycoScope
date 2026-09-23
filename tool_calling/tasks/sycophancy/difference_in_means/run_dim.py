@@ -12,14 +12,16 @@ import torch
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, roc_auc_score
 from sklearn.model_selection import StratifiedGroupKFold
 
-SYCOPHANCY_DIR = Path(__file__).resolve().parents[2]
-if str(SYCOPHANCY_DIR) not in sys.path:
-    sys.path.insert(0, str(SYCOPHANCY_DIR))
+SYCOPHANCY_DIR = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[4]
+for _p in (SYCOPHANCY_DIR, REPO_ROOT):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
 
-from pipeline_scripts.cache import load_activation_cache  # noqa: E402
-from pipeline_scripts.common import json_dump, parse_dataset_spec, t_confidence_interval, t_interval  # noqa: E402
-from pipeline_scripts.datasets import prepare_cache  # noqa: E402
-from pipeline_scripts.training import (  # noqa: E402
+from probing.utils.baseline_probes_cache import load_activation_cache  # noqa: E402
+from probing.utils.baseline_probes_common import json_dump, parse_dataset_spec, t_confidence_interval, t_interval  # noqa: E402
+from probing.utils.baseline_probes_datasets import prepare_cache  # noqa: E402
+from probing.probe.baseline_training import (  # noqa: E402
     Bundle, equalize_and_pool, reserve_group_holdout, validate_groups,
 )
 
@@ -191,7 +193,7 @@ def main() -> None:
     if args.train_mode == "pooled":
         run_one(equalize_and_pool(train_bundles, args.seed), ood, args, output)
         if args.steering_eval:
-            from pipeline_scripts.difference_in_means.steering_eval import run_steering_evaluation
+            from difference_in_means.steering_eval import run_steering_evaluation
             run_steering_evaluation(args, alphas, output)
     else:
         for bundle, holdout in zip(train_bundles, holdouts):
@@ -201,7 +203,7 @@ def main() -> None:
             })
             run_one(bundle, ood, args, child)
             if args.steering_eval:
-                from pipeline_scripts.difference_in_means.steering_eval import run_steering_evaluation
+                from difference_in_means.steering_eval import run_steering_evaluation
                 run_steering_evaluation(args, alphas, child)
 
 

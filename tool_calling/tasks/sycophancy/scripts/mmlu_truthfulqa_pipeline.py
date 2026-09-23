@@ -47,7 +47,7 @@ for p in (SYCOPHANCY_DIR, REPO_ROOT):
 
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt
-from sycophancy_model_registry import get_model_config
+from utils.model_registry import get_model_config
 from sycophancy_steering import ActivationSteerer, load_direction_vectors
 from cross_dataset_generalization import DEFAULT_ALPHAS as ALPHAS
 

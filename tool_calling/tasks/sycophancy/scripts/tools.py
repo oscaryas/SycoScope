@@ -26,7 +26,7 @@ def set_output_dir(path: Path):
 
 def load_model(model_path: str) -> str:
     """Load model and tokenizer with conservative bfloat16 policy, device_map=auto."""
-    import gpu_memory
+    from probing.utils import gpu_memory
     model, tokenizer, dtype = gpu_memory.load_model_conservatively(model_path)
     _session.update({"model": model, "tokenizer": tokenizer, "dtype": dtype, "model_path": model_path})
     return f"Model '{model_path}' loaded (dtype={dtype})"
@@ -36,7 +36,7 @@ def cleanup_model() -> str:
     """Free GPU memory. Call between models in cross-model analysis."""
     if _session["model"] is None:
         return "error: no model loaded — call load_model first"
-    import gpu_memory
+    from probing.utils import gpu_memory
     gpu_memory.safe_cleanup(model=_session["model"], tokenizer=_session["tokenizer"])
     _session.update({"model": None, "tokenizer": None, "dtype": None,
                      "model_path": None, "model_config": None, "activations": None,
@@ -147,7 +147,7 @@ def generate_behavioral_labels(n_examples: int, output_path: str = "behavioral_l
     if _session["model"] is None:
         return "error: no model loaded — call load_model first"
 
-    import sycophancy_data
+    from probing.data import sycophancy_data
     items = sycophancy_data.load_truthfulqa(n_examples)
     all_examples = []
     with open(out, "w") as f:
@@ -186,9 +186,11 @@ def generate_moral_sycophancy_labels(n_pairs: int = 50, output_path: str = "beha
     if _session["tokenizer"] is None:
         return "error: no model loaded — call load_model first (its tokenizer builds the chat-formatted text)"
 
-    import moral_sycophancy_judge
+    from probing.evaluations.baseline_probes.judge import moral_sycophancy_judge
 
-    result = moral_sycophancy_judge.generate_moral_sycophancy_labels(_session["tokenizer"], n_pairs=n_pairs)
+    result = moral_sycophancy_judge.generate_moral_sycophancy_labels(
+        _session["tokenizer"], input_path=moral_sycophancy_judge.DEFAULT_INPUT_PATH, n_pairs=n_pairs
+    )
     with open(out, "w", encoding="utf-8") as f:
         for rec in result["records"]:
             f.write(json.dumps(rec) + "\n")
@@ -231,7 +233,7 @@ def generate_social_sycophancy_labels(
     if _session["tokenizer"] is None:
         return "error: no model loaded — call load_model first (its tokenizer builds the chat-formatted text)"
 
-    import social_sycophancy_judge
+    from probing.evaluations.baseline_probes.judge import social_sycophancy_judge
 
     input_path = social_sycophancy_judge.DEFAULT_RESULTS_DIR / f"{dataset}.jsonl"
     if not input_path.exists():
@@ -262,7 +264,7 @@ def extract_activations(labels_path: str, answer_token_id: int, pooling: str = "
     Writes activations/ with metadata.json, labels.npy, mha.npy, mlp.npy, residual.npy.
     """
     import numpy as np
-    import sycophancy_probes
+    from probing.probe import baseline_probes as sycophancy_probes
 
     if _session["model"] is None:
         return "error: no model loaded — call load_model first"
@@ -322,7 +324,7 @@ def train_probe_family(probe_type: str) -> str:
         return f"error: probe_type must be mha, mlp, or residual — got '{probe_type}'"
 
     import numpy as np
-    import sycophancy_probes
+    from probing.probe import baseline_probes as sycophancy_probes
 
     cache_dir = Path(_session["activations"])
     meta = json.loads((cache_dir / "metadata.json").read_text())
@@ -360,7 +362,7 @@ def write_metrics() -> str:
     if missing:
         return f"error: missing probe families: {missing}. Call train_probe_family for each."
 
-    import sycophancy_probes
+    from probing.probe import baseline_probes as sycophancy_probes
 
     pr = _session["probe_results"]
     results = {
@@ -427,7 +429,7 @@ def fetch_paper_results(paper_title: str) -> str:
 
 def compare_with_paper(results_path: str, paper_results_path: str) -> str:
     """Compare reproduced metrics against paper. Writes comparison_table.md."""
-    import sycophancy_compare
+    from probing.analyze_probes import sycophancy_compare
 
     results_file = _OUTPUT_DIR / results_path
     paper_file = _OUTPUT_DIR / paper_results_path

@@ -40,7 +40,7 @@ for p in (SYCOPHANCY_DIR, REPO_ROOT):
         sys.path.insert(0, str(p))
 
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
-from sycophancy_model_registry import get_model_config
+from utils.model_registry import get_model_config
 from sycophancy_steering import ActivationSteerer
 from mixture_dim_pipeline import (
     load_mixture, load_moral_index, load_social_index, load_sypr_index,

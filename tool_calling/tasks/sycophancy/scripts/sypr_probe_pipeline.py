@@ -43,8 +43,8 @@ for p in (SYCOPHANCY_DIR, REPO_ROOT):
 
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt_multiturn
-from sycophancy_model_registry import get_model_config
-from sycophancy_probes import (
+from utils.model_registry import get_model_config
+from probing.probe.baseline_probes import (
     collect_activations,
     train_mha_probes,
     train_mlp_probes,
@@ -53,13 +53,13 @@ from sycophancy_probes import (
     load_probe_results,
 )
 from sycophancy_steering import ActivationSteerer, load_direction_vectors
-from sycophantic_praise_judge import judge_praise_batch, JUDGE_MODEL
-from sypr_data import (
+from probing.evaluations.baseline_probes.judge.sycophantic_praise_judge import judge_praise_batch, JUDGE_MODEL
+from probing.data.sypr_data import (
     load_sypr_dataset,
-    generate_and_label_sypr,
     sample_poor_quality_heldout,
     build_chat_messages,
 )
+from sypr_generation import generate_and_label_sypr
 from cross_dataset_generalization import DEFAULT_ALPHAS as ALPHAS, run_generalization_sweep
 
 BALANCE_METHODS = ["undersample", "upweight"]

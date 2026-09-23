@@ -136,7 +136,7 @@ def main():
 
     import torch
     from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
-    from sycophancy_model_registry import get_model_config
+    from utils.model_registry import get_model_config
     from sycophancy_steering import ActivationSteerer
     from utils.inference import build_chat_prompt, build_chat_prompt_multiturn
 

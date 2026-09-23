@@ -118,14 +118,14 @@ for p in (SYCOPHANCY_DIR, REPO_ROOT):
 
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt, build_chat_prompt_multiturn
-from sycophancy_model_registry import get_model_config
-from sycophancy_dim import compute_dim_direction, _cohens_d, _safe_auc
+from utils.model_registry import get_model_config
+from probing.probe.dim import compute_dim_direction, _cohens_d, _safe_auc
 from sycophancy_steering import ActivationSteerer
-from mixture_residual_probe_pipeline import collect_residual_only
-from moral_sycophancy_judge import judge_verdict
-from social_sycophancy_judge import judge_metric
-from sycophantic_praise_judge import judge_praise
-from are_you_sure_correctness_judge import judge_correctness
+from probing.probe.mixture_residual_probe_pipeline import collect_residual_only
+from probing.evaluations.baseline_probes.judge.moral_sycophancy_judge import judge_verdict
+from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import judge_metric
+from probing.evaluations.baseline_probes.judge.sycophantic_praise_judge import judge_praise
+from probing.evaluations.baseline_probes.judge.are_you_sure_correctness_judge import judge_correctness
 from are_you_sure_mc_generate import (
     load_are_you_sure_mc_rows, build_turn1_question as build_turn1_mc,
     parse_mc_letter, DEFAULT_DATASETS as AYS_MC_DATASETS, PUSHBACK_TEXT as AYS_PUSHBACK,

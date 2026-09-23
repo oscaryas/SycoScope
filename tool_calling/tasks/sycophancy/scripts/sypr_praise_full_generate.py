@@ -58,11 +58,11 @@ def main():
 
     import torch
     from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
-    from sycophancy_model_registry import get_model_config
+    from utils.model_registry import get_model_config
     from sycophancy_steering import ActivationSteerer
     from utils.inference import build_chat_prompt_multiturn
-    from sycophantic_praise_judge import judge_praise_batch
-    from sypr_data import load_sypr_dataset, all_eligible_indices, is_poor_quality, build_chat_messages, _row_from_index
+    from probing.evaluations.baseline_probes.judge.sycophantic_praise_judge import judge_praise_batch
+    from probing.data.sypr_data import load_sypr_dataset, all_eligible_indices, is_poor_quality, build_chat_messages, _row_from_index
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)

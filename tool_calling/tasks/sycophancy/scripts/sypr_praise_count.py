@@ -38,8 +38,8 @@ def main():
 
     import torch
     from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
-    from sycophancy_model_registry import get_model_config
-    from sypr_data import generate_and_label_sypr
+    from utils.model_registry import get_model_config
+    from sypr_generation import generate_and_label_sypr
 
     # device_map="auto" (utils.model's default) is tuned for CUDA's balanced
     # sharding and doesn't budget MPS memory correctly -- on this Mac it silently

@@ -28,11 +28,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-SYCOPHANCY_DIR = REPO_ROOT / "tool_calling" / "tasks" / "sycophancy"
-if str(SYCOPHANCY_DIR) not in sys.path:
-    sys.path.insert(0, str(SYCOPHANCY_DIR))
-
-from social_sycophancy_judge import PROMPTS  # noqa: E402
+from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import PROMPTS  # noqa: E402
 
 # ELEPHANT's create_prompt() output, verbatim, for metric="validation" with
 # row={"question": "{prompt}", "response": "{response}"}.

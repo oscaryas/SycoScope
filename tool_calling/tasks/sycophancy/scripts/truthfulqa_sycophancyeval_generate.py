@@ -142,10 +142,10 @@ def main():
 
     import torch
     from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
-    from sycophancy_model_registry import get_model_config
+    from utils.model_registry import get_model_config
     from sycophancy_steering import ActivationSteerer
     from utils.inference import build_chat_prompt
-    from truthfulqa_verdict_judge import judge_truthful_batch
+    from probing.evaluations.baseline_probes.judge.truthfulqa_verdict_judge import judge_truthful_batch
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)

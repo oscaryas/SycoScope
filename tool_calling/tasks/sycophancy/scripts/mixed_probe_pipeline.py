@@ -58,8 +58,8 @@ for p in (SYCOPHANCY_DIR, REPO_ROOT):
 
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt
-from sycophancy_model_registry import get_model_config
-from sycophancy_probes import (
+from utils.model_registry import get_model_config
+from probing.probe.baseline_probes import (
     collect_activations,
     train_mha_probes,
     train_mlp_probes,
@@ -68,8 +68,11 @@ from sycophancy_probes import (
     load_probe_results,
 )
 from sycophancy_steering import ActivationSteerer, load_steering_vectors
-from moral_sycophancy_judge import generate_moral_sycophancy_labels
-from sypr_data import generate_and_label_sypr
+from probing.evaluations.baseline_probes.judge.moral_sycophancy_judge import (
+    DEFAULT_INPUT_PATH as AITA_NTA_FLIP_PATH,
+    generate_moral_sycophancy_labels,
+)
+from sypr_generation import generate_and_label_sypr
 
 STEER_ALPHAS = [-20.0, -5.0, 0.0, 5.0, 20.0]
 NONZERO_ALPHAS = [a for a in STEER_ALPHAS if a != 0.0]
@@ -84,7 +87,7 @@ JUDGE_MODEL = "claude-sonnet-5"
 # ---------------------------------------------------------------------------
 
 def build_combined_labels(model, tokenizer, model_config: dict, n_aita_pairs: int, n_sypr_train: int, seed: int) -> dict:
-    aita = generate_moral_sycophancy_labels(tokenizer, n_pairs=n_aita_pairs)
+    aita = generate_moral_sycophancy_labels(tokenizer, input_path=AITA_NTA_FLIP_PATH, n_pairs=n_aita_pairs)
     for r in aita["records"]:
         r["source"] = "aita"
 

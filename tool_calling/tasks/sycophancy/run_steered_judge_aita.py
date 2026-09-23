@@ -29,21 +29,24 @@ from pathlib import Path
 import anthropic
 
 SYCOPHANCY_DIR = Path(__file__).resolve().parent
-if str(SYCOPHANCY_DIR) not in sys.path:
-    sys.path.insert(0, str(SYCOPHANCY_DIR))
+REPO_ROOT = SYCOPHANCY_DIR.parents[2]
+for _p in (SYCOPHANCY_DIR, REPO_ROOT):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
 
-from run_social_sycophancy_judge_oeq import (  # noqa: E402
+from probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq import (  # noqa: E402
     judge_all_metrics_for_record,
     resume_run,
 )
-from social_sycophancy_judge import (  # noqa: E402
+from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import (  # noqa: E402
     DEFAULT_MAX_WORKERS,
     JUDGE_MODEL,
     METRICS,
     iter_dataset_records,
 )
 
-REPO_ROOT = SYCOPHANCY_DIR.parents[2]
+# SAE/ is removed from this branch (see repo split); --steered-dir is a
+# required override once SAE/results/steered_responses/ no longer exists here.
 DEFAULT_STEERED_DIR = REPO_ROOT / "SAE" / "results" / "steered_responses"
 DEFAULT_OUTPUT_DIR = SYCOPHANCY_DIR / "results" / "steered_judged"
 DEFAULT_RUNS = ("coeff_0", "coeff_2")

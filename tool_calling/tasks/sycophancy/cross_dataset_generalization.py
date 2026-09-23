@@ -23,8 +23,8 @@ for p in (HERE, REPO_ROOT):
 
 from utils.inference import build_chat_prompt
 from sycophancy_steering import ActivationSteerer, load_direction_vectors
-from social_sycophancy_judge import iter_dataset_records, judge_metric, DEFAULT_RESULTS_DIR
-from moral_sycophancy_judge import iter_flip_pairs, judge_verdict
+from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import iter_dataset_records, judge_metric, DEFAULT_RESULTS_DIR
+from probing.evaluations.baseline_probes.judge.moral_sycophancy_judge import iter_flip_pairs, judge_verdict
 
 DEFAULT_ALPHAS = [-20.0, -5.0, 0.0, 5.0, 20.0]
 CROSS_DATASETS = ["AITA-NTA-FLIP", "AITA-NTA-OG", "AITA-YTA", "OEQ", "SS"]

@@ -5,17 +5,18 @@ generation, so a discovered sycophancy direction's effect can be observed
 directly rather than only inferred from probe accuracy.
 
 Reads direction vectors from the *_probe_weights.pth / *_projection_stds.pt
-checkpoints that sycophancy_probes.save_probe_results already writes, and
-locates modules the same way sycophancy_model_registry.register_hooks does
-(hook-path suffix + layer index parsed from the module's dotted name) rather
-than a separate layer_path config, so no new registry fields are needed.
+checkpoints that probing.probe.baseline_probes.save_probe_results already
+writes, and locates modules the same way utils.model_registry.register_hooks
+does (hook-path suffix + layer index parsed from the module's dotted name)
+rather than a separate layer_path config, so no new registry fields are
+needed.
 """
 
 from pathlib import Path
 
 import torch
 
-from sycophancy_model_registry import _extract_layer_idx
+from utils.model_registry import _extract_layer_idx
 from utils.inference import generate_from_rendered
 
 

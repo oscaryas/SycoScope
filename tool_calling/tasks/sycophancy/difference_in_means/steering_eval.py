@@ -7,8 +7,14 @@ from pathlib import Path
 
 import torch
 
-from pipeline_scripts.common import json_dump, parse_dataset_spec, read_jsonl, write_jsonl
-from pipeline_scripts.judges.scoring import score_rows
+SYCOPHANCY_DIR = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[4]
+for _p in (SYCOPHANCY_DIR, REPO_ROOT):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
+
+from probing.utils.baseline_probes_common import json_dump, parse_dataset_spec, read_jsonl, write_jsonl  # noqa: E402
+from probing.evaluations.baseline_probes.judge.scoring import score_rows  # noqa: E402
 
 
 def _metadata_for(path: Path) -> dict | None:
@@ -96,7 +102,7 @@ def _generated_rows(tokenizer, baseline_rows: list[dict], responses: list[str]) 
 
 
 def run_steering_evaluation(args, alphas: list[float], output_dir: Path) -> None:
-    from sycophancy_model_registry import get_model_config
+    from utils.model_registry import get_model_config
     from sycophancy_steering import ActivationSteerer
     from utils.model import cleanup, load_model_and_tokenizer
 

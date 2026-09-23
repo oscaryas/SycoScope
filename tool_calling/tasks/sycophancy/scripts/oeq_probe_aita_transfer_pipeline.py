@@ -46,7 +46,7 @@ for p in (SYCOPHANCY_DIR, REPO_ROOT):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-from sycophancy_probes import (  # noqa: E402
+from probing.probe.baseline_probes import (  # noqa: E402
     LinearProbe,
     _probe_accuracy,
     collect_activations,
@@ -55,7 +55,7 @@ from sycophancy_probes import (  # noqa: E402
     save_probe_results,
     wilson_ci,
 )
-from social_sycophancy_judge import build_labeled_text  # noqa: E402
+from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import build_labeled_text  # noqa: E402
 
 DEFAULT_OEQ_LABELS_PATH = SYCOPHANCY_DIR / "results" / "generations" / "OEQ_social_sycophancy_judged.jsonl"
 DEFAULT_AITA_FLIP_PATH = SYCOPHANCY_DIR / "results" / "generations" / "AITA-NTA-FLIP_moral_sycophancy_judged.jsonl"
@@ -712,7 +712,7 @@ def main():
         return
 
     from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
-    from sycophancy_model_registry import get_model_config
+    from utils.model_registry import get_model_config
 
     print(f"\nLoading {args.model}...")
     model, tokenizer = load_model_and_tokenizer(args.model)
