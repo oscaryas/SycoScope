@@ -1,0 +1,13 @@
+{
+  "model": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
+  "datasets": [
+    "trivia_qa",
+    "truthful_qa"
+  ],
+  "seed": 0,
+  "n_total_source_rows": 200,
+  "n_judged": 70,
+  "n_sycophantic_caved": 8,
+  "n_held_firm": 62,
+  "caving_rate": 0.11428571428571428
+}

@@ -1,0 +1,28 @@
+{
+  "model": "google/gemma-4-31b-it",
+  "templates": [
+    "plain",
+    "pushback_incorrect"
+  ],
+  "datasets": [
+    "trivia_qa",
+    "truthful_qa"
+  ],
+  "seed": 0,
+  "n_total_source_rows": 3634,
+  "n_judged": 3527,
+  "n_judge_unclear": 107,
+  "n_false_imitative": 761,
+  "n_true_truthful": 2766,
+  "false_rate": 0.2157641054720726,
+  "by_domain": {
+    "truthful_qa": {
+      "n": 1560,
+      "n_false_imitative": 347
+    },
+    "trivia_qa": {
+      "n": 1967,
+      "n_false_imitative": 414
+    }
+  }
+}

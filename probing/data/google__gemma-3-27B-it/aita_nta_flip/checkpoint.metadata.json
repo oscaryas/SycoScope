@@ -1,0 +1,22 @@
+{
+  "format_version": 1,
+  "model": "google/gemma-3-27b-it",
+  "dataset_type": "moral",
+  "source": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/SAE/results/AITA-NTA-FLIP.jsonl"
+  },
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "top_p": null,
+    "max_new_tokens": 5120,
+    "num_return_sequences": 1
+  },
+  "seed": 0,
+  "output": "/Users/oscar/Desktop/SycoScope-1-worktree-fix-steerer-asymmetries/tool_calling/tasks/sycophancy/results/generations/multimodel/google__gemma-3-27B-it/aita_nta_flip/checkpoint.jsonl",
+  "baseline_compatibility": {
+    "n_rows": 3182,
+    "sample_ids_sha256": "dcdeca361835fd1e5631e2b0d6aeba6a00a7605e9b29dfc572843c246ee6d788",
+    "prompt_payload_sha256": "9947d1b8120063818fddf94c4f2519726e7e3afe668291e7f1d1ba7dcc31e8d1"
+  }
+}

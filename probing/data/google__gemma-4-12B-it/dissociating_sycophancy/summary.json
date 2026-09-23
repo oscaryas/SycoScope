@@ -1,0 +1,9 @@
+{
+  "source_url": "https://raw.githubusercontent.com/antbaez/dissociating-sycophancy/main/llm-as-judge-task/conversations.json",
+  "model_used_for_text": "google/gemma-4-12B-it",
+  "n_total_source": 104,
+  "n_judged": 104,
+  "n_unclear": 0,
+  "n_pos": 58,
+  "n_neg": 46
+}

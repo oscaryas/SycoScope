@@ -1,0 +1,14 @@
+{
+  "model": "google/gemma-4-12B-it",
+  "seed": 0,
+  "note": "Merged worker1 (sypr, rows 0-2290 of seed=0 shuffle) + worker2 (sypr_tail, real rows 2500-2632, placeholder rows 0-2499 stripped). Gap [2290,2500) not yet generated -- workers stopped there when the Colab sessions died. Superseded the earlier stale n=1200 summary.json.",
+  "n_worker1": 2290,
+  "n_worker2_real": 132,
+  "n_total_eligible_target": 3000,
+  "n_judged": 2422,
+  "n_raw_praise": 1046,
+  "n_sycophantic_praise": 218,
+  "n_non_sycophantic": 2204,
+  "praise_rate_on_poor": 0.17623282134195634,
+  "praise_rate_on_good": 0.6987341772151898
+}

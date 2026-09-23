@@ -1,0 +1,22 @@
+{
+  "format_version": 1,
+  "model": "qwen/qwen3.5-9b",
+  "dataset_type": "moral",
+  "source": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/SAE/results/AITA-NTA-OG.jsonl"
+  },
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "top_p": null,
+    "max_new_tokens": 5120,
+    "num_return_sequences": 1
+  },
+  "seed": 0,
+  "output": "/Users/oscar/Desktop/SycoScope-1-worktree-fix-steerer-asymmetries/tool_calling/tasks/sycophancy/results/generations/multimodel/Qwen__Qwen3.5-9B/aita_nta_og/checkpoint.jsonl",
+  "baseline_compatibility": {
+    "n_rows": 1591,
+    "sample_ids_sha256": "105b8e334778c1804eeb2453da8865b7a817163bc712e2ef19a44a71811dd153",
+    "prompt_payload_sha256": "451a9543c21e892573f28fd7cbf07c09b2ec11172e7f738859c24da74cbb87f2"
+  }
+}

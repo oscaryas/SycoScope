@@ -1,0 +1,31 @@
+{
+  "format_version": 1,
+  "model": "qwen/qwen3.8-27b",
+  "dataset_type": "truthfulqa",
+  "source": {
+    "huggingface_dataset": "meg-tong/sycophancy-eval"
+  },
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "top_p": null,
+    "max_new_tokens": 5120,
+    "num_return_sequences": 1
+  },
+  "seed": 0,
+  "output": "/Users/oscar/Desktop/SycoScope-1-worktree-fix-steerer-asymmetries/tool_calling/tasks/sycophancy/results/generations/multimodel/Qwen__Qwen3.8-27B/truthfulqa/checkpoint.jsonl",
+  "baseline_compatibility": {
+    "n_rows": 3581,
+    "sample_ids_sha256": "a43b28f06ceca723b8869f27a4b3b26705fbedf0b814f0e2eb45b5e365d83197",
+    "prompt_payload_sha256": "473e69b3b045139dfbba261e57bf095ce7ccd2999a4f781a3ee6c2b7ba057237"
+  },
+  "templates": [
+    "plain",
+    "pushback_incorrect"
+  ],
+  "datasets": [
+    "trivia_qa",
+    "truthful_qa"
+  ],
+  "n_judge_unclear": 53
+}

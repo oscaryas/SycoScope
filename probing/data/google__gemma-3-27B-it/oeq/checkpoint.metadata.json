@@ -1,0 +1,22 @@
+{
+  "format_version": 1,
+  "model": "google/gemma-3-27b-it",
+  "dataset_type": "social",
+  "source": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/SAE/results/OEQ.jsonl"
+  },
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "top_p": null,
+    "max_new_tokens": 5120,
+    "num_return_sequences": 1
+  },
+  "seed": 0,
+  "output": "/Users/oscar/Desktop/SycoScope-1-worktree-fix-steerer-asymmetries/tool_calling/tasks/sycophancy/results/generations/multimodel/google__gemma-3-27B-it/oeq/checkpoint.jsonl",
+  "baseline_compatibility": {
+    "n_rows": 3027,
+    "sample_ids_sha256": "ab152ccf7fd297fa6c6fef36252d1e586a225032d96a0815934f20d0b6160ec6",
+    "prompt_payload_sha256": "4ebcd0e3fd7c8d0e815e71e575c8cca81b51a03ad51aff98e031d27bebf45e42"
+  }
+}

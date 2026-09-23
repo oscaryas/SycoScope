@@ -1,0 +1,9 @@
+{
+  "model": "Qwen/Qwen3-8B",
+  "dataset": "aita_nta_flip",
+  "seed": 0,
+  "n_rows": 200,
+  "n_total_generations": 400,
+  "n_generated": 399,
+  "n_cap_hit_set_aside": 10
+}

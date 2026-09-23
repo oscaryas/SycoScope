@@ -1,0 +1,22 @@
+{
+  "format_version": 1,
+  "model": "qwen/qwen3.5-9b",
+  "dataset_type": "sypr",
+  "source": {
+    "huggingface_dataset": "vennemeyerd/sycophantic-praise"
+  },
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "top_p": null,
+    "max_new_tokens": 5120,
+    "num_return_sequences": 1
+  },
+  "seed": 0,
+  "output": "/Users/oscar/Desktop/SycoScope-1-worktree-fix-steerer-asymmetries/tool_calling/tasks/sycophancy/results/generations/multimodel/Qwen__Qwen3.5-9B/sypr/checkpoint.jsonl",
+  "baseline_compatibility": {
+    "n_rows": 5000,
+    "sample_ids_sha256": "73b220ed7c21d2aaa9aae5f769359f7e64c5c446a24c925ca8c6535026ad978c",
+    "prompt_payload_sha256": "ca6f170418b4c7fd282d1671c1a1bb2cf85778fab13a262eba7f16c63dc36199"
+  }
+}

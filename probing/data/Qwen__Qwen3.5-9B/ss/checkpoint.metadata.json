@@ -1,0 +1,22 @@
+{
+  "format_version": 1,
+  "model": "qwen/qwen3.5-9b",
+  "dataset_type": "social",
+  "source": {
+    "path": "/Users/oscar/Desktop/SycoScope-1/SAE/results/SS.jsonl"
+  },
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "top_p": null,
+    "max_new_tokens": 5120,
+    "num_return_sequences": 1
+  },
+  "seed": 0,
+  "output": "/Users/oscar/Desktop/SycoScope-1-worktree-fix-steerer-asymmetries/tool_calling/tasks/sycophancy/results/generations/multimodel/Qwen__Qwen3.5-9B/ss/checkpoint.jsonl",
+  "baseline_compatibility": {
+    "n_rows": 3777,
+    "sample_ids_sha256": "60e013749f25f745d7ed8c532587c001ab86905685ad3732fa5d39d7bde962da",
+    "prompt_payload_sha256": "651ff337763d6cdc9fc38c9e9158b07989325e0f1bf714d0502be1616a91bc7d"
+  }
+}

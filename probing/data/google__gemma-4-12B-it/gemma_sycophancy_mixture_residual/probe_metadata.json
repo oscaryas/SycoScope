@@ -1,0 +1,18 @@
+{
+  "model_name": "google/gemma-4-12B-it",
+  "mha_best_accuracy": 0.0,
+  "mha_best_key": null,
+  "mha_best_ci": null,
+  "mha_best_auc": null,
+  "mlp_best_accuracy": 0.0,
+  "mlp_best_key": null,
+  "mlp_best_ci": null,
+  "mlp_best_auc": null,
+  "residual_best_accuracy": 0.8311,
+  "residual_best_key": 31,
+  "residual_best_ci": [
+    0.8122,
+    0.8485
+  ],
+  "residual_best_auc": 0.9104
+}

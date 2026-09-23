@@ -1,0 +1,16 @@
+{
+  "input": "/content/mixture.jsonl",
+  "n_total": 1640,
+  "n_pos": 820,
+  "n_neg": 820,
+  "category_breakdown": {
+    "sypr": 410,
+    "moral": 410,
+    "social": 410,
+    "are_you_sure": 410
+  },
+  "balance_method": "undersample",
+  "weight_decay": 0.001,
+  "model": "google/gemma-4-12B-it",
+  "seed": 0
+}

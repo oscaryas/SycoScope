@@ -1,0 +1,12 @@
+{
+  "model": "google/gemma-4-12B-it",
+  "seed": 0,
+  "n_per_category_per_label": 205,
+  "total_rows": 1640,
+  "category_caps": {
+    "sypr": 218,
+    "are_you_sure": 205,
+    "social": 504,
+    "moral": 409
+  }
+}

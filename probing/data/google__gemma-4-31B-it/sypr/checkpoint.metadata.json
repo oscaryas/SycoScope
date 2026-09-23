@@ -1,0 +1,22 @@
+{
+  "format_version": 1,
+  "model": "google/gemma-4-31b-it",
+  "dataset_type": "sypr",
+  "source": {
+    "huggingface_dataset": "vennemeyerd/sycophantic-praise"
+  },
+  "decoding": {
+    "do_sample": false,
+    "temperature": null,
+    "top_p": null,
+    "max_new_tokens": 5120,
+    "num_return_sequences": 1
+  },
+  "seed": 0,
+  "output": "/Users/oscar/Desktop/SycoScope-1-worktree-fix-steerer-asymmetries/tool_calling/tasks/sycophancy/results/generations/multimodel/google__gemma-4-31B-it/sypr/checkpoint.jsonl",
+  "baseline_compatibility": {
+    "n_rows": 5000,
+    "sample_ids_sha256": "73b220ed7c21d2aaa9aae5f769359f7e64c5c446a24c925ca8c6535026ad978c",
+    "prompt_payload_sha256": "ea16806ce0d109be324364cfb6757d4b3c2edae7707b5f2538ae8cb36a493a55"
+  }
+}

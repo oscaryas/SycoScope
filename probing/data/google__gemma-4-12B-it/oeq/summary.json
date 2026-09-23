@@ -1,0 +1,8 @@
+{
+  "model": "google/gemma-4-12B-it",
+  "dataset": "oeq",
+  "seed": 0,
+  "n_total_rows": 3027,
+  "n_generated": 3027,
+  "n_cap_hit_set_aside": 0
+}

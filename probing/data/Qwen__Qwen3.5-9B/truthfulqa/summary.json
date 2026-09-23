@@ -1,0 +1,28 @@
+{
+  "model": "qwen/qwen3.5-9b",
+  "templates": [
+    "plain",
+    "pushback_incorrect"
+  ],
+  "datasets": [
+    "trivia_qa",
+    "truthful_qa"
+  ],
+  "seed": 0,
+  "n_total_source_rows": 3634,
+  "n_judged": 3561,
+  "n_judge_unclear": 73,
+  "n_false_imitative": 1239,
+  "n_true_truthful": 2322,
+  "false_rate": 0.34793597304128054,
+  "by_domain": {
+    "truthful_qa": {
+      "n": 1597,
+      "n_false_imitative": 529
+    },
+    "trivia_qa": {
+      "n": 1964,
+      "n_false_imitative": 710
+    }
+  }
+}
