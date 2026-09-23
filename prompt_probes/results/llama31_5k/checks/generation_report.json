@@ -1,0 +1,291 @@
+{
+  "ctrl_affiliation": {
+    "n": 10000,
+    "degenerate_rate": 0.0198,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1625.4,
+      "refusal_rate": 0.0382
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1635.6,
+      "refusal_rate": 0.018
+    }
+  },
+  "ctrl_calibrated_hedging": {
+    "n": 10000,
+    "degenerate_rate": 0.0624,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1261.8,
+      "refusal_rate": 0.0348
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1715.9,
+      "refusal_rate": 0.0874
+    }
+  },
+  "ctrl_emotional_support": {
+    "n": 10000,
+    "degenerate_rate": 0.0264,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1572.7,
+      "refusal_rate": 0.0276
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1583.8,
+      "refusal_rate": 0.0292
+    }
+  },
+  "ctrl_evasive_hedging": {
+    "n": 10000,
+    "degenerate_rate": 0.0683,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1587.7,
+      "refusal_rate": 0.0564
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1132.2,
+      "refusal_rate": 0.0882
+    }
+  },
+  "ctrl_excitement": {
+    "n": 10000,
+    "degenerate_rate": 0.0178,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1658.9,
+      "refusal_rate": 0.0406
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1393.5,
+      "refusal_rate": 0.001
+    }
+  },
+  "ctrl_genuine_agreement": {
+    "n": 10000,
+    "degenerate_rate": 0.0408,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1905.9,
+      "refusal_rate": 0.0742
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1907.1,
+      "refusal_rate": 0.0224
+    }
+  },
+  "ctrl_inauthenticity": {
+    "n": 10000,
+    "degenerate_rate": 0.0179,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1853.4,
+      "refusal_rate": 0.0262
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1568.2,
+      "refusal_rate": 0.0112
+    }
+  },
+  "ctrl_obsequiousness": {
+    "n": 10000,
+    "degenerate_rate": 0.0348,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1717.9,
+      "refusal_rate": 0.0364
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1903.2,
+      "refusal_rate": 0.0404
+    }
+  },
+  "ctrl_politeness": {
+    "n": 10000,
+    "degenerate_rate": 0.0902,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 550.0,
+      "refusal_rate": 0.0088
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1840.9,
+      "refusal_rate": 0.026
+    }
+  },
+  "ctrl_pure_sycophancy": {
+    "n": 10000,
+    "degenerate_rate": 0.0154,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 2049.9,
+      "refusal_rate": 0.0282
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1596.1,
+      "refusal_rate": 0.0158
+    }
+  },
+  "ctrl_warranted_praise": {
+    "n": 10000,
+    "degenerate_rate": 0.0123,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1628.4,
+      "refusal_rate": 0.0132
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 2199.9,
+      "refusal_rate": 0.01
+    }
+  },
+  "general_baseline": {
+    "n": 10000,
+    "degenerate_rate": 0.0744,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 2312.5,
+      "refusal_rate": 0.0642
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1424.9,
+      "refusal_rate": 0.0876
+    }
+  },
+  "neutral": {
+    "n": 5000,
+    "degenerate_rate": 0.0708,
+    "neutral": {
+      "n": 5000,
+      "mean_chars": 2085.3,
+      "refusal_rate": 0.0642
+    }
+  },
+  "pe_explicit": {
+    "n": 10000,
+    "degenerate_rate": 0.0177,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1814.4,
+      "refusal_rate": 0.011
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1735.2,
+      "refusal_rate": 0.0338
+    }
+  },
+  "pe_implicit": {
+    "n": 10000,
+    "degenerate_rate": 0.0342,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1852.3,
+      "refusal_rate": 0.0546
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1504.2,
+      "refusal_rate": 0.019
+    }
+  },
+  "ps_explicit": {
+    "n": 10000,
+    "degenerate_rate": 0.0046,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 2178.3,
+      "refusal_rate": 0.0296
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1723.1,
+      "refusal_rate": 0.0006
+    }
+  },
+  "ps_implicit": {
+    "n": 10000,
+    "degenerate_rate": 0.025,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 3175.4,
+      "refusal_rate": 0.0226
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1882.2,
+      "refusal_rate": 0.0044
+    }
+  },
+  "pt_explicit": {
+    "n": 10000,
+    "degenerate_rate": 0.0706,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1892.0,
+      "refusal_rate": 0.1212
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 2045.7,
+      "refusal_rate": 0.0316
+    }
+  },
+  "pt_implicit": {
+    "n": 10000,
+    "degenerate_rate": 0.0495,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1859.6,
+      "refusal_rate": 0.0702
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 944.5,
+      "refusal_rate": 0.0544
+    }
+  },
+  "pv_explicit": {
+    "n": 10000,
+    "degenerate_rate": 0.0257,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1474.9,
+      "refusal_rate": 0.0282
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 829.7,
+      "refusal_rate": 0.0056
+    }
+  },
+  "pv_implicit": {
+    "n": 10000,
+    "degenerate_rate": 0.0096,
+    "non_sycophantic": {
+      "n": 5000,
+      "mean_chars": 1810.5,
+      "refusal_rate": 0.022
+    },
+    "sycophantic": {
+      "n": 5000,
+      "mean_chars": 1518.5,
+      "refusal_rate": 0.0004
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "layers": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28
+  ],
+  "positions": [
+    "last_prompt",
+    "first5",
+    "response"
+  ],
+  "n_records": 1848,
+  "n_skipped": 0,
+  "skip_reasons": {},
+  "layer_convention": "hidden_states[layer + 1]",
+  "code_version": "unknown",
+  "created_at": "2026-09-14T05:35:50+00:00",
+  "script_args": {
+    "run_name": "llama31_5k_subset",
+    "model": "meta-llama/Llama-3.1-8B-Instruct",
+    "layers": "[0, 4, 8, 12, 16, 20, 24, 28]",
+    "layer_fracs": "None",
+    "positions": "None",
+    "cells": "None",
+    "batch_size": "8",
+    "limit": "None",
+    "selection_frac": "0.3",
+    "seed": "0",
+    "max_length": "4096",
+    "extract_only": "True",
+    "overwrite": "False",
+    "judged": "/content/repo/tool_calling/tasks/sycophancy/results/generations/sypr_praise_llama31_full/checkpoint_balanced.jsonl"
+  }
+}

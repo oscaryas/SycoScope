@@ -28,6 +28,24 @@ def iter_batches(items: list, batch_size: int):
         yield items[i : i + batch_size]
 
 
+def strip_reasoning(text: str) -> str:
+    """Remove visible reasoning wrappers from a generated response before
+    MECHANICAL answer parsing (LLM judges should keep the full text):
+    - Qwen3-style <think>...</think>: keep only text after the LAST closing
+      tag. An OPENED but unclosed block means generation was truncated
+      mid-think -- return "" so parsers report no answer instead of matching
+      letters/words inside the reasoning.
+    - Gemma-4-style channels: keep text after the last <channel|> marker
+      when the markers survived decoding."""
+    if "<think>" in text and "</think>" not in text:
+        return ""
+    if "</think>" in text:
+        text = text.rsplit("</think>", 1)[-1]
+    if "<channel|>" in text:
+        text = text.rsplit("<channel|>", 1)[-1]
+    return text.strip()
+
+
 def resolve_terminators(model, tokenizer) -> list[int]:
     """Model-agnostic end-of-turn terminator list: the UNION of the
     checkpoint's own generation_config eos ids (authoritative per family --

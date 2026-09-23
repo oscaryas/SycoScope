@@ -1,0 +1,62 @@
+Sycophancy model-diff feasibility pilot — 2026-09-15
+
+Setup
+  8 first-sample AITA-NTA-FLIP narrator conflict pairs: 4 chat NTA/NTA,
+  4 chat mixed verdict; 16 ordinary, no-system-prompt Llama-3-8B-Instruct
+  responses. All 16 exactly match the existing SAE rollout corpus.
+  Official Meta-Llama-3-8B-Instruct and Meta-Llama-3-8B checkpoints were
+  run on an A100. Both teacher-forcing passes used the *same* rendered
+  Instruct chat prefix, tokenizer, and full token sequence.
+  All 16 token hashes, sequence lengths, and response starts match.
+
+Teacher forcing
+  Chat-minus-base mean observed-response log-probability:
+    chat NTA/NTA conflict responses: +0.6014 nats/token
+    chat mixed conflict responses:   +0.7005 nats/token
+  Restricting to response verdict NTA:
+    NTA/NTA: +0.6014; mixed NTA side: +0.6009 nats/token.
+  This is likelihood of chat-generated text, not behavioral evidence that
+  the base would itself choose sycophantic output.
+  287 chat sentence states were encoded by the frozen layer-14 n15/k3 SAE.
+  The largest NTA-only feature differences are numbered-list markers
+  (latents 2 and 13), followed by an empathetic opener (latent 11).
+  Response style and verdict phrasing are substantial confounds.
+
+Prompt-end category direction feasibility
+  Leave-one-conflict-out pair-averaged centroid direction:
+    chat pre-response states: 4/8 correct; early-response: 4/8
+    base pre-response states: 2/8 correct; early-response: 2/8.
+  With only 8 conflicts, these results cannot establish absence of a gate,
+  but they provide no support for fitting a causal sycophancy vector now.
+
+Base free generation (greedy, 128 output tokens each, 16 prompts per format)
+  Shared chat prefix, no system message: 0/16 begin NTA/YTA/ESH/NAH;
+    4/16 begin another AITA post.
+  Raw AITA prompt plus plain "Verdict:" cue: 0/16 begin acronym;
+    6/16 begin another AITA post.
+  Two balanced no-system AITA examples ending in "Verdict:":
+    16/16 begin NTA or YTA; later text frequently drifts into another
+    example/post. Three of eight narrator pairs get NTA/NTA; one of the
+    four chat NTA/NTA pairs remains NTA/NTA, while two of four chat-mixed
+    pairs become NTA/NTA under this few-shot format.
+  The base can produce the verdict format when cued in context. Neither
+  prompt format nor these eight pairs isolate the morally correct answer
+  or show when the model should agree with a narrator.
+
+Revised next step
+  Keep the chat SAE frozen. Use new conflict-group splits and fresh
+  confirmation prompts; score the first judgment as well as style and
+  warranted agreement. Compare within-source NTA cases across narrator
+  sides and answer formats. Train a base prompt-end direction only if a
+  group-held-out decision signal survives those controls. Test steering
+  against unsteered free generation and false-absolution rates before
+  calling any SAE category or direction a sycophancy mechanism.
+  Adding SyPR, are-you-sure, TruthfulQA, or Perez rows to a pooled SAE
+  training set now would make source/format cues easier to learn while
+  leaving the causal question unresolved.
+
+Artifacts
+  chat.jsonl, base.jsonl, paired_summary.json, analysis.json,
+  prompt_end_direction.json, base_chat_prefix_128_generations.jsonl,
+  base_plain_verdict_generations.jsonl, base_fewshot_generations.jsonl,
+  and compact chat_states/base_states NPZ files in this directory.

@@ -1,0 +1,148 @@
+"""Shared utilities for the steering-persona-space experiment.
+
+Honors env vars:
+  PHASE_K_AXES        — alternate steering_vectors config (default: configs/steering_vectors.py)
+  PHASE_K_MODELS      — alternate models config (default: configs/models.py)
+  PHASE_K_DATA_ROOT   — root dir for OUR new data (default: ./data)
+  PRIOR_DATA_ROOT     — prior project's data dir (default: /jumbo/lisp/paulcherian/persona-space-comparison/data)
+"""
+from __future__ import annotations
+
+import importlib.util
+import os
+from pathlib import Path
+
+import numpy as np
+import torch
+
+REPO_ROOT = Path(__file__).resolve().parent
+
+
+def _load_config(env_var: str, default_relative: str):
+    path = Path(os.environ.get(env_var, REPO_ROOT / default_relative))
+    spec = importlib.util.spec_from_file_location(env_var.lower(), path)
+    if spec is None or spec.loader is None:
+        raise FileNotFoundError(f"Cannot load config at {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+_models_cfg = _load_config("PHASE_K_MODELS", "configs/models.py")
+_vectors_cfg = _load_config("PHASE_K_VECTORS", "configs/steering_vectors.py")
+_alphas_cfg = _load_config("PHASE_K_ALPHAS", "configs/alphas.py")
+
+MODELS = _models_cfg.MODELS
+TRAITS = _vectors_cfg.TRAITS
+CONTROL_SEEDS = _vectors_cfg.CONTROL_SEEDS
+vector_inventory = _vectors_cfg.vector_inventory
+SWEEP_ALPHAS = _alphas_cfg.SWEEP_ALPHAS
+
+DATA_ROOT = Path(os.environ.get("PHASE_K_DATA_ROOT", REPO_ROOT / "data")).resolve()
+PRIOR_DATA_ROOT = Path(os.environ.get(
+    "PRIOR_DATA_ROOT", "/jumbo/lisp/paulcherian/persona-space-comparison/data"
+)).resolve()
+
+
+def model_dir(tag: str) -> Path:
+    """Return our per-model data dir (data/steered, etc. go under here)."""
+    if tag not in MODELS:
+        raise KeyError(f"Unknown model tag {tag!r}; configured: {list(MODELS)}")
+    return DATA_ROOT / MODELS[tag]["path"]
+
+
+def baseline_dir(tag: str) -> Path:
+    """Return the symlinked baseline dir (read-only, lives in prior repo)."""
+    return DATA_ROOT / "baseline" / tag
+
+
+def steered_dir(tag: str, vector_name: str, alpha: float, intervention: str = "addition") -> Path:
+    """data/<DATA_ROOT>/steered/<tag>/<vector_name>/alpha_<a>/         (addition; default)
+    data/<DATA_ROOT>/steered/<tag>/<vector_name>/<intervention>_coef_<a>/  (ablation, etc.)"""
+    if intervention == "addition":
+        return DATA_ROOT / "steered" / tag / vector_name / f"alpha_{alpha:g}"
+    return DATA_ROOT / "steered" / tag / vector_name / f"{intervention}_coef_{alpha:g}"
+
+
+def trait_vector_path(tag: str, trait: str) -> Path:
+    return DATA_ROOT / "vectors_steering" / tag / f"{trait}.pt"
+
+
+def control_vector_path(tag: str, vector_name: str) -> Path:
+    return DATA_ROOT / "vectors_steering" / tag / "controls" / f"{vector_name}.pt"
+
+
+def pca_basis_path(tag: str) -> Path:
+    return DATA_ROOT / "pca" / tag / "baseline_basis.pt"
+
+
+def _extract_tensor(obj) -> torch.Tensor:
+    if isinstance(obj, dict):
+        obj = obj.get("vector", obj.get("mean", next(iter(obj.values()))))
+    return obj
+
+
+def load_baseline_role_matrix(tag: str) -> tuple[np.ndarray, list[str]]:
+    """Load the prior project's per-model role vectors (276 entries).
+    Returns (X: ndarray of shape (276, hidden_dim), roles: sorted list of names)."""
+    vec_dir = baseline_dir(tag) / "vectors"
+    files = sorted(vec_dir.glob("*.pt"))
+    if not files:
+        raise FileNotFoundError(f"No role vectors found in {vec_dir}")
+    roles, vecs = [], []
+    for f in files:
+        roles.append(f.stem)
+        v = _extract_tensor(torch.load(f, map_location="cpu", weights_only=False))
+        vecs.append(v.float().squeeze().numpy())
+    return np.stack(vecs), roles
+
+
+def load_baseline_default(tag: str) -> np.ndarray:
+    v = _extract_tensor(torch.load(baseline_dir(tag) / "default.pt",
+                                   map_location="cpu", weights_only=False))
+    return v.float().squeeze().numpy()
+
+
+def load_alpha0_role_matrix(tag: str) -> tuple[np.ndarray, list[str]]:
+    """Load OUR HF α=0 condition's per-role vectors (last-token extraction).
+    Use this for any plot/analysis whose PCA basis was built from the same
+    α=0 cloud (since 2026-05-18) — avoids mixed-extraction projection."""
+    vec_dir = steered_dir(tag, "evil", 0.0) / "vectors"
+    files = sorted(vec_dir.glob("*.pt"))
+    if not files:
+        raise FileNotFoundError(f"No HF α=0 role vectors at {vec_dir}")
+    roles, vecs = [], []
+    for f in files:
+        d = torch.load(f, map_location="cpu", weights_only=False)
+        if isinstance(d, dict) and d.get("type") == "SKIPPED":
+            continue   # skip sentinel files from partition_anchor skip-throughs
+        roles.append(f.stem)
+        vecs.append(_extract_tensor(d).float().squeeze().numpy())
+    return np.stack(vecs), roles
+
+
+def load_alpha0_default(tag: str) -> np.ndarray:
+    v = _extract_tensor(torch.load(steered_dir(tag, "evil", 0.0) / "default.pt",
+                                   map_location="cpu", weights_only=False))
+    return v.float().squeeze().numpy()
+
+
+def load_pca_basis(tag: str) -> dict:
+    """Load {pc1, pc2, pc3, role_mean, var_frac}. PCs are shape (hidden_dim,)."""
+    data = torch.load(pca_basis_path(tag), map_location="cpu", weights_only=False)
+    return data
+
+
+def to_native(obj):
+    """Recursively convert numpy/torch scalars + arrays to native Python for json.dump."""
+    if isinstance(obj, dict):
+        return {k: to_native(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [to_native(x) for x in obj]
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    if isinstance(obj, np.floating):
+        return float(obj)
+    if isinstance(obj, np.integer):
+        return int(obj)
+    return obj

@@ -1,0 +1,1083 @@
+{
+  "groups": 150,
+  "contexts_per_model": 1800,
+  "base_chat_prompt_hashes_match": true,
+  "state_hashes_match_prior_scores": true,
+  "crossing_story_end_tokens": 1772,
+  "raw_state_cosine": {
+    "L14/story_end": {
+      "median": 0.8941,
+      "q10": 0.8458,
+      "q90": 0.9161,
+      "n": 1800
+    },
+    "L14/pre_verdict": {
+      "median": 0.8144,
+      "q10": 0.7581,
+      "q90": 0.8464,
+      "n": 1800
+    },
+    "L23/story_end": {
+      "median": 0.9129,
+      "q10": 0.8646,
+      "q90": 0.93,
+      "n": 1800
+    },
+    "L23/pre_verdict": {
+      "median": 0.8549,
+      "q10": 0.7915,
+      "q90": 0.8911,
+      "n": 1800
+    }
+  },
+  "saes": {
+    "L14_n15_k3_uncentered_s0": {
+      "layer": 14,
+      "n_latents": 15,
+      "training_topk_positive_rates": {
+        "14": 0.4115
+      },
+      "natural_story_end": {
+        "relative_reconstruction_error": {
+          "median": 0.8996,
+          "q10": 0.869,
+          "q90": 0.9504,
+          "n": 1800
+        },
+        "hidden_state_norm": {
+          "median": 7.1088,
+          "q10": 6.7522,
+          "q90": 7.4029,
+          "n": 1800
+        },
+        "max_activation": {
+          "median": 2.1797,
+          "q10": 0.7583,
+          "q90": 2.6347,
+          "n": 1800
+        },
+        "zero_code_fraction": 0.0,
+        "top1": {
+          "14": {
+            "count": 1484,
+            "title": "AITA-style verdict question closer"
+          },
+          "4": {
+            "count": 115,
+            "title": null
+          },
+          "7": {
+            "count": 59,
+            "title": "Affirming, reassuring direct address"
+          },
+          "0": {
+            "count": 41,
+            "title": "Suggested self-improvement activities"
+          },
+          "3": {
+            "count": 27,
+            "title": "Numbered-list advice items (esp. 'have an open conversation')"
+          },
+          "6": {
+            "count": 24,
+            "title": null
+          },
+          "11": {
+            "count": 14,
+            "title": "Empathetic exclamatory validation openers"
+          },
+          "8": {
+            "count": 10,
+            "title": null
+          },
+          "10": {
+            "count": 8,
+            "title": "Hypothetical concession about perceived harm"
+          },
+          "13": {
+            "count": 6,
+            "title": "Numbered list marker tokens"
+          }
+        },
+        "selected_features": {
+          "14": {
+            "title": "AITA-style verdict question closer",
+            "positive_rate": 0.9594,
+            "strength": {
+              "median": 2.1359,
+              "q10": 0.4071,
+              "q90": 2.5616,
+              "n": 1800
+            }
+          }
+        }
+      },
+      "natural_pre_verdict": {
+        "relative_reconstruction_error": {
+          "median": 0.878,
+          "q10": 0.8538,
+          "q90": 0.9071,
+          "n": 1800
+        },
+        "hidden_state_norm": {
+          "median": 6.3668,
+          "q10": 6.1843,
+          "q90": 6.5536,
+          "n": 1800
+        },
+        "max_activation": {
+          "median": 3.201,
+          "q10": 3.0052,
+          "q90": 3.3739,
+          "n": 1800
+        },
+        "zero_code_fraction": 0.0,
+        "top1": {
+          "14": {
+            "count": 1800,
+            "title": "AITA-style verdict question closer"
+          }
+        },
+        "selected_features": {
+          "14": {
+            "title": "AITA-style verdict question closer",
+            "positive_rate": 1.0,
+            "strength": {
+              "median": 3.201,
+              "q10": 3.0052,
+              "q90": 3.3739,
+              "n": 1800
+            }
+          }
+        }
+      },
+      "code_stability": {
+        "story_end_to_pre_verdict_top1_change": 0.1756,
+        "yta_nta_vs_nta_yta_top1_change": 0.0,
+        "four_yta_last_vs_four_nta_last_top1_change": 0.0
+      },
+      "unwarranted_stance_association": {
+        "NTA/yta_nta": {
+          "n_groups": 75,
+          "false_agreement_groups": 25,
+          "features": {
+            "14": {
+              "positive_false_agreement": 25,
+              "positive_correction": 50
+            }
+          }
+        },
+        "YTA/yta_nta": {
+          "n_groups": 75,
+          "false_agreement_groups": 11,
+          "features": {
+            "14": {
+              "positive_false_agreement": 11,
+              "positive_correction": 64
+            }
+          }
+        },
+        "NTA/nta_yta": {
+          "n_groups": 75,
+          "false_agreement_groups": 5,
+          "features": {
+            "14": {
+              "positive_false_agreement": 5,
+              "positive_correction": 70
+            }
+          }
+        },
+        "YTA/nta_yta": {
+          "n_groups": 75,
+          "false_agreement_groups": 49,
+          "features": {
+            "14": {
+              "positive_false_agreement": 49,
+              "positive_correction": 26
+            }
+          }
+        },
+        "NTA/four_yta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 25,
+          "features": {
+            "14": {
+              "positive_false_agreement": 25,
+              "positive_correction": 50
+            }
+          }
+        },
+        "YTA/four_yta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 19,
+          "features": {
+            "14": {
+              "positive_false_agreement": 19,
+              "positive_correction": 56
+            }
+          }
+        },
+        "NTA/four_nta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 5,
+          "features": {
+            "14": {
+              "positive_false_agreement": 5,
+              "positive_correction": 70
+            }
+          }
+        },
+        "YTA/four_nta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 55,
+          "features": {
+            "14": {
+              "positive_false_agreement": 55,
+              "positive_correction": 20
+            }
+          }
+        }
+      },
+      "old_response_sentence_reference": {
+        "relative_reconstruction_error": {
+          "median": 0.6298,
+          "q10": 0.5323,
+          "q90": 0.7182,
+          "n": 4106
+        },
+        "hidden_state_norm": {
+          "median": 4.7217,
+          "q10": 4.2169,
+          "q90": 5.4356,
+          "n": 4106
+        },
+        "max_activation": {
+          "median": 1.3011,
+          "q10": 0.4904,
+          "q90": 2.7543,
+          "n": 4106
+        },
+        "zero_code_fraction": 0.0002,
+        "top1": {
+          "7": {
+            "count": 1234,
+            "title": "Affirming, reassuring direct address"
+          },
+          "3": {
+            "count": 723,
+            "title": "Numbered-list advice items (esp. 'have an open conversation')"
+          },
+          "14": {
+            "count": 714,
+            "title": "AITA-style verdict question closer"
+          },
+          "11": {
+            "count": 460,
+            "title": "Empathetic exclamatory validation openers"
+          },
+          "13": {
+            "count": 327,
+            "title": "Numbered list marker tokens"
+          },
+          "2": {
+            "count": 327,
+            "title": "Numbered list markers"
+          },
+          "0": {
+            "count": 320,
+            "title": "Suggested self-improvement activities"
+          }
+        },
+        "selected_features": {
+          "14": {
+            "title": "AITA-style verdict question closer",
+            "positive_rate": 0.4856,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 1.5097,
+              "n": 4106
+            }
+          }
+        }
+      },
+      "old_chat_template_prompt_end_reference": {
+        "relative_reconstruction_error": {
+          "median": 0.7056,
+          "q10": 0.6868,
+          "q90": 0.74,
+          "n": 200
+        },
+        "hidden_state_norm": {
+          "median": 6.4187,
+          "q10": 6.2395,
+          "q90": 6.6742,
+          "n": 200
+        },
+        "max_activation": {
+          "median": 3.1251,
+          "q10": 2.717,
+          "q90": 3.3541,
+          "n": 200
+        },
+        "zero_code_fraction": 0.0,
+        "top1": {
+          "14": {
+            "count": 200,
+            "title": "AITA-style verdict question closer"
+          }
+        },
+        "selected_features": {
+          "14": {
+            "title": "AITA-style verdict question closer",
+            "positive_rate": 1.0,
+            "strength": {
+              "median": 3.1251,
+              "q10": 2.717,
+              "q90": 3.3541,
+              "n": 200
+            }
+          }
+        }
+      }
+    },
+    "L14_n40_k3_uncentered_s0": {
+      "layer": 14,
+      "n_latents": 40,
+      "training_topk_positive_rates": {
+        "16": 0.2089,
+        "17": 0.2568,
+        "39": 0.1538
+      },
+      "natural_story_end": {
+        "relative_reconstruction_error": {
+          "median": 0.869,
+          "q10": 0.8284,
+          "q90": 0.9419,
+          "n": 1800
+        },
+        "hidden_state_norm": {
+          "median": 7.1088,
+          "q10": 6.7522,
+          "q90": 7.4029,
+          "n": 1800
+        },
+        "max_activation": {
+          "median": 2.8364,
+          "q10": 1.5922,
+          "q90": 3.2342,
+          "n": 1800
+        },
+        "zero_code_fraction": 0.0,
+        "top1": {
+          "39": {
+            "count": 1498,
+            "title": "AITA-style verdict query closer"
+          },
+          "17": {
+            "count": 69,
+            "title": "Validating the user's reasonable behavior (AITA-style verdicts)"
+          },
+          "26": {
+            "count": 34,
+            "title": null
+          },
+          "21": {
+            "count": 34,
+            "title": "Formulaic supportive closing affirmations"
+          },
+          "34": {
+            "count": 20,
+            "title": "Listing concrete resources/services as suggestions"
+          },
+          "0": {
+            "count": 17,
+            "title": null
+          },
+          "11": {
+            "count": 16,
+            "title": null
+          },
+          "16": {
+            "count": 13,
+            "title": "Moral condemnation of someone's behavior as unacceptable/hurtful"
+          },
+          "12": {
+            "count": 12,
+            "title": null
+          },
+          "31": {
+            "count": 11,
+            "title": "Advising deference to authority/boundaries"
+          }
+        },
+        "selected_features": {
+          "16": {
+            "title": "Moral condemnation of someone's behavior as unacceptable/hurtful",
+            "positive_rate": 0.3172,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 0.6188,
+              "n": 1800
+            }
+          },
+          "17": {
+            "title": "Validating the user's reasonable behavior (AITA-style verdicts)",
+            "positive_rate": 0.5006,
+            "strength": {
+              "median": 0.2617,
+              "q10": 0.0,
+              "q90": 1.5295,
+              "n": 1800
+            }
+          },
+          "39": {
+            "title": "AITA-style verdict query closer",
+            "positive_rate": 0.8733,
+            "strength": {
+              "median": 2.7991,
+              "q10": 0.0,
+              "q90": 3.1606,
+              "n": 1800
+            }
+          }
+        }
+      },
+      "natural_pre_verdict": {
+        "relative_reconstruction_error": {
+          "median": 0.8613,
+          "q10": 0.8385,
+          "q90": 0.8888,
+          "n": 1800
+        },
+        "hidden_state_norm": {
+          "median": 6.3668,
+          "q10": 6.1843,
+          "q90": 6.5536,
+          "n": 1800
+        },
+        "max_activation": {
+          "median": 3.1779,
+          "q10": 2.9459,
+          "q90": 3.3391,
+          "n": 1800
+        },
+        "zero_code_fraction": 0.0,
+        "top1": {
+          "39": {
+            "count": 1800,
+            "title": "AITA-style verdict query closer"
+          }
+        },
+        "selected_features": {
+          "16": {
+            "title": "Moral condemnation of someone's behavior as unacceptable/hurtful",
+            "positive_rate": 0.0044,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "n": 1800
+            }
+          },
+          "17": {
+            "title": "Validating the user's reasonable behavior (AITA-style verdicts)",
+            "positive_rate": 0.0178,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "n": 1800
+            }
+          },
+          "39": {
+            "title": "AITA-style verdict query closer",
+            "positive_rate": 1.0,
+            "strength": {
+              "median": 3.1779,
+              "q10": 2.9459,
+              "q90": 3.3391,
+              "n": 1800
+            }
+          }
+        }
+      },
+      "code_stability": {
+        "story_end_to_pre_verdict_top1_change": 0.1678,
+        "yta_nta_vs_nta_yta_top1_change": 0.0,
+        "four_yta_last_vs_four_nta_last_top1_change": 0.0
+      },
+      "unwarranted_stance_association": {
+        "NTA/yta_nta": {
+          "n_groups": 75,
+          "false_agreement_groups": 25,
+          "features": {
+            "16": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "17": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "39": {
+              "positive_false_agreement": 25,
+              "positive_correction": 50
+            }
+          }
+        },
+        "YTA/yta_nta": {
+          "n_groups": 75,
+          "false_agreement_groups": 11,
+          "features": {
+            "16": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "17": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "39": {
+              "positive_false_agreement": 11,
+              "positive_correction": 64
+            }
+          }
+        },
+        "NTA/nta_yta": {
+          "n_groups": 75,
+          "false_agreement_groups": 5,
+          "features": {
+            "16": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "17": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "39": {
+              "positive_false_agreement": 5,
+              "positive_correction": 70
+            }
+          }
+        },
+        "YTA/nta_yta": {
+          "n_groups": 75,
+          "false_agreement_groups": 49,
+          "features": {
+            "16": {
+              "positive_false_agreement": 0,
+              "positive_correction": 1
+            },
+            "17": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "39": {
+              "positive_false_agreement": 49,
+              "positive_correction": 26
+            }
+          }
+        },
+        "NTA/four_yta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 25,
+          "features": {
+            "16": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "17": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "39": {
+              "positive_false_agreement": 25,
+              "positive_correction": 50
+            }
+          }
+        },
+        "YTA/four_yta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 19,
+          "features": {
+            "16": {
+              "positive_false_agreement": 0,
+              "positive_correction": 1
+            },
+            "17": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "39": {
+              "positive_false_agreement": 19,
+              "positive_correction": 56
+            }
+          }
+        },
+        "NTA/four_nta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 5,
+          "features": {
+            "16": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "17": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "39": {
+              "positive_false_agreement": 5,
+              "positive_correction": 70
+            }
+          }
+        },
+        "YTA/four_nta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 55,
+          "features": {
+            "16": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "17": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            },
+            "39": {
+              "positive_false_agreement": 55,
+              "positive_correction": 20
+            }
+          }
+        }
+      },
+      "old_response_sentence_reference": {
+        "relative_reconstruction_error": {
+          "median": 0.6039,
+          "q10": 0.502,
+          "q90": 0.6925,
+          "n": 4106
+        },
+        "hidden_state_norm": {
+          "median": 4.7217,
+          "q10": 4.2169,
+          "q90": 5.4356,
+          "n": 4106
+        },
+        "max_activation": {
+          "median": 1.4346,
+          "q10": 0.7742,
+          "q90": 2.7856,
+          "n": 4106
+        },
+        "zero_code_fraction": 0.0,
+        "top1": {
+          "17": {
+            "count": 694,
+            "title": "Validating the user's reasonable behavior (AITA-style verdicts)"
+          },
+          "21": {
+            "count": 651,
+            "title": "Formulaic supportive closing affirmations"
+          },
+          "16": {
+            "count": 473,
+            "title": "Moral condemnation of someone's behavior as unacceptable/hurtful"
+          },
+          "30": {
+            "count": 335,
+            "title": "Numbered list markers"
+          },
+          "2": {
+            "count": 326,
+            "title": "Numbered list markers"
+          },
+          "39": {
+            "count": 258,
+            "title": "AITA-style verdict query closer"
+          },
+          "18": {
+            "count": 223,
+            "title": "Formulaic empathetic acknowledgment openers"
+          },
+          "14": {
+            "count": 204,
+            "title": "Scripted first-person assertiveness openers"
+          },
+          "32": {
+            "count": 163,
+            "title": "List-introducing header phrase"
+          },
+          "23": {
+            "count": 161,
+            "title": "Sentence-initial 'This can/will help' construction"
+          }
+        },
+        "selected_features": {
+          "16": {
+            "title": "Moral condemnation of someone's behavior as unacceptable/hurtful",
+            "positive_rate": 0.2954,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 0.9266,
+              "n": 4106
+            }
+          },
+          "17": {
+            "title": "Validating the user's reasonable behavior (AITA-style verdicts)",
+            "positive_rate": 0.4457,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 1.269,
+              "n": 4106
+            }
+          },
+          "39": {
+            "title": "AITA-style verdict query closer",
+            "positive_rate": 0.1926,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 0.7358,
+              "n": 4106
+            }
+          }
+        }
+      },
+      "old_chat_template_prompt_end_reference": {
+        "relative_reconstruction_error": {
+          "median": 0.7081,
+          "q10": 0.6913,
+          "q90": 0.7399,
+          "n": 200
+        },
+        "hidden_state_norm": {
+          "median": 6.4187,
+          "q10": 6.2395,
+          "q90": 6.6742,
+          "n": 200
+        },
+        "max_activation": {
+          "median": 2.3862,
+          "q10": 2.1953,
+          "q90": 2.6208,
+          "n": 200
+        },
+        "zero_code_fraction": 0.0,
+        "top1": {
+          "39": {
+            "count": 117,
+            "title": "AITA-style verdict query closer"
+          },
+          "18": {
+            "count": 83,
+            "title": "Formulaic empathetic acknowledgment openers"
+          }
+        },
+        "selected_features": {
+          "16": {
+            "title": "Moral condemnation of someone's behavior as unacceptable/hurtful",
+            "positive_rate": 0.0,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "n": 200
+            }
+          },
+          "17": {
+            "title": "Validating the user's reasonable behavior (AITA-style verdicts)",
+            "positive_rate": 0.0,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "n": 200
+            }
+          },
+          "39": {
+            "title": "AITA-style verdict query closer",
+            "positive_rate": 1.0,
+            "strength": {
+              "median": 2.2834,
+              "q10": 1.6561,
+              "q90": 2.5682,
+              "n": 200
+            }
+          }
+        }
+      }
+    },
+    "L23_n30_k3_uncentered_s0": {
+      "layer": 23,
+      "n_latents": 30,
+      "training_topk_positive_rates": {
+        "13": 0.1899,
+        "15": 0.1815
+      },
+      "natural_story_end": {
+        "relative_reconstruction_error": {
+          "median": 0.8526,
+          "q10": 0.8295,
+          "q90": 1.0364,
+          "n": 1800
+        },
+        "hidden_state_norm": {
+          "median": 17.2625,
+          "q10": 15.1914,
+          "q90": 17.9178,
+          "n": 1800
+        },
+        "max_activation": {
+          "median": 5.4971,
+          "q10": 3.0479,
+          "q90": 10.4417,
+          "n": 1800
+        },
+        "zero_code_fraction": 0.0,
+        "top1": {
+          "13": {
+            "count": 1199,
+            "title": "AITA-style rhetorical verdict question"
+          },
+          "5": {
+            "count": 342,
+            "title": null
+          },
+          "0": {
+            "count": 98,
+            "title": "Proposing compromises and scheduling arrangements"
+          },
+          "16": {
+            "count": 68,
+            "title": "Suggesting financial/social aid resources"
+          },
+          "10": {
+            "count": 37,
+            "title": "Empathetic check-in questions"
+          },
+          "14": {
+            "count": 13,
+            "title": "Advice on calm, assertive communication tone"
+          },
+          "9": {
+            "count": 8,
+            "title": "List-introducing lead-in phrase"
+          },
+          "18": {
+            "count": 8,
+            "title": "Affirming self-worth imperative phrasing"
+          },
+          "2": {
+            "count": 8,
+            "title": null
+          },
+          "28": {
+            "count": 7,
+            "title": null
+          }
+        },
+        "selected_features": {
+          "13": {
+            "title": "AITA-style rhetorical verdict question",
+            "positive_rate": 0.9072,
+            "strength": {
+              "median": 5.372,
+              "q10": 1.5876,
+              "q90": 6.0553,
+              "n": 1800
+            }
+          },
+          "15": {
+            "title": "Formulaic empathetic affirmation openers",
+            "positive_rate": 0.1711,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 1.097,
+              "n": 1800
+            }
+          }
+        }
+      },
+      "natural_pre_verdict": {
+        "relative_reconstruction_error": {
+          "median": 0.85,
+          "q10": 0.814,
+          "q90": 0.8791,
+          "n": 1800
+        },
+        "hidden_state_norm": {
+          "median": 15.2217,
+          "q10": 14.8961,
+          "q90": 15.5945,
+          "n": 1800
+        },
+        "max_activation": {
+          "median": 7.7306,
+          "q10": 7.1162,
+          "q90": 8.2381,
+          "n": 1800
+        },
+        "zero_code_fraction": 0.0,
+        "top1": {
+          "13": {
+            "count": 1800,
+            "title": "AITA-style rhetorical verdict question"
+          }
+        },
+        "selected_features": {
+          "13": {
+            "title": "AITA-style rhetorical verdict question",
+            "positive_rate": 1.0,
+            "strength": {
+              "median": 7.7306,
+              "q10": 7.1162,
+              "q90": 8.2381,
+              "n": 1800
+            }
+          },
+          "15": {
+            "title": "Formulaic empathetic affirmation openers",
+            "positive_rate": 0.1094,
+            "strength": {
+              "median": 0.0,
+              "q10": 0.0,
+              "q90": 1.177,
+              "n": 1800
+            }
+          }
+        }
+      },
+      "code_stability": {
+        "story_end_to_pre_verdict_top1_change": 0.3339,
+        "yta_nta_vs_nta_yta_top1_change": 0.0,
+        "four_yta_last_vs_four_nta_last_top1_change": 0.0
+      },
+      "unwarranted_stance_association": {
+        "NTA/yta_nta": {
+          "n_groups": 75,
+          "false_agreement_groups": 25,
+          "features": {
+            "13": {
+              "positive_false_agreement": 25,
+              "positive_correction": 50
+            },
+            "15": {
+              "positive_false_agreement": 0,
+              "positive_correction": 6
+            }
+          }
+        },
+        "YTA/yta_nta": {
+          "n_groups": 75,
+          "false_agreement_groups": 11,
+          "features": {
+            "13": {
+              "positive_false_agreement": 11,
+              "positive_correction": 64
+            },
+            "15": {
+              "positive_false_agreement": 0,
+              "positive_correction": 0
+            }
+          }
+        },
+        "NTA/nta_yta": {
+          "n_groups": 75,
+          "false_agreement_groups": 5,
+          "features": {
+            "13": {
+              "positive_false_agreement": 5,
+              "positive_correction": 70
+            },
+            "15": {
+              "positive_false_agreement": 0,
+              "positive_correction": 13
+            }
+          }
+        },
+        "YTA/nta_yta": {
+          "n_groups": 75,
+          "false_agreement_groups": 49,
+          "features": {
+            "13": {
+              "positive_false_agreement": 49,
+              "positive_correction": 26
+            },
+            "15": {
+              "positive_false_agreement": 2,
+              "positive_correction": 0
+            }
+          }
+        },
+        "NTA/four_yta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 25,
+          "features": {
+            "13": {
+              "positive_false_agreement": 25,
+              "positive_correction": 50
+            },
+            "15": {
+              "positive_false_agreement": 0,
+              "positive_correction": 7
+            }
+          }
+        },
+        "YTA/four_yta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 19,
+          "features": {
+            "13": {
+              "positive_false_agreement": 19,
+              "positive_correction": 56
+            },
+            "15": {
+              "positive_false_agreement": 1,
+              "positive_correction": 1
+            }
+          }
+        },
+        "NTA/four_nta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 5,
+          "features": {
+            "13": {
+              "positive_false_agreement": 5,
+              "positive_correction": 70
+            },
+            "15": {
+              "positive_false_agreement": 0,
+              "positive_correction": 9
+            }
+          }
+        },
+        "YTA/four_nta_last": {
+          "n_groups": 75,
+          "false_agreement_groups": 55,
+          "features": {
+            "13": {
+              "positive_false_agreement": 55,
+              "positive_correction": 20
+            },
+            "15": {
+              "positive_false_agreement": 3,
+              "positive_correction": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  "reference": {
+    "old_chat_teacher_forced_response_files": 200,
+    "response_sentence_states": 4106,
+    "old_chat_template_prompt_ends": 200
+  }
+}

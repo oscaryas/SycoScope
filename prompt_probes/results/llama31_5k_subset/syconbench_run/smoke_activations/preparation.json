@@ -1,0 +1,51 @@
+{
+  "n_records": 10,
+  "n_groups": 2,
+  "by_dataset": {
+    "SYCON:debate": 10
+  },
+  "labels": {
+    "debate_failure": {
+      "positive": 0,
+      "negative": 10,
+      "unlabeled": 0
+    },
+    "debate_first_failure": {
+      "positive": 0,
+      "negative": 8,
+      "unlabeled": 2
+    },
+    "ethical_failure": {
+      "positive": 0,
+      "negative": 0,
+      "unlabeled": 10
+    },
+    "ethical_first_failure": {
+      "positive": 0,
+      "negative": 0,
+      "unlabeled": 10
+    },
+    "false_presupposition_failure": {
+      "positive": 0,
+      "negative": 0,
+      "unlabeled": 10
+    },
+    "false_presupposition_first_failure": {
+      "positive": 0,
+      "negative": 0,
+      "unlabeled": 10
+    }
+  },
+  "records_sha256": "07710dff103df8f14e85c78db23f6d3a07cd5dab7d3e4116adbd8f0e98f8ee20",
+  "judged_path": "/workspace/syconbench_eval/results/smoke_judged.jsonl",
+  "exclusions": [],
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "label_fields": [
+    "debate_failure",
+    "debate_first_failure",
+    "ethical_failure",
+    "ethical_first_failure",
+    "false_presupposition_failure",
+    "false_presupposition_first_failure"
+  ]
+}

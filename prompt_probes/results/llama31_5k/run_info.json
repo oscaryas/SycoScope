@@ -1,0 +1,47 @@
+{
+  "generate_response_openrouter": {
+    "args": {
+      "run_name": "llama31_5k",
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "tokenizer": "meta-llama/Llama-3.1-8B-Instruct",
+      "user_prompts": "../data/perez_user_prompts_5k.jsonl",
+      "cells": null,
+      "limit_prompts": null,
+      "max_new_tokens": 1024,
+      "temperature": 0.6,
+      "top_p": 0.9,
+      "max_workers": 32,
+      "chunk_size": 250,
+      "min_response_chars": 80,
+      "seed": 0,
+      "do_sample": true
+    },
+    "code_version": "907b8e6-dirty",
+    "created_at": "2026-09-13T09:41:52+00:00",
+    "n_prompts": 5000,
+    "n_generations_target": 205000,
+    "cells": [
+      "ctrl_affiliation",
+      "ctrl_calibrated_hedging",
+      "ctrl_emotional_support",
+      "ctrl_evasive_hedging",
+      "ctrl_excitement",
+      "ctrl_genuine_agreement",
+      "ctrl_inauthenticity",
+      "ctrl_obsequiousness",
+      "ctrl_politeness",
+      "ctrl_pure_sycophancy",
+      "ctrl_warranted_praise",
+      "general_baseline",
+      "neutral",
+      "pe_explicit",
+      "pe_implicit",
+      "ps_explicit",
+      "ps_implicit",
+      "pt_explicit",
+      "pt_implicit",
+      "pv_explicit",
+      "pv_implicit"
+    ]
+  }
+}

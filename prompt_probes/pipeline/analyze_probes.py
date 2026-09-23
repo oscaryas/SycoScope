@@ -45,6 +45,7 @@ across probes.
 Usage:
     python analyze_probes.py --run-name main
     python analyze_probes.py --run-name main --positions first5 --layers 16
+    python analyze_probes.py --run-name llama31_5k_subset --positions response --cluster-only
 """
 import argparse
 import json
@@ -184,14 +185,41 @@ def transfer_matrix(run_dir, slugs, probes, position, layer, split, drop_degener
     return {"paired_win_rate": win, "auc": auc, "eval_cells": sorted(evals)}
 
 
+def discover_eval_bases(run_dir: Path) -> list[str]:
+    """Every eval_* directory with cached activations (eval_sypr, eval_moral,
+    eval_elephant, ...), in a stable order. Each is a distinct real-world
+    dataset -- correlate on each separately before ever pooling (V1 plan step
+    3: "pooled correlations can reflect differences between datasets rather
+    than agreement within them")."""
+    return sorted(
+        p.name for p in run_dir.glob("eval_*")
+        if (p / "activations.npz").exists()
+    )
+
+
+def load_basis_activations(run_dir, basis_slug, key) -> np.ndarray | None:
+    """(n_rows, hidden_dim) for one (eval_* basis, position, layer), or None
+    if the eval directory or that (position, layer) isn't cached."""
+    if basis_slug == ELEPHANT_BASIS:
+        basis_slug = "eval_elephant"
+    npz = run_dir / basis_slug / "activations.npz"
+    if not npz.exists():
+        return None
+    with np.load(npz) as z:
+        if key not in z.files:
+            return None
+        return z[key].astype(np.float32)
+
+
 def score_correlations(run_dir, slugs, probes, position, layer, basis_slug):
     """Pearson correlation between probe scores over one common sample set.
 
-    basis_slug == "elephant" uses the cached OOD activations, which is what the
-    paper does -- section 5.3 correlates probe outputs "across all evaluation
-    samples". That is the version to report: correlations measured
-    in-distribution are computed where every probe saturates, so they describe
-    behaviour on data that cannot discriminate between them.
+    An `eval_*` basis (eval_sypr, eval_moral, eval_elephant, ...; "elephant"
+    is a back-compat alias for eval_elephant) uses real-world OOD activations
+    -- what the paper does in section 5.3, correlating probe outputs "across
+    all evaluation samples". That is the version to report: correlations
+    measured in-distribution are computed where every probe saturates, so
+    they describe behaviour on data that cannot discriminate between them.
 
     Any per-cell slug (e.g. `neutral`) is also accepted as an in-distribution
     basis. `neutral` is the cleanest of those -- identical inputs for every
@@ -199,14 +227,11 @@ def score_correlations(run_dir, slugs, probes, position, layer, basis_slug):
     control-adjusted scores (section 5.5).
     """
     key = ga.act_key(position, layer)
-    if basis_slug == ELEPHANT_BASIS:
-        npz = run_dir / "eval_elephant" / "activations.npz"
-        if not npz.exists():
+    resolved = ELEPHANT_BASIS if basis_slug == ELEPHANT_BASIS else basis_slug
+    if resolved.startswith("eval_") or resolved == ELEPHANT_BASIS:
+        X = load_basis_activations(run_dir, resolved, key)
+        if X is None:
             return None
-        with np.load(npz) as z:
-            if key not in z.files:
-                return None
-            X = z[key].astype(np.float32)
     else:
         npz = run_dir / "activations" / f"{basis_slug}.npz"
         if not npz.exists():
@@ -308,11 +333,24 @@ def length_analysis(run_dir, slugs, probes, position, layer, drop_degenerate) ->
     return out
 
 
-def cluster_from_matrix(names: list[str], matrix: np.ndarray, n_clusters: int) -> dict:
-    """Agglomerative clustering on a precomputed distance = 1 - |similarity|."""
+def cluster_from_matrix(names: list[str], matrix: np.ndarray, n_clusters: int, signed: bool = False) -> dict:
+    """Agglomerative clustering on a precomputed distance.
+
+    signed=False (default): distance = 1 - |similarity|. Groups probes with
+    strongly *opposite* scores into the same cluster (same axis, either
+    direction). Useful as a supplementary "same axis regardless of sign" view,
+    but must be labeled as such -- see V1_ANALYSIS_PLAN.md step 3.
+
+    signed=True: distance = 1 - similarity (range [0, 2]). This is the primary
+    view for score-correlation clustering: two probes that fire in opposite
+    directions on the same examples (e.g. the calibrated-hedging inversion,
+    see FINDINGS.md section 4) land in *different* clusters, which is the
+    behaviourally correct read -- they disagree on most examples.
+    """
     from sklearn.cluster import AgglomerativeClustering
 
-    dist = 1.0 - np.abs(np.nan_to_num(matrix, nan=0.0))
+    m = np.nan_to_num(matrix, nan=0.0)
+    dist = (1.0 - m) if signed else (1.0 - np.abs(m))
     np.fill_diagonal(dist, 0.0)
     dist = (dist + dist.T) / 2.0
     k = min(n_clusters, len(names))
@@ -325,7 +363,37 @@ def cluster_from_matrix(names: list[str], matrix: np.ndarray, n_clusters: int) -
         idx = [names.index(m) for m in members]
         vals = [matrix[a][b] for a in idx for b in idx if a < b]
         internal[cname] = [round(float(min(vals)), 3), round(float(max(vals)), 3)] if vals else None
-    return {"clusters": clusters, "internal_similarity_range": internal}
+    return {"clusters": clusters, "internal_similarity_range": internal, "signed": signed}
+
+
+def cluster_sweep(names: list[str], matrix: np.ndarray, k_range: range, signed: bool = False) -> dict:
+    """Cluster count left free to explore (V1 plan step 3), not fixed at 5.
+
+    Reports, for each k, the clustering and its silhouette score (on the same
+    precomputed distance), so a stable k can be picked from where silhouette
+    peaks rather than assumed in advance.
+    """
+    from sklearn.metrics import silhouette_score
+
+    m = np.nan_to_num(matrix, nan=0.0)
+    dist = (1.0 - m) if signed else (1.0 - np.abs(m))
+    np.fill_diagonal(dist, 0.0)
+    dist = (dist + dist.T) / 2.0
+    out = {}
+    for k in k_range:
+        if k < 2 or k >= len(names):
+            continue
+        res = cluster_from_matrix(names, matrix, k, signed=signed)
+        labels = [
+            next(int(lab.split("_")[1]) for lab, members in res["clusters"].items() if name in members)
+            for name in names
+        ]
+        try:
+            sil = float(silhouette_score(dist, labels, metric="precomputed"))
+        except ValueError:
+            sil = None
+        out[str(k)] = {"silhouette": sil, **res}
+    return out
 
 
 def reliability_ceiling(run_dir, slug, position, layer, split, n_splits, seed, C, max_iter, drop_degenerate):
@@ -397,6 +465,31 @@ def heatmap(path, matrix, row_names, col_names, title, vmin, vmax, cmap, center_
     plt.close(fig)
 
 
+def correlation_dendrogram(path, matrix, names, title):
+    """Average-linkage tree using the same signed distance as primary clustering."""
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from scipy.cluster.hierarchy import dendrogram, linkage
+    from scipy.spatial.distance import squareform
+
+    dist = 1.0 - np.asarray(matrix, dtype=float)
+    dist = np.maximum((dist + dist.T) / 2.0, 0.0)
+    np.fill_diagonal(dist, 0.0)
+    tree = linkage(squareform(dist, checks=True), method="average")
+    fig, ax = plt.subplots(figsize=(11, 7))
+    dendrogram(
+        tree, labels=names, orientation="right", leaf_font_size=9,
+        color_threshold=0, above_threshold_color="#3b6ea5", ax=ax,
+    )
+    ax.set_xlabel("Average-linkage distance (1 - signed Pearson r)")
+    ax.set_title(title + "\nTree shown without a fixed cluster cut", fontsize=10)
+    fig.tight_layout()
+    fig.savefig(path, dpi=170)
+    plt.close(fig)
+
+
 def anova_plot(path, decomposition, title):
     import matplotlib
 
@@ -429,10 +522,19 @@ def main():
     parser.add_argument("--layers", type=int, nargs="+", default=None)
     parser.add_argument("--n-clusters", type=int, default=5, help="Paper found 5 clusters over 23 prompts.")
     parser.add_argument(
+        "--cluster-only", action="store_true",
+        help="Only compute score correlations, clustering, and their heatmaps from cached "
+        "evaluation activations; skip ANOVA, transfer, length analysis, and probe geometry.",
+    )
+    parser.add_argument(
         "--cluster-basis",
-        default=ELEPHANT_BASIS,
-        help="Sample set for the score-correlation clustering: 'elephant' (the paper's "
-        "'all evaluation samples') or a cell slug such as 'neutral'.",
+        type=str,
+        nargs="+",
+        default=None,
+        help="Sample set(s) for score-correlation clustering: any of 'elephant' (alias for "
+        "eval_elephant), 'eval_sypr', 'eval_moral', or an in-distribution cell slug such as "
+        "'neutral'. Default: every eval_* directory with cached activations under this run, "
+        "each correlated separately (V1 plan step 3 -- never pool datasets by default).",
     )
     parser.add_argument("--ceiling-splits", type=int, default=5, help="0 to skip reliability ceilings.")
     parser.add_argument("--C", type=float, default=1.0)
@@ -470,7 +572,9 @@ def main():
     # validation dataset"). In-distribution AUC saturates near 1.000, so it has
     # no variance to decompose and the residual absorbs everything.
     ood_path = run_dir / "eval_elephant" / "summary.json"
-    if not ood_path.exists():
+    if args.cluster_only:
+        print("Score-correlation clustering only; other analyses skipped.")
+    elif not ood_path.exists():
         print()
         print(f"--- ANOVA skipped: {ood_path} not found; run eval_elephant.py first ---")
     else:
@@ -504,7 +608,11 @@ def main():
             tag = f"{position}_L{layer:02d}"
             print(f"\n=== {tag} ===")
 
-            tm = transfer_matrix(run_dir, slugs, probes, position, layer, split, drop_degenerate)
+            tm = (
+                {"paired_win_rate": {}, "eval_cells": []}
+                if args.cluster_only else
+                transfer_matrix(run_dir, slugs, probes, position, layer, split, drop_degenerate)
+            )
             rows_present = [s for s in slugs if tm["paired_win_rate"].get(s)]
             cols = tm["eval_cells"]
             if rows_present and cols:
@@ -534,7 +642,9 @@ def main():
                             + (f"   own {own:.3f}" if own is not None else "")
                         )
 
-            la = length_analysis(run_dir, slugs, probes, position, layer, drop_degenerate)
+            la = {} if args.cluster_only else length_analysis(
+                run_dir, slugs, probes, position, layer, drop_degenerate
+            )
             if la:
                 (out_dir / f"length_{tag}.json").write_text(json.dumps(la, indent=2), encoding="utf-8")
 
@@ -560,19 +670,25 @@ def main():
                         "    up, the pooling is the problem, not the representation."
                     )
 
-            sc = score_correlations(run_dir, slugs, probes, position, layer, args.cluster_basis)
-            if sc is None and args.cluster_basis == ELEPHANT_BASIS:
-                sc = score_correlations(run_dir, slugs, probes, position, layer, common.NEUTRAL_SLUG)
-                if sc is not None:
-                    print("  NOTE: no ELEPHANT activations; clustered on the in-distribution")
-                    print("  'neutral' cell instead, where probes saturate. The paper correlates")
-                    print("  over evaluation samples -- run eval_elephant.py for that version.")
-            if sc:
+            bases = args.cluster_basis or discover_eval_bases(run_dir) or [common.NEUTRAL_SLUG]
+            any_basis_found = False
+            for basis in bases:
+                sc = score_correlations(run_dir, slugs, probes, position, layer, basis)
+                if sc is None:
+                    print(f"  [{basis}] skipped: cached activations unavailable for {tag}")
+                    continue
+                any_basis_found = True
                 corr = np.array(sc["correlation"], dtype=float)
-                sc["clustering"] = cluster_from_matrix(sc["cells"], corr, args.n_clusters)
-                (out_dir / f"score_correlation_{tag}.json").write_text(json.dumps(sc, indent=2), encoding="utf-8")
+                # Signed is the primary view (V1 plan step 3): opposite-scoring
+                # probes must NOT land in the same cluster. Unsigned (1-|r|) is
+                # reported alongside only as a "same axis, either direction" view.
+                sc["clustering_signed"] = cluster_from_matrix(sc["cells"], corr, args.n_clusters, signed=True)
+                sc["clustering_unsigned"] = cluster_from_matrix(sc["cells"], corr, args.n_clusters, signed=False)
+                sc["clustering"] = sc["clustering_signed"]  # back-compat default
+                sc["cluster_sweep_signed"] = cluster_sweep(sc["cells"], corr, range(2, min(10, len(sc["cells"]))), signed=True)
+                (out_dir / f"score_correlation_{tag}_{basis}.json").write_text(json.dumps(sc, indent=2), encoding="utf-8")
                 heatmap(
-                    plot_dir / f"score_correlation_{tag}.png",
+                    plot_dir / f"score_correlation_{tag}_{basis}.png",
                     corr,
                     sc["cells"],
                     sc["cells"],
@@ -582,19 +698,35 @@ def main():
                     "RdBu_r",
                     f"Pearson r over {sc['n_samples']} common samples",
                 )
-                print(f"  score-correlation clusters (basis={sc['basis']}, n={sc['n_samples']}):")
-                for cname, members in sorted(sc["clustering"]["clusters"].items()):
-                    rng_ = sc["clustering"]["internal_similarity_range"][cname]
+                correlation_dendrogram(
+                    plot_dir / f"dendrogram_{tag}_{basis}.png",
+                    corr, sc["cells"],
+                    f"Probe score clustering on {sc['basis']} ({tag}, n={sc['n_samples']})",
+                )
+                print(f"  [{basis}] score-correlation clusters, SIGNED (n={sc['n_samples']}):")
+                for cname, members in sorted(sc["clustering_signed"]["clusters"].items()):
+                    rng_ = sc["clustering_signed"]["internal_similarity_range"][cname]
                     print(f"    {cname}: {members}  internal r {rng_}")
-            else:
+                best_k = max(
+                    sc["cluster_sweep_signed"].items(),
+                    key=lambda kv: kv[1]["silhouette"] if kv[1]["silhouette"] is not None else -2,
+                    default=(None, None),
+                )
+                if best_k[0] is not None:
+                    print(f"    best-silhouette k (signed): {best_k[0]} (silhouette {best_k[1]['silhouette']:.3f})")
+                print(f"  [{basis}] score-correlation clusters, UNSIGNED 1-|r| (same axis, either direction -- supplementary):")
+                for cname, members in sorted(sc["clustering_unsigned"]["clusters"].items()):
+                    rng_ = sc["clustering_unsigned"]["internal_similarity_range"][cname]
+                    print(f"    {cname}: {members}  internal r {rng_}")
+            if not any_basis_found:
                 print(
-                    f"  score correlation skipped: no '{common.NEUTRAL_SLUG}' activations. "
-                    "Generate that cell to get a common evaluation basis and control-adjusted scores."
+                    f"  score correlation skipped: none of {bases} have cached activations. "
+                    "Run an eval_*.py script (or generate the 'neutral' cell) for a common basis."
                 )
 
             key = ga.act_key(position, layer)
             dirs = {s: probes[s][key]["direction_raw"] for s in slugs if key in probes.get(s, {})}
-            if len(dirs) >= 2:
+            if not args.cluster_only and len(dirs) >= 2:
                 names = list(dirs)
                 cos = np.array([[cosine(dirs[a], dirs[b]) for b in names] for a in names])
                 geometry = {"cells": names, "cosine": cos.tolist()}
