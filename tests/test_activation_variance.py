@@ -4,8 +4,8 @@ import unittest
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "prompt_probes/pipeline"))
-from activation_variance import decompose, bootstrap_kernels, resampled_shares, question_bootstrap
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from probing.analyze_probes.activation_variance import decompose, bootstrap_kernels, resampled_shares, question_bootstrap
 
 
 class ActivationVarianceTests(unittest.TestCase):
