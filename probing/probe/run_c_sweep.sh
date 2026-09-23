@@ -7,7 +7,7 @@ set -e
 cd "$(dirname "$0")"
 
 CELLS="general_baseline pv_implicit pe_implicit ctrl_pure_sycophancy ctrl_obsequiousness"
-BASE=../results/llama31_5k_subset
+BASE=../../prompt_probes/results/llama31_5k_subset
 
 for C in 0.01 0.1 1.0 10.0 100.0; do
   RUN="llama31_5k_subset_C${C}"
