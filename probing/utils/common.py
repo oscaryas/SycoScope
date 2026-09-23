@@ -13,10 +13,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-PROMPT_PROBES_DIR = HERE.parent
+PROBING_DIR = HERE.parent
 REPO_ROOT = HERE.parents[1]
-DATA_DIR = PROMPT_PROBES_DIR / "data"
-RESULTS_DIR = PROMPT_PROBES_DIR / "results"
+DATA_DIR = PROBING_DIR / "data"
+RESULTS_DIR = PROBING_DIR / "results"
 GENERATIONS_DIR = RESULTS_DIR / "generations"
 SYCOPHANCY_DIR = REPO_ROOT / "tool_calling" / "tasks" / "sycophancy"
 
