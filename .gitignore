@@ -15,19 +15,6 @@ dist/
 SAE/results/activations/
 SAE/notebooks/
 SAE/results/runs/
-tool_calling/tasks/sycophancy/runs/
-
-# Activation arrays and disposable rendered outputs stay local. Generated
-# JSONL, compressed generation checkpoints, and model/probe checkpoints are
-# intentionally versioned so long-running experiments remain resumable.
-tool_calling/tasks/sycophancy/results/**/*.npy
-tool_calling/tasks/sycophancy/results/**/*.npz
-tool_calling/tasks/sycophancy/results/**/*.png
-
-# Redundant local decompressed copy of a checkpoint already tracked as
-# checkpoint.jsonl.gz (byte-identical once decompressed) -- over GitHub's
-# 100MB push limit and adds nothing the .gz doesn't already have.
-tool_calling/tasks/sycophancy/results/generations/sypr_praise_llama31_full/checkpoint.jsonl
 
 # Local handoff/session notes are not project documentation. Do not ignore
 # Markdown globally: architecture plans, runbooks, and package READMEs should

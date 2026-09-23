@@ -24,7 +24,7 @@ if str(PIPELINE_DIR) not in sys.path:
 
 from label_clusters import expand_layer_runs
 from steer import compute_latent_activation_stats
-from utils.sae_utils import DEFAULT_ACTIVATIONS_DIR, DEFAULT_TRAINED_SAE_DIR
+from SAE.sae.utils import DEFAULT_ACTIVATIONS_DIR, DEFAULT_TRAINED_SAE_DIR
 
 
 def compute_run_p90s(

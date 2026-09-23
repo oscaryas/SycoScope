@@ -30,7 +30,7 @@ from steer import DEFAULT_COEFF_MULTIPLIER, generate_with_steering as steer_gene
 
 from utils import datasets, inference
 from utils.model import DEFAULT_MODEL, cleanup, load_model_and_tokenizer
-from utils.sae_utils import DEFAULT_ACTIVATIONS_DIR, DEFAULT_TRAINED_SAE_DIR, sae_dir_name
+from SAE.sae.utils import DEFAULT_ACTIVATIONS_DIR, DEFAULT_TRAINED_SAE_DIR, sae_dir_name
 
 DEFAULT_OUTPUT_DIR = Path(__file__).resolve().parents[1] / "results" / "steered_responses"
 DEFAULT_LIMIT = 300

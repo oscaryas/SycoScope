@@ -20,7 +20,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from utils import inference
 from utils.model import DEFAULT_MODEL, cleanup, load_model_and_tokenizer
-from utils.sae_utils import (
+from SAE.sae.utils import (
     DEFAULT_ACTIVATIONS_DIR,
     DEFAULT_TRAINED_SAE_DIR,
     TopKSAE,

@@ -12,7 +12,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]  # utils.py -> sae -> SAE -> repo_root
 DEFAULT_ACTIVATIONS_DIR = REPO_ROOT / "SAE" / "results" / "activations"
 DEFAULT_TRAINED_SAE_DIR = REPO_ROOT / "SAE" / "results" / "trained_sae"
 

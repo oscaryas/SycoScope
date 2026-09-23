@@ -27,12 +27,16 @@ ALL_DRIVERS = [
     oeq_probe_pipeline,
 ]
 
-# Which sibling module remains a flat (non-package) file under
-# tool_calling/tasks/sycophancy/ -- these are OUT of this migration's scope,
-# so their bare-import style is intentional, not a leftover.
+# cross_dataset_generalization.py depends on the application-owned live-
+# steering machinery, so it stays a flat (non-package) file under
+# tool_calling/tasks/sycophancy/ (building-agent only) rather than moving
+# into probing/ -- this is OUT of this migration's scope, so its bare-import
+# style is intentional, not a leftover. moral_sycophancy_judge.py and
+# social_sycophancy_judge.py, by contrast, DID move into the shared
+# probing.evaluations.baseline_probes.judge package (Task 4 of the shared
+# extraction), so the drivers below import them by that qualified name
+# instead of the old flat-file sibling import.
 SIBLING_FLAT_IMPORTS = {
-    "moral_sycophancy_judge",
-    "social_sycophancy_judge",
     "cross_dataset_generalization",
 }
 
@@ -43,16 +47,21 @@ class DriverImportPathTests(unittest.TestCase):
     probing/probe/ (no renaming). Confirms:
       - each driver imports cleanly under its new location
       - REPO_ROOT / SYCOPHANCY_DIR path constants resolve correctly from the
-        new probing/probe/ location (SYCOPHANCY_DIR must still point at the
-        ORIGINAL tool_calling/tasks/sycophancy/ directory, since results/
-        data was not moved -- only the driver scripts were)
+        new probing/probe/ location (SYCOPHANCY_DIR still points at
+        tool_calling/tasks/sycophancy/ by name, matching building-agent/
+        pre-cleanup main -- but on the SAE branch tool_calling/ was removed
+        by Task 9 of the branch-split plan, so the directory itself is gone;
+        only the still-present drivers' SYCOPHANCY_DIR/results defaults for
+        application-owned data are being confirmed here, not the directory's
+        existence)
       - the import-mapping table was applied (sycophancy_model_registry ->
         utils.model_registry, sycophancy_probes -> probing.probe.baseline_probes,
         sycophancy_dim -> probing.probe.dim)
-      - the still-in-place tool_calling/tasks/sycophancy/ flat-file imports
-        (moral_sycophancy_judge, social_sycophancy_judge,
-        cross_dataset_generalization) are left as bare imports, since those
-        modules are out of this migration's scope
+      - moral_sycophancy_judge / social_sycophancy_judge are imported from
+        their shared probing.evaluations.baseline_probes.judge package home;
+        cross_dataset_generalization.py remains a tool_calling-only, flat,
+        try/except-guarded import (see SIBLING_FLAT_IMPORTS), since it is
+        steering-dependent and out of this migration's scope
     """
 
     def test_all_drivers_resolve_repo_root_and_sycophancy_dir(self):
@@ -60,7 +69,9 @@ class DriverImportPathTests(unittest.TestCase):
             with self.subTest(driver=driver.__name__):
                 self.assertEqual(driver.REPO_ROOT, REPO_ROOT)
                 self.assertEqual(driver.SYCOPHANCY_DIR, SYCOPHANCY_DIR)
-                self.assertTrue(driver.SYCOPHANCY_DIR.is_dir())
+                # NOT asserting SYCOPHANCY_DIR.is_dir(): true on building-agent/
+                # pre-cleanup main (tool_calling/ present), false on SAE (Task 9
+                # removed tool_calling/ from this branch entirely).
 
     def test_no_driver_references_stale_pipeline_scripts_path(self):
         for driver in ALL_DRIVERS:
@@ -89,15 +100,26 @@ class DriverImportPathTests(unittest.TestCase):
         self.assertIn("from probing.probe.dim import (", source)
         self.assertNotIn("from sycophancy_probes import", source)
         self.assertNotIn("from sycophancy_dim import", source)
-        # Out-of-scope sibling modules stay flat-imported.
-        self.assertIn("from moral_sycophancy_judge import", source)
+        # moral_sycophancy_judge.py moved into the shared judge package.
+        self.assertIn(
+            "from probing.evaluations.baseline_probes.judge.moral_sycophancy_judge import",
+            source,
+        )
+        self.assertNotIn("from moral_sycophancy_judge import", source)
+        # cross_dataset_generalization.py is out-of-scope and stays flat-imported.
         self.assertIn("from cross_dataset_generalization import", source)
 
     def test_oeq_probe_pipeline_imports_baseline_probes_by_new_name(self):
         source = inspect.getsource(oeq_probe_pipeline)
         self.assertIn("from probing.probe.baseline_probes import (", source)
         self.assertNotIn("from sycophancy_probes import", source)
-        self.assertIn("from social_sycophancy_judge import", source)
+        # social_sycophancy_judge.py moved into the shared judge package.
+        self.assertIn(
+            "from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import",
+            source,
+        )
+        self.assertNotIn("from social_sycophancy_judge import", source)
+        # cross_dataset_generalization.py is out-of-scope and stays flat-imported.
         self.assertIn("from cross_dataset_generalization import", source)
 
     def test_pipelines_sharing_collect_residual_only_use_package_qualified_import(self):

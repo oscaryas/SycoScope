@@ -40,9 +40,18 @@ for candidate in (REPO_ROOT, SYCOPHANCY_DIR, SCRIPTS_DIR):
     if str(candidate) not in sys.path:
         sys.path.insert(0, str(candidate))
 
-from truthfulqa_sycophancyeval_generate import (  # noqa: E402
-    DEFAULT_DATASETS, TEMPLATE_LABELS, load_truthfulqa_sycophancyeval_rows,
-)
+try:
+    # Absent on branches without tool_calling/ (SAE, and eventually main) --
+    # importing this module for its argparse surface (e.g. --help, or a
+    # smoke-test import) still works, but actually running generation
+    # requires a tool_calling-carrying branch (building-agent).
+    from truthfulqa_sycophancyeval_generate import (  # noqa: E402
+        DEFAULT_DATASETS, TEMPLATE_LABELS, load_truthfulqa_sycophancyeval_rows,
+    )
+except ModuleNotFoundError:
+    DEFAULT_DATASETS = ("trivia_qa", "truthful_qa")  # mirrored from truthfulqa_sycophancyeval_generate.py
+    TEMPLATE_LABELS = None
+    load_truthfulqa_sycophancyeval_rows = None
 from probing.evaluations.baseline_probes.judge.truthfulqa_verdict_judge import judge_truthful_batch  # noqa: E402
 from probing.utils.baseline_probes_common import seed_everything, write_jsonl  # noqa: E402
 from probing.evaluations.baseline_probes.generation.common import (  # noqa: E402

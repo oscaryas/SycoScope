@@ -11,7 +11,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils.llm_judge import DEFAULT_JUDGE_MODEL, call_judge, parse_json_response
-from utils.sae_utils import DEFAULT_ACTIVATIONS_DIR, DEFAULT_TRAINED_SAE_DIR
+from SAE.sae.utils import DEFAULT_ACTIVATIONS_DIR, DEFAULT_TRAINED_SAE_DIR
 
 JUDGE_SYSTEM_PROMPT = (
     "You are an interpretability researcher analyzing latent directions in a sparse "

@@ -48,7 +48,9 @@ for p in (REPO_ROOT, SYCOPHANCY_DIR):
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.model_registry import get_model_config
 from probing.probe.baseline_probes import collect_activations, bootstrap_ci
-from moral_sycophancy_judge import generate_moral_sycophancy_labels, build_labeled_text, DEFAULT_INPUT_PATH
+from probing.evaluations.baseline_probes.judge.moral_sycophancy_judge import (
+    generate_moral_sycophancy_labels, build_labeled_text, DEFAULT_INPUT_PATH,
+)
 from probing.probe.dim import (
     iter_flip_pairs_all_samples,
     _average_blocks,
@@ -57,7 +59,19 @@ from probing.probe.dim import (
     train_residual_dim,
     save_dim_results,
 )
-from cross_dataset_generalization import DEFAULT_ALPHAS as ALPHAS, run_generalization_sweep
+try:
+    # cross_dataset_generalization.py depends on the live-steering machinery
+    # elsewhere in tool_calling/tasks/sycophancy/, so it stays application-
+    # owned there (building-agent only) rather than moving into probing/ --
+    # see the plan's "Files that remain application-owned on building-agent".
+    # On branches without tool_calling/ (SAE, and eventually main), this
+    # module is simply absent; importing aita_dim_pipeline for its helpers
+    # (e.g. from tests) still works, but actually running its cross-dataset
+    # sweep requires a tool_calling-carrying branch.
+    from cross_dataset_generalization import DEFAULT_ALPHAS as ALPHAS, run_generalization_sweep
+except ModuleNotFoundError:
+    ALPHAS = [-20.0, -5.0, 0.0, 5.0, 20.0]  # cross_dataset_generalization.py's DEFAULT_ALPHAS, mirrored
+    run_generalization_sweep = None
 
 CROSS_DATASETS_OTHER = ["AITA-NTA-OG", "AITA-YTA", "OEQ", "SS"]
 HOME_DATASET = "AITA-NTA-FLIP"
