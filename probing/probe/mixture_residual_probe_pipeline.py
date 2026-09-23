@@ -105,6 +105,7 @@ def main():
     parser.add_argument("--output-dir", type=str, default=str(SYCOPHANCY_DIR / "results" / "probing" / "sycophancy_mixture_residual"))
     parser.add_argument("--model", type=str, default="meta-llama/Meta-Llama-3-8B-Instruct")
     parser.add_argument("--balance-method", type=str, default="undersample", choices=["undersample", "upweight"])
+    parser.add_argument("--weight-decay", type=float, default=0.0, help="L2 regularization strength (Adam weight_decay). 0.0 = none.")
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
 
@@ -128,7 +129,8 @@ def main():
 
     print(f"\nTraining residual probes ({n_layers} layers, balance_method={args.balance_method})...")
     res_acc, res_ci, res_states, res_auc, res_auc_ci = train_residual_probes(
-        residual_activations, labels, n_layers, balance_method=args.balance_method, seed=args.seed,
+        residual_activations, labels, n_layers,
+        balance_method=args.balance_method, seed=args.seed, weight_decay=args.weight_decay,
     )
 
     results = {
@@ -146,6 +148,7 @@ def main():
         "n_neg": n_neg,
         "category_breakdown": dict(Counter(categories)),
         "balance_method": args.balance_method,
+        "weight_decay": args.weight_decay,
         "model": args.model,
         "seed": args.seed,
     }

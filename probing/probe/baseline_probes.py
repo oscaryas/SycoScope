@@ -90,8 +90,15 @@ class LinearProbe(nn.Module):
 # Training
 # ---------------------------------------------------------------------------
 
-def _fit_probe(X: np.ndarray, y: np.ndarray, input_dim: int, n_epochs: int, batch_size: int, lr: float) -> nn.Module:
-    """Fit one LinearProbe on the given (train) data and return it."""
+def _fit_probe(X: np.ndarray, y: np.ndarray, input_dim: int, n_epochs: int, batch_size: int, lr: float, weight_decay: float = 0.0) -> nn.Module:
+    """Fit one LinearProbe on the given (train) data and return it.
+
+    weight_decay > 0 applies L2 regularization to the probe weights via
+    Adam's built-in decoupled weight decay -- useful here since the residual
+    stream is high-dimensional (e.g. 3840 for gemma-4-12B-it) relative to how
+    few examples a per-category/per-layer fold sees, so an unregularized
+    probe can overfit the training fold.
+    """
     X_t = torch.FloatTensor(X)
     y_t = torch.FloatTensor(y)
 
@@ -103,7 +110,7 @@ def _fit_probe(X: np.ndarray, y: np.ndarray, input_dim: int, n_epochs: int, batc
     pos_weight = torch.tensor(n_neg / n_pos) if n_pos > 0 and n_neg > 0 else torch.tensor(1.0)
 
     probe = LinearProbe(input_dim)
-    optimizer = Adam(probe.parameters(), lr=lr)
+    optimizer = Adam(probe.parameters(), lr=lr, weight_decay=weight_decay)
     criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
 
     probe.train()
@@ -166,6 +173,7 @@ def train_probe(
     n_folds: int = 5,
     seed: Optional[int] = None,
     balance_method: str = "undersample",
+    weight_decay: float = 0.0,
 ) -> dict:
     """
     Train a linear probe on activations X with binary labels y, evaluated
@@ -188,6 +196,12 @@ def train_probe(
       computed per training fold from whatever y ends up in that fold). Uses
       the full dataset -- no examples discarded -- at the cost of a noisier
       gradient signal from the minority class's small absolute count.
+
+    weight_decay (default 0.0, no regularization) applies L2 regularization
+    via Adam's weight_decay -- worth setting > 0 when hidden_dim is large
+    relative to n_examples per fold (e.g. gemma-4-12B-it's 3840-dim residual
+    stream against a few hundred examples per class), where an unregularized
+    probe can overfit the training fold.
 
     Returns dict with keys: accuracy (pooled across folds), fold_accuracies
     (list, one per fold), train_accuracy (mean across folds' training
@@ -227,7 +241,7 @@ def train_probe(
         if test_mask.sum() == 0 or train_mask.sum() == 0:
             continue
 
-        probe = _fit_probe(X[train_mask], y[train_mask], input_dim, n_epochs, batch_size, lr)
+        probe = _fit_probe(X[train_mask], y[train_mask], input_dim, n_epochs, batch_size, lr, weight_decay)
         _, _, train_acc = _probe_accuracy(probe, X[train_mask], y[train_mask])
         n_correct, n_test_fold, fold_acc = _probe_accuracy(probe, X[test_mask], y[test_mask])
         fold_auc = _fold_auc(y[test_mask], _probe_scores(probe, X[test_mask]))
@@ -240,7 +254,7 @@ def train_probe(
         total_test += n_test_fold
 
     # Refit on all (balanced) data for the returned probe weights.
-    final_probe = _fit_probe(X, y, input_dim, n_epochs, batch_size, lr)
+    final_probe = _fit_probe(X, y, input_dim, n_epochs, batch_size, lr, weight_decay)
 
     ci_lower, ci_upper = wilson_ci(total_correct, total_test)
     if fold_aucs:
