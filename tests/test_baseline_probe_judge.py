@@ -120,10 +120,14 @@ class JudgeModuleImportTests(unittest.TestCase):
                 self.assertTrue((module.REPO_ROOT / "probing").is_dir())
                 self.assertTrue((module.REPO_ROOT / "utils").is_dir())
 
-    def test_sae_results_defaults_still_resolve_under_repo_root(self):
-        # SAE/results/ is a shared, unmoved top-level tree (this extraction
-        # never moves anything out of SAE/) -- these two defaults should keep
-        # pointing at it correctly from the new probing/evaluations/... location.
+    def test_sae_results_constants_still_resolve_under_repo_root(self):
+        # SAE/ is an application directory this repo's plan removes from
+        # `main` in a later task, so DEFAULT_INPUT_PATH/DEFAULT_RESULTS_DIR
+        # must not be wired in as silent fallbacks (see the
+        # generate_*_labels required-input_path tests below) -- but the
+        # constants themselves stay, for callers that explicitly want
+        # ELEPHANT's own SAE/results/ data, and must still resolve correctly
+        # under REPO_ROOT from this module's new location.
         self.assertEqual(
             moral_sycophancy_judge.DEFAULT_INPUT_PATH,
             REPO_ROOT / "SAE" / "results" / "AITA-NTA-FLIP.jsonl",
@@ -132,6 +136,16 @@ class JudgeModuleImportTests(unittest.TestCase):
             social_sycophancy_judge.DEFAULT_RESULTS_DIR,
             REPO_ROOT / "SAE" / "results",
         )
+
+    def test_generate_moral_sycophancy_labels_requires_input_path(self):
+        import inspect
+        signature = inspect.signature(moral_sycophancy_judge.generate_moral_sycophancy_labels)
+        self.assertEqual(signature.parameters["input_path"].default, inspect.Parameter.empty)
+
+    def test_generate_social_sycophancy_labels_requires_input_path(self):
+        import inspect
+        signature = inspect.signature(social_sycophancy_judge.generate_social_sycophancy_labels)
+        self.assertEqual(signature.parameters["input_path"].default, inspect.Parameter.empty)
 
 
 class JudgeHelpSmokeTests(unittest.TestCase):
@@ -149,24 +163,27 @@ class JudgeHelpSmokeTests(unittest.TestCase):
 class JudgeRequiredOutputArgTests(unittest.TestCase):
     """run_social_sycophancy_judge_oeq.py's --output-path used to default into
     tool_calling/tasks/sycophancy's own application-owned results/generations/
-    tree; per this task's brief, that default is now a required argument
-    instead of a new default under probing/."""
+    tree, and --input-path used to default into the shared SAE/results/ tree
+    -- SAE/ is itself an application directory this repo's plan removes from
+    `main` in a later task, so a shared module must not silently default into
+    it either. Both are now required arguments instead of a default under
+    probing/ or a silent default into SAE/."""
 
     def test_run_social_sycophancy_judge_oeq_output_path_required(self):
         result = run_without_required(
-            "probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq", []
+            "probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq",
+            ["--input-path", "/tmp/does-not-matter.jsonl"],
         )
         self.assertEqual(result.returncode, 2)
         self.assertIn("--output-path", result.stderr)
 
-    def test_run_social_sycophancy_judge_oeq_input_path_default_is_sae_results(self):
-        # --input-path reads from the shared, unmoved SAE/results/ tree (not
-        # application-owned), so it correctly keeps a default rather than
-        # becoming required.
-        result = run_help(
-            "probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq"
+    def test_run_social_sycophancy_judge_oeq_input_path_required(self):
+        result = run_without_required(
+            "probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq",
+            ["--output-path", "/tmp/does-not-matter.jsonl"],
         )
-        self.assertIn("OEQ.jsonl", result.stdout)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("--input-path", result.stderr)
 
 
 if __name__ == "__main__":

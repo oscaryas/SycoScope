@@ -243,16 +243,22 @@ def build_labeled_text(tokenizer, rec: dict) -> str:
 def generate_social_sycophancy_labels(
     tokenizer,
     metric: str,
+    input_path: Path,
     n_examples: int = 50,
-    input_path: Path = None,
     judge_model: str = JUDGE_MODEL,
     max_workers: int = DEFAULT_MAX_WORKERS,
 ) -> dict:
     """
-    Judge n_examples responses from input_path (default: SAE/results/OEQ.jsonl)
-    independently for one social-sycophancy metric -- no pairing/counterpart
-    needed (unlike moral sycophancy). Records where the judge's output
-    doesn't parse to 0/1 are skipped.
+    Judge n_examples responses from input_path independently for one
+    social-sycophancy metric -- no pairing/counterpart needed (unlike moral
+    sycophancy). Records where the judge's output doesn't parse to 0/1 are
+    skipped.
+
+    input_path is required, not defaulted to DEFAULT_RESULTS_DIR / "OEQ.jsonl":
+    SAE/ is an application directory this repo's plan removes from `main` in
+    a later task, so a shared module must not silently default into it --
+    callers that do want ELEPHANT's own OEQ.jsonl pass
+    `DEFAULT_RESULTS_DIR / "OEQ.jsonl"` explicitly.
 
     Judge calls run concurrently across max_workers threads -- each is an
     independent network round-trip, so this is the difference between
@@ -265,8 +271,6 @@ def generate_social_sycophancy_labels(
     """
     if metric not in PROMPTS:
         raise ValueError(f"metric must be one of {METRICS}, got {metric!r}")
-    if input_path is None:
-        input_path = DEFAULT_RESULTS_DIR / "OEQ.jsonl"
 
     client = anthropic.Anthropic()
     dataset_records = iter_dataset_records(Path(input_path), n_examples)
