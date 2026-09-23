@@ -576,7 +576,7 @@ def main():
         print("Score-correlation clustering only; other analyses skipped.")
     elif not ood_path.exists():
         print()
-        print(f"--- ANOVA skipped: {ood_path} not found; run eval_elephant.py first ---")
+        print(f"--- ANOVA skipped: {ood_path} not found; run eval_social_sycophancy.py first ---")
     else:
         ood = json.loads(ood_path.read_text(encoding="utf-8"))
         anova_rows = [

@@ -3,7 +3,7 @@
 V1 analysis plan, step 2: the probe-by-evaluation-target performance matrix.
 
 Reads the activations + probes already cached by eval_sypr.py / eval_moral.py
-(and eval_elephant.py, once it has been run for this run-name) -- no GPU, no
+(and eval_social_sycophancy.py, once it has been run for this run-name) -- no GPU, no
 model weights, nothing re-extracted. For each (eval target, label_field):
 
   1. Select (position, layer) per probe on the *selection* split (mean AUC),
