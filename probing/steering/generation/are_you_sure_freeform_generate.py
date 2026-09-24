@@ -92,7 +92,7 @@ def main():
     parser.add_argument("--judge-max-workers", type=int, default=16)
     parser.add_argument("--out", type=str, required=True,
                          help="Output checkpoint path, e.g. "
-                              "probing/data/<model_slug>/are_you_sure_freeform/checkpoint.jsonl")
+                              "probing/data/baseline/<model_slug>/are_you_sure_freeform/checkpoint.jsonl")
     parser.add_argument("--n", type=int, default=None, help="Cap on number of rows, for smoke-testing. Default: all rows across the selected datasets.")
     args = parser.parse_args()
     if "nemotron" in args.model.lower() and not args.system_prompt:

@@ -11,10 +11,18 @@ Positions:
   response     h[prompt_len : resp_end]          behaviour measurement
 --average mean pools the span; --average none takes its final token.
 
-Prompt resolution per record: chat_messages, else chat_prefix, else
-user_prompt + system_prompt through the chat template. --prompt-field uses
-another field instead (with --prompt-templated if it is already a rendered
-chat prefix, as in the baseline checkpoint.jsonl files).
+Prompt resolution per record: --prompt-field if given (with
+--prompt-templated if it is already a rendered chat prefix, as in the baseline
+checkpoint.jsonl files), else chat_messages, else chat_prefix, else a
+multi-turn `messages` list ending in an assistant turn (the generate_*.py
+output schema: messages[:-1], system prompt included, is the prompt and the
+final assistant turn is the response span), else user_prompt + system_prompt
+through the chat template.
+
+Labels (--label-field) are validated before the model is loaded: every row
+must carry a 0/1 label, or the run stops with the offending example ids.
+--drop-unlabeled skips rows whose label is missing/None instead (logged in
+the .meta.json skips).
 
 Over-length records are skipped, never truncated. Right padding is asserted
 on every batch. Output format: see probes_core.save_cache.
@@ -41,9 +49,49 @@ from probing.analyze_probes import probes_core as core  # noqa: E402
 from probing.utils import common  # noqa: E402
 
 
+def parse_label(value) -> int | None:
+    """0/1 int from a bool/int/float/numeric-string label; None if missing or
+    not binary."""
+    if value is None or isinstance(value, (list, dict)):
+        return None
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return int(number) if number in (0.0, 1.0) else None
+
+
+def attach_labels(records: list[dict], label_field: str, drop_unlabeled: bool) -> tuple[list[dict], list[dict]]:
+    """Validate/convert every label BEFORE any GPU work. Returns (kept, skip_log);
+    raises SystemExit naming the bad rows unless --drop-unlabeled covers them."""
+    kept, skip_log, missing, invalid = [], [], [], []
+    for i, rec in enumerate(records):
+        rec = dict(rec)
+        rec.setdefault("example_id", str(i))
+        raw = rec.get(label_field)
+        label = parse_label(raw)
+        if label is not None:
+            rec["_label"] = label
+            kept.append(rec)
+        elif raw is None:
+            missing.append(rec["example_id"])
+            skip_log.append({"example_id": rec["example_id"], "reason": "unlabeled"})
+        else:
+            invalid.append((rec["example_id"], raw))
+    if invalid:
+        raise SystemExit(f"{len(invalid)} rows have a non-binary {label_field!r} (first: {invalid[:5]}); "
+                         f"pick another --label-field")
+    if missing and not drop_unlabeled:
+        raise SystemExit(f"{len(missing)}/{len(records)} rows have no {label_field!r} (missing key or None; "
+                         f"first ids: {missing[:5]}). Judge them first, pass the right --label-field, "
+                         f"or --drop-unlabeled to skip them.")
+    return kept, skip_log
+
+
 def normalize_records(records: list[dict], args, tokenizer) -> list[dict]:
-    """Fill the fields prepare_records reads (example_id, chat_prefix) from the
-    CLI's field choices, without touching records that already carry them."""
+    """Fill the fields prepare_records reads (example_id, chat_prefix /
+    chat_messages + response) from the CLI's field choices and the record's
+    own schema."""
     from utils.inference import build_chat_prompt
 
     out = []
@@ -55,6 +103,14 @@ def normalize_records(records: list[dict], args, tokenizer) -> list[dict]:
             rec["chat_prefix"] = prompt if args.prompt_templated else build_chat_prompt(
                 tokenizer, prompt, rec.get("system_prompt")
             )
+            rec.pop("chat_messages", None)  # --prompt-field wins over any chat_messages
+        elif (rec.get("chat_messages") is None and not rec.get("chat_prefix") and "user_prompt" not in rec
+              and rec.get("messages")):
+            messages = rec["messages"]
+            if messages[-1].get("role") != "assistant":
+                raise SystemExit(f"record {rec['example_id']}: `messages` does not end with an assistant turn")
+            rec["chat_messages"] = messages[:-1]
+            rec["response"] = messages[-1]["content"]
         out.append(rec)
     return out
 
@@ -74,7 +130,8 @@ def main() -> None:
     parser.add_argument("--average", choices=["mean", "none"], default="mean")
     parser.add_argument("--layers", type=int, nargs="+", default=None, help="0-based block indices (read at hidden_states[layer + 1]).")
     parser.add_argument("--layer-fracs", type=float, nargs="+", default=None, help="Depth fractions; default 0.25 0.5 0.75 when --layers is omitted.")
-    parser.add_argument("--label-field", default="label")
+    parser.add_argument("--label-field", default="label", help="Binary 0/1 label field (validated before the model loads).")
+    parser.add_argument("--drop-unlabeled", action="store_true", help="Skip rows whose label is missing/None instead of failing.")
     parser.add_argument("--group-field", default="prompt_id", help="CV group field (falls back to prompt_id/row_id/example_id).")
     parser.add_argument("--prompt-field", default=None)
     parser.add_argument("--prompt-templated", action="store_true", help="--prompt-field already holds the rendered chat prefix.")
@@ -85,7 +142,11 @@ def main() -> None:
 
     from utils.model import cleanup as cleanup_model, load_model_and_tokenizer
 
-    records = common.read_jsonl(args.input)
+    records, label_skips = attach_labels(common.read_jsonl(args.input), args.label_field, args.drop_unlabeled)
+    if label_skips:
+        print(f"dropping {len(label_skips)} unlabeled rows (--drop-unlabeled)")
+    if not records:
+        raise SystemExit("no labeled rows")
     print(f"Loading {args.model} ...")
     model, tokenizer = load_model_and_tokenizer(args.model)
     # load_model_and_tokenizer sets padding_side="left" for generation. Absolute
@@ -100,6 +161,7 @@ def main() -> None:
 
     records = normalize_records(records, args, tokenizer)
     prepared, skip_log = core.prepare_records(records, tokenizer, args)
+    skip_log = label_skips + skip_log
     print(f"{len(prepared)} examples ({len(skip_log)} skipped)")
     if not prepared:
         raise SystemExit("nothing to extract")
@@ -112,7 +174,7 @@ def main() -> None:
     core.save_cache(
         args.output,
         {layer: arrays[(args.token_position, layer)] for layer in layers},
-        y=np.array([int(float(r[args.label_field])) for r in recs]),
+        y=np.array([r["_label"] for r in recs], dtype=np.int64),
         groups=[record_group(r, args.group_field) for r in recs],
         example_id=np.array([str(r["example_id"]) for r in recs]),
         degenerate=np.array([str(r.get("degenerate") or "") for r in recs]),

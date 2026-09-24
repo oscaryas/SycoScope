@@ -4,7 +4,7 @@ gemma-4-12B-it analogue of build_sycophancy_mixture.py -- assembles a 4-way
 balanced sycophancy mixture from ONLY this session's google/gemma-4-12B-it
 generations (no llama31 data mixed in):
 
-    - sypr          probing/data/google__gemma-4-12B-it/sypr_merged/checkpoint.jsonl
+    - sypr          probing/results/probes/google__gemma-4-12B-it/sypr_merged/checkpoint.jsonl
                     (worker1 rows 0-2290 + worker2 real rows 2500-2632 of the
                     seed=0 shuffle, already has text+label; see summary.json
                     in that dir for the merge note)
@@ -36,8 +36,11 @@ every category contributes exactly n positive + n negative rows -- same
 algorithm as build_sycophancy_mixture.py, just gemma-only inputs/loaders.
 
 Usage:
-    python -m probing.data.build_gemma_sycophancy_mixture \
-        --out probing/data/google__gemma-4-12B-it/gemma_sycophancy_mixture/mixture.jsonl
+    python -m probing.evaluations.generation.build_gemma_sycophancy_mixture \
+        --out probing/results/probes/google__gemma-4-12B-it/gemma_sycophancy_mixture/mixture.jsonl
+
+Other inputs (are_you_sure / oeq / ss / aita_nta_flip) default to
+probing/data/baseline/google__gemma-4-12B-it/<source>/.
 """
 import argparse
 import json
@@ -45,8 +48,9 @@ import random
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-GEMMA_DIR = HERE / "google__gemma-4-12B-it"
+REPO_ROOT = Path(__file__).resolve().parents[3]
+GEMMA_DIR = REPO_ROOT / "probing" / "data" / "baseline" / "google__gemma-4-12B-it"
+GEMMA_PROBES = REPO_ROOT / "probing" / "results" / "probes" / "google__gemma-4-12B-it"
 
 
 def load_sypr(path: Path) -> list:
@@ -138,13 +142,13 @@ def load_moral(path: Path) -> list:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--sypr", type=str, default=str(GEMMA_DIR / "sypr_merged" / "checkpoint.jsonl"))
+    parser.add_argument("--sypr", type=str, default=str(GEMMA_PROBES / "sypr_merged" / "checkpoint.jsonl"))
     parser.add_argument("--are-you-sure-freeform", type=str, default=str(GEMMA_DIR / "are_you_sure_freeform" / "checkpoint.jsonl"))
     parser.add_argument("--are-you-sure-mc", type=str, default=str(GEMMA_DIR / "are_you_sure_mc" / "checkpoint.jsonl"))
     parser.add_argument("--oeq", type=str, default=str(GEMMA_DIR / "oeq" / "judged.jsonl"))
     parser.add_argument("--ss", type=str, default=str(GEMMA_DIR / "ss" / "judged.jsonl"))
     parser.add_argument("--moral", type=str, default=str(GEMMA_DIR / "aita_nta_flip" / "judged.jsonl"))
-    parser.add_argument("--out", type=str, default=str(GEMMA_DIR / "gemma_sycophancy_mixture" / "mixture.jsonl"))
+    parser.add_argument("--out", type=str, default=str(GEMMA_PROBES / "gemma_sycophancy_mixture" / "mixture.jsonl"))
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
 

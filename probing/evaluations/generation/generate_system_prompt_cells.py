@@ -55,6 +55,9 @@ from utils.inference import build_chat_prompt, iter_batches  # noqa: E402
 from probing.evaluations.generation.common import add_backend_args, generate_openrouter  # noqa: E402
 
 DEFAULT_OPENROUTER_TOKENIZER = "meta-llama/Llama-3.1-8B-Instruct"
+# --model default per backend: an HF repo id is not a valid OpenRouter slug
+# (OpenRouter answers it with a non-retryable 400).
+DEFAULT_OPENROUTER_MODEL = "meta-llama/llama-3.1-8b-instruct"
 
 # Diagnostics, not labels: they flag individual records and feed a per-cell rate.
 REFUSAL_MARKERS = ("i can't", "i cannot", "i won't", "i'm not able to", "i am not able to")
@@ -133,9 +136,18 @@ def build_work_list(pairs: list[dict], prompts: list[dict], slugs: list[str] | N
 
 
 def load_done(path: Path) -> set[str]:
+    """example_ids already generated. Rows from a failed OpenRouter request
+    (degenerate == "request_failed", written by older runs) are not done: they
+    are removed from the file here so the rerun retries them without leaving
+    duplicate example_ids behind."""
     if not path.exists():
         return set()
-    return {json.loads(line)["example_id"] for line in open(path, encoding="utf-8") if line.strip()}
+    rows = [json.loads(line) for line in open(path, encoding="utf-8") if line.strip()]
+    ok = [r for r in rows if r.get("degenerate") != "request_failed"]
+    if len(ok) != len(rows):
+        print(f"{path.name}: dropping {len(rows) - len(ok)} request_failed rows so they are retried")
+        common.write_jsonl(path, ok)
+    return {r["example_id"] for r in ok}
 
 
 def group_key(item: dict) -> tuple:
@@ -243,6 +255,7 @@ def run_openrouter(todo: dict, run_dir: Path, n_pending: int, args) -> None:
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer or DEFAULT_OPENROUTER_TOKENIZER)
     args.do_sample = True  # generate_openrouter reads args.do_sample; this design always samples.
     n_done = 0
+    n_failed_total = 0
     for (slug, polarity), pending in todo.items():
         system_prompt = pending[0]["system_prompt"]
         print(f"\n[{slug} / {polarity}] {len(pending)} to generate via OpenRouter "
@@ -255,25 +268,36 @@ def run_openrouter(todo: dict, run_dir: Path, n_pending: int, args) -> None:
                 messages_list.append(msgs)
             results = generate_openrouter(messages_list, args)
             records = []
+            n_failed = 0
             for item, result in zip(chunk, results):
+                if result["finish_reason"] == "request_failed":
+                    # Not persisted: load_done would treat it as finished and a
+                    # rerun would never retry it.
+                    n_failed += 1
+                    continue
                 response = result["content"]
                 n_tok = len(tokenizer(response, add_special_tokens=False)["input_ids"]) if response else 0
                 reason = classify_degenerate(response, n_tok, args.max_new_tokens, args.min_response_chars)
                 if result["finish_reason"] == "length" and reason != "empty":
                     reason = reason or "truncated"
-                if result["finish_reason"] == "request_failed":
-                    reason = "request_failed"
                 records.append({**_record(item, response, n_tok, reason, args), "finish_reason": result["finish_reason"]})
             _write_chunk(run_dir / "generations" / f"{slug}.jsonl", records)
             n_done += len(chunk)
             print(f"  {n_done}/{n_pending} total", flush=True)
+            if n_failed:
+                n_failed_total += n_failed
+                print(f"  WARNING: {n_failed}/{len(chunk)} requests failed and were NOT saved; rerun to retry them",
+                      flush=True)
+    if n_failed_total:
+        print(f"\nWARNING: {n_failed_total} failed requests not saved -- rerun the same command to retry them.")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--run-name", type=str, required=True)
-    parser.add_argument("--model", type=str, default=common.DEFAULT_MODEL,
-                        help="HF repo id (local) or OpenRouter slug (openrouter)")
+    parser.add_argument("--model", type=str, default=None,
+                        help=f"HF repo id (local; default {common.DEFAULT_MODEL}) or OpenRouter slug "
+                             f"(openrouter; default {DEFAULT_OPENROUTER_MODEL})")
     parser.add_argument("--tokenizer", type=str, default=None,
                         help="HF repo id used to count response tokens / render --dry-run prompts "
                              f"(default: --model for local, {DEFAULT_OPENROUTER_TOKENIZER} for openrouter)")
@@ -297,6 +321,8 @@ def main():
         help="Render the first prompt of each group, count tokens, load no weights, write nothing.",
     )
     args = parser.parse_args()
+    if args.model is None:
+        args.model = DEFAULT_OPENROUTER_MODEL if args.backend == "openrouter" else common.DEFAULT_MODEL
 
     pairs = common.load_prompt_pairs()
     prompts = common.read_jsonl(args.user_prompts)
@@ -312,7 +338,8 @@ def main():
     if args.dry_run:
         from transformers import AutoTokenizer
 
-        tokenizer = AutoTokenizer.from_pretrained(args.tokenizer or args.model)
+        tokenizer = AutoTokenizer.from_pretrained(
+            args.tokenizer or (DEFAULT_OPENROUTER_TOKENIZER if args.backend == "openrouter" else args.model))
         for key, items in groups.items():
             item = items[0]
             rendered = build_chat_prompt(tokenizer, item["user_prompt"], item["system_prompt"])

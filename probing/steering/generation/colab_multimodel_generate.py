@@ -11,7 +11,7 @@ ANTHROPIC_API_KEY into os.environ (google.colab.userdata):
         > /content/gen.log 2>&1 &
 
 Per model x dataset, output lands in
-probing/data/<model_slug>/<dataset>/checkpoint.jsonl
+probing/data/baseline/<model_slug>/<dataset>/checkpoint.jsonl
 (the scripts' own resumable checkpoint format), so a killed run just picks
 up where it left off on rerun.
 
@@ -53,7 +53,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[2]
-GEN_DIR = REPO_ROOT / "probing" / "data"
+GEN_DIR = REPO_ROOT / "probing" / "data" / "baseline"
 
 MODELS = [
     # (hf id, system prompt, generation batch size)
@@ -141,8 +141,7 @@ def main():
 
     if args.tar:
         # Tar just the model-slug directories this run touched (not all of
-        # probing/data/, which also holds source datasets and unrelated
-        # scripts) -- each is a direct child of GEN_DIR, one per model.
+        # probing/data/baseline/) -- each is a direct child of GEN_DIR, one per model.
         slugs = [slug(m) for m, _, _ in want_models]
         subprocess.call(["tar", "-czf", args.tar, "-C", str(GEN_DIR), *slugs])
         log(f"tarred results to {args.tar}")

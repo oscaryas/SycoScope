@@ -5,8 +5,8 @@ indirectness, and framing sycophancy.
 
 Unlike moral_sycophancy_judge.py (pairwise, AITA-specific: needs both sides
 of a conflict), these three metrics score each response independently, so
-they apply to any open-ended-advice dataset -- SAE/results/OEQ.jsonl by
-default, or SS.jsonl. The judge prompts below are ELEPHANT's own (kept
+they apply to any open-ended-advice dataset -- the baseline oeq/ source by
+default, or ss/. The judge prompts below are ELEPHANT's own (kept
 verbatim, since they're carefully worded and already validated in the
 paper); only the judge model changed, from ELEPHANT's GPT-4o to Claude
 (this repo's existing anthropic dependency), same single-token 0/1 output
@@ -21,17 +21,15 @@ from pathlib import Path
 
 import anthropic
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils.inference import build_chat_prompt
 
-# SAE/results/ is a shared, unmoved top-level results tree (this extraction
-# does not move anything out of SAE/) -- REPO_ROOT still resolves correctly
-# to the real repo root from this module's new location, so this default
-# keeps working unchanged.
-DEFAULT_RESULTS_DIR = REPO_ROOT / "SAE" / "results"
+# Baseline generations live at DEFAULT_RESULTS_DIR/<model_slug>/<source>/
+# (e.g. .../google__gemma-4-12B-it/oeq/checkpoint.jsonl).
+DEFAULT_RESULTS_DIR = REPO_ROOT / "probing" / "data" / "baseline"
 JUDGE_MODEL = "claude-sonnet-5"
 DEFAULT_MAX_WORKERS = 16
 
@@ -254,11 +252,8 @@ def generate_social_sycophancy_labels(
     sycophancy). Records where the judge's output doesn't parse to 0/1 are
     skipped.
 
-    input_path is required, not defaulted to DEFAULT_RESULTS_DIR / "OEQ.jsonl":
-    SAE/ is an application directory this repo's plan removes from `main` in
-    a later task, so a shared module must not silently default into it --
-    callers that do want ELEPHANT's own OEQ.jsonl pass
-    `DEFAULT_RESULTS_DIR / "OEQ.jsonl"` explicitly.
+    input_path is required, not defaulted: callers pass e.g.
+    `DEFAULT_RESULTS_DIR / "<model_slug>" / "oeq" / "checkpoint.jsonl"`.
 
     Judge calls run concurrently across max_workers threads -- each is an
     independent network round-trip, so this is the difference between

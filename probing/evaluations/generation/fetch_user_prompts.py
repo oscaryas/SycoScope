@@ -13,11 +13,11 @@ cut at --n. That makes --n 20 a prefix of --n 200: smoke runs use real data, and
 raising --n appends rather than invalidating generations already produced against
 the smaller file.
 
-generate_response.py always reads the default path, so --out is for inspecting a
+generate_system_prompt_cells.py reads the default path, so --out is for inspecting a
 selection, not for feeding the pipeline; use its --limit-prompts for smoke runs.
 
 Usage:
-    python fetch_user_prompts.py --n 200
+    python -m probing.evaluations.generation.fetch_user_prompts --n 200
 """
 import argparse
 import json
@@ -26,13 +26,13 @@ import re
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from probing.utils import common  # noqa: E402
 
-# name -> filename in prompt_probes/data/
+# name -> filename in probing/data/system_prompt/
 SUBSETS = {
     "nlp_survey": "sycophancy_on_nlp_survey.jsonl",
     "political_typology": "sycophancy_on_political_typology_quiz.jsonl",

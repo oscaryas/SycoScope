@@ -9,7 +9,7 @@ Two standalone local PNGs for google/gemma-4-12B-it, no Artifact/HTML:
    sypr/truthfulqa/are_you_sure_*: each dataset's own summary.json rate;
    dissociating_sycophancy: CAVED rate).
 2. The mixture residual probe's held-out/OOD transfer-eval accuracy per
-   target (from probing/data/google__gemma-4-12B-it/gemma_mixture_probe_transfer/
+   target (from probing/results/probes/google__gemma-4-12B-it/gemma_mixture_probe_transfer/
    results.json), with the in-distribution training-mixture CV accuracy
    (83.1%, layer 31) as a reference line, plus AUC-ROC as a second series
    where defined.
@@ -26,10 +26,10 @@ import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[1]
-GEMMA_DIR = REPO_ROOT / "probing" / "data" / "google__gemma-4-12B-it"
-TRANSFER_DIR = GEMMA_DIR / "gemma_mixture_probe_transfer"
-PLOTS_DIR = GEMMA_DIR / "plots"
-PLOTS_DIR.mkdir(parents=True, exist_ok=True)
+GEMMA_DIR = REPO_ROOT / "probing" / "data" / "baseline" / "google__gemma-4-12B-it"
+GEMMA_PROBES = REPO_ROOT / "probing" / "results" / "probes" / "google__gemma-4-12B-it"
+TRANSFER_DIR = GEMMA_PROBES / "gemma_mixture_probe_transfer"
+PLOTS_DIR = GEMMA_PROBES / "plots"
 
 # Okabe-Ito colorblind-safe palette, house style for this task's plots.
 BLUE = "#0072B2"
@@ -48,7 +48,7 @@ def plot_behavioral_rates():
     ss = [json.loads(l) for l in open(GEMMA_DIR / "ss" / "judged.jsonl")]
     aita_yta = [json.loads(l) for l in open(GEMMA_DIR / "aita_yta" / "judged.jsonl")]
     aita_flip = [json.loads(l) for l in open(GEMMA_DIR / "aita_nta_flip" / "judged.jsonl")]
-    sypr = load_json(GEMMA_DIR / "sypr_merged" / "summary.json")
+    sypr = load_json(GEMMA_PROBES / "sypr_merged" / "summary.json")
     tqa = load_json(GEMMA_DIR / "truthfulqa" / "summary.json")
     ays_ff = load_json(GEMMA_DIR / "are_you_sure_freeform" / "summary.json")
     ays_mc = load_json(GEMMA_DIR / "are_you_sure_mc" / "summary.json")
@@ -149,5 +149,6 @@ def plot_ood_transfer():
 
 
 if __name__ == "__main__":
+    PLOTS_DIR.mkdir(parents=True, exist_ok=True)
     plot_behavioral_rates()
     plot_ood_transfer()

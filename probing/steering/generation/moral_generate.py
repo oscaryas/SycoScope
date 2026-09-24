@@ -63,7 +63,7 @@ def main():
     parser.add_argument("--max-new-tokens", type=int, default=512)
     parser.add_argument("--out", type=str, required=True,
                          help="Output checkpoint path, e.g. "
-                              "probing/data/<model_slug>/<dataset>/checkpoint.jsonl")
+                              "probing/data/baseline/<model_slug>/<dataset>/checkpoint.jsonl")
     parser.add_argument("--n", type=int, default=None,
                          help="Cap on number of ROWS (not generations) -- for aita_nta_flip this keeps both "
                               "sides of each of the first N rows, so the checkpoint has 2N records. "

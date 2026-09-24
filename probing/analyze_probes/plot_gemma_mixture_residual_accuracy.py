@@ -6,7 +6,7 @@ mixture_residual_probe_pipeline.py --model google/gemma-4-12B-it).
 
 Usage:
     python -m probing.analyze_probes.plot_gemma_mixture_residual_accuracy \
-        --results-dir probing/data/google__gemma-4-12B-it/gemma_sycophancy_mixture_residual
+        --results-dir probing/results/probes/google__gemma-4-12B-it/gemma_sycophancy_mixture_residual
 """
 import argparse
 import json
@@ -24,7 +24,7 @@ GRAY = "#999999"
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--results-dir", type=Path, required=True,
-                         help="e.g. probing/data/<model_slug>/gemma_sycophancy_mixture_residual")
+                         help="e.g. probing/results/probes/<model_slug>/gemma_sycophancy_mixture_residual")
     args = parser.parse_args()
     results_dir = args.results_dir
 

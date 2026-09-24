@@ -1,6 +1,6 @@
 """
 Standalone runner: judges every sample_idx=0 record in an OEQ-style jsonl
-file (SAE/results/OEQ.jsonl by default) on all three social_sycophancy_judge
+file (e.g. probing/data/baseline/<model_slug>/oeq/checkpoint.jsonl) on all three social_sycophancy_judge
 metrics (validation, indirectness, framing) and writes one row per record
 with all three labels to a jsonl output.
 
@@ -31,7 +31,7 @@ from pathlib import Path
 import anthropic
 import httpx
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -134,14 +134,8 @@ def resume_run(output_path: Path, judge_model: str, max_workers: int):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    # Both --input-path (previously defaulted into the shared SAE/results/
-    # tree) and --output-path (previously defaulted into
-    # tool_calling/tasks/sycophancy's own application-owned
-    # results/generations/ tree) are required, not defaulted: SAE/ is an
-    # application directory this repo's plan removes from `main` in a later
-    # task, so a shared module must not silently default into it either --
-    # callers must pass both paths explicitly. Pass
-    # `--input-path <repo>/SAE/results/OEQ.jsonl` to reproduce the old default.
+    # Both paths are required, e.g.
+    # --input-path probing/data/baseline/<model_slug>/oeq/checkpoint.jsonl.
     parser.add_argument("--input-path", type=Path, required=True)
     parser.add_argument("--output-path", type=Path, required=True)
     parser.add_argument("--n-examples", type=int, default=None, help="Limit to first N records (default: all)")

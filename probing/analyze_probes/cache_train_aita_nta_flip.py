@@ -12,7 +12,7 @@ CV groups are row_ids.
 
 Usage:
     python -m probing.analyze_probes.cache_train_aita_nta_flip \\
-        --input-path SAE/results/AITA-NTA-FLIP.jsonl --n-examples 100 \\
+        --input-path probing/data/baseline/<model_slug>/aita_nta_flip/checkpoint.jsonl --n-examples 100 \\
         --model <model> --layers 8 16 24 --output weights.pkl
 """
 import argparse
@@ -128,16 +128,18 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--input-path", type=Path, default=None,
                         help="AITA-NTA-FLIP generations (row_id/prompt_col/sample_idx/prompt/response). "
-                             "Default: moral_sycophancy_judge.DEFAULT_INPUT_PATH.")
+                             "Default: probing/data/baseline/<model_slug>/aita_nta_flip/checkpoint.jsonl.")
     parser.add_argument("--n-examples", type=int, default=100, help="Pairs to judge and train on.")
     parser.add_argument("--prompts-templated", action="store_true", help="prompt fields are already chat-templated.")
     core.add_sweep_args(parser, default_model="meta-llama/Meta-Llama-3-8B-Instruct")
     args = parser.parse_args()
 
-    from probing.evaluations.judge.moral_sycophancy_judge import DEFAULT_INPUT_PATH
+    from probing.evaluations.judge.moral_sycophancy_judge import default_input_path
     from utils.model import cleanup as cleanup_model
 
-    input_path = args.input_path or DEFAULT_INPUT_PATH
+    input_path = args.input_path or default_input_path(args.model)
+    if not input_path.exists():
+        parser.error(f"input file not found: {input_path} (pass --input-path)")
     print(f"Loading {args.model}...")
     model, tokenizer, model_config = core.load_model_and_config(args.model)
     layers = core.select_layers(model_config["n_layers"], args.layers)

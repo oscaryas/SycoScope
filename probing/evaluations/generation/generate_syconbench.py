@@ -13,9 +13,8 @@ turn k's prompt is system + user_1, assistant_1, ..., user_k.
 Backends:
   openrouter  concurrent chat-completions requests, one turn at a time per chunk
   local       HF model, greedy, left-padded batches of --batch-size
-              conversations; prompts are NOT truncated (multi-turn histories
-              routinely exceed utils.inference.generate_from_rendered's
-              1024-token prompt cap). Replaces the former Vast/GPU-only
+              conversations; prompts are NOT truncated
+              (common.generate_local_untruncated). Replaces the former Vast/GPU-only
               generate_syconbench_gpu.py.
 
 Checkpointed for both backends: each finished chunk of conversations is
@@ -23,8 +22,9 @@ appended to --output, and rerunning the same command skips ids already
 there. A sidecar <output>.meta.json pins the generation config; resuming
 with a different config is refused.
 
-Judge with probing.evaluations.judge.judge_syconbench
-or judge_dataset --dataset-type syconbench.
+Judge with probing.evaluations.judge.judge_syconbench.
+A conversation with a failed OpenRouter request is not saved (never as an
+empty assistant turn), so rerunning the same command retries it.
 
 Usage:
     python -m probing.evaluations.generation.generate_syconbench \\
@@ -52,7 +52,8 @@ if str(REPO_ROOT) not in sys.path:
 
 from probing.utils.probes_common import read_jsonl, seed_everything  # noqa: E402
 from probing.evaluations.generation.common import (  # noqa: E402
-    add_backend_args, add_generation_args, generate_openrouter, load_local_model, resolve_system_prompt,
+    add_backend_args, add_generation_args, generate_local_untruncated, generate_openrouter, load_local_model,
+    resolve_system_prompt,
     source_revision, with_system_prompt, write_metadata,
 )
 
@@ -123,27 +124,6 @@ def load_scenarios(args, settings: list[str]) -> list[dict]:
     return [row for row in read_jsonl(args.scenarios) if row["setting"] in settings]
 
 
-def generate_local_untruncated(model, tokenizer, conversations: list[list[dict]], max_new_tokens: int) -> list[dict]:
-    """Greedy left-padded batch decode of whole conversations with no prompt
-    truncation (ported from the former generate_syconbench_gpu.py)."""
-    import torch
-    from utils.inference import resolve_terminators
-
-    terminators = set(resolve_terminators(model, tokenizer))
-    pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
-    texts = [tokenizer.apply_chat_template(m, tokenize=False, add_generation_prompt=True) for m in conversations]
-    tokens = tokenizer(texts, add_special_tokens=False, padding=True, return_tensors="pt").to(model.device)
-    with torch.inference_mode():
-        generated = model.generate(**tokens, max_new_tokens=max_new_tokens, do_sample=False,
-                                   eos_token_id=sorted(terminators), pad_token_id=pad_id)
-    results = []
-    for sequence in generated[:, tokens["input_ids"].shape[1]:].tolist():
-        stop = next((j for j, token in enumerate(sequence) if token in terminators), None)
-        answer = tokenizer.decode(sequence[:stop] if stop is not None else sequence, skip_special_tokens=True)
-        results.append({"content": answer, "finish_reason": "stop" if stop is not None else "length", "reasoning": ""})
-    return results
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--setting", choices=["debate", "ethical", "false_presupposition", "all"], default="all")
@@ -194,6 +174,15 @@ def main() -> None:
     guard_path.write_text(json.dumps(guard, indent=2))
 
     done_rows = read_jsonl(output) if output.exists() else []
+    # Conversations with a failed OpenRouter turn (written by older runs as an
+    # empty assistant turn) are not done: drop them so this run retries them.
+    kept_rows = [r for r in done_rows if "request_failed" not in (r.get("turn_finish_reasons") or [])]
+    if len(kept_rows) != len(done_rows):
+        print(f"dropping {len(done_rows) - len(kept_rows)} conversations with a request_failed turn; retrying them")
+        with output.open("w", encoding="utf-8") as handle:
+            for row in kept_rows:
+                handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+        done_rows = kept_rows
     done = {r["id"] for r in done_rows}
     if len(done) != len(done_rows) or not done <= {r["id"] for r in rows}:
         raise ValueError("duplicate or unexpected resume IDs in existing output")
@@ -209,21 +198,38 @@ def main() -> None:
         chunk_size = args.chunk_size
 
     start_time = time.monotonic()
+    n_failed_total = n_saved = 0
     for offset in range(0, len(pending), chunk_size):
         batch = pending[offset : offset + chunk_size]
         conversations = [with_system_prompt([{"role": "system", "content": r["system_message"]}], system_prompt) for r in batch]
         finish_reasons = [[] for _ in batch]
         reasoning = [[] for _ in batch]
+        failed = [False] * len(batch)
         for turn in range(N_TURNS):
-            for row, conversation in zip(batch, conversations):
-                conversation.append({"role": "user", "content": row["user_turns"][turn]})
-            for i, generation in enumerate(generate(conversations)):
+            live = [i for i in range(len(batch)) if not failed[i]]
+            if not live:
+                break
+            for i in live:
+                conversations[i].append({"role": "user", "content": batch[i]["user_turns"][turn]})
+            for i, generation in zip(live, generate([conversations[i] for i in live])):
+                if generation["finish_reason"] == "request_failed":
+                    # A failed request is not an empty answer: drop the whole
+                    # conversation (not saved, so a rerun retries it).
+                    failed[i] = True
+                    continue
                 conversations[i].append({"role": "assistant", "content": generation["content"]})
                 finish_reasons[i].append(generation["finish_reason"])
                 reasoning[i].append(generation["reasoning"])
             print(f"chunk {offset // chunk_size + 1}, turn {turn + 1}/{N_TURNS}", flush=True)
+        n_failed = sum(failed)
+        n_failed_total += n_failed
+        if n_failed:
+            print(f"WARNING: {n_failed}/{len(batch)} conversations had a failed request and were NOT saved; "
+                  f"rerun to retry them", flush=True)
         with output.open("a", encoding="utf-8") as handle:
-            for row, conversation, reasons, thoughts in zip(batch, conversations, finish_reasons, reasoning):
+            for row, conversation, reasons, thoughts, bad in zip(batch, conversations, finish_reasons, reasoning, failed):
+                if bad:
+                    continue
                 result = {key: value for key, value in row.items() if key not in {"user_turns", "system_message"}}
                 result.update(
                     messages=conversation, responses=[m["content"] for m in conversation if m["role"] == "assistant"],
@@ -233,9 +239,12 @@ def main() -> None:
                     system_prompt=system_prompt, backend=args.backend,
                 )
                 handle.write(json.dumps(result, ensure_ascii=False) + "\n")
-        print(f"Saved {len(done) + min(offset + len(batch), len(pending))}/{len(rows)} conversations; "
+        n_saved += len(batch) - n_failed
+        print(f"Saved {len(done) + n_saved}/{len(rows)} conversations; "
               f"elapsed {time.monotonic() - start_time:.1f}s", flush=True)
 
+    if n_failed_total:
+        print(f"WARNING: {n_failed_total} conversations not saved due to failed requests -- rerun to retry them.")
     source = ({"path": str(args.source_dir.resolve()), "git_revision": source_revision(args.source_dir)}
               if args.from_source_dir else {"path": str(args.scenarios)})
     write_metadata(

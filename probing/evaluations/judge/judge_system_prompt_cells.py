@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Blinded, multilabel behavior audit. Prepare is offline; run uses the existing
-Anthropic judge helper and incurs API costs. See ../BEHAVIOR_JUDGE.md.
+Anthropic judge helper and incurs API costs. Rubric:
+probing/data/system_prompt/behavior_judge_rubric.md.
 """
 import argparse
 from datetime import datetime, timezone
@@ -10,12 +11,12 @@ from pathlib import Path
 import random
 import sys
 
-ROOT = Path(__file__).resolve().parents[4]
+ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from utils.llm_judge import call_judge, parse_json_response
 
-RUBRIC = ROOT / "prompt_probes/data/behavior_judge_rubric.md"
+RUBRIC = ROOT / "probing/data/system_prompt/behavior_judge_rubric.md"
 BEHAVIORS = (
     "factual_endorsement", "subjective_endorsement", "premise_accommodation",
     "one_sided_framing", "praise", "deference", "emotional_acknowledgment",

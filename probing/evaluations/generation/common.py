@@ -2,8 +2,9 @@
 
 Two interchangeable backends, selected per run with --backend:
   - openrouter: concurrent chat-completions requests (generate_openrouter)
-  - local:      a locally loaded HF model, greedy batched decoding via
-                utils.inference.generate_from_rendered (generate_local)
+  - local:      a locally loaded HF model, greedy left-padded batched
+                decoding with NO prompt truncation (generate_local) -- a
+                left-truncated prompt would silently drop the system prompt
 
 Both take a list of chat conversations (each a list of {"role", "content"}
 dicts) and return one {"content", "finish_reason", "reasoning"} dict per
@@ -258,27 +259,50 @@ def load_local_model(model_name: str):
     return load_model_and_tokenizer(model_name, device_map=device_map)
 
 
+def generate_local_untruncated(model, tokenizer, conversations: list[list[dict]], max_new_tokens: int) -> list[dict]:
+    """Greedy left-padded batch decode of whole conversations with NO prompt
+    truncation (ported from the former generate_syconbench_gpu.py). Returns
+    [{"content", "finish_reason", "reasoning"}]; finish_reason is "length"
+    when max_new_tokens was hit without a terminator."""
+    import torch
+    from utils.inference import resolve_terminators
+
+    terminators = set(resolve_terminators(model, tokenizer))
+    pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
+    texts = [tokenizer.apply_chat_template(m, tokenize=False, add_generation_prompt=True) for m in conversations]
+    original_padding_side = tokenizer.padding_side
+    tokenizer.padding_side = "left"  # right padding corrupts batched causal-LM generation
+    try:
+        tokens = tokenizer(texts, add_special_tokens=False, padding=True, return_tensors="pt").to(model.device)
+    finally:
+        tokenizer.padding_side = original_padding_side
+    with torch.inference_mode():
+        generated = model.generate(**tokens, max_new_tokens=max_new_tokens, do_sample=False,
+                                   eos_token_id=sorted(terminators), pad_token_id=pad_id)
+    results = []
+    for sequence in generated[:, tokens["input_ids"].shape[1]:].tolist():
+        stop = next((j for j, token in enumerate(sequence) if token in terminators), None)
+        answer = tokenizer.decode(sequence[:stop] if stop is not None else sequence, skip_special_tokens=True)
+        results.append({"content": answer, "finish_reason": "stop" if stop is not None else "length", "reasoning": ""})
+    return results
+
+
 def generate_local(messages_list: list[list[dict]], model, tokenizer, args) -> list[dict]:
     """Local-model counterpart of generate_openrouter: renders each
-    conversation with the model's own chat template and decodes greedily via
-    utils.inference.generate_from_rendered. Same return shape as
-    generate_openrouter; finish_reason is "length" for a cap-hit (incomplete)
-    response and "stop" otherwise."""
-    from utils.inference import generate_from_rendered
-
+    conversation with the model's own chat template and decodes greedily in
+    chunks of args.batch_size. Prompts are never truncated (the old
+    generate_from_rendered path left-truncated at 1024 tokens, which dropped
+    the --system-prompt manipulation first on long prompts); an over-long
+    prompt costs memory, it never silently changes the condition. Same return
+    shape as generate_openrouter."""
     if getattr(args, "do_sample", False):
-        raise ValueError("--do-sample is not supported by --backend local (generate_from_rendered is greedy)")
-    rendered = [
-        tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-        for messages in messages_list
-    ]
-    responses, truncated = generate_from_rendered(
-        model, tokenizer, rendered, max_new_tokens=args.max_new_tokens, batch_size=args.batch_size,
-    )
-    return [
-        {"content": response, "finish_reason": "length" if trunc else "stop", "reasoning": ""}
-        for response, trunc in zip(responses, truncated)
-    ]
+        raise ValueError("--do-sample is not supported by --backend local (greedy only)")
+    results: list[dict] = []
+    for start in range(0, len(messages_list), args.batch_size):
+        chunk = messages_list[start : start + args.batch_size]
+        results.extend(generate_local_untruncated(model, tokenizer, chunk, args.max_new_tokens))
+        print(f"Generated {len(results)}/{len(messages_list)}", flush=True)
+    return results
 
 
 def make_generator(args):
@@ -287,7 +311,7 @@ def make_generator(args):
     if args.backend == "openrouter":
         return lambda messages_list: generate_openrouter(messages_list, args)
     if args.do_sample:
-        raise ValueError("--do-sample is not supported by --backend local (generate_from_rendered is greedy)")
+        raise ValueError("--do-sample is not supported by --backend local (greedy only)")
     state: dict = {}
 
     def _generate(messages_list: list[list[dict]]) -> list[dict]:
