@@ -14,11 +14,9 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[1]
-# Data/results stay under prompt_probes/ until a separate results-migration plan moves them;
-# PROBING_DIR intentionally still points there, not at probing/.
-PROBING_DIR = REPO_ROOT / "prompt_probes"
-DATA_DIR = PROBING_DIR / "data"
-RESULTS_DIR = PROBING_DIR / "results"
+PROBING_DIR = REPO_ROOT / "probing"
+DATA_DIR = PROBING_DIR / "data" / "system_prompt"
+RESULTS_DIR = PROBING_DIR / "results" / "prompt_probes"
 GENERATIONS_DIR = RESULTS_DIR / "generations"
 SYCOPHANCY_DIR = REPO_ROOT / "tool_calling" / "tasks" / "sycophancy"
 
