@@ -8,7 +8,7 @@ REPO_ROOT = Path(__file__).resolve().parents[4]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils.baseline_probes_common import json_dump, read_jsonl, write_jsonl
+from probing.utils.probes_common import json_dump, read_jsonl, write_jsonl
 from probing.evaluations.baseline_probes.judge.scoring import score_rows
 
 

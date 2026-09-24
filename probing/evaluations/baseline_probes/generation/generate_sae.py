@@ -16,7 +16,7 @@ REPO_ROOT = Path(__file__).resolve().parents[4]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils.baseline_probes_common import read_jsonl, seed_everything, write_jsonl  # noqa: E402
+from probing.utils.probes_common import read_jsonl, seed_everything, write_jsonl  # noqa: E402
 from probing.evaluations.baseline_probes.generation.common import (  # noqa: E402
     add_generation_args, generate_via_openrouter_with_finish_reasons, write_metadata,
 )

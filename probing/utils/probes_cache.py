@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from probing.utils.baseline_probes_common import json_dump, read_jsonl, write_jsonl
+from probing.utils.probes_common import json_dump, read_jsonl, write_jsonl
 
 
 @dataclass

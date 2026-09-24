@@ -2,9 +2,9 @@
 test_pipeline.py, rewritten against the shared probing/ packages per the Task 3 import
 mapping table:
 
-    pipeline_scripts.cache                    -> probing.utils.baseline_probes_cache
-    pipeline_scripts.common                   -> probing.utils.baseline_probes_common
-    pipeline_scripts.datasets                 -> probing.utils.baseline_probes_datasets
+    pipeline_scripts.cache                    -> probing.utils.probes_cache
+    pipeline_scripts.common                   -> probing.utils.probes_common
+    pipeline_scripts.datasets                 -> probing.utils.probes_datasets
     pipeline_scripts.training                 -> probing.probe.baseline_training
     pipeline_scripts.generations.generate_syconbench
                                                -> probing.evaluations.baseline_probes.generation.generate_syconbench
@@ -35,9 +35,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils.baseline_probes_cache import ActivationCache
-from probing.utils.baseline_probes_common import t_confidence_interval, t_interval
-from probing.utils.baseline_probes_datasets import prepare_cache
+from probing.utils.probes_cache import ActivationCache
+from probing.utils.probes_common import t_confidence_interval, t_interval
+from probing.utils.probes_datasets import prepare_cache
 from probing.probe.dim import compute_dim_direction
 from probing.evaluations.baseline_probes.generation.generate_syconbench import (
     DEFAULT_SOURCE, load_debate, load_ethical, load_false_presupposition,

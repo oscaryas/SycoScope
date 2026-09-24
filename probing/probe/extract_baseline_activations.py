@@ -13,8 +13,8 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils.baseline_probes_cache import save_activation_cache  # noqa: E402
-from probing.utils.baseline_probes_datasets import normalize_records  # noqa: E402
+from probing.utils.probes_cache import save_activation_cache  # noqa: E402
+from probing.utils.probes_datasets import normalize_records  # noqa: E402
 from utils.model_registry import get_model_config, register_hooks, remove_hooks  # noqa: E402
 
 

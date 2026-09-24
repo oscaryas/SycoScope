@@ -40,8 +40,8 @@ class CoreModuleImportPathTests(unittest.TestCase):
 
     def test_extract_baseline_activations_imports_shared_cache_and_datasets(self):
         source = inspect.getsource(extract_baseline_activations)
-        self.assertIn("from probing.utils.baseline_probes_cache import save_activation_cache", source)
-        self.assertIn("from probing.utils.baseline_probes_datasets import normalize_records", source)
+        self.assertIn("from probing.utils.probes_cache import save_activation_cache", source)
+        self.assertIn("from probing.utils.probes_datasets import normalize_records", source)
         self.assertIn("from utils.model_registry import get_model_config, register_hooks, remove_hooks", source)
         self.assertNotIn("pipeline_scripts", source)
         self.assertNotIn("sycophancy_model_registry", source)
@@ -54,14 +54,14 @@ class CoreModuleImportPathTests(unittest.TestCase):
 
     def test_baseline_training_imports_common_from_canonical_location(self):
         source = inspect.getsource(baseline_training)
-        self.assertIn("from probing.utils.baseline_probes_common import t_confidence_interval", source)
+        self.assertIn("from probing.utils.probes_common import t_confidence_interval", source)
         self.assertNotIn("from .common import", source)
 
     def test_train_baseline_probes_imports_from_canonical_locations(self):
         source = inspect.getsource(train_baseline_probes)
-        self.assertIn("from probing.utils.baseline_probes_cache import load_activation_cache", source)
-        self.assertIn("from probing.utils.baseline_probes_common import json_dump, parse_dataset_spec", source)
-        self.assertIn("from probing.utils.baseline_probes_datasets import prepare_cache", source)
+        self.assertIn("from probing.utils.probes_cache import load_activation_cache", source)
+        self.assertIn("from probing.utils.probes_common import json_dump, parse_dataset_spec", source)
+        self.assertIn("from probing.utils.probes_datasets import prepare_cache", source)
         self.assertIn("from probing.probe.baseline_training import", source)
         self.assertNotIn("pipeline_scripts", source)
 

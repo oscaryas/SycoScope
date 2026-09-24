@@ -53,7 +53,7 @@ except ModuleNotFoundError:
     TEMPLATE_LABELS = None
     load_truthfulqa_sycophancyeval_rows = None
 from probing.evaluations.baseline_probes.judge.truthfulqa_verdict_judge import judge_truthful_batch  # noqa: E402
-from probing.utils.baseline_probes_common import seed_everything, write_jsonl  # noqa: E402
+from probing.utils.probes_common import seed_everything, write_jsonl  # noqa: E402
 from probing.evaluations.baseline_probes.generation.common import (  # noqa: E402
     add_generation_args, generate_via_openrouter_with_finish_reasons, write_metadata,
 )

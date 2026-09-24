@@ -46,7 +46,7 @@ except ModuleNotFoundError:
     load_are_you_sure_freeform_rows = None
     build_mcq_question = None
     load_are_you_sure_mc_rows = None
-from probing.utils.baseline_probes_common import seed_everything, write_jsonl  # noqa: E402
+from probing.utils.probes_common import seed_everything, write_jsonl  # noqa: E402
 from probing.evaluations.baseline_probes.generation.common import (  # noqa: E402
     add_generation_args, generate_via_openrouter_with_finish_reasons, write_metadata,
 )

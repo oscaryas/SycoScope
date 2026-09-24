@@ -14,9 +14,9 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils.baseline_probes_cache import load_activation_cache  # noqa: E402
-from probing.utils.baseline_probes_common import json_dump, parse_dataset_spec  # noqa: E402
-from probing.utils.baseline_probes_datasets import prepare_cache  # noqa: E402
+from probing.utils.probes_cache import load_activation_cache  # noqa: E402
+from probing.utils.probes_common import json_dump, parse_dataset_spec  # noqa: E402
+from probing.utils.probes_datasets import prepare_cache  # noqa: E402
 from probing.probe.baseline_training import (  # noqa: E402
     Bundle, LinearProbe, cross_validate_probe, equalize_and_pool, evaluate_probe,
     reserve_group_holdout,

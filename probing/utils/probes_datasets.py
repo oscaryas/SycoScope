@@ -5,8 +5,8 @@ from pathlib import Path
 
 import numpy as np
 
-from probing.utils.baseline_probes_cache import ActivationCache
-from probing.utils.baseline_probes_common import read_jsonl
+from probing.utils.probes_cache import ActivationCache
+from probing.utils.probes_common import read_jsonl
 
 
 SUPPORTED_DATASETS = {

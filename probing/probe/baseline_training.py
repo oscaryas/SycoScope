@@ -8,7 +8,7 @@ import torch.nn as nn
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, roc_auc_score
 from sklearn.model_selection import StratifiedGroupKFold, train_test_split
 
-from probing.utils.baseline_probes_common import t_confidence_interval
+from probing.utils.probes_common import t_confidence_interval
 
 
 @dataclass

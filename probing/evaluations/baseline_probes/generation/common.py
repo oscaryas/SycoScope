@@ -8,7 +8,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from probing.utils.baseline_probes_common import json_dump
+from probing.utils.probes_common import json_dump
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 MAX_RETRIES = 5
