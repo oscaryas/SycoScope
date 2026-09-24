@@ -5,9 +5,8 @@ generation, so a discovered sycophancy direction's effect can be observed
 directly rather than only inferred from probe accuracy.
 
 Reads direction vectors from the *_probe_weights.pth / *_projection_stds.pt
-checkpoints written by the retired torch probe pipeline's save_probe_results
-(the current probes_core.l2_sweep_train pickles sklearn models with a
-direction_raw vector instead, which this module does not read yet), and locates modules the same way utils.model_registry.register_hooks
+checkpoints written by the retired torch probe pipeline's save_probe_results,
+or (fmt="sklearn") from the pickle written by probes_core.train_and_save, and locates modules the same way utils.model_registry.register_hooks
 does (hook-path suffix + layer index parsed from the module's dotted name)
 rather than a separate layer_path config, so no new registry fields are
 needed.
@@ -52,7 +51,25 @@ def load_steering_vectors(probe_dir: str, component: str) -> dict:
     return vectors
 
 
-def load_direction_vectors(direction_dir: str, component: str, fmt: str = "probe") -> dict:
+def load_sklearn_vectors(weights_path: str, C: float = None) -> dict:
+    """
+    Load per-layer residual directions from a probes_core pickle
+    ({"layers": {layer: {"best_C", "by_C": {C: {"direction_raw", ...}}}}}).
+    Uses `C` if given, else each layer's best_C. Returns {layer: unit-norm
+    torch.Tensor of direction_raw} (unit norm, so alpha is in raw activation units).
+    """
+    from probing.analyze_probes.probes_core import load_weights
+
+    payload = load_weights(weights_path)
+    vectors = {}
+    for layer, entry in payload["layers"].items():
+        c = entry["best_C"] if C is None else C
+        d = torch.as_tensor(entry["by_C"][c]["direction_raw"], dtype=torch.float32)
+        vectors[int(layer)] = d / (d.norm() + 1e-8)
+    return vectors
+
+
+def load_direction_vectors(direction_dir: str, component: str, fmt: str = "probe", C: float = None) -> dict:
     """
     Format-agnostic direction loader. fmt="probe" delegates to load_steering_vectors
     above. fmt="dim" reads {component}_dim_vectors.pt directly -- DIM directions are
@@ -62,6 +79,10 @@ def load_direction_vectors(direction_dir: str, component: str, fmt: str = "probe
     cross-dataset sweep function are format-agnostic once handed this dict, so this
     is the only place that needs to know DIM and probe checkpoints differ.
     """
+    if fmt == "sklearn":
+        if component != "residual":
+            raise ValueError("sklearn probe pickles only hold residual-stream directions")
+        return load_sklearn_vectors(direction_dir, C)
     if fmt == "probe":
         return load_steering_vectors(direction_dir, component)
     if fmt == "dim":
@@ -69,7 +90,7 @@ def load_direction_vectors(direction_dir: str, component: str, fmt: str = "probe
         if not vectors_path.exists():
             raise FileNotFoundError(f"No {vectors_path.name} in {direction_dir}")
         return torch.load(vectors_path, map_location="cpu")
-    raise ValueError(f"fmt must be 'probe' or 'dim', got {fmt!r}")
+    raise ValueError(f"fmt must be 'probe', 'dim' or 'sklearn', got {fmt!r}")
 
 
 def _find_module(model, suffix: str, layer: int):
