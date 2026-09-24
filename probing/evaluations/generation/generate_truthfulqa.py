@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""OpenRouter port of scripts/truthfulqa_sycophancyeval_generate.py -- same
-prompts/templates/judging, generation via OpenRouter instead of a locally
-loaded HF model. Judging stays inline (Claude, via the existing
-truthfulqa_verdict_judge.judge_truthful_batch) rather than a separate
-judge/ stage, matching the old script's own convention (this dataset's label
-depends on the source row's correct/incorrect answer strings, which the
-judge/judge_dataset.py dispatcher has no notion of).
+"""TruthfulQA/TriviaQA sycophancy-eval generation + inline truthful/imitative-falsehood judging.
 
 Prompts come from Sharma et al.'s sycophancy-eval (meg-tong/sycophancy-eval,
 answer.jsonl), filtered to base.dataset in {"trivia_qa", "truthful_qa"}
@@ -16,9 +10,15 @@ question:
      really not sure."                                               user asserts the wrong answer)
 giving up to 3634 generations.
 
+Judging stays inline (Claude, via truthfulqa_verdict_judge.judge_truthful_batch)
+rather than a separate judge/ stage: this dataset's label depends on the
+source row's correct/incorrect answer strings, which the judge_dataset.py
+dispatcher has no notion of. label = 1 (imitative falsehood) if FALSE, 0 if
+TRUE; UNCLEAR rows are dropped.
+
 Usage:
-    python -m probing.evaluations.baseline_probes.generation.generate_truthfulqa \
-        --model meta-llama/llama-3.1-8b-instruct --output <path>
+    python -m probing.evaluations.generation.generate_truthfulqa \\
+        --model meta-llama/llama-3.1-8b-instruct --backend openrouter --output <path>
 """
 from __future__ import annotations
 
@@ -28,47 +28,33 @@ import random
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve()
-REPO_ROOT = HERE.parents[4]
-# truthfulqa_sycophancyeval_generate.py remains application-owned on
-# tool_calling/tasks/sycophancy/scripts/ (it depends on sycophancy_steering.py's
-# ActivationSteerer machinery elsewhere in the same scripts/ directory) --
-# kept on sys.path as a bare import, not moved here.
-SYCOPHANCY_DIR = REPO_ROOT / "tool_calling" / "tasks" / "sycophancy"
-SCRIPTS_DIR = SYCOPHANCY_DIR / "scripts"
-for candidate in (REPO_ROOT, SYCOPHANCY_DIR, SCRIPTS_DIR):
-    if str(candidate) not in sys.path:
-        sys.path.insert(0, str(candidate))
+REPO_ROOT = Path(__file__).resolve().parents[3]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-try:
-    # Absent on branches without tool_calling/ (SAE, and eventually main) --
-    # importing this module for its argparse surface (e.g. --help, or a
-    # smoke-test import) still works, but actually running generation
-    # requires a tool_calling-carrying branch (building-agent).
-    from truthfulqa_sycophancyeval_generate import (  # noqa: E402
-        DEFAULT_DATASETS, TEMPLATE_LABELS, load_truthfulqa_sycophancyeval_rows,
-    )
-except ModuleNotFoundError:
-    DEFAULT_DATASETS = ("trivia_qa", "truthful_qa")  # mirrored from truthfulqa_sycophancyeval_generate.py
-    TEMPLATE_LABELS = None
-    load_truthfulqa_sycophancyeval_rows = None
+# Row loader shared with the steering generator (stdlib-only module imports).
+from probing.steering.generation.truthfulqa_sycophancyeval_generate import (  # noqa: E402
+    DEFAULT_DATASETS, TEMPLATE_LABELS, load_truthfulqa_sycophancyeval_rows,
+)
 from probing.evaluations.baseline_probes.judge.truthfulqa_verdict_judge import judge_truthful_batch  # noqa: E402
 from probing.utils.probes_common import seed_everything, write_jsonl  # noqa: E402
-from probing.evaluations.baseline_probes.generation.common import (  # noqa: E402
-    add_generation_args, generate_via_openrouter_with_finish_reasons, write_metadata,
+from probing.evaluations.generation.common import (  # noqa: E402
+    add_backend_args, add_generation_args, make_generator, resolve_system_prompt, with_system_prompt, write_metadata,
 )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--templates", type=str, default="plain,pushback_incorrect",
-                         help="Comma-separated subset of: plain,pushback_incorrect")
+                        help="Comma-separated subset of: plain,pushback_incorrect")
     parser.add_argument("--datasets", type=str, default=",".join(DEFAULT_DATASETS),
-                         help="Comma-separated answer.jsonl base.dataset values (from: trivia_qa,truthful_qa).")
+                        help="Comma-separated answer.jsonl base.dataset values (from: trivia_qa,truthful_qa).")
     parser.add_argument("--judge-max-workers", type=int, default=16)
     add_generation_args(parser, 200)
+    add_backend_args(parser)
     args = parser.parse_args()
     seed_everything(args.seed)
+    system_prompt = resolve_system_prompt(args)
 
     label_to_template = {v: k for k, v in TEMPLATE_LABELS.items()}
     selected_labels = [t.strip() for t in args.templates.split(",") if t.strip()]
@@ -82,11 +68,11 @@ def main() -> None:
         rows = rows[: args.limit]
     print(f"{len(rows)} rows to generate.")
 
-    messages = [[{"role": "user", "content": row["question_text"]}] for row in rows]
-    generations = generate_via_openrouter_with_finish_reasons(messages, args)
+    messages = [with_system_prompt([{"role": "user", "content": row["question_text"]}], system_prompt) for row in rows]
+    generations = make_generator(args)(messages)
     responses = [g["content"] for g in generations]
 
-    print(f"Judging {len(rows)} responses (model=claude-sonnet-5, max_workers={args.judge_max_workers})...")
+    print(f"Judging {len(rows)} responses (max_workers={args.judge_max_workers})...")
     verdicts = judge_truthful_batch(
         [
             {
@@ -111,8 +97,10 @@ def main() -> None:
         output_rows.append({
             "text": row["question_text"] + response, "label": label,
             "source": "truthfulqa_sycophancyeval", "domain": row["dataset"], "template": row["template"],
-            "question": row["question"], "response": response, "verdict": verdict,
+            "question": row["question"], "question_text": row["question_text"],
+            "response": response, "verdict": verdict,
             "finish_reason": generation["finish_reason"], "reasoning": generation["reasoning"],
+            "system_prompt": system_prompt, "backend": args.backend,
             "messages": chat + [{"role": "assistant", "content": response}], "model": args.model,
         })
 
@@ -132,8 +120,8 @@ def main() -> None:
         d["n"] += 1
         d["n_false_imitative"] += r["label"] == 1
     summary = {
-        "model": args.model, "templates": selected_labels, "datasets": list(datasets), "seed": args.seed,
-        "n_total_source_rows": len(rows), "n_judged": n_judged, "n_judge_unclear": n_unclear,
+        "model": args.model, "backend": args.backend, "templates": selected_labels, "datasets": list(datasets),
+        "seed": args.seed, "n_total_source_rows": len(rows), "n_judged": n_judged, "n_judge_unclear": n_unclear,
         "n_false_imitative": n_pos, "n_true_truthful": n_judged - n_pos,
         "false_rate": n_pos / n_judged if n_judged else 0.0, "by_domain": by_domain,
     }

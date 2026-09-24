@@ -3,24 +3,41 @@
 Generate responses on prompts from Perez et al. (2022) under contrastive system prompts.
 
 Paired design: the same user prompts are used for both polarities of a cell and
-for all 14 cells. Nothing about prompt content can then separate the classes, and
+for all cells. Nothing about prompt content can then separate the classes, and
 each prompt yields one label-1 / label-0 pair -- which is why train_probes.py has
-to split by prompt_id rather than by row.
+to split by prompt_id rather than by row. The system prompt is inherent here
+(each cell's sycophantic / non_sycophantic text from
+probing/data/system_prompt/sycophancy_probe_prompt_pairs.json); pick cells with
+--cells. The `neutral` pseudo-cell generates with no system prompt.
 
-Checkpointed: every record is appended immediately, so a crash costs at most
-one batch, and re-running the same command resumes. Per-cell output files mean
-one cell can be regenerated without touching the other 13.
+Backends (formerly generate_response.py and generate_response_openrouter.py):
+  local       HF model, sampled (temperature/top_p) via utils.inference.generate_batch,
+              --batch-size prompts per forward pass
+  openrouter  concurrent chat-completions requests, sampled, --chunk-size items
+              per checkpoint step; --tokenizer counts response tokens (CPU only)
+
+Checkpointed: every chunk is appended and fsync'd immediately, so a crash costs
+at most one batch, and re-running the same command resumes. Per-cell output
+files (<run>/generations/<slug>.jsonl) mean one cell can be regenerated without
+touching the others.
 
 Usage:
     # smoke test, no GPU needed
-    python generate_response.py --run-name smoke --model meta-llama/Llama-3.2-1B-Instruct \\
-        --cells general_baseline neutral --limit-prompts 4 --max-new-tokens 48 --batch-size 4
+    python -m probing.evaluations.generation.generate_system_prompt_cells --run-name smoke \\
+        --model meta-llama/Llama-3.2-1B-Instruct --cells general_baseline neutral \\
+        --limit-prompts 4 --max-new-tokens 48 --batch-size 4
 
     # render prompts and count tokens without loading any weights
-    python generate_response.py --run-name smoke --cells general_baseline --limit-prompts 2 --dry-run
+    python -m probing.evaluations.generation.generate_system_prompt_cells --run-name smoke \\
+        --cells general_baseline --limit-prompts 2 --dry-run
 
-    # full run
-    python generate_response.py --run-name main --batch-size 8
+    # full local run
+    python -m probing.evaluations.generation.generate_system_prompt_cells --run-name main --batch-size 8
+
+    # OpenRouter run
+    python -m probing.evaluations.generation.generate_system_prompt_cells --run-name llama31_5k \\
+        --backend openrouter --model meta-llama/llama-3.1-8b-instruct \\
+        --user-prompts probing/data/system_prompt/perez_user_prompts_5k.jsonl
 """
 import argparse
 import json
@@ -29,15 +46,19 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from probing.utils import common  # noqa: E402
-from utils.inference import build_chat_prompt, generate_batch, iter_batches  # noqa: E402
+from utils.inference import build_chat_prompt, iter_batches  # noqa: E402
+from probing.evaluations.generation.common import add_backend_args, generate_openrouter  # noqa: E402
+
+DEFAULT_OPENROUTER_TOKENIZER = "meta-llama/Llama-3.1-8B-Instruct"
 
 # Diagnostics, not labels: they flag individual records and feed a per-cell rate.
 REFUSAL_MARKERS = ("i can't", "i cannot", "i won't", "i'm not able to", "i am not able to")
+
 
 def classify_degenerate(response: str, n_response_tokens: int, max_new_tokens: int, min_chars: int) -> str | None:
     """First matching degeneracy reason, or None. Flags only -- never drops."""
@@ -161,36 +182,126 @@ def print_report(report: dict) -> None:
     )
 
 
+def _record(item: dict, response: str, n_tok: int, degenerate, args) -> dict:
+    return {
+        **item,
+        "response": response,
+        "n_response_chars": len(response),
+        "n_response_tokens": n_tok,
+        "degenerate": degenerate,
+        "model": args.model,
+        "backend": args.backend,
+        "max_new_tokens": args.max_new_tokens,
+        "temperature": args.temperature,
+        "top_p": args.top_p,
+        "seed": args.seed,
+    }
+
+
+def _write_chunk(out_path: Path, records: list[dict]) -> None:
+    with open(out_path, "a", encoding="utf-8") as f:
+        for record in records:
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+        f.flush()
+        os.fsync(f.fileno())
+
+
+def run_local(todo: dict, run_dir: Path, n_pending: int, args) -> None:
+    import torch
+
+    from utils.inference import generate_batch
+    from utils.model import cleanup as cleanup_model
+    from probing.evaluations.generation.common import load_local_model
+
+    model, tokenizer = load_local_model(args.model)
+    # Seeded once. Note that resuming mid-run shifts the RNG relative to an
+    # uninterrupted run, so post-resume samples differ; recorded in run_info.
+    torch.manual_seed(args.seed)
+    n_done = 0
+    for (slug, polarity), pending in todo.items():
+        system_prompt = pending[0]["system_prompt"]
+        print(f"\n[{slug} / {polarity}] {len(pending)} to generate")
+        for chunk in iter_batches(pending, args.batch_size):
+            responses = generate_batch(
+                model, tokenizer, [c["user_prompt"] for c in chunk], system_prompt=system_prompt,
+                max_new_tokens=args.max_new_tokens, do_sample=True, temperature=args.temperature, top_p=args.top_p,
+            )
+            records = []
+            for item, response in zip(chunk, responses):
+                n_tok = len(tokenizer(response, add_special_tokens=False)["input_ids"])
+                degenerate = classify_degenerate(response, n_tok, args.max_new_tokens, args.min_response_chars)
+                records.append(_record(item, response, n_tok, degenerate, args))
+            _write_chunk(run_dir / "generations" / f"{slug}.jsonl", records)
+            n_done += len(chunk)
+            print(f"  {n_done}/{n_pending}", flush=True)
+    cleanup_model(model, tokenizer)
+
+
+def run_openrouter(todo: dict, run_dir: Path, n_pending: int, args) -> None:
+    from transformers import AutoTokenizer
+
+    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer or DEFAULT_OPENROUTER_TOKENIZER)
+    args.do_sample = True  # generate_openrouter reads args.do_sample; this design always samples.
+    n_done = 0
+    for (slug, polarity), pending in todo.items():
+        system_prompt = pending[0]["system_prompt"]
+        print(f"\n[{slug} / {polarity}] {len(pending)} to generate via OpenRouter "
+              f"(max_workers={args.max_workers}, chunk_size={args.chunk_size})", flush=True)
+        for chunk in iter_batches(pending, args.chunk_size):
+            messages_list = []
+            for item in chunk:
+                msgs = [{"role": "system", "content": system_prompt}] if system_prompt else []
+                msgs.append({"role": "user", "content": item["user_prompt"]})
+                messages_list.append(msgs)
+            results = generate_openrouter(messages_list, args)
+            records = []
+            for item, result in zip(chunk, results):
+                response = result["content"]
+                n_tok = len(tokenizer(response, add_special_tokens=False)["input_ids"]) if response else 0
+                reason = classify_degenerate(response, n_tok, args.max_new_tokens, args.min_response_chars)
+                if result["finish_reason"] == "length" and reason != "empty":
+                    reason = reason or "truncated"
+                if result["finish_reason"] == "request_failed":
+                    reason = "request_failed"
+                records.append({**_record(item, response, n_tok, reason, args), "finish_reason": result["finish_reason"]})
+            _write_chunk(run_dir / "generations" / f"{slug}.jsonl", records)
+            n_done += len(chunk)
+            print(f"  {n_done}/{n_pending} total", flush=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--run-name", type=str, required=True)
-    parser.add_argument("--model", type=str, default=common.DEFAULT_MODEL)
+    parser.add_argument("--model", type=str, default=common.DEFAULT_MODEL,
+                        help="HF repo id (local) or OpenRouter slug (openrouter)")
+    parser.add_argument("--tokenizer", type=str, default=None,
+                        help="HF repo id used to count response tokens / render --dry-run prompts "
+                             f"(default: --model for local, {DEFAULT_OPENROUTER_TOKENIZER} for openrouter)")
+    parser.add_argument("--user-prompts", type=Path, default=common.USER_PROMPTS_PATH,
+                        help="jsonl of user prompts (default: the shared perez_user_prompts.jsonl)")
     common.add_cells_arg(parser)
     parser.add_argument("--limit-prompts", type=int, default=None, help="Use only the first N user prompts.")
     parser.add_argument("--max-new-tokens", type=int, default=1024,
                         help="High enough that EOS fires naturally; response length is measured, not capped.")
     parser.add_argument("--temperature", type=float, default=0.6)
     parser.add_argument("--top-p", type=float, default=0.9)
-    parser.add_argument("--batch-size", type=int, default=16)
+    add_backend_args(parser, default_backend="local", system_prompt=False)
+    parser.add_argument("--max-workers", type=int, default=32, help="Concurrent OpenRouter requests per chunk.")
+    parser.add_argument("--chunk-size", type=int, default=250,
+                        help="OpenRouter items per checkpoint step (bounds work lost to a crash mid-group).")
     parser.add_argument("--min-response-chars", type=int, default=80)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Render the first prompt of each group, count tokens, load no weights.",
+        help="Render the first prompt of each group, count tokens, load no weights, write nothing.",
     )
     args = parser.parse_args()
 
-    run_dir = common.resolve_run_dir(args.run_name)
-    (run_dir / "generations").mkdir(parents=True, exist_ok=True)
-
     pairs = common.load_prompt_pairs()
-    prompts = common.read_jsonl(common.USER_PROMPTS_PATH)
+    prompts = common.read_jsonl(args.user_prompts)
     if args.limit_prompts:
         prompts = prompts[: args.limit_prompts]
-    # Freeze the exact prompts this run used, so the run is self-describing even
-    # if data/perez_user_prompts.jsonl is later regenerated with a different n.
-    common.write_jsonl(run_dir / "user_prompts.jsonl", prompts)
 
     work = build_work_list(pairs, prompts, args.cells)
     groups: dict[tuple, list[dict]] = {}
@@ -201,7 +312,7 @@ def main():
     if args.dry_run:
         from transformers import AutoTokenizer
 
-        tokenizer = AutoTokenizer.from_pretrained(args.model)
+        tokenizer = AutoTokenizer.from_pretrained(args.tokenizer or args.model)
         for key, items in groups.items():
             item = items[0]
             rendered = build_chat_prompt(tokenizer, item["user_prompt"], item["system_prompt"])
@@ -210,14 +321,15 @@ def main():
             print(rendered)
         return
 
-    import torch
-
-    from utils.model import cleanup as cleanup_model, load_model_and_tokenizer
+    run_dir = common.resolve_run_dir(args.run_name)
+    (run_dir / "generations").mkdir(parents=True, exist_ok=True)
+    # Freeze the exact prompts this run used, so the run is self-describing even
+    # if the user-prompts file is later regenerated with a different n.
+    common.write_jsonl(run_dir / "user_prompts.jsonl", prompts)
 
     todo = {}
     for key, items in groups.items():
-        slug = key[0]
-        done = load_done(run_dir / "generations" / f"{slug}.jsonl")
+        done = load_done(run_dir / "generations" / f"{key[0]}.jsonl")
         pending = [i for i in items if i["example_id"] not in done]
         if pending:
             todo[key] = pending
@@ -225,53 +337,7 @@ def main():
     print(f"{n_pending} pending after resume ({len(work) - n_pending} already on disk)")
 
     if n_pending:
-        print(f"\nLoading {args.model} ...")
-        model, tokenizer = load_model_and_tokenizer(args.model)
-        # Seeded once. Note that resuming mid-run shifts the RNG relative to an
-        # uninterrupted run, so post-resume samples differ; recorded in run_info.
-        torch.manual_seed(args.seed)
-
-        n_done = 0
-        for key, pending in todo.items():
-            slug, polarity = key
-            system_prompt = pending[0]["system_prompt"]
-            out_path = run_dir / "generations" / f"{slug}.jsonl"
-            print(f"\n[{slug} / {polarity}] {len(pending)} to generate")
-            with open(out_path, "a", encoding="utf-8") as f:
-                for chunk in iter_batches(pending, args.batch_size):
-                    responses = generate_batch(
-                        model,
-                        tokenizer,
-                        [c["user_prompt"] for c in chunk],
-                        system_prompt=system_prompt,
-                        max_new_tokens=args.max_new_tokens,
-                        do_sample=True,
-                        temperature=args.temperature,
-                        top_p=args.top_p,
-                    )
-                    for item, response in zip(chunk, responses):
-                        n_tok = len(tokenizer(response, add_special_tokens=False)["input_ids"])
-                        record = {
-                            **{k: v for k, v in item.items()},
-                            "response": response,
-                            "n_response_chars": len(response),
-                            "n_response_tokens": n_tok,
-                            "degenerate": classify_degenerate(
-                                response, n_tok, args.max_new_tokens, args.min_response_chars
-                            ),
-                            "model": args.model,
-                            "max_new_tokens": args.max_new_tokens,
-                            "temperature": args.temperature,
-                            "top_p": args.top_p,
-                            "seed": args.seed,
-                        }
-                        f.write(json.dumps(record, ensure_ascii=False) + "\n")
-                    f.flush()
-                    os.fsync(f.fileno())
-                    n_done += len(chunk)
-                    print(f"  {n_done}/{n_pending}", flush=True)
-
-        cleanup_model(model, tokenizer)
+        (run_local if args.backend == "local" else run_openrouter)(todo, run_dir, n_pending, args)
 
     touched = sorted({k[0] for k in groups})
     report = report_cells(run_dir, touched)
@@ -280,7 +346,8 @@ def main():
     (run_dir / "checks" / "generation_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     common.write_run_info(
         run_dir,
-        "generate_response",
+        # Stage keys kept from the two scripts this replaces, so existing run_info.json files stay comparable.
+        "generate_response" if args.backend == "local" else "generate_response_openrouter",
         args,
         {"n_prompts": len(prompts), "n_generations_target": len(work), "cells": touched},
     )
