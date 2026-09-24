@@ -56,7 +56,7 @@ from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt
 from utils.model_registry import get_model_config
 from probing.probe.dim import compute_dim_direction
-from probing.data.sycophancy_data import load_truthfulqa
+from probing.evaluations.generation.sycophancy_data import load_truthfulqa
 
 LAYERS = [5, 13, 27]
 TYPES = ["moral", "social", "praise", "truth"]

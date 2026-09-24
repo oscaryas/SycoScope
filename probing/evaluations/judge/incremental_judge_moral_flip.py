@@ -7,7 +7,7 @@ every pair the way run_moral_sycophancy_judge_aita.py --mode flip's default
 mode does.
 
 Usage:
-    python -m probing.evaluations.baseline_probes.judge.incremental_judge_moral_flip \
+    python -m probing.evaluations.judge.incremental_judge_moral_flip \
         --input-path .../aita_nta_flip/checkpoint.jsonl \
         --output-path .../aita_nta_flip/judged.jsonl
 """
@@ -25,7 +25,7 @@ if str(REPO_ROOT) not in sys.path:
 import anthropic  # noqa: E402
 import httpx  # noqa: E402
 
-from probing.evaluations.baseline_probes.judge.moral_sycophancy_judge import (  # noqa: E402
+from probing.evaluations.judge.moral_sycophancy_judge import (  # noqa: E402
     DEFAULT_MAX_WORKERS, JUDGE_MODEL, iter_flip_pairs, judge_verdict,
 )
 

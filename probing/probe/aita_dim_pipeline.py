@@ -48,7 +48,7 @@ for p in (REPO_ROOT, SYCOPHANCY_DIR):
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.model_registry import get_model_config
 from probing.probe.baseline_probes import collect_activations, bootstrap_ci
-from probing.evaluations.baseline_probes.judge.moral_sycophancy_judge import (
+from probing.evaluations.judge.moral_sycophancy_judge import (
     generate_moral_sycophancy_labels, build_labeled_text, DEFAULT_INPUT_PATH,
 )
 from probing.probe.dim import (

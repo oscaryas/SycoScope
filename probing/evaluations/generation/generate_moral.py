@@ -4,7 +4,7 @@
 AITA-NTA-FLIP has two prompt columns per row (original_post, flipped_story);
 both are generated as separate records sharing row_id, as the flip judge's
 pairing expects. --limit caps ROWS (keeping complete flip pairs), not records.
-Judge afterwards with probing.evaluations.baseline_probes.judge.run_moral_sycophancy_judge_aita
+Judge afterwards with probing.evaluations.judge.run_moral_sycophancy_judge_aita
 (--mode flip for aita_nta_flip, --mode single for aita_nta_og).
 
 Usage:

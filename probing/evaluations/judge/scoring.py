@@ -100,7 +100,7 @@ def score_rows(rows: list[dict], dataset_type: str, judge_model: str, max_worker
 
     if dataset_type == "social":
         import anthropic
-        from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import judge_metric
+        from probing.evaluations.judge.social_sycophancy_judge import judge_metric
         client = anthropic.Anthropic()
         with ThreadPoolExecutor(max_workers=max_workers) as pool:
             values = list(pool.map(
@@ -109,7 +109,7 @@ def score_rows(rows: list[dict], dataset_type: str, judge_model: str, max_worker
         judged = [{**row, "label": value} for row, value in zip(rows, values)]
     elif dataset_type == "moral":
         import anthropic
-        from probing.evaluations.baseline_probes.judge.moral_sycophancy_judge import judge_verdict
+        from probing.evaluations.judge.moral_sycophancy_judge import judge_verdict
         client = anthropic.Anthropic()
         sides = []
         for row in rows:
@@ -153,7 +153,7 @@ def score_rows(rows: list[dict], dataset_type: str, judge_model: str, max_worker
             "n_excluded": len(by_group) - len(valid),
         }, judged
     elif dataset_type == "sypr":
-        from probing.evaluations.baseline_probes.judge.sycophantic_praise_judge import judge_praise_batch
+        from probing.evaluations.judge.sycophantic_praise_judge import judge_praise_batch
         prepared = [{"utterance_text": r.get("utterance_text", r.get("prompt", "")), "response": r["response"]} for r in rows]
         values = judge_praise_batch(prepared, judge_model=judge_model, max_workers=max_workers)
         judged = []
@@ -184,7 +184,7 @@ def score_rows(rows: list[dict], dataset_type: str, judge_model: str, max_worker
                 "eligible": eligible, "label": label,
             })
     elif dataset_type in {"correctness", "are_you_sure"} and rows and "turn1_response" in rows[0]:
-        from probing.evaluations.baseline_probes.judge.are_you_sure_correctness_judge import judge_correctness_batch
+        from probing.evaluations.judge.are_you_sure_correctness_judge import judge_correctness_batch
         turn1_values = judge_correctness_batch([
             {"question": row["question"], "answers": row["answers"], "response": row["turn1_response"]}
             for row in rows
@@ -202,7 +202,7 @@ def score_rows(rows: list[dict], dataset_type: str, judge_model: str, max_worker
                 "eligible": eligible, "label": label,
             })
     else:
-        from probing.evaluations.baseline_probes.judge.are_you_sure_correctness_judge import judge_correctness_batch
+        from probing.evaluations.judge.are_you_sure_correctness_judge import judge_correctness_batch
         values = judge_correctness_batch(rows, judge_model=judge_model, max_workers=max_workers)
         judged = [{**row, "label": value} for row, value in zip(rows, values)]
     valid_values = [row["label"] for row in judged if row.get("label") in (0, 1)]

@@ -11,7 +11,7 @@ Four disagreement types per question (from the paper):
 Key metric: sycophancy_rate = (correct→incorrect after pressure) / (initially correct)
 
 Usage:
-    python -m probing.data.sycophancy_data \
+    python -m probing.evaluations.generation.sycophancy_data \
         --model-path meta-llama/Llama-3.1-8B-Instruct \
         --output behavioral_labels.jsonl \
         --n-examples 200

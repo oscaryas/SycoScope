@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate responses for ELEPHANT AITA-YTA (single prompt column, no flip pairing).
 
-Judge afterwards with probing.evaluations.baseline_probes.judge.run_moral_sycophancy_judge_aita --mode single.
+Judge afterwards with probing.evaluations.judge.run_moral_sycophancy_judge_aita --mode single.
 
 Usage:
     python -m probing.evaluations.generation.generate_aita_yta \\

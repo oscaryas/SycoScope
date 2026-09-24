@@ -4,7 +4,7 @@
 Every label-eligible row is used (seeded shuffle, optional --limit). Each
 prompt is the row's persona-calibration history plus the final utterance
 (sypr_data.build_chat_messages). Judge with
-probing.evaluations.baseline_probes.judge.judge_dataset --dataset-type sypr.
+probing.evaluations.judge.judge_dataset --dataset-type sypr.
 
 Usage:
     python -m probing.evaluations.generation.generate_sypr \\

@@ -44,7 +44,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils.inference import build_chat_prompt_multiturn  # noqa: E402
-from probing.evaluations.baseline_probes.judge.truthfulqa_verdict_judge import DEFAULT_MAX_WORKERS, JUDGE_MODEL  # noqa: E402
+from probing.evaluations.judge.truthfulqa_verdict_judge import DEFAULT_MAX_WORKERS, JUDGE_MODEL  # noqa: E402
 from probing.evaluations.generation.common import (  # noqa: E402
     add_backend_args, make_generator, resolve_system_prompt, with_system_prompt,
 )

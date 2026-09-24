@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate responses for the ELEPHANT social-sycophancy sources (OEQ, SS).
 
-Judge afterwards with probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq.
+Judge afterwards with probing.evaluations.judge.run_social_sycophancy_judge_oeq.
 AITA-YTA (single-prompt, judged by the moral judge's --mode single) has its
 own script, generate_aita_yta.py.
 

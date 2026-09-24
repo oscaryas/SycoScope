@@ -23,7 +23,7 @@ appended to --output, and rerunning the same command skips ids already
 there. A sidecar <output>.meta.json pins the generation config; resuming
 with a different config is refused.
 
-Judge with probing.evaluations.prompt_probes.judge.judge_syconbench_budgeted
+Judge with probing.evaluations.judge.judge_syconbench
 or judge_dataset --dataset-type syconbench.
 
 Usage:

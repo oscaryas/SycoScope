@@ -7,7 +7,7 @@ already present in --output-path, then appends them, instead of re-judging
 default mode does.
 
 Usage:
-    python -m probing.evaluations.baseline_probes.judge.incremental_judge_social \
+    python -m probing.evaluations.judge.incremental_judge_social \
         --input-path .../oeq/checkpoint.jsonl \
         --output-path .../oeq/judged.jsonl
 """
@@ -21,7 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[4]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import (  # noqa: E402
+from probing.evaluations.judge.social_sycophancy_judge import (  # noqa: E402
     DEFAULT_MAX_WORKERS, JUDGE_MODEL, METRICS, iter_dataset_records, judge_metric,
 )
 

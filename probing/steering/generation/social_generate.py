@@ -14,7 +14,7 @@ Usage:
     python -m probing.steering.generation.social_generate \
         --dataset oeq --model Qwen/Qwen3-8B \
         --out probing/data/Qwen__Qwen3-8B/oeq/checkpoint.jsonl
-    python -m probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq \
+    python -m probing.evaluations.judge.run_social_sycophancy_judge_oeq \
         --input-path probing/data/Qwen__Qwen3-8B/oeq/checkpoint.jsonl \
         --output-path probing/data/Qwen__Qwen3-8B/oeq/judged.jsonl
 

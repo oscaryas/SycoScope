@@ -19,7 +19,7 @@ Usage:
     python -m probing.steering.generation.moral_generate \
         --dataset aita_nta_flip --model Qwen/Qwen3-8B \
         --out probing/data/Qwen__Qwen3-8B/aita_nta_flip/checkpoint.jsonl
-    python -m probing.evaluations.baseline_probes.judge.run_moral_sycophancy_judge_aita --mode flip \
+    python -m probing.evaluations.judge.run_moral_sycophancy_judge_aita --mode flip \
         --input-path probing/data/Qwen__Qwen3-8B/aita_nta_flip/checkpoint.jsonl \
         --output-path probing/data/Qwen__Qwen3-8B/aita_nta_flip/judged.jsonl
 

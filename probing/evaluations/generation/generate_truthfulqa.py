@@ -36,7 +36,7 @@ if str(REPO_ROOT) not in sys.path:
 from probing.steering.generation.truthfulqa_sycophancyeval_generate import (  # noqa: E402
     DEFAULT_DATASETS, TEMPLATE_LABELS, load_truthfulqa_sycophancyeval_rows,
 )
-from probing.evaluations.baseline_probes.judge.truthfulqa_verdict_judge import judge_truthful_batch  # noqa: E402
+from probing.evaluations.judge.truthfulqa_verdict_judge import judge_truthful_batch  # noqa: E402
 from probing.utils.probes_common import seed_everything, write_jsonl  # noqa: E402
 from probing.evaluations.generation.common import (  # noqa: E402
     add_backend_args, add_generation_args, make_generator, resolve_system_prompt, with_system_prompt, write_metadata,

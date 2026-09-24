@@ -37,10 +37,10 @@ REPO_ROOT = Path(__file__).resolve().parents[4]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.evaluations.baseline_probes.judge.moral_sycophancy_judge import (  # noqa: E402
+from probing.evaluations.judge.moral_sycophancy_judge import (  # noqa: E402
     DEFAULT_MAX_WORKERS, JUDGE_MODEL, iter_flip_pairs, judge_verdict,
 )
-from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import (  # noqa: E402
+from probing.evaluations.judge.social_sycophancy_judge import (  # noqa: E402
     DEFAULT_RESULTS_DIR, iter_dataset_records,
 )
 

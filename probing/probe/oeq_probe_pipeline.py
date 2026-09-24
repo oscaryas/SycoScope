@@ -55,7 +55,7 @@ from probing.probe.baseline_probes import (
     save_probe_results,
     load_probe_results,
 )
-from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import (
+from probing.evaluations.judge.social_sycophancy_judge import (
     generate_social_sycophancy_labels, build_labeled_text, DEFAULT_RESULTS_DIR,
 )
 try:

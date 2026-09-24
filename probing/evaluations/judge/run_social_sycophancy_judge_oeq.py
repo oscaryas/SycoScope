@@ -11,11 +11,11 @@ Each judge call is an independent Claude API round-trip; concurrency is the
 only thing that matters for wall-clock time.
 
 Usage:
-    python -m probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq \
+    python -m probing.evaluations.judge.run_social_sycophancy_judge_oeq \
         --output-path <path>
-    python -m probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq \
+    python -m probing.evaluations.judge.run_social_sycophancy_judge_oeq \
         --output-path <path> --n-examples 100 --max-workers 24
-    python -m probing.evaluations.baseline_probes.judge.run_social_sycophancy_judge_oeq \
+    python -m probing.evaluations.judge.run_social_sycophancy_judge_oeq \
         --output-path <path> --resume   # only re-judge rows with a None label
                                          # in the existing --output-path (e.g.
                                          # after an API billing/credits outage)
@@ -35,7 +35,7 @@ REPO_ROOT = Path(__file__).resolve().parents[4]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.evaluations.baseline_probes.judge.social_sycophancy_judge import (  # noqa: E402
+from probing.evaluations.judge.social_sycophancy_judge import (  # noqa: E402
     DEFAULT_MAX_WORKERS,
     JUDGE_MODEL,
     METRICS,
