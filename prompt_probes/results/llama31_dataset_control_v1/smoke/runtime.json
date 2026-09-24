@@ -1,7 +1,0 @@
-{
-  "experiment_hash": "5a782d30231325d80c13584da889694081e3b26998b24badca3cb1265565ce19",
-  "torch": "2.8.0+cu128",
-  "transformers": "4.57.6",
-  "model_path": "/workspace/syconbench_model",
-  "smoke": true
-}
