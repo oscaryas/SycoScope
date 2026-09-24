@@ -20,7 +20,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import numpy as np  # noqa: E402
-from probing.probe import get_activations as ga  # noqa: E402
+from probing.analyze_probes import probes_core as ga  # noqa: E402
 
 TOKENIZER_MODEL = "meta-llama/Llama-3.2-1B-Instruct"
 
@@ -220,7 +220,7 @@ class TestApplyProbeParity(unittest.TestCase):
 
     def test_matches_sklearn_decision_function(self):
         from probing.analyze_probes import analyze_probes as ap
-        from probing.probe import train_probes as tp
+        from probing.analyze_probes import probes_core as tp
 
         rng = np.random.default_rng(0)
         X = rng.normal(size=(80, 16))

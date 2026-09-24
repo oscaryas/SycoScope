@@ -51,10 +51,10 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from probing.utils import common  # noqa: E402
-from probing.probe import get_activations as ga  # noqa: E402
+from probing.analyze_probes import probes_core as ga  # noqa: E402
 from probing.analyze_probes.analyze_probes import apply_probe, load_probes  # noqa: E402
 from probing.analyze_probes.eval_matrix import bootstrap_auc  # noqa: E402
-from probing.probe.train_probes import DROP_REASONS, safe_auc  # noqa: E402
+from probing.analyze_probes.probes_core import DROP_REASONS, safe_auc  # noqa: E402
 
 N_BOOT = 2000
 SEED = 0

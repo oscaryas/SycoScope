@@ -8,7 +8,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 from probing.analyze_probes import eval_syconbench as sycon
 from probing.analyze_probes.eval_common import selection_split, split_key
-from probing.probe import get_activations as ga
+from probing.analyze_probes import probes_core as ga
 
 
 def conversation(judgments=(1, 1, 0, 1, 0)):

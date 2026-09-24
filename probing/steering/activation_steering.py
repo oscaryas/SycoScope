@@ -5,8 +5,9 @@ generation, so a discovered sycophancy direction's effect can be observed
 directly rather than only inferred from probe accuracy.
 
 Reads direction vectors from the *_probe_weights.pth / *_projection_stds.pt
-checkpoints that probing.probe.baseline_probes.save_probe_results already
-writes, and locates modules the same way utils.model_registry.register_hooks
+checkpoints written by the retired torch probe pipeline's save_probe_results
+(the current probes_core.l2_sweep_train pickles sklearn models with a
+direction_raw vector instead, which this module does not read yet), and locates modules the same way utils.model_registry.register_hooks
 does (hook-path suffix + layer index parsed from the module's dotted name)
 rather than a separate layer_path config, so no new registry fields are
 needed.

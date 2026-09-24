@@ -148,18 +148,13 @@ class AnalysisModuleImportTests(unittest.TestCase):
         source = inspect.getsource(truthfulqa_probe_transfer_pipeline)
         self.assertIn("from mixture_dim_pipeline import extract_all_activations", source)
 
-    def test_mixture_holdout_eval_resolves_baseline_probes_fit_probe(self):
-        """The flagged cross-reference: this module's docstring mentions
-        probing.probe.baseline_probes.train_probe by name (for contrast), and
-        imports _fit_probe from the same now-extracted module -- confirm both
-        actually resolve."""
+    def test_mixture_holdout_eval_resolves_probes_core_fit_probe(self):
+        """probing/probe/ is retired: the held-out eval fits with the sklearn
+        probes_core.fit_probe, not the old torch _fit_probe."""
         source = inspect.getsource(mixture_holdout_eval_pipeline)
-        self.assertIn("probing.probe.baseline_probes.train_probe", source)
-        self.assertIn("from probing.probe.baseline_probes import _fit_probe", source)
-        import probing.probe.baseline_probes as baseline_probes
-        self.assertTrue(hasattr(baseline_probes, "_fit_probe"))
-        self.assertTrue(hasattr(baseline_probes, "train_probe"))
-        self.assertIs(mixture_holdout_eval_pipeline._fit_probe, baseline_probes._fit_probe)
+        self.assertIn("from probing.analyze_probes.probes_core import fit_probe, score", source)
+        import probing.analyze_probes.probes_core as probes_core
+        self.assertIs(mixture_holdout_eval_pipeline.fit_probe, probes_core.fit_probe)
 
     def test_pipelines_sharing_collect_residual_only_use_package_qualified_import(self):
         for module in (bootstrap_nc1_pipeline, mixture_holdout_eval_pipeline,
@@ -168,7 +163,7 @@ class AnalysisModuleImportTests(unittest.TestCase):
                 source = inspect.getsource(module)
                 if "collect_residual_only" in source:
                     self.assertIn(
-                        "from probing.probe.mixture_residual_probe_pipeline import collect_residual_only",
+                        "from probing.analyze_probes.probes_core import collect_residual_only",
                         source,
                     )
 

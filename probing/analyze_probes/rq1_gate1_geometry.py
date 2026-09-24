@@ -47,6 +47,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
+from sklearn.metrics import roc_auc_score
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
@@ -55,8 +56,106 @@ if str(REPO_ROOT) not in sys.path:
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt
 from utils.model_registry import get_model_config
-from probing.probe.dim import compute_dim_direction
 from probing.evaluations.generation.sycophancy_data import load_truthfulqa
+
+# ---------------------------------------------------------------------------
+# Difference-in-means direction (moved verbatim from the retired probe/dim.py;
+# this geometry analysis is its only remaining user).
+# ---------------------------------------------------------------------------
+
+def _stratified_folds(y, n_folds, rng):
+    """Assign each example to one of n_folds folds, preserving class balance per fold."""
+    fold_of = np.empty(len(y), dtype=int)
+    for cls in np.unique(y):
+        cls_idx = np.nonzero(y == cls)[0]
+        rng.shuffle(cls_idx)
+        fold_of[cls_idx] = np.arange(len(cls_idx)) % n_folds
+    return fold_of
+
+
+def _unit(v):
+    return v / (np.linalg.norm(v) + 1e-8)
+
+
+def _cohens_d(X, y, direction):
+    """Cohen's d between the label=1 and label=0 groups, projected onto unit `direction`."""
+    proj = X @ direction
+    pos, neg = proj[y == 1], proj[y == 0]
+    n_pos, n_neg = len(pos), len(neg)
+    if n_pos > 1 and n_neg > 1:
+        pooled_std = np.sqrt(
+            ((n_pos - 1) * pos.var(ddof=1) + (n_neg - 1) * neg.var(ddof=1)) / (n_pos + n_neg - 2)
+        )
+    else:
+        pooled_std = proj.std(ddof=0)
+    return float((pos.mean() - neg.mean()) / (pooled_std + 1e-8))
+
+
+def _safe_auc(y_true, scores):
+    """roc_auc_score, but degrades to 0.5 (chance) instead of raising when only one
+    class is present in y_true -- can happen on a small held-out CV fold."""
+    if len(np.unique(y_true)) < 2:
+        return 0.5
+    return float(roc_auc_score(y_true, scores))
+
+
+def compute_dim_direction(X, y, method="cv_averaged", n_folds=5, seed=None):
+    """
+    Difference-in-means direction between label=1 and label=0 activations.
+
+    method="naive": direction = unit(mean(X[y==1]) - mean(X[y==0])), effect size is
+    Cohen's d evaluated on the same data the direction was computed from -- optimistic,
+    since the direction is fit and scored on the same examples.
+
+    method="cv_averaged" (default): n_folds-fold stratified CV. Each fold fits a
+    direction on the training split and scores Cohen's d / AUC-ROC on the held-out
+    test split only, then the final direction is the (re-unit-normalized) mean of the
+    n_folds fold directions -- an out-of-sample effect-size/AUC estimate, and a
+    direction less sensitive to any single fold's noise.
+
+    AUC-ROC here is diagnostic-only -- direction *selection* between candidate
+    (layer, head) keys always uses effect_size (Cohen's d), never auc_roc. AUC is
+    reported alongside because it's a more familiar separability metric to sanity-check
+    effect_size against, and because bucket_cross_results / metadata want it recorded.
+
+    Returns dict: direction (unit np.ndarray), effect_size (float), fold_effect_sizes
+    (list or None, cv_averaged only), auc_roc (float), fold_aucs (list or None,
+    cv_averaged only), input_dim (int), proj_std (float -- std of X @ direction over
+    ALL of X, used downstream to scale the direction into an alpha-ready steering
+    vector).
+    """
+    input_dim = X.shape[-1]
+    if method == "naive":
+        direction = _unit(X[y == 1].mean(axis=0) - X[y == 0].mean(axis=0))
+        effect_size = _cohens_d(X, y, direction)
+        fold_effect_sizes = None
+        auc_roc = _safe_auc(y, X @ direction)
+        fold_aucs = None
+    elif method == "cv_averaged":
+        rng = np.random.default_rng(seed)
+        fold_of = _stratified_folds(y, n_folds, rng)
+        fold_directions, fold_effect_sizes, fold_aucs = [], [], []
+        for fold in range(n_folds):
+            test_mask = fold_of == fold
+            train_mask = ~test_mask
+            if test_mask.sum() == 0 or train_mask.sum() == 0:
+                continue
+            Xtr, ytr = X[train_mask], y[train_mask]
+            d_f = _unit(Xtr[ytr == 1].mean(axis=0) - Xtr[ytr == 0].mean(axis=0))
+            fold_directions.append(d_f)
+            fold_effect_sizes.append(_cohens_d(X[test_mask], y[test_mask], d_f))
+            fold_aucs.append(_safe_auc(y[test_mask], X[test_mask] @ d_f))
+        direction = _unit(np.mean(fold_directions, axis=0))
+        effect_size = float(np.mean(fold_effect_sizes)) if fold_effect_sizes else 0.0
+        auc_roc = float(np.mean(fold_aucs)) if fold_aucs else 0.5
+    else:
+        raise ValueError(f"method must be 'naive' or 'cv_averaged', got {method!r}")
+    proj_std = float(np.std(X @ direction))
+    return {
+        "direction": direction, "effect_size": effect_size, "fold_effect_sizes": fold_effect_sizes,
+        "auc_roc": auc_roc, "fold_aucs": fold_aucs, "input_dim": input_dim, "proj_std": proj_std,
+    }
+
 
 LAYERS = [5, 13, 27]
 TYPES = ["moral", "social", "praise", "truth"]

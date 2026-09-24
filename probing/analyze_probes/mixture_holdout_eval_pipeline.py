@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 Genuine held-out evaluation of the residual probe on sycophancy_mixture --
-unlike probing.probe.baseline_probes.train_probe (used everywhere else in
-this batch of runs), which does 5-fold CV for reported accuracy but then
-REFITS the saved probe on 100% of the data (no example is ever truly held
-out from the deployed probe), this script does a real train/test split:
+unlike probes_core.l2_sweep_train, which does grouped CV for reported
+accuracy but then REFITS the saved probe on 100% of the data (no example is
+ever truly held out from the deployed probe), this script does a real
+train/test split:
 fits the probe on train only, then reports per-example correct/incorrect on
 test examples the probe never saw during fitting.
 
@@ -14,7 +14,9 @@ all 4 categories and both labels, not just balanced in aggregate.
 
 Uses the same moral-fix-aware extraction as mixture_residual_probe_pipeline_
 v2.py: moral rows get two averaged forward passes (original post, flipped
-story), other rows get one.
+story), other rows get one. The probe is probes_core.fit_probe (sklearn L2
+logistic regression on standardized activations, --C / --max-iter); the
+earlier torch nn.Linear estimator (--n-epochs/--batch-size/--lr) is retired.
 
 Usage:
     python mixture_holdout_eval_pipeline.py \
@@ -32,7 +34,6 @@ from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
-import torch
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
@@ -41,8 +42,8 @@ if str(REPO_ROOT) not in sys.path:
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt
 from utils.model_registry import get_model_config
-from probing.probe.baseline_probes import _fit_probe
-from probing.probe.mixture_residual_probe_pipeline import collect_residual_only
+from probing.analyze_probes.probes_core import fit_probe, score
+from probing.analyze_probes.probes_core import collect_residual_only
 
 
 def load_mixture(path: Path) -> list:
@@ -78,9 +79,8 @@ def main():
     parser.add_argument("--model", type=str, default="meta-llama/Meta-Llama-3-8B-Instruct")
     parser.add_argument("--layer", type=int, default=14, help="Residual layer to evaluate (14 was the best layer for the moral-fixed combined probe).")
     parser.add_argument("--test-frac", type=float, default=0.2)
-    parser.add_argument("--n-epochs", type=int, default=25)
-    parser.add_argument("--batch-size", type=int, default=25)
-    parser.add_argument("--lr", type=float, default=0.001)
+    parser.add_argument("--C", type=float, default=1.0, help="Inverse L2 strength.")
+    parser.add_argument("--max-iter", type=int, default=2000)
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
 
@@ -142,11 +142,9 @@ def main():
     X_test, y_test = layer_activations[test_idx], labels[test_idx]
 
     print(f"\nFitting probe on train set only ({len(train_idx)} examples, layer {args.layer})...")
-    probe = _fit_probe(X_train, y_train, input_dim=hidden_dim, n_epochs=args.n_epochs, batch_size=args.batch_size, lr=args.lr)
-
-    with torch.no_grad():
-        train_logits = probe(torch.FloatTensor(X_train)).numpy()
-        test_logits = probe(torch.FloatTensor(X_test)).numpy()
+    scaler, clf = fit_probe(X_train, y_train.astype(int), args.seed, args.C, args.max_iter)
+    train_logits = score(scaler, clf, X_train)
+    test_logits = score(scaler, clf, X_test)
     train_preds = (train_logits > 0).astype(np.float32)
     test_preds = (test_logits > 0).astype(np.float32)
 
@@ -189,7 +187,7 @@ def main():
 
     summary = {
         "mixture": str(args.mixture), "layer": args.layer, "test_frac": args.test_frac, "seed": args.seed,
-        "n_train": len(train_idx), "n_test": len(test_idx),
+        "C": args.C, "n_train": len(train_idx), "n_test": len(test_idx),
         "train_accuracy": train_acc, "test_accuracy": test_acc,
         "n_test_correct": int(sum(r["correct"] for r in per_example)),
         "n_test_misclassified": len(misclassified),

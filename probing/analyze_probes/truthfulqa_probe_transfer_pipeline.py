@@ -85,8 +85,50 @@ from sklearn.metrics import roc_auc_score
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt
 from utils.model_registry import get_model_config
-from probing.probe.baseline_probes import LinearProbe, _probe_accuracy, _probe_scores, _fold_auc, wilson_ci
-from probing.probe.mixture_residual_probe_pipeline import collect_residual_only
+from probing.analyze_probes.probes_core import wilson_ci
+
+
+# ---------------------------------------------------------------------------
+# Legacy torch probe scoring. The residual_probe_weights.pth checkpoints this
+# script reads were written by the retired torch estimator (nn.Linear, keys
+# linear.weight / linear.bias), so the minimal module and its scoring helpers
+# live here to keep those checkpoints loadable.
+# ---------------------------------------------------------------------------
+
+
+class LinearProbe(torch.nn.Module):
+    def __init__(self, input_dim: int):
+        super().__init__()
+        self.linear = torch.nn.Linear(input_dim, 1)
+
+    def forward(self, x):
+        return self.linear(x).squeeze(-1)
+
+
+def _probe_accuracy(probe, X: np.ndarray, y: np.ndarray) -> tuple:
+    """Returns (n_correct, n_total, accuracy) for probe on (X, y)."""
+    X_t = torch.FloatTensor(X)
+    y_t = torch.FloatTensor(y)
+    with torch.no_grad():
+        preds = (probe(X_t) > 0).float()
+        n_correct = int((preds == y_t).sum().item())
+    n_total = len(y_t)
+    return n_correct, n_total, n_correct / n_total if n_total else 0.0
+
+
+def _probe_scores(probe, X: np.ndarray) -> np.ndarray:
+    """Raw pre-threshold logits -- roc_auc_score needs continuous scores."""
+    X_t = torch.FloatTensor(X)
+    with torch.no_grad():
+        return probe(X_t).numpy()
+
+
+def _fold_auc(y_true: np.ndarray, scores: np.ndarray):
+    """None if only one class is present (roc_auc_score is undefined there)."""
+    if len(np.unique(y_true)) < 2:
+        return None
+    return float(roc_auc_score(y_true, scores))
+from probing.analyze_probes.probes_core import collect_residual_only
 
 
 def build_targets(generations_dir: Path) -> dict:
@@ -168,7 +210,7 @@ def bootstrap_auc_ci(y: np.ndarray, scores: np.ndarray, n_bootstrap: int = 1000,
     """Percentile bootstrap CI for a single-shot AUC-ROC point estimate --
     resamples (label, score) pairs together (not scores alone, since AUC is
     a function of the pairing) and recomputes roc_auc_score each draw.
-    Unlike sycophancy_probes.bootstrap_ci, which bootstraps a 1-D
+    Unlike probes_core.bootstrap_ci, which bootstraps a 1-D
     array of already-computed per-fold statistics rather than raw examples.
     Returns None if every draw collapses to a single class (tiny/imbalanced
     groups) -- same "no signal" convention as _fold_auc returning None."""

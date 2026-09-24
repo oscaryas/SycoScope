@@ -42,7 +42,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.model_registry import get_model_config
-from probing.probe.mixture_residual_probe_pipeline import collect_residual_only
+from probing.analyze_probes.probes_core import collect_residual_only
 
 
 def load_mixture(path: Path) -> tuple:
