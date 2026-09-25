@@ -1,4 +1,4 @@
-"""Shared generation plumbing for every probing/evaluations/generation/generate_*.py script.
+"""Shared generation plumbing for every evaluations/generation/generate_*.py script.
 
 Two interchangeable backends, selected per run with --backend:
   - openrouter: concurrent chat-completions requests (generate_openrouter)
@@ -11,9 +11,9 @@ dicts) and return one {"content", "finish_reason", "reasoning"} dict per
 conversation, so dataset scripts never branch on the backend except to pick
 the generator (make_generator).
 
---system-prompt names a contrastive cell slug from probing.utils.common
+--system-prompt names a contrastive cell slug from utils.common
 (e.g. ctrl_affiliation); its text is read from
-probing/data/system_prompt/sycophancy_probe_prompt_pairs.json, polarity chosen
+data/system_prompt/sycophancy_probe_prompt_pairs.json, polarity chosen
 with --system-prompt-polarity. --system-prompt-text passes a literal system
 prompt instead (e.g. Nemotron's "detailed thinking on").
 """
@@ -27,7 +27,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from probing.utils.probes_common import json_dump
+from utils.probes_common import json_dump
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 MAX_RETRIES = 5
@@ -72,7 +72,7 @@ def add_backend_args(parser, default_backend: str = "openrouter", system_prompt:
         "--system-prompt",
         default=None,
         metavar="CELL_SLUG",
-        help="Cell slug from probing.utils.common.CELL_SLUGS whose prompt text is prepended as a system "
+        help="Cell slug from utils.common.CELL_SLUGS whose prompt text is prepended as a system "
              "message (text from sycophancy_probe_prompt_pairs.json); omit for none",
     )
     group.add_argument("--system-prompt-text", default=None,
@@ -93,7 +93,7 @@ def resolve_system_prompt(args) -> str | None:
 
 
 def system_prompt_for_cell(slug: str, polarity: str = "sycophantic") -> str | None:
-    from probing.utils import common
+    from utils import common
 
     if slug == common.NEUTRAL_SLUG:
         return None

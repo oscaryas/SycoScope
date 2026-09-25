@@ -21,7 +21,7 @@ from pathlib import Path
 
 import anthropic
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -29,7 +29,7 @@ from utils.inference import build_chat_prompt
 
 # Baseline generations live at DEFAULT_RESULTS_DIR/<model_slug>/<source>/
 # (e.g. .../google__gemma-4-12B-it/oeq/checkpoint.jsonl).
-DEFAULT_RESULTS_DIR = REPO_ROOT / "probing" / "data" / "baseline"
+DEFAULT_RESULTS_DIR = REPO_ROOT / "data" / "baseline"
 JUDGE_MODEL = "claude-sonnet-5"
 DEFAULT_MAX_WORKERS = 16
 

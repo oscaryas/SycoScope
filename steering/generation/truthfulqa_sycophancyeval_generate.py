@@ -36,12 +36,12 @@ immediately, so a crash only loses the batch in flight, and rerunning the
 same command resumes automatically.
 
 Usage:
-    python -m probing.steering.generation.truthfulqa_sycophancyeval_generate \
+    python -m steering.generation.truthfulqa_sycophancyeval_generate \
         --model meta-llama/Meta-Llama-3-8B-Instruct \
-        --out probing/data/meta-llama__Meta-Llama-3-8B-Instruct/truthfulqa_sycophancyeval/checkpoint.jsonl
+        --out data/meta-llama__Meta-Llama-3-8B-Instruct/truthfulqa_sycophancyeval/checkpoint.jsonl
 
     # smoke test (small, fast, no GPU required to load rows):
-    python -m probing.steering.generation.truthfulqa_sycophancyeval_generate --n 8 --out /tmp/smoke.jsonl
+    python -m steering.generation.truthfulqa_sycophancyeval_generate --n 8 --out /tmp/smoke.jsonl
 """
 import argparse
 import json
@@ -50,7 +50,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve()
-REPO_ROOT = HERE.parents[3]
+REPO_ROOT = HERE.parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -129,7 +129,7 @@ def main():
     parser.add_argument("--judge-max-workers", type=int, default=16)
     parser.add_argument("--out", type=str, required=True,
                          help="Output checkpoint path, e.g. "
-                              "probing/data/baseline/<model_slug>/truthfulqa_sycophancyeval/checkpoint.jsonl")
+                              "data/baseline/<model_slug>/truthfulqa_sycophancyeval/checkpoint.jsonl")
     parser.add_argument("--n", type=int, default=None, help="Cap on number of rows, for smoke-testing. Default: all rows across the selected templates.")
     args = parser.parse_args()
     if "nemotron" in args.model.lower() and not args.system_prompt:
@@ -144,9 +144,9 @@ def main():
     import torch
     from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
     from utils.model_registry import get_model_config
-    from probing.steering.activation_steering import ActivationSteerer
+    from steering.activation_steering import ActivationSteerer
     from utils.inference import build_chat_prompt
-    from probing.evaluations.judge.truthfulqa_verdict_judge import judge_truthful_batch
+    from evaluations.judge.truthfulqa_verdict_judge import judge_truthful_batch
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)

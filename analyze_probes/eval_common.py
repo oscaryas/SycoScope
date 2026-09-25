@@ -9,10 +9,10 @@ from pathlib import Path
 
 import numpy as np
 
-from probing.utils import common
-from probing.analyze_probes import probes_core as ga
-from probing.analyze_probes.analyze_probes import apply_probe, load_probes
-from probing.analyze_probes.probes_core import safe_auc
+from utils import common
+from analyze_probes import probes_core as ga
+from analyze_probes.analyze_probes import apply_probe, load_probes
+from analyze_probes.probes_core import safe_auc
 
 N_NULL_DIRECTIONS = 20
 NULL_SLUGS = common.NULL_SLUGS

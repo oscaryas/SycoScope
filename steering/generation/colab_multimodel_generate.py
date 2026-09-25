@@ -7,11 +7,11 @@ to the Llama-3 originals), then tar the results for transfer.
 Run detached from a notebook cell AFTER the kernel has exported HF_TOKEN /
 ANTHROPIC_API_KEY into os.environ (google.colab.userdata):
 
-    !cd /content/SycoScope && nohup python -m probing.steering.generation.colab_multimodel_generate \
+    !cd /content/SycoScope && nohup python -m steering.generation.colab_multimodel_generate \
         > /content/gen.log 2>&1 &
 
 Per model x dataset, output lands in
-probing/data/baseline/<model_slug>/<dataset>/checkpoint.jsonl
+data/baseline/<model_slug>/<dataset>/checkpoint.jsonl
 (the scripts' own resumable checkpoint format), so a killed run just picks
 up where it left off on rerun.
 
@@ -52,8 +52,8 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-REPO_ROOT = HERE.parents[2]
-GEN_DIR = REPO_ROOT / "probing" / "data" / "baseline"
+REPO_ROOT = HERE.parents[1]
+GEN_DIR = REPO_ROOT / "data" / "baseline"
 
 MODELS = [
     # (hf id, system prompt, generation batch size)
@@ -141,7 +141,7 @@ def main():
 
     if args.tar:
         # Tar just the model-slug directories this run touched (not all of
-        # probing/data/baseline/) -- each is a direct child of GEN_DIR, one per model.
+        # data/baseline/) -- each is a direct child of GEN_DIR, one per model.
         slugs = [slug(m) for m, _, _ in want_models]
         subprocess.call(["tar", "-czf", args.tar, "-C", str(GEN_DIR), *slugs])
         log(f"tarred results to {args.tar}")

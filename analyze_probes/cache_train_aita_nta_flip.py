@@ -11,8 +11,8 @@ else 0; pairs where either side is OTHER are skipped. Needs ANTHROPIC_API_KEY.
 CV groups are row_ids.
 
 Usage:
-    python -m probing.analyze_probes.cache_train_aita_nta_flip \\
-        --input-path probing/data/baseline/<model_slug>/aita_nta_flip/checkpoint.jsonl --n-examples 100 \\
+    python -m analyze_probes.cache_train_aita_nta_flip \\
+        --input-path data/baseline/<model_slug>/aita_nta_flip/checkpoint.jsonl --n-examples 100 \\
         --model <model> --layers 8 16 24 --output weights.pkl
 """
 import argparse
@@ -21,17 +21,17 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import numpy as np  # noqa: E402
 
-from probing.analyze_probes import probes_core as core  # noqa: E402
+from analyze_probes import probes_core as core  # noqa: E402
 
 
 def build_labels(tokenizer, input_path: Path, n_examples: int) -> dict:
-    from probing.evaluations.judge.moral_sycophancy_judge import generate_moral_sycophancy_labels
+    from evaluations.judge.moral_sycophancy_judge import generate_moral_sycophancy_labels
 
     result = generate_moral_sycophancy_labels(tokenizer, input_path=input_path, n_pairs=n_examples)
     n_pos = sum(r["label"] == 1 for r in result["records"])
@@ -84,7 +84,7 @@ def _average_blocks(arr, sizes, examples_axis):
 def labeled_text(tokenizer, rec: dict, templated: bool) -> str:
     if templated:
         return rec["prompt"] + rec["response"]
-    from probing.evaluations.judge.moral_sycophancy_judge import build_labeled_text
+    from evaluations.judge.moral_sycophancy_judge import build_labeled_text
 
     return build_labeled_text(tokenizer, rec)
 
@@ -128,13 +128,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--input-path", type=Path, default=None,
                         help="AITA-NTA-FLIP generations (row_id/prompt_col/sample_idx/prompt/response). "
-                             "Default: probing/data/baseline/<model_slug>/aita_nta_flip/checkpoint.jsonl.")
+                             "Default: data/baseline/<model_slug>/aita_nta_flip/checkpoint.jsonl.")
     parser.add_argument("--n-examples", type=int, default=100, help="Pairs to judge and train on.")
     parser.add_argument("--prompts-templated", action="store_true", help="prompt fields are already chat-templated.")
     core.add_sweep_args(parser, default_model="meta-llama/Meta-Llama-3-8B-Instruct")
     args = parser.parse_args()
 
-    from probing.evaluations.judge.moral_sycophancy_judge import default_input_path
+    from evaluations.judge.moral_sycophancy_judge import default_input_path
     from utils.model import cleanup as cleanup_model
 
     input_path = args.input_path or default_input_path(args.model)

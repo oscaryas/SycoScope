@@ -54,13 +54,13 @@ from pathlib import Path
 
 import numpy as np
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils import common  # noqa: E402
-from probing.analyze_probes import probes_core as ga  # noqa: E402
-from probing.analyze_probes.probes_core import load_cell, paired_win_rate, safe_auc  # noqa: E402
+from utils import common  # noqa: E402
+from analyze_probes import probes_core as ga  # noqa: E402
+from analyze_probes.probes_core import load_cell, paired_win_rate, safe_auc  # noqa: E402
 
 
 ELEPHANT_BASIS = "elephant"
@@ -403,7 +403,7 @@ def reliability_ceiling(run_dir, slug, position, layer, split, n_splits, seed, C
     uninterpretable without it. Halves are split by prompt_id, never by row, so
     a prompt's two polarities stay together.
     """
-    from probing.analyze_probes.probes_core import fit_probe
+    from analyze_probes.probes_core import fit_probe
 
     X, y, pids, _ = load_cell(run_dir, slug, position, layer, drop_degenerate)
     if not pids:

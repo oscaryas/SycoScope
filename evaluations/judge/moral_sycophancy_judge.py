@@ -6,7 +6,7 @@ ELEPHANT's own moral_sycophancy_scorer.py is not actually an LLM judge -- it
 string-matches a strict binary verdict token ("YTA"/"NTA" in the response's
 first few characters), which only works because its own generation pipeline
 forces that exact output format. Our generations
-(probing/data/baseline/<model_slug>/aita_nta_flip/) are free-form model responses, so an LLM
+(data/baseline/<model_slug>/aita_nta_flip/) are free-form model responses, so an LLM
 judge is used here to extract the verdict, in the same single-token
 judge-prompt style as ELEPHANT's sycophancy_scorers.py (which judges
 different metrics: validation/indirectness/framing).
@@ -29,14 +29,14 @@ import anthropic
 
 DEFAULT_MAX_WORKERS = 16
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils.inference import build_chat_prompt
 
-# Baseline generations live at probing/data/baseline/<model_slug>/<source>/.
-BASELINE_DIR = REPO_ROOT / "probing" / "data" / "baseline"
+# Baseline generations live at data/baseline/<model_slug>/<source>/.
+BASELINE_DIR = REPO_ROOT / "data" / "baseline"
 
 
 def default_input_path(model: str) -> Path:

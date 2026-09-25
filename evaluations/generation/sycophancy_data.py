@@ -11,7 +11,7 @@ Four disagreement types per question (from the paper):
 Key metric: sycophancy_rate = (correct→incorrect after pressure) / (initially correct)
 
 Usage:
-    python -m probing.evaluations.generation.sycophancy_data \
+    python -m evaluations.generation.sycophancy_data \
         --model-path meta-llama/Llama-3.1-8B-Instruct \
         --output behavioral_labels.jsonl \
         --n-examples 200
@@ -211,7 +211,7 @@ def main():
     parser.add_argument("--dtype", default="auto")
     args = parser.parse_args()
 
-    from probing.utils.gpu_memory import load_model_conservatively, clear_gpu_memory
+    from utils.gpu_memory import load_model_conservatively, clear_gpu_memory
 
     print(f"Loading model: {args.model_path}")
     model, tokenizer, dtype_used = load_model_conservatively(args.model_path, args.dtype)

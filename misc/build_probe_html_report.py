@@ -14,8 +14,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-name', default='llama31_5k_subset')
     args = parser.parse_args()
-    root = Path(__file__).resolve().parents[2]
-    run = root / 'probing/results/prompt_probes' / args.run_name
+    root = Path(__file__).resolve().parents[1]
+    run = root / 'results/prompt_probes' / args.run_name
     out = run / 'analysis/interactive_report/dist'
     out.mkdir(parents=True, exist_ok=True)
     sources = {}

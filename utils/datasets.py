@@ -1,6 +1,6 @@
 """
 Loading and iterating over the shared ELEPHANT raw dataset CSVs
-(probing/data/source/elephant/ -- extracted from SAE/datasets/ so this
+(data/source/elephant/ -- extracted from SAE/datasets/ so this
 module has no dependency on the SAE application directory).
 
 Each CSV has a different schema (see DATASET_SPECS below), so a per-file spec
@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
-DATASETS_DIR = Path(__file__).resolve().parents[1] / "probing" / "data" / "source" / "elephant"
+DATASETS_DIR = Path(__file__).resolve().parents[1] / "data" / "source" / "elephant"
 
 EXCLUDED_FILES = set()
 
@@ -28,7 +28,7 @@ DATASET_SPECS = {
 
 
 def list_dataset_files() -> list[str]:
-    """CSV filenames in probing/data/source/elephant that have a known spec."""
+    """CSV filenames in data/source/elephant that have a known spec."""
     files = []
     for path in sorted(DATASETS_DIR.glob("*.csv")):
         if path.name in EXCLUDED_FILES:

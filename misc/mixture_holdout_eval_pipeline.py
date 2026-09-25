@@ -35,15 +35,15 @@ from pathlib import Path
 
 import numpy as np
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt
 from utils.model_registry import get_model_config
-from probing.analyze_probes.probes_core import fit_probe, score
-from probing.analyze_probes.probes_core import collect_residual_only
+from analyze_probes.probes_core import fit_probe, score
+from analyze_probes.probes_core import collect_residual_only
 
 
 def load_mixture(path: Path) -> list:

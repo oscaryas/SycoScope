@@ -7,7 +7,7 @@ for all cells. Nothing about prompt content can then separate the classes, and
 each prompt yields one label-1 / label-0 pair -- which is why train_probes.py has
 to split by prompt_id rather than by row. The system prompt is inherent here
 (each cell's sycophantic / non_sycophantic text from
-probing/data/system_prompt/sycophancy_probe_prompt_pairs.json); pick cells with
+data/system_prompt/sycophancy_probe_prompt_pairs.json); pick cells with
 --cells. The `neutral` pseudo-cell generates with no system prompt.
 
 Backends (formerly generate_response.py and generate_response_openrouter.py):
@@ -23,21 +23,21 @@ touching the others.
 
 Usage:
     # smoke test, no GPU needed
-    python -m probing.evaluations.generation.generate_system_prompt_cells --run-name smoke \\
+    python -m evaluations.generation.generate_system_prompt_cells --run-name smoke \\
         --model meta-llama/Llama-3.2-1B-Instruct --cells general_baseline neutral \\
         --limit-prompts 4 --max-new-tokens 48 --batch-size 4
 
     # render prompts and count tokens without loading any weights
-    python -m probing.evaluations.generation.generate_system_prompt_cells --run-name smoke \\
+    python -m evaluations.generation.generate_system_prompt_cells --run-name smoke \\
         --cells general_baseline --limit-prompts 2 --dry-run
 
     # full local run
-    python -m probing.evaluations.generation.generate_system_prompt_cells --run-name main --batch-size 8
+    python -m evaluations.generation.generate_system_prompt_cells --run-name main --batch-size 8
 
     # OpenRouter run
-    python -m probing.evaluations.generation.generate_system_prompt_cells --run-name llama31_5k \\
+    python -m evaluations.generation.generate_system_prompt_cells --run-name llama31_5k \\
         --backend openrouter --model meta-llama/llama-3.1-8b-instruct \\
-        --user-prompts probing/data/system_prompt/perez_user_prompts_5k.jsonl
+        --user-prompts data/system_prompt/perez_user_prompts_5k.jsonl
 """
 import argparse
 import json
@@ -46,13 +46,13 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils import common  # noqa: E402
+from utils import common  # noqa: E402
 from utils.inference import build_chat_prompt, iter_batches  # noqa: E402
-from probing.evaluations.generation.common import add_backend_args, generate_openrouter  # noqa: E402
+from evaluations.generation.common import add_backend_args, generate_openrouter  # noqa: E402
 
 DEFAULT_OPENROUTER_TOKENIZER = "meta-llama/Llama-3.1-8B-Instruct"
 # --model default per backend: an HF repo id is not a valid OpenRouter slug
@@ -223,7 +223,7 @@ def run_local(todo: dict, run_dir: Path, n_pending: int, args) -> None:
 
     from utils.inference import generate_batch
     from utils.model import cleanup as cleanup_model
-    from probing.evaluations.generation.common import load_local_model
+    from evaluations.generation.common import load_local_model
 
     model, tokenizer = load_local_model(args.model)
     # Seeded once. Note that resuming mid-run shifts the RNG relative to an

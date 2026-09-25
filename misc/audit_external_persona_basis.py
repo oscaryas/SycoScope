@@ -14,11 +14,11 @@ import urllib.request
 import numpy as np
 import torch
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils import common
+from utils import common
 
 
 REVISION = "98ae1b599e8ed1ae6952d83167ea4e4ba42111ce"

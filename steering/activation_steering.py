@@ -58,7 +58,7 @@ def load_sklearn_vectors(weights_path: str, C: float = None) -> dict:
     Uses `C` if given, else each layer's best_C. Returns {layer: unit-norm
     torch.Tensor of direction_raw} (unit norm, so alpha is in raw activation units).
     """
-    from probing.analyze_probes.probes_core import load_weights
+    from analyze_probes.probes_core import load_weights
 
     payload = load_weights(weights_path)
     vectors = {}

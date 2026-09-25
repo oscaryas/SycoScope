@@ -28,8 +28,8 @@ Over-length records are skipped, never truncated. Right padding is asserted
 on every batch. Output format: see probes_core.save_cache.
 
 Usage:
-    python -m probing.analyze_probes.cache_activations \\
-        --input probing/data/baseline/<model>/sypr/checkpoint.jsonl \\
+    python -m analyze_probes.cache_activations \\
+        --input data/baseline/<model>/sypr/checkpoint.jsonl \\
         --prompt-field prompt --prompt-templated --group-field utterance_text \\
         --model <model> --token-position response --layers 8 16 24 --output cache.npz
 """
@@ -39,14 +39,14 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import numpy as np  # noqa: E402
 
-from probing.analyze_probes import probes_core as core  # noqa: E402
-from probing.utils import common  # noqa: E402
+from analyze_probes import probes_core as core  # noqa: E402
+from utils import common  # noqa: E402
 
 
 def parse_label(value) -> int | None:

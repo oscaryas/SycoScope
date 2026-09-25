@@ -21,15 +21,15 @@ Per model it verifies:
      special tokens.
 
 Usage:
-    python -m probing.evaluations.generation.verify_model_generation_setup
-    python -m probing.evaluations.generation.verify_model_generation_setup --models Qwen/Qwen3-8B
+    python -m evaluations.generation.verify_model_generation_setup
+    python -m evaluations.generation.verify_model_generation_setup --models Qwen/Qwen3-8B
 """
 import argparse
 import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-REPO_ROOT = HERE.parents[2]
+REPO_ROOT = HERE.parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 

@@ -14,12 +14,12 @@ from scipy.cluster.hierarchy import linkage, cut_tree
 from scipy.spatial.distance import squareform
 from sklearn.metrics import adjusted_rand_score, silhouette_score
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
-from probing.utils import common
-from probing.analyze_probes.analyze_probes import apply_probe, load_probes, heatmap
-from probing.analyze_probes.eval_syconbench import SETTINGS
+from utils import common
+from analyze_probes.analyze_probes import apply_probe, load_probes, heatmap
+from analyze_probes.eval_syconbench import SETTINGS
 
 
 def correlation(values):
@@ -170,7 +170,7 @@ def main():
              "All available questions are used descriptively, without judge-label selection. Layers reuse questions and are not independent replications. Score correlation describes probe behavior on this dataset, not orthogonality or causal circuits. Best k is conditional on searching 2–9: this procedure cannot establish that any discrete clusters exist.", "",
              "The adjusted view removes linear effects of turn indicators and log(1 + response tokens), refitted inside each bootstrap sample. It does not eliminate all wording, topic, style, or system-prompt confounds, and may remove genuine behavior-associated signal. Question means average probe scores across turns, not token activations across a conversation.", "",
              "Unsigned distance 1−|r| is only a same-axis sensitivity check. Participation rank is (sum eigenvalues)²/sum(eigenvalues²) of the score-correlation matrix, not an estimate of the number of sycophancy concepts. Fixed k=3 co-clustering deliberately forces three groups and is not evidence for three concepts.", "",
-             f"Reproduce: `.venv/bin/python probing/analyze_probes/cluster_syconbench_stability.py --run-name {args.run_name} --n-boot {args.n_boot} --seed {args.seed}`", "",
+             f"Reproduce: `.venv/bin/python misc/cluster_syconbench_stability.py --run-name {args.run_name} --n-boot {args.n_boot} --seed {args.seed}`", "",
              "Full memberships, correlation matrices, bootstrap consensus, per-turn, unsigned, ablation, and question-mean sensitivities are in [results.json](results.json)."]
     (out / "SUMMARY.md").write_text("\n".join(rows) + "\n")
 

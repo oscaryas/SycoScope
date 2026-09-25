@@ -23,9 +23,9 @@ the final assistant response appended so answer_token_id pooling lands on
 the same span it always does.
 
 Usage:
-    python -m probing.evaluations.generation.generate_dissociating_sycophancy \\
+    python -m evaluations.generation.generate_dissociating_sycophancy \\
         --output <path> --model meta-llama/Meta-Llama-3-8B-Instruct
-    python -m probing.evaluations.generation.generate_dissociating_sycophancy \\
+    python -m evaluations.generation.generate_dissociating_sycophancy \\
         --output <path> --model meta-llama/Meta-Llama-3-8B-Instruct \\
         --response-source generate --backend local --system-prompt pv_explicit
 """
@@ -39,13 +39,13 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils.inference import build_chat_prompt_multiturn  # noqa: E402
-from probing.evaluations.judge.truthfulqa_verdict_judge import DEFAULT_MAX_WORKERS, JUDGE_MODEL  # noqa: E402
-from probing.evaluations.generation.common import (  # noqa: E402
+from evaluations.judge.truthfulqa_verdict_judge import DEFAULT_MAX_WORKERS, JUDGE_MODEL  # noqa: E402
+from evaluations.generation.common import (  # noqa: E402
     add_backend_args, make_generator, resolve_system_prompt, with_system_prompt,
 )
 

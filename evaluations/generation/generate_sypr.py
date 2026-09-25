@@ -4,10 +4,10 @@
 Every label-eligible row is used (seeded shuffle, optional --limit). Each
 prompt is the row's persona-calibration history plus the final utterance
 (sypr_data.build_chat_messages). Judge with
-probing.evaluations.judge.judge_dataset --dataset-type sypr.
+evaluations.judge.judge_dataset --dataset-type sypr.
 
 Usage:
-    python -m probing.evaluations.generation.generate_sypr \\
+    python -m evaluations.generation.generate_sypr \\
         --model meta-llama/llama-3.1-8b-instruct --backend openrouter --output <path>
 """
 from __future__ import annotations
@@ -17,15 +17,15 @@ import random
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils.probes_common import seed_everything, write_jsonl  # noqa: E402
-from probing.evaluations.generation.common import (  # noqa: E402
+from utils.probes_common import seed_everything, write_jsonl  # noqa: E402
+from evaluations.generation.common import (  # noqa: E402
     add_backend_args, add_generation_args, make_generator, resolve_system_prompt, with_system_prompt, write_metadata,
 )
-from probing.evaluations.generation.sypr_data import (  # noqa: E402
+from evaluations.generation.sypr_data import (  # noqa: E402
     HF_DATASET_ID, _row_from_index, all_eligible_indices, build_chat_messages, load_sypr_dataset,
 )
 

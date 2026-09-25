@@ -4,12 +4,12 @@ import argparse
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils.probes_common import json_dump, read_jsonl, write_jsonl
-from probing.evaluations.judge.scoring import score_rows
+from utils.probes_common import json_dump, read_jsonl, write_jsonl
+from evaluations.judge.scoring import score_rows
 
 
 def main():

@@ -27,12 +27,12 @@ import argparse
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils import common  # noqa: E402
-from probing.analyze_probes import eval_common  # noqa: E402
+from utils import common  # noqa: E402
+from analyze_probes import eval_common  # noqa: E402
 
 LABEL_FIELDS = ("sycophantic",)
 SRC_DIR = common.REPO_ROOT / "prompt_probes" / "results" / "llama31_5k" / "generations"

@@ -74,7 +74,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 SYCOPHANCY_DIR = REPO_ROOT / "tool_calling" / "tasks" / "sycophancy"
 for p in (REPO_ROOT, SYCOPHANCY_DIR):
     if str(p) not in sys.path:
@@ -85,7 +85,7 @@ from sklearn.metrics import roc_auc_score
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt
 from utils.model_registry import get_model_config
-from probing.analyze_probes.probes_core import wilson_ci
+from analyze_probes.probes_core import wilson_ci
 
 
 # ---------------------------------------------------------------------------
@@ -128,7 +128,7 @@ def _fold_auc(y_true: np.ndarray, scores: np.ndarray):
     if len(np.unique(y_true)) < 2:
         return None
     return float(roc_auc_score(y_true, scores))
-from probing.analyze_probes.probes_core import collect_residual_only
+from analyze_probes.probes_core import collect_residual_only
 
 
 def build_targets(generations_dir: Path) -> dict:

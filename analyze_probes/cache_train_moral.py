@@ -14,8 +14,8 @@ a --seed sample of the same number of negatives (random.Random(seed)).
 CV groups are row_ids.
 
 Usage:
-    python -m probing.analyze_probes.cache_train_moral \\
-        --judged probing/data/baseline/<model>/aita_nta_flip/judged.jsonl \\
+    python -m analyze_probes.cache_train_moral \\
+        --judged data/baseline/<model>/aita_nta_flip/judged.jsonl \\
         --model <model> --layers 8 16 24 --output weights.pkl
 """
 import argparse
@@ -24,13 +24,13 @@ import random
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import numpy as np  # noqa: E402
 
-from probing.analyze_probes import probes_core as core  # noqa: E402
+from analyze_probes import probes_core as core  # noqa: E402
 
 
 def select_moral_pairs(judged_path: Path, seed: int) -> dict:

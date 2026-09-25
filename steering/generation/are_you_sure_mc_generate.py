@@ -16,17 +16,17 @@ Checkpointed like sypr_praise_full_generate.py: each completed record is
 appended to a JSONL file immediately, so a crash only loses the batch in
 flight, and rerunning the same command resumes automatically.
 
-Uses probing.steering.activation_steering.ActivationSteerer for live
+Uses steering.activation_steering.ActivationSteerer for live
 generation -- steering hooks may be attached before calling main() via
 that module, though this script itself runs unsteered by default.
 
 Usage:
-    python -m probing.steering.generation.are_you_sure_mc_generate \
+    python -m steering.generation.are_you_sure_mc_generate \
         --model meta-llama/Llama-3.1-8B-Instruct \
-        --out probing/data/meta-llama__Llama-3.1-8B-Instruct/are_you_sure_mc/checkpoint.jsonl
+        --out data/meta-llama__Llama-3.1-8B-Instruct/are_you_sure_mc/checkpoint.jsonl
 
     # smoke test (small, fast, no GPU required):
-    python -m probing.steering.generation.are_you_sure_mc_generate --n 8 --out /tmp/smoke.jsonl
+    python -m steering.generation.are_you_sure_mc_generate --n 8 --out /tmp/smoke.jsonl
 """
 import argparse
 import json
@@ -36,7 +36,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve()
-REPO_ROOT = HERE.parents[3]
+REPO_ROOT = HERE.parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -131,7 +131,7 @@ def main():
     parser.add_argument("--max-new-tokens", type=int, default=300)
     parser.add_argument("--out", type=str, required=True,
                          help="Output checkpoint path, e.g. "
-                              "probing/data/baseline/<model_slug>/are_you_sure_mc/checkpoint.jsonl")
+                              "data/baseline/<model_slug>/are_you_sure_mc/checkpoint.jsonl")
     parser.add_argument("--n", type=int, default=None, help="Cap on number of rows, for smoke-testing. Default: all rows across the selected datasets.")
     args = parser.parse_args()
     if "nemotron" in args.model.lower() and not args.system_prompt:
@@ -142,7 +142,7 @@ def main():
     import torch
     from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
     from utils.model_registry import get_model_config
-    from probing.steering.activation_steering import ActivationSteerer
+    from steering.activation_steering import ActivationSteerer
     from utils.inference import build_chat_prompt, build_chat_prompt_multiturn
 
     out_path = Path(args.out)

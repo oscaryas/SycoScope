@@ -18,8 +18,8 @@ pools that exclude every mixture row (the retired
 gemma_mixture_probe_transfer_pipeline.py, now with the sklearn probe).
 
 Usage:
-    python -m probing.analyze_probes.cache_train_gemma_mixture \\
-        --layers 31 --output probing/results/probes/google__gemma-4-12B-it/mixture_l2/weights.pkl \\
+    python -m misc.cache_train_gemma_mixture \\
+        --layers 31 --output results/probes/google__gemma-4-12B-it/mixture_l2/weights.pkl \\
         --heldout-targets sypr,social,are_you_sure,truthfulqa,moral
 """
 import argparse
@@ -28,17 +28,17 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import numpy as np  # noqa: E402
 
-from probing.analyze_probes import probes_core as core  # noqa: E402
+from analyze_probes import probes_core as core  # noqa: E402
 
 GEMMA_MODEL = "google/gemma-4-12B-it"
-GEMMA_DATA = REPO_ROOT / "probing" / "data" / "baseline" / "google__gemma-4-12B-it"
-GEMMA_PROBES = REPO_ROOT / "probing" / "results" / "probes" / "google__gemma-4-12B-it"
+GEMMA_DATA = REPO_ROOT / "data" / "baseline" / "google__gemma-4-12B-it"
+GEMMA_PROBES = REPO_ROOT / "results" / "probes" / "google__gemma-4-12B-it"
 DEFAULT_MIXTURE = GEMMA_PROBES / "gemma_sycophancy_mixture" / "mixture.jsonl"
 DEFAULT_JUDGED = GEMMA_DATA / "aita_nta_flip" / "judged.jsonl"
 OOD_DIR = GEMMA_PROBES / "ood_pools"

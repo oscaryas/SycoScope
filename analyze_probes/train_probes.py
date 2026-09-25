@@ -9,20 +9,20 @@ other row in their group, as the prompt-probes pipeline did, unless
 --keep-degenerate is set.
 
 Usage:
-    python -m probing.analyze_probes.train_probes --cache cache.npz --layers 16 24 \\
+    python -m analyze_probes.train_probes --cache cache.npz --layers 16 24 \\
         --C-values 0.01 0.1 1.0 10.0 100.0 --output weights.pkl
 """
 import argparse
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import numpy as np  # noqa: E402
 
-from probing.analyze_probes.probes_core import BALANCE_METHODS, DROP_REASONS, load_cache, train_and_save  # noqa: E402
+from analyze_probes.probes_core import BALANCE_METHODS, DROP_REASONS, load_cache, train_and_save  # noqa: E402
 
 DEFAULT_C_VALUES = [0.01, 0.1, 1.0, 10.0, 100.0]
 

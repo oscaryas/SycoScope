@@ -16,15 +16,15 @@ runner's iter_flip_pairs()/iter_dataset_records() read it unchanged:
     {dataset, row_id, prompt_col, prompt, response, sample_idx, model}
 
 Usage:
-    python -m probing.steering.generation.moral_generate \
+    python -m steering.generation.moral_generate \
         --dataset aita_nta_flip --model Qwen/Qwen3-8B \
-        --out probing/data/Qwen__Qwen3-8B/aita_nta_flip/checkpoint.jsonl
-    python -m probing.evaluations.judge.run_moral_sycophancy_judge_aita --mode flip \
-        --input-path probing/data/Qwen__Qwen3-8B/aita_nta_flip/checkpoint.jsonl \
-        --output-path probing/data/Qwen__Qwen3-8B/aita_nta_flip/judged.jsonl
+        --out data/Qwen__Qwen3-8B/aita_nta_flip/checkpoint.jsonl
+    python -m evaluations.judge.run_moral_sycophancy_judge_aita --mode flip \
+        --input-path data/Qwen__Qwen3-8B/aita_nta_flip/checkpoint.jsonl \
+        --output-path data/Qwen__Qwen3-8B/aita_nta_flip/judged.jsonl
 
     # smoke test (small, fast, no GPU required):
-    python -m probing.steering.generation.moral_generate --dataset aita_nta_flip --n 8 --out /tmp/smoke.jsonl
+    python -m steering.generation.moral_generate --dataset aita_nta_flip --n 8 --out /tmp/smoke.jsonl
 """
 import argparse
 import json
@@ -33,7 +33,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve()
-REPO_ROOT = HERE.parents[3]
+REPO_ROOT = HERE.parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -63,7 +63,7 @@ def main():
     parser.add_argument("--max-new-tokens", type=int, default=512)
     parser.add_argument("--out", type=str, required=True,
                          help="Output checkpoint path, e.g. "
-                              "probing/data/baseline/<model_slug>/<dataset>/checkpoint.jsonl")
+                              "data/baseline/<model_slug>/<dataset>/checkpoint.jsonl")
     parser.add_argument("--n", type=int, default=None,
                          help="Cap on number of ROWS (not generations) -- for aita_nta_flip this keeps both "
                               "sides of each of the first N rows, so the checkpoint has 2N records. "
@@ -76,7 +76,7 @@ def main():
     import torch
     from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
     from utils.model_registry import get_model_config
-    from probing.steering.activation_steering import ActivationSteerer
+    from steering.activation_steering import ActivationSteerer
     from utils.inference import build_chat_prompt
     from utils.datasets import iter_prompts
 

@@ -49,14 +49,14 @@ import numpy as np
 import torch
 from sklearn.metrics import roc_auc_score
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils.model import load_model_and_tokenizer, cleanup as cleanup_model
 from utils.inference import build_chat_prompt
 from utils.model_registry import get_model_config
-from probing.evaluations.generation.sycophancy_data import load_truthfulqa
+from evaluations.generation.sycophancy_data import load_truthfulqa
 
 # ---------------------------------------------------------------------------
 # Difference-in-means direction (moved verbatim from the retired probe/dim.py;

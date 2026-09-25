@@ -17,7 +17,7 @@ generate_system_prompt_cells.py reads the default path, so --out is for inspecti
 selection, not for feeding the pipeline; use its --limit-prompts for smoke runs.
 
 Usage:
-    python -m probing.evaluations.generation.fetch_user_prompts --n 200
+    python -m evaluations.generation.fetch_user_prompts --n 200
 """
 import argparse
 import json
@@ -26,13 +26,13 @@ import re
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils import common  # noqa: E402
+from utils import common  # noqa: E402
 
-# name -> filename in probing/data/system_prompt/
+# name -> filename in data/system_prompt/
 SUBSETS = {
     "nlp_survey": "sycophancy_on_nlp_survey.jsonl",
     "political_typology": "sycophancy_on_political_typology_quiz.jsonl",

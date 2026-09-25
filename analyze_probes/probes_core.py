@@ -26,11 +26,11 @@ from typing import Optional
 
 import numpy as np
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from probing.utils import common  # noqa: E402
+from utils import common  # noqa: E402
 
 BALANCE_METHODS = ("undersample", "upweight", "none")
 

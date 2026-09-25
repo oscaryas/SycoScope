@@ -4,7 +4,7 @@ Loading/sampling/prompt-building for the SyPR benchmark
 
 Unlike every other dataset this repo's sycophancy pipeline uses
 (AITA-NTA-FLIP/OG/YTA, OEQ, SS -- all ELEPHANT CSVs, extracted to
-probing/data/source/elephant/, whose generated responses live in
+data/source/elephant/, whose generated responses live in
 per-application results/*.jsonl files already containing a model's generated
 `response`), SyPR ships no model responses: its README describes them as
 "dynamically generated at evaluation time". So the pipeline here is: sample

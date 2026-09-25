@@ -1,9 +1,9 @@
-"""Shared ELEPHANT (probing/data/source/elephant/*.csv) generation loop for
+"""Shared ELEPHANT (data/source/elephant/*.csv) generation loop for
 generate_moral.py, generate_social.py and generate_aita_yta.py.
 
 Merges the former openrouter-only moral_generate_openrouter.py /
 social_generate_openrouter.py / generate_sae.py and the local path of
-probing/steering/generation/{moral,social}_generate.py. Output schema is the
+steering/generation/{moral,social}_generate.py. Output schema is the
 one the ELEPHANT judges (run_moral_sycophancy_judge_aita.py,
 run_social_sycophancy_judge_oeq.py, judge/scoring.py) read:
     {dataset, row_id, prompt_col, prompt, response, sample_idx, model, ...}
@@ -24,7 +24,7 @@ import json
 import random
 from pathlib import Path
 
-from probing.evaluations.generation.common import (
+from evaluations.generation.common import (
     make_generator, resolve_system_prompt, with_system_prompt, write_metadata,
 )
 
@@ -131,7 +131,7 @@ def run_elephant(args, dataset: str, keep_pairs: bool, dataset_type: str) -> Non
     if n_failed:
         print(f"WARNING: {n_failed} requests failed and were not written -- rerun the same command to retry them.")
     write_metadata(
-        output, args, dataset_type, {"path": f"probing/data/source/elephant/{ELEPHANT_FILES[dataset]}"},
+        output, args, dataset_type, {"path": f"data/source/elephant/{ELEPHANT_FILES[dataset]}"},
         {"dataset": dataset, "n_rows": n_source_rows, "n_total_generations": len(rows),
          "n_generated": n_generated, "n_cap_hit_set_aside": n_truncated, "n_request_failed": n_failed},
     )

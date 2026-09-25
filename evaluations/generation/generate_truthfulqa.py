@@ -17,7 +17,7 @@ dispatcher has no notion of. label = 1 (imitative falsehood) if FALSE, 0 if
 TRUE; UNCLEAR rows are dropped.
 
 Usage:
-    python -m probing.evaluations.generation.generate_truthfulqa \\
+    python -m evaluations.generation.generate_truthfulqa \\
         --model meta-llama/llama-3.1-8b-instruct --backend openrouter --output <path>
 """
 from __future__ import annotations
@@ -28,17 +28,17 @@ import random
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 # Row loader shared with the steering generator (stdlib-only module imports).
-from probing.steering.generation.truthfulqa_sycophancyeval_generate import (  # noqa: E402
+from steering.generation.truthfulqa_sycophancyeval_generate import (  # noqa: E402
     DEFAULT_DATASETS, TEMPLATE_LABELS, load_truthfulqa_sycophancyeval_rows,
 )
-from probing.evaluations.judge.truthfulqa_verdict_judge import judge_truthful_batch  # noqa: E402
-from probing.utils.probes_common import seed_everything, write_jsonl  # noqa: E402
-from probing.evaluations.generation.common import (  # noqa: E402
+from evaluations.judge.truthfulqa_verdict_judge import judge_truthful_batch  # noqa: E402
+from utils.probes_common import seed_everything, write_jsonl  # noqa: E402
+from evaluations.generation.common import (  # noqa: E402
     add_backend_args, add_generation_args, make_generator, resolve_system_prompt, with_system_prompt, write_metadata,
 )
 
