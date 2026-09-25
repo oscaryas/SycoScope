@@ -19,9 +19,14 @@ per-dataset breakdown, not "all", for the cross-cell number).
 Label field: "sycophantic" (int(row["label"]), 1 = sycophantic polarity, 0 =
 non_sycophantic -- identical to POLARITY_LABEL, no external judging needed).
 
+--probe takes one pickle per cell as name=path with name = the cell slug, so
+the per-dataset rows line up with the probe names.
+
 Usage:
-    python eval_cross_cell.py --run-name llama31_5k_subset --extract-only
-    python eval_cross_cell.py --run-name llama31_5k_subset
+    python -m scorer.eval_cross_cell --cache results/probes/scores/cross_cell.npz --model <model> \
+        --holdout results/prompt_probes/llama31_5k_subset/cross_cell_holdout_prompt_ids.json --extract-only
+    python -m scorer.eval_cross_cell --cache results/probes/scores/cross_cell.npz \
+        --probe pv_implicit=pv_implicit.pkl ctrl_obsequiousness=ctrl_obsequiousness.pkl
 """
 import argparse
 import sys
@@ -32,14 +37,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils import common  # noqa: E402
-from analyze_probes import eval_common  # noqa: E402
+from scorer import eval_common  # noqa: E402
 
 LABEL_FIELDS = ("sycophantic",)
 SRC_DIR = common.REPO_ROOT / "prompt_probes" / "results" / "llama31_5k" / "generations"
 
 
-def load_cross_cell_records(run_dir: Path, cells: list[str]) -> list[dict]:
-    holdout_path = run_dir / "cross_cell_holdout_prompt_ids.json"
+def load_cross_cell_records(holdout_path: Path, cells: list[str]) -> list[dict]:
     if not holdout_path.exists():
         raise SystemExit(f"missing: {holdout_path} -- run build_llama31_subset.py first")
     holdout = set(__import__("json").loads(holdout_path.read_text())["prompt_ids"])
@@ -71,44 +75,28 @@ def load_cross_cell_records(run_dir: Path, cells: list[str]) -> list[dict]:
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     eval_common.add_common_args(parser)
+    parser.add_argument("--holdout", type=Path, default=None,
+                        help="cross_cell_holdout_prompt_ids.json (needed only when extracting).")
+    common.add_cells_arg(parser)
     args = parser.parse_args()
 
-    run_dir = common.resolve_run_dir(args.run_name, create=False)
-    if not run_dir.exists():
-        raise SystemExit(f"no such run: {run_dir}")
-    out_dir = run_dir / "eval_cross_cell"
-
-    cells = args.cells or common.all_slugs(include_neutral=False)
-    print("Loading held-out cross-cell records ...")
-    records = load_cross_cell_records(run_dir, cells)
-    if not records:
-        raise SystemExit("no records loaded")
-    print(f"{len(records)} records across {len(set(r['dataset'] for r in records))} cells")
-
-    if args.overwrite or not (out_dir / "activations.npz").exists():
-        eval_common.extract_activations(out_dir, records, LABEL_FIELDS, args)
-    else:
-        print(f"using cached activations at {out_dir / 'activations.npz'} (--overwrite to redo)")
+    paths = eval_common.cache_paths(args.cache, args.positions)
+    if eval_common.needs_extraction(paths, args):
+        if args.holdout is None:
+            raise SystemExit("--holdout is required to build the cache")
+        cells = args.cells or common.all_slugs(include_neutral=False)
+        print("Loading held-out cross-cell records ...")
+        records = load_cross_cell_records(args.holdout, cells)
+        if not records:
+            raise SystemExit("no records loaded")
+        print(f"{len(records)} records across {len(set(r['dataset'] for r in records))} cells")
+        eval_common.build_cache(paths, records, LABEL_FIELDS, LABEL_FIELDS, args)
     if args.extract_only:
         return
 
-    positions, layers, slugs = eval_common.resolve_eval_targets(run_dir, out_dir, args)
-    index = common.read_jsonl(out_dir / "activations_index.jsonl")
-    selection = eval_common.selection_split(index, args.selection_frac, args.seed)
-    print(f"\nselection split: {len(selection)} keys reserved for probe selection")
-
-    rows = eval_common.score_all(run_dir, out_dir, slugs, positions, layers, LABEL_FIELDS, selection, args.seed)
-    eval_common.report(
-        out_dir,
-        rows,
-        positions,
-        layers,
-        LABEL_FIELDS,
-        slugs,
-        {
-            "n_records": len(index),
-            "selection_frac": args.selection_frac,
-            "seed": args.seed,
+    eval_common.score_and_report(
+        args, paths, "eval_cross_cell", LABEL_FIELDS,
+        extra={
             "note": "Cross-system-prompt generalization: dataset field = source cell slug. "
             "The 'all' row for a probe includes its OWN cell's held-out data (not a cross-cell "
             "test) -- read the per-dataset breakdown and exclude the row matching the probe's "

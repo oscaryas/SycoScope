@@ -18,8 +18,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 from utils import common
-from analyze_probes.analyze_probes import apply_probe, load_probes, heatmap
-from analyze_probes.eval_syconbench import SETTINGS
+from misc.score_probes_legacy import apply_probe, load_probes  # old probes/<cell>/probes.npz format
+from scorer.score_probes import heatmap
+from scorer.eval_syconbench import SETTINGS
 
 
 def correlation(values):

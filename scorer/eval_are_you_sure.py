@@ -9,8 +9,10 @@ The probed context is each record's `turn2_prompt`: the chat-formatted turn-1
 question, turn-1 answer and pushback that the model saw before answering again.
 
 Usage:
-    python eval_are_you_sure.py --run-name main --extract-only
-    python eval_are_you_sure.py --run-name main
+    # one GPU pass, cached thereafter
+    python -m scorer.eval_are_you_sure --cache results/probes/scores/ays.npz --model <model> --extract-only
+    # scoring only, CPU
+    python -m scorer.eval_are_you_sure --probe weights.pkl --cache results/probes/scores/ays.npz
 """
 import argparse
 import random
@@ -22,7 +24,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils import common  # noqa: E402
-from analyze_probes import eval_common  # noqa: E402
+from scorer import eval_common  # noqa: E402
 
 DEFAULT_CHECKPOINTS = [
     common.GENERATIONS_DIR / "are_you_sure_mc" / "checkpoint.jsonl",
@@ -58,48 +60,25 @@ def main():
     parser.add_argument("--checkpoints", type=Path, nargs="+", default=DEFAULT_CHECKPOINTS)
     args = parser.parse_args()
 
-    run_dir = common.resolve_run_dir(args.run_name, create=False)
-    if not run_dir.exists():
-        raise SystemExit(f"no such run: {run_dir}")
-    out_dir = run_dir / "eval_are_you_sure"
-
-    print("Loading are_you_sure checkpoints ...")
-    records = load_checkpoints(list(args.checkpoints))
-    if not records:
-        raise SystemExit("no records loaded")
-    if args.limit:
-        random.Random(args.seed).shuffle(records)
-        records = records[: args.limit]
-    n_pos = sum(r["caved"] for r in records)
-    print(f"{len(records)} records across {len(set(r['dataset'] for r in records))} subsets")
-    print(f"  caved {n_pos} / held {len(records) - n_pos}  (caving rate {n_pos / len(records):.3f})")
-
-    if args.overwrite or not (out_dir / "activations.npz").exists():
-        eval_common.extract_activations(out_dir, records, LABEL_FIELDS, args)
-    else:
-        print(f"using cached activations at {out_dir / 'activations.npz'} (--overwrite to redo)")
+    paths = eval_common.cache_paths(args.cache, args.positions)
+    if eval_common.needs_extraction(paths, args):
+        print("Loading are_you_sure checkpoints ...")
+        records = load_checkpoints(list(args.checkpoints))
+        if not records:
+            raise SystemExit("no records loaded")
+        if args.limit:
+            random.Random(args.seed).shuffle(records)
+            records = records[: args.limit]
+        n_pos = sum(r["caved"] for r in records)
+        print(f"{len(records)} records across {len(set(r['dataset'] for r in records))} subsets")
+        print(f"  caved {n_pos} / held {len(records) - n_pos}  (caving rate {n_pos / len(records):.3f})")
+        eval_common.build_cache(paths, records, LABEL_FIELDS, LABEL_FIELDS, args)
     if args.extract_only:
         return
 
-    positions, layers, slugs = eval_common.resolve_eval_targets(run_dir, out_dir, args)
-    index = common.read_jsonl(out_dir / "activations_index.jsonl")
-    selection = eval_common.selection_split(index, args.selection_frac, args.seed)
-    print(f"\nselection split: {len(selection)} rows reserved, {len(index) - len(selection)} for reporting")
-
-    rows = eval_common.score_all(
-        run_dir, out_dir, slugs, positions, layers, LABEL_FIELDS, selection, args.seed
-    )
-    eval_common.report(
-        out_dir,
-        rows,
-        positions,
-        layers,
-        LABEL_FIELDS,
-        slugs,
-        {
-            "n_records": len(index),
-            "selection_frac": args.selection_frac,
-            "seed": args.seed,
+    eval_common.score_and_report(
+        args, paths, "eval_are_you_sure", LABEL_FIELDS,
+        extra={
             "note": "`response` pools the whole turn-2 answer, which states the letter on the "
             "MC subsets -- read it as a decodability ceiling. `last_prompt` precedes any "
             "turn-2 token, so it is the prediction number.",

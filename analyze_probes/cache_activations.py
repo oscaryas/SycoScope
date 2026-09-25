@@ -122,6 +122,48 @@ def record_group(rec: dict, group_field: str) -> str:
     raise KeyError(f"record has none of {group_field!r}/prompt_id/row_id/example_id")
 
 
+def extract_records(records: list[dict], model_name: str, layers=None, layer_fracs=None,
+                    positions=("response",), average: str = "mean", batch_size: int = 8,
+                    max_length: int = 4096, model_path=None, normalize=None):
+    """Load the model, compute spans (over-length rows skipped, never
+    truncated), run one batched right-padded forward pass over `records`, and
+    free the model. Records need example_id, response and one of
+    chat_messages / chat_prefix / user_prompt+system_prompt; `normalize`
+    (records, tokenizer) -> records may fill those first. Shared with the
+    scorer/eval_*.py OOD evaluations.
+
+    Returns (prepared, skip_log, arrays, layers): arrays is
+    {(position, layer): (n_prepared, hidden_dim) float32} in `prepared` order."""
+    from types import SimpleNamespace
+
+    from utils.model import cleanup as cleanup_model, load_model_and_tokenizer
+
+    print(f"Loading {model_name} ...")
+    model, tokenizer = load_model_and_tokenizer(model_path or model_name)
+    # load_model_and_tokenizer sets padding_side="left" for generation. Absolute
+    # token indices require RIGHT padding, or every span points into pad tokens.
+    tokenizer.padding_side = "right"
+
+    n_layers = model.config.num_hidden_layers
+    hidden_dim = model.config.hidden_size
+    layers = core.resolve_layers(n_layers, layers, layer_fracs)
+    for layer in layers:
+        print(f"  block {layer:>2} (depth {layer / n_layers:.2f}) -> hidden_states[{layer + 1}]")
+
+    if normalize is not None:
+        records = normalize(records, tokenizer)
+    prepared, skip_log = core.prepare_records(records, tokenizer, SimpleNamespace(max_length=max_length))
+    print(f"{len(prepared)} examples ({len(skip_log)} skipped)")
+    if not prepared:
+        cleanup_model(model, tokenizer)
+        raise SystemExit("nothing to extract")
+
+    arrays = core.extract(model, tokenizer, prepared, layers, hidden_dim, batch_size,
+                          positions=tuple(positions), average=average)
+    cleanup_model(model, tokenizer)
+    return prepared, skip_log, arrays, layers
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--input", required=True, type=Path, help="Generation .jsonl (one record per response).")
@@ -140,35 +182,17 @@ def main() -> None:
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
 
-    from utils.model import cleanup as cleanup_model, load_model_and_tokenizer
-
     records, label_skips = attach_labels(common.read_jsonl(args.input), args.label_field, args.drop_unlabeled)
     if label_skips:
         print(f"dropping {len(label_skips)} unlabeled rows (--drop-unlabeled)")
     if not records:
         raise SystemExit("no labeled rows")
-    print(f"Loading {args.model} ...")
-    model, tokenizer = load_model_and_tokenizer(args.model)
-    # load_model_and_tokenizer sets padding_side="left" for generation. Absolute
-    # token indices require RIGHT padding, or every span points into pad tokens.
-    tokenizer.padding_side = "right"
-
-    n_layers = model.config.num_hidden_layers
-    hidden_dim = model.config.hidden_size
-    layers = core.resolve_layers(n_layers, args.layers, args.layer_fracs)
-    for layer in layers:
-        print(f"  block {layer:>2} (depth {layer / n_layers:.2f}) -> hidden_states[{layer + 1}]")
-
-    records = normalize_records(records, args, tokenizer)
-    prepared, skip_log = core.prepare_records(records, tokenizer, args)
+    prepared, skip_log, arrays, layers = extract_records(
+        records, args.model, args.layers, args.layer_fracs, positions=(args.token_position,),
+        average=args.average, batch_size=args.batch_size, max_length=args.max_length,
+        normalize=lambda recs, tokenizer: normalize_records(recs, args, tokenizer),
+    )
     skip_log = label_skips + skip_log
-    print(f"{len(prepared)} examples ({len(skip_log)} skipped)")
-    if not prepared:
-        raise SystemExit("nothing to extract")
-
-    arrays = core.extract(model, tokenizer, prepared, layers, hidden_dim, args.batch_size,
-                          positions=(args.token_position,), average=args.average)
-    cleanup_model(model, tokenizer)
 
     recs = [p["rec"] for p in prepared]
     core.save_cache(

@@ -15,9 +15,10 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 from utils import common
 from analyze_probes import probes_core as ga
-from analyze_probes.analyze_probes import apply_probe, load_probes, cluster_sweep, heatmap, correlation_dendrogram
-from analyze_probes.eval_common import selection_split, split_key
-from analyze_probes.eval_syconbench import LABEL_FIELDS, SETTINGS
+from misc.score_probes_legacy import apply_probe, load_probes  # old probes/<cell>/probes.npz format
+from scorer.score_probes import cluster_sweep, heatmap, correlation_dendrogram
+from scorer.eval_common import selection_split, split_key
+from scorer.eval_syconbench import LABEL_FIELDS, SETTINGS
 from analyze_probes.probes_core import safe_auc
 
 

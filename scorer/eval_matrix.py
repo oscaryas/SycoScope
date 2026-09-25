@@ -2,9 +2,11 @@
 """
 V1 analysis plan, step 2: the probe-by-evaluation-target performance matrix.
 
-Reads the activations + probes already cached by eval_sypr.py / eval_moral.py
-(and eval_social_sycophancy.py, once it has been run for this run-name) -- no GPU, no
-model weights, nothing re-extracted. For each (eval target, label_field):
+Reads an activation cache already built by scorer/eval_sypr.py /
+eval_moral.py / eval_social_sycophancy.py / eval_syconbench.py (one .npz per
+position, see eval_common) and pickled probes -- no GPU, no model weights,
+nothing re-extracted. --target picks the label/pair-field spec. For each
+label_field:
 
   1. Select (position, layer) per probe on the *selection* split (mean AUC),
      never on the eval split.
@@ -16,13 +18,13 @@ model weights, nothing re-extracted. For each (eval target, label_field):
      extraction time: group_id if the record has one, else example_id) with
      replacement, so related rows always move together.
   5. Report each taxonomy probe's paired bootstrap AUC delta against
-     general_baseline and against the "best single probe" (also selected on
-     the selection split, across all 20 cells).
+     a probe named general_baseline (if given) and against the "best single
+     probe" (also selected on the selection split, across all given probes).
 
 None of the three current eval targets (SyPR, AITA, ELEPHANT) has matched
 positive/negative *responses* to the same scenario -- that contrastive-pair
 structure exists only in the probe training data, where transfer_matrix() in
-analyze_probes.py already reports paired win rate. If a future eval target
+misc/score_probes_legacy.py reports paired win rate. If a future eval target
 does have matched pairs, that metric belongs here as a new function, not
 retrofitted onto PAIR_FIELDS (which here means "shared pair-level label").
 
@@ -30,9 +32,8 @@ This is a synthesis pass over already-computed per-row scores; it does not
 change any evaluation logic in eval_common.py.
 
 Usage:
-    python eval_matrix.py --run-name llama31_5k_subset --target sypr
-    python eval_matrix.py --run-name llama31_5k_subset --target moral
-    python eval_matrix.py --run-name llama31_5k_subset --target sypr moral elephant
+    python -m scorer.eval_matrix --target moral --cache results/probes/scores/moral.npz \
+        --probe pv_implicit=pv.pkl general_baseline=gb.pkl
 """
 import argparse
 import json
@@ -46,25 +47,23 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils import common  # noqa: E402
-from analyze_probes import probes_core as ga  # noqa: E402
-from analyze_probes.analyze_probes import apply_probe, load_probes  # noqa: E402
-from analyze_probes.eval_common import group_mean, selection_split, split_key  # noqa: E402
 from analyze_probes.probes_core import safe_auc  # noqa: E402
+from scorer.eval_common import (  # noqa: E402
+    cache_paths, group_mean, load_table, resolve_label_fields, selection_split, split_key,
+)
+from scorer.score_probes import SCORES_DIR, apply_probe, load_probe_set, select_probe  # noqa: E402
 
 TARGETS = {
-    "sypr": {"dir": "eval_sypr", "label_fields": ("sycophantic_praise",), "pair_fields": ()},
+    "sypr": {"label_fields": ("sycophantic_praise",), "pair_fields": ()},
     "moral": {
-        "dir": "eval_moral",
         "label_fields": ("nta_when_yta", "unwarranted_nta", "both_nta"),
         "pair_fields": ("both_nta",),
     },
     "elephant": {
-        "dir": "eval_elephant",
-        "label_fields": None,  # discovered from meta.json / index if present
+        "label_fields": None,  # discovered from the cache's label__* arrays
         "pair_fields": (),
     },
     "syconbench": {
-        "dir": "eval_syconbench",
         "label_fields": tuple(
             f"{setting}_{target}"
             for setting in ("debate", "ethical", "false_presupposition")
@@ -140,73 +139,55 @@ def bootstrap_delta(scores_a, scores_b, y, group_ids, n_boot=N_BOOT, seed=SEED):
     return {"delta": point, "ci_lo": float(lo), "ci_hi": float(hi), "n_boot": len(boots)}
 
 
-def select_position_layer(run_dir, out_dir, index, selection, probes, slug, label_field, positions, layers,
-                           group_field: bool = False):
+def select_position_layer(tables, selection, payload, label_field, group_field: bool = False, C=None):
     """Best (position, layer) for this probe on the selection split, by AUC.
     Never touches the eval split. For a pair-level label (group_field=True,
     e.g. AITA both_nta), scores are averaged within each group before AUC --
     that label describes the pair, not either individual response, matching
     eval_common.auc_rows()."""
-    is_sel = np.array([split_key(r) in selection for r in index], dtype=bool)
-    y_all = np.array([-1 if r.get(label_field) is None else int(r[label_field]) for r in index], dtype=int)
-    group_ids = np.array([split_key(r) for r in index]) if group_field else None
-    mask_sel = is_sel & (y_all >= 0)
-    if mask_sel.sum() == 0 or len(np.unique(y_all[mask_sel])) < 2:
-        return None
     best = None
-    with np.load(out_dir / "activations.npz") as z:
-        for position in positions:
-            for layer in layers:
-                key = ga.act_key(position, layer)
-                probe = probes.get(slug, {}).get(key)
-                if probe is None or key not in z:
-                    continue
-                X = z[key].astype(np.float32)
-                s = apply_probe(probe, X[mask_sel])
-                yy = y_all[mask_sel]
-                if group_field:
-                    s, yy = group_mean(s, yy, group_ids[mask_sel])
-                a = safe_auc(yy, s)
-                if a is not None and (best is None or a > best[0]):
-                    best = (a, position, layer)
+    for table in tables:
+        is_sel = np.array([split_key(r) in selection for r in table["records"]], dtype=bool)
+        y_all = table["labels"][label_field]
+        mask_sel = is_sel & (y_all >= 0)
+        if mask_sel.sum() == 0 or len(np.unique(y_all[mask_sel])) < 2:
+            continue
+        for layer in table["layers"]:
+            probe = select_probe(payload, layer, C)
+            if probe is None:
+                continue
+            s = apply_probe(probe, table["acts"][layer][mask_sel])
+            yy = y_all[mask_sel]
+            if group_field:
+                s, yy = group_mean(s, yy, table["groups"][mask_sel])
+            a = safe_auc(yy, s)
+            if a is not None and (best is None or a > best[0]):
+                best = (a, table["position"], int(layer))
     if best is None:
         return None
     return {"selection_auc": best[0], "position": best[1], "layer": best[2]}
 
 
-def run_target(run_dir: Path, target_key: str, n_boot: int, out_path: Path):
+def run_target(probes: dict, paths: dict, target_key: str, n_boot: int, out_path: Path, C=None):
     spec = TARGETS[target_key]
-    out_dir = run_dir / spec["dir"]
-    if not out_dir.exists() or not (out_dir / "activations.npz").exists():
-        print(f"skip {target_key}: no cached activations at {out_dir}")
-        return None
-
-    meta = json.loads((out_dir / "meta.json").read_text(encoding="utf-8"))
-    index = common.read_jsonl(out_dir / "activations_index.jsonl")
-    positions = meta["positions"]
-    layers = meta["layers"]
-    label_fields = spec["label_fields"]
-    if label_fields is None:
-        sample = index[0]
-        label_fields = tuple(
-            k for k in sample if k not in ("row", "example_id", "dataset", "n_response_tokens", "group_id")
-        )
+    tables = [load_table(path, position) for position, path in paths.items()]
+    if len({len(t["records"]) for t in tables}) != 1:
+        raise SystemExit("position caches disagree on row count")
+    label_fields = resolve_label_fields(tables, spec["label_fields"] or ())
     pair_fields = spec["pair_fields"]
+    by_position = {t["position"]: t for t in tables}
 
-    all_slugs = [s for s in common.all_slugs(include_neutral=False) if (run_dir / "probes" / s / "probes.npz").exists()]
-    probes = {s: load_probes(run_dir, s) for s in all_slugs}
-    split_spec = meta.get("evaluation_selection", {"frac": 0.3, "seed": SEED})
-    selection = selection_split(index, split_spec["frac"], split_spec["seed"])
-    group_ids_all = np.array([split_key(r) for r in index])
-    is_sel = np.array([split_key(r) in selection for r in index], dtype=bool)
+    records = tables[0]["records"]
+    split_spec = tables[0]["meta"].get("evaluation_selection", {"frac": 0.3, "seed": SEED})
+    selection = selection_split(records, split_spec["frac"], split_spec["seed"])
+    group_ids_all = np.array([split_key(r) for r in records])
+    is_sel = np.array([split_key(r) in selection for r in records], dtype=bool)
 
-    with np.load(out_dir / "activations.npz") as z:
-        cache = {k: z[k].astype(np.float32) for k in z.files}
-
-    report = {"target": target_key, "run_name": run_dir.name, "n_boot": n_boot, "fields": {}}
+    report = {"target": target_key, "caches": {t["position"]: str(t["path"]) for t in tables},
+              "probes": sorted(probes), "n_boot": n_boot, "fields": {}}
 
     for field in label_fields:
-        y_all = np.array([-1 if r.get(field) is None else int(r[field]) for r in index], dtype=int)
+        y_all = tables[0]["labels"][field]
         eval_mask = (~is_sel) & (y_all >= 0)
         if eval_mask.sum() == 0 or len(np.unique(y_all[eval_mask])) < 2:
             print(f"  {field}: no usable eval-split labels, skipping")
@@ -216,14 +197,12 @@ def run_target(run_dir: Path, target_key: str, n_boot: int, out_path: Path):
         groups_eval_raw = group_ids_all[eval_mask]
 
         picks, eval_scores = {}, {}
-        for slug in all_slugs:
-            pick = select_position_layer(run_dir, out_dir, index, selection, probes, slug, field, positions, layers,
-                                          group_field=group_field)
+        for slug, payload in probes.items():
+            pick = select_position_layer(tables, selection, payload, field, group_field=group_field, C=C)
             if pick is None:
                 continue
-            key = ga.act_key(pick["position"], pick["layer"])
-            probe = probes[slug][key]
-            s = apply_probe(probe, cache[key][eval_mask])
+            probe = select_probe(payload, pick["layer"], C)
+            s = apply_probe(probe, by_position[pick["position"]]["acts"][pick["layer"]][eval_mask])
             if group_field:
                 # both_nta etc: the label describes the pair, not either response
                 # individually -- average within each group before scoring, same
@@ -249,7 +228,7 @@ def run_target(run_dir: Path, target_key: str, n_boot: int, out_path: Path):
             print(f"  {field}: no probes scoreable")
             continue
 
-        # Best single probe selected on the selection split, across all cells.
+        # Best single probe selected on the selection split, across all probes.
         best_slug = max(picks, key=lambda s: picks[s]["selection_auc"])
 
         field_report = {"n_eval": int(eval_mask.sum()), "n_eval_groups": int(len(np.unique(groups_eval_raw))),
@@ -262,7 +241,8 @@ def run_target(run_dir: Path, target_key: str, n_boot: int, out_path: Path):
             s = eval_scores[slug]
             boot = bootstrap_auc(s, y_eval, groups_eval, n_boot=n_boot)
             entry = {"position": picks[slug]["position"], "layer": picks[slug]["layer"],
-                     "selection_auc": round(picks[slug]["selection_auc"], 4), **boot}
+                     "selection_auc": round(picks[slug]["selection_auc"], 4),
+                     "accuracy": float(((s > 0).astype(int) == y_eval).mean()), **boot}
             if gb_scores is not None and slug != "general_baseline":
                 entry["vs_general_baseline"] = bootstrap_delta(s, gb_scores, y_eval, groups_eval, n_boot=n_boot)
             if slug != best_slug:
@@ -297,17 +277,18 @@ def run_target(run_dir: Path, target_key: str, n_boot: int, out_path: Path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--run-name", type=str, required=True)
-    parser.add_argument("--target", type=str, nargs="+", default=list(TARGETS), choices=list(TARGETS))
+    parser.add_argument("--probe", nargs="+", required=True, help="Pickled probes: path or name=path.")
+    parser.add_argument("--cache", type=Path, required=True, help="The eval_*.py cache for --target.")
+    parser.add_argument("--positions", type=str, nargs="+", default=["response"], choices=common.POSITIONS)
+    parser.add_argument("--target", type=str, required=True, choices=list(TARGETS))
     parser.add_argument("--n-boot", type=int, default=N_BOOT)
+    parser.add_argument("--C", type=float, default=None, help="Default: each layer's best_C.")
+    parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
 
-    run_dir = common.resolve_run_dir(args.run_name, create=False)
-    if not run_dir.exists():
-        raise SystemExit(f"no such run: {run_dir}")
-    out_dir = run_dir / "analysis"
-    for target in args.target:
-        run_target(run_dir, target, args.n_boot, out_dir / f"matrix_{target}.json")
+    out_path = args.output or SCORES_DIR / "matrix" / f"matrix_{args.target}.json"
+    run_target(load_probe_set(args.probe), cache_paths(args.cache, args.positions), args.target, args.n_boot,
+               out_path, args.C)
 
 
 if __name__ == "__main__":

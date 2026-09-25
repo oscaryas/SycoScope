@@ -1,51 +1,30 @@
 #!/usr/bin/env python3
 """
-Cross-probe analysis. Stage 4 of the prompt_probes pipeline. Reads the saved
-probes and cached activations; no GPU, no model weights. Kept separate from
-train_probes.py because this is the part that gets re-run repeatedly while
-training runs once.
+LEGACY holding pen: the cross-cell analyses from the retired
+analyze_probes/analyze_probes.py that only work on the OLD prompt_probes run
+layout, which the new cache_activations.py / train_probes.py pipeline does not
+produce:
 
-Four analyses, all following Natarajan et al. (2026):
+  results/prompt_probes/<run>/probes/<cell>/probes.npz        (coef/mean/scale per act_key)
+  results/prompt_probes/<run>/activations/<cell>.npz          (pos_L## keys, probes_core.load_acts)
+  results/prompt_probes/<run>/activations/<cell>_index.jsonl
+  results/prompt_probes/<run>/prompt_split.json               (shared train/test prompt split)
+  results/prompt_probes/<run>/eval_*/activations.npz          (old eval_* caches)
 
-1. ANOVA variance decomposition (their section 4.1). How much of the AUC
-   variance is attributable to the prompt pair vs the layer vs the token
-   position. They found system prompt 70.6%, layer 2.7%, token selection 0.6%
-   on Gemma-2-9B (71.0% / 5.8% / 0.3% on Llama-3.3-70B). If that holds here,
-   the 3x3 position/layer grid is ~3% of the effect and the prompt axis is
-   where any further budget should go. Position may well matter more here than
-   it did for them, because we generate on-policy and position controls how
-   much response content the probe can see.
+Moved here rather than faked on the new format:
+  * transfer_matrix: cell i's probe on cell j's held-out prompts needs the
+    shared prompt_split; new probes are refit on ALL rows of their cache.
+  * length_analysis: needs per-cell n_response_tokens in the old index.
+  * reliability_ceiling / score_correlations / discover_eval_bases in their
+    run-dir form, and the old main() (ANOVA over eval_elephant/summary.json).
+  * load_probes / apply_probe for the old .npz probes (still used by
+    misc/summarize_syconbench.py and misc/cluster_syconbench_stability.py).
 
-2. Transfer matrix. Cell i's probe scored on cell j's held-out-prompt rows.
-   Primary statistic is the paired win rate (per prompt, does the
-   sycophantic-condition response outscore the non-sycophantic one), with AUC
-   alongside for comparability with their reported AUC deltas. Both are
-   threshold-free, which is what makes a transferred direction scorable at all:
-   a transferred intercept is meaningless across cells, but the ranking is not.
-   The `universal` row is the direct answer to "does one probe generalize".
+Format-agnostic helpers (ANOVA, clustering, plots) are imported from
+scorer.score_probes; the new-format equivalents live there.
 
-3. Score-correlation clustering (their section 5.3). Pearson correlation
-   between probe *scores* over a common evaluation set, then hierarchical
-   clustering. This is behavioural similarity. They found 16 linguistically
-   distinct prompts collapsing onto ~5 clusters (internal r up to .97), and
-   took the control probes forming their own cluster as evidence the deception
-   clusters meant something -- our 5 controls play that role.
-
-4. Cosine matrix between probe directions, with split-half reliability
-   ceilings. Not redundant with (3): a high score correlation can arise from
-   two different directions both loading on a shared component, and only the
-   geometry distinguishes that. The ceilings are not optional either -- a
-   cross-cosine of 0.4 against a per-cell ceiling of 0.45 means "the same
-   direction", not "different directions".
-
-Scores are reported both raw and control-adjusted (median score on the
-`neutral` cell subtracted), because probe logit scales are not comparable
-across probes.
-
-Usage:
-    python analyze_probes.py --run-name main
-    python analyze_probes.py --run-name main --positions first5 --layers 16
-    python analyze_probes.py --run-name llama31_5k_subset --positions response --cluster-only
+Usage (old run dirs only):
+    python -m misc.score_probes_legacy --run-name main
 """
 import argparse
 import json
@@ -61,77 +40,12 @@ if str(REPO_ROOT) not in sys.path:
 from utils import common  # noqa: E402
 from analyze_probes import probes_core as ga  # noqa: E402
 from analyze_probes.probes_core import load_cell, paired_win_rate, safe_auc  # noqa: E402
-
+from scorer.score_probes import (  # noqa: E402
+    anova, anova_plot, as_matrix, cluster_from_matrix, cluster_sweep, correlation_dendrogram, cosine, heatmap,
+)
 
 ELEPHANT_BASIS = "elephant"
-
-
-def cosine(a: np.ndarray, b: np.ndarray) -> float:
-    """Same convention as rq1_gate1_geometry.cosine."""
-    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-8))
-
-
-# ---------------------------------------------------------------------------
-# 1. ANOVA
-# ---------------------------------------------------------------------------
-
-
-def anova(rows: list[dict], value_key: str = "auc") -> dict:
-    """Main-effect variance decomposition over a fully crossed design.
-
-    One observation per (spec, position, layer) cell means interactions cannot
-    be separated from error, so they land in the residual -- which is exactly
-    how the paper reports it ("Residual (Unexplained)").
-    """
-    usable = [r for r in rows if r.get(value_key) is not None and r[value_key] == r[value_key]]
-    if len(usable) < 4:
-        return {"error": f"only {len(usable)} usable rows"}
-
-    y = np.array([r[value_key] for r in usable], dtype=float)
-    grand = y.mean()
-    ss_total = float(((y - grand) ** 2).sum())
-    if ss_total == 0:
-        return {"error": "no variance in " + value_key}
-
-    factors = {"prompt_pair": "spec", "layer": "layer", "position": "position"}
-    out, ss_explained, df_used = {}, 0.0, 0
-    for label, key in factors.items():
-        levels = {}
-        for r, val in zip(usable, y):
-            levels.setdefault(r[key], []).append(val)
-        # Unbalanced-safe: weight each level by its own count.
-        ss = float(sum(len(v) * (np.mean(v) - grand) ** 2 for v in levels.values()))
-        out[label] = {
-            "ss": ss,
-            "pct_variance": round(100.0 * ss / ss_total, 2),
-            "df": len(levels) - 1,
-            "n_levels": len(levels),
-        }
-        ss_explained += ss
-        df_used += len(levels) - 1
-
-    ss_resid = max(ss_total - ss_explained, 0.0)
-    df_resid = max(len(usable) - 1 - df_used, 1)
-    ms_resid = ss_resid / df_resid
-    for label, entry in out.items():
-        if entry["df"] > 0 and ms_resid > 0:
-            f = (entry["ss"] / entry["df"]) / ms_resid
-            entry["F"] = round(float(f), 3)
-            try:
-                from scipy.stats import f as f_dist
-
-                entry["p"] = float(f_dist.sf(f, entry["df"], df_resid))
-            except Exception:
-                entry["p"] = None
-
-    out["residual"] = {"ss": ss_resid, "pct_variance": round(100.0 * ss_resid / ss_total, 2), "df": df_resid}
-    out["_meta"] = {"value_key": value_key, "n_observations": len(usable), "ss_total": ss_total}
-    return out
-
-
-# ---------------------------------------------------------------------------
-# Probe loading / scoring
-# ---------------------------------------------------------------------------
+LEGACY_ANOVA_FACTORS = {"prompt_pair": "spec", "layer": "layer", "position": "position"}
 
 
 def load_probes(run_dir: Path, slug: str) -> dict:
@@ -151,11 +65,6 @@ def apply_probe(probe: dict, X: np.ndarray) -> np.ndarray:
     """Replicate sklearn's decision_function on standardized features."""
     scale = np.where(probe["scale"] == 0, 1.0, probe["scale"])
     return ((X - probe["mean"]) / scale) @ probe["coef"] + float(probe["intercept"])
-
-
-# ---------------------------------------------------------------------------
-# 2/3/4
-# ---------------------------------------------------------------------------
 
 
 def transfer_matrix(run_dir, slugs, probes, position, layer, split, drop_degenerate):
@@ -333,69 +242,6 @@ def length_analysis(run_dir, slugs, probes, position, layer, drop_degenerate) ->
     return out
 
 
-def cluster_from_matrix(names: list[str], matrix: np.ndarray, n_clusters: int, signed: bool = False) -> dict:
-    """Agglomerative clustering on a precomputed distance.
-
-    signed=False (default): distance = 1 - |similarity|. Groups probes with
-    strongly *opposite* scores into the same cluster (same axis, either
-    direction). Useful as a supplementary "same axis regardless of sign" view,
-    but must be labeled as such -- see V1_ANALYSIS_PLAN.md step 3.
-
-    signed=True: distance = 1 - similarity (range [0, 2]). This is the primary
-    view for score-correlation clustering: two probes that fire in opposite
-    directions on the same examples (e.g. the calibrated-hedging inversion,
-    see FINDINGS.md section 4) land in *different* clusters, which is the
-    behaviourally correct read -- they disagree on most examples.
-    """
-    from sklearn.cluster import AgglomerativeClustering
-
-    m = np.nan_to_num(matrix, nan=0.0)
-    dist = (1.0 - m) if signed else (1.0 - np.abs(m))
-    np.fill_diagonal(dist, 0.0)
-    dist = (dist + dist.T) / 2.0
-    k = min(n_clusters, len(names))
-    labels = AgglomerativeClustering(n_clusters=k, metric="precomputed", linkage="average").fit_predict(dist)
-    clusters: dict[str, list[str]] = {}
-    for name, lab in zip(names, labels):
-        clusters.setdefault(f"cluster_{int(lab)}", []).append(name)
-    internal = {}
-    for cname, members in clusters.items():
-        idx = [names.index(m) for m in members]
-        vals = [matrix[a][b] for a in idx for b in idx if a < b]
-        internal[cname] = [round(float(min(vals)), 3), round(float(max(vals)), 3)] if vals else None
-    return {"clusters": clusters, "internal_similarity_range": internal, "signed": signed}
-
-
-def cluster_sweep(names: list[str], matrix: np.ndarray, k_range: range, signed: bool = False) -> dict:
-    """Cluster count left free to explore (V1 plan step 3), not fixed at 5.
-
-    Reports, for each k, the clustering and its silhouette score (on the same
-    precomputed distance), so a stable k can be picked from where silhouette
-    peaks rather than assumed in advance.
-    """
-    from sklearn.metrics import silhouette_score
-
-    m = np.nan_to_num(matrix, nan=0.0)
-    dist = (1.0 - m) if signed else (1.0 - np.abs(m))
-    np.fill_diagonal(dist, 0.0)
-    dist = (dist + dist.T) / 2.0
-    out = {}
-    for k in k_range:
-        if k < 2 or k >= len(names):
-            continue
-        res = cluster_from_matrix(names, matrix, k, signed=signed)
-        labels = [
-            next(int(lab.split("_")[1]) for lab, members in res["clusters"].items() if name in members)
-            for name in names
-        ]
-        try:
-            sil = float(silhouette_score(dist, labels, metric="precomputed"))
-        except ValueError:
-            sil = None
-        out[str(k)] = {"silhouette": sil, **res}
-    return out
-
-
 def reliability_ceiling(run_dir, slug, position, layer, split, n_splits, seed, C, max_iter, drop_degenerate):
     """Split-half cosine between two probe directions fit on disjoint prompt halves.
 
@@ -436,83 +282,6 @@ def reliability_ceiling(run_dir, slug, position, layer, split, n_splits, seed, C
     if not cosines:
         return None
     return {"mean": float(np.mean(cosines)), "min": float(np.min(cosines)), "max": float(np.max(cosines)), "n": len(cosines)}
-
-
-# ---------------------------------------------------------------------------
-# Plots
-# ---------------------------------------------------------------------------
-
-
-def heatmap(path, matrix, row_names, col_names, title, vmin, vmax, cmap, center_note=""):
-    import matplotlib
-
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    fig, ax = plt.subplots(figsize=(1 + 0.55 * len(col_names), 1 + 0.5 * len(row_names)))
-    im = ax.imshow(matrix, vmin=vmin, vmax=vmax, cmap=cmap)
-    ax.set_xticks(range(len(col_names)), col_names, rotation=90, fontsize=7)
-    ax.set_yticks(range(len(row_names)), row_names, fontsize=7)
-    ax.set_title(title + ("\n" + center_note if center_note else ""), fontsize=9)
-    for a in range(len(row_names)):
-        for b in range(len(col_names)):
-            v = matrix[a][b]
-            if v is not None and v == v:
-                ax.text(b, a, f"{v:.2f}".lstrip("0"), ha="center", va="center", fontsize=5.5)
-    fig.colorbar(im, ax=ax, fraction=0.03)
-    fig.tight_layout()
-    fig.savefig(path, dpi=170)
-    plt.close(fig)
-
-
-def correlation_dendrogram(path, matrix, names, title):
-    """Average-linkage tree using the same signed distance as primary clustering."""
-    import matplotlib
-
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    from scipy.cluster.hierarchy import dendrogram, linkage
-    from scipy.spatial.distance import squareform
-
-    dist = 1.0 - np.asarray(matrix, dtype=float)
-    dist = np.maximum((dist + dist.T) / 2.0, 0.0)
-    np.fill_diagonal(dist, 0.0)
-    tree = linkage(squareform(dist, checks=True), method="average")
-    fig, ax = plt.subplots(figsize=(11, 7))
-    dendrogram(
-        tree, labels=names, orientation="right", leaf_font_size=9,
-        color_threshold=0, above_threshold_color="#3b6ea5", ax=ax,
-    )
-    ax.set_xlabel("Average-linkage distance (1 - signed Pearson r)")
-    ax.set_title(title + "\nTree shown without a fixed cluster cut", fontsize=10)
-    fig.tight_layout()
-    fig.savefig(path, dpi=170)
-    plt.close(fig)
-
-
-def anova_plot(path, decomposition, title):
-    import matplotlib
-
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    labels = ["prompt_pair", "layer", "position", "residual"]
-    vals = [decomposition[k]["pct_variance"] for k in labels if k in decomposition]
-    labels = [k for k in labels if k in decomposition]
-    fig, ax = plt.subplots(figsize=(5.5, 3.4))
-    ax.bar(labels, vals, color=["#3b6ea5", "#7ba7d7", "#b8cfe6", "#cccccc"][: len(labels)])
-    for i, v in enumerate(vals):
-        ax.text(i, v + 1, f"{v:.1f}%", ha="center", fontsize=8)
-    ax.set_ylabel("variance explained (%)")
-    ax.set_ylim(0, max(vals) * 1.2 + 5)
-    ax.set_title(title, fontsize=9)
-    fig.tight_layout()
-    fig.savefig(path, dpi=170)
-    plt.close(fig)
-
-
-def as_matrix(nested: dict, rows: list[str], cols: list[str]) -> np.ndarray:
-    return np.array([[nested.get(r, {}).get(c, np.nan) for c in cols] for r in rows], dtype=float)
 
 
 def main():
@@ -576,7 +345,7 @@ def main():
         print("Score-correlation clustering only; other analyses skipped.")
     elif not ood_path.exists():
         print()
-        print(f"--- ANOVA skipped: {ood_path} not found; run eval_social_sycophancy.py first ---")
+        print(f"--- ANOVA skipped: {ood_path} not found; run the old eval_social_sycophancy.py first ---")
     else:
         ood = json.loads(ood_path.read_text(encoding="utf-8"))
         anova_rows = [
@@ -584,7 +353,7 @@ def main():
             if r["split"] == "eval" and r.get("dataset", "all") == "all"
             and r["slug"] not in common.NULL_SLUGS
         ]
-        decomposition = anova(anova_rows, "auc")
+        decomposition = anova(anova_rows, "auc", LEGACY_ANOVA_FACTORS)
         (out_dir / "anova.json").write_text(
             json.dumps({"source": "ELEPHANT eval-half AUC", **decomposition}, indent=2), encoding="utf-8"
         )

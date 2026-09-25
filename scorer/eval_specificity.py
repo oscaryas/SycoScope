@@ -18,26 +18,31 @@ and the FPR reported below silently means the opposite of what it says, so
 each ROWS entry states the assigned ground truth explicitly rather than
 deriving it from the stored label field.
 
-No new activations extracted -- reads whatever get_activations.py already
-cached for this run, all 20 cells' own in-distribution activations. The
-existing per-cell in-distribution holdout AUC (summary.json) is USELESS for
-selecting (position, layer) here: it is saturated at ~1.000 for nearly every
-config (confirmed directly -- see FINDINGS.md sec. 1), so "pick the best one"
-degenerates to an arbitrary tie-break with no real signal. Instead, this
-script holds out a further split of the run's test-split prompts:
+No new activations extracted: scores pickled probes (one per probed cell,
+--probe slug=path) on per-cell activation caches (--cache slug=path, the
+cache_activations.py format: y = the cell's stored polarity label, groups =
+prompt_id, optional degenerate). Those caches MUST hold rows the probes were
+not trained on -- train_probes.py refits on every row of its cache, so there
+is no internal held-out split any more; pass caches built from held-out
+prompts. All cell caches must share one token position; the layer is selected
+per probe (over the probe's layers present in the caches).
 
-  select_prompts (35%): used ONLY to pick each probe's (position, layer) --
-    by AUC on that row's own combined positive/negative sources, which DOES
-    vary by config (row AUCs range ~0.4-1.0, unlike in-distribution AUC) --
-    and to calibrate the probe's fixed-TPR decision threshold from its own
-    native class.
+In-distribution CV accuracy is USELESS for selecting the layer here: it
+saturates at ~1.000 for nearly every config (see FINDINGS.md sec. 1). Instead,
+the held-out prompts (the union of the caches' groups) are split again:
+
+  select_prompts (35%): used ONLY to pick each probe's layer -- by AUC on
+    that row's own combined positive/negative sources, which DOES vary by
+    config (row AUCs range ~0.4-1.0) -- and to calibrate the probe's
+    fixed-TPR decision threshold from its own native class.
   report_prompts (65%): used ONLY to compute the row AUC and the benign-
     look-alike FPR that get reported. Neither figure is computed on any row
     used for selection or thresholding.
 
 Usage:
-    python eval_specificity.py --run-name llama31_5k_subset
-    python eval_specificity.py --run-name llama31_5k_subset --target-tpr 0.8
+    python -m scorer.eval_specificity \
+        --probe pt_explicit=pt_explicit.pkl ctrl_obsequiousness=ctrl_obs.pkl ... \
+        --cache pt_explicit=heldout/pt_explicit.npz ctrl_warranted_praise=heldout/ctrl_wp.npz ...
 """
 import argparse
 import json
@@ -50,11 +55,11 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from utils import common  # noqa: E402
-from analyze_probes import probes_core as ga  # noqa: E402
-from analyze_probes.analyze_probes import apply_probe, load_probes  # noqa: E402
-from analyze_probes.eval_matrix import bootstrap_auc  # noqa: E402
+from analyze_probes import probes_core as core  # noqa: E402
 from analyze_probes.probes_core import DROP_REASONS, safe_auc  # noqa: E402
+from scorer.eval_common import read_meta  # noqa: E402
+from scorer.eval_matrix import bootstrap_auc  # noqa: E402
+from scorer.score_probes import SCORES_DIR, apply_probe, load_probes, probe_layers, select_probe  # noqa: E402
 
 N_BOOT = 2000
 SEED = 0
@@ -175,35 +180,46 @@ def split_prompts(test_prompt_ids: set, frac: float, seed: int) -> tuple[set, se
     return select, report
 
 
-def load_cell_test(run_dir: Path, test_prompt_ids: set, slug: str, position: str, layer: int,
-                    drop_degenerate: bool, cache: dict) -> tuple[np.ndarray, np.ndarray, list]:
-    """(X, y, prompt_ids) for ALL of this cell's held-out test-split rows at
-    (position, layer) -- cached once per (slug, position, layer); callers
-    slice down to a selection/report prompt subset with `subset()`."""
-    key = (slug, position, layer)
+def parse_named(specs: list[str], what: str) -> dict[str, Path]:
+    """slug=path pairs; the slug must be a cell slug so ROWS can find it."""
+    out = {}
+    for spec in specs:
+        if "=" not in spec:
+            raise SystemExit(f"--{what} takes slug=path, got {spec!r}")
+        slug, path = spec.split("=", 1)
+        out[slug] = Path(path)
+    return out
+
+
+def load_cell_test(cell_caches: dict, slug: str, layer: int, drop_degenerate: bool,
+                   cache: dict) -> tuple[np.ndarray, np.ndarray, list] | None:
+    """(X, y, prompt_ids) for ALL of this cell's held-out rows at `layer` --
+    loaded once per (slug, layer); callers slice down to a selection/report
+    prompt subset with `subset()`. y is the cell's stored polarity label
+    (1 = sycophantic pole). None if the cell has no cache or lacks the layer."""
+    key = (slug, layer)
     if key not in cache:
-        index = ga.load_index(run_dir, slug)
-        X = ga.load_acts(run_dir, slug, position, layer)
-        assert len(index) == X.shape[0], f"{slug}: index/activation row-count mismatch"
-        keep = np.ones(len(index), dtype=bool)
-        if drop_degenerate:
-            bad_prompts = {r["prompt_id"] for r in index if r["degenerate"] in DROP_REASONS}
-            keep &= np.array([r["prompt_id"] not in bad_prompts for r in index], dtype=bool)
-        keep &= np.array([r["prompt_id"] in test_prompt_ids for r in index], dtype=bool)
-        rows = [r for r, k in zip(index, keep) if k]
-        y = np.array([r["label"] for r in rows], dtype=int)
-        pids = [r["prompt_id"] for r in rows]
-        cache[key] = (X[keep], y, pids)
+        path = cell_caches.get(slug)
+        if path is None:
+            cache[key] = None
+            return None
+        cell = core.load_cache(path)
+        if layer not in cell["acts"]:
+            cache[key] = None
+            return None
+        groups = cell["groups"].astype(str)
+        keep = np.ones(len(groups), dtype=bool)
+        if drop_degenerate and "degenerate" in cell:
+            bad_prompts = {g for g, d in zip(groups, cell["degenerate"]) if d in DROP_REASONS}
+            keep &= np.array([g not in bad_prompts for g in groups], dtype=bool)
+        cache[key] = (cell["acts"][layer][keep].astype(np.float32), cell["y"][keep].astype(int),
+                      groups[keep].tolist())
     return cache[key]
 
 
 def subset(X: np.ndarray, y: np.ndarray, pids: list, wanted: set) -> tuple[np.ndarray, np.ndarray]:
     mask = np.array([p in wanted for p in pids], dtype=bool)
     return X[mask], y[mask]
-
-
-def load_summary(run_dir: Path) -> dict:
-    return json.loads((run_dir / "summary.json").read_text(encoding="utf-8"))
 
 
 def pick_threshold(scores_own: np.ndarray, y_own: np.ndarray, target_tpr: float) -> tuple[float, float]:
@@ -217,21 +233,21 @@ def pick_threshold(scores_own: np.ndarray, y_own: np.ndarray, target_tpr: float)
     return threshold, achieved_tpr
 
 
-def row_config_auc(run_dir, row, probe, position, layer, prompt_ids, test_prompt_ids, drop_degenerate, cache):
-    """AUC of this probe (at this position/layer) over the row's combined
+def row_config_auc(row, probe, layer, prompt_ids, cell_caches, drop_degenerate, cache):
+    """AUC of this probe (at this layer) over the row's combined
     positive/negative sources, restricted to `prompt_ids` (a selection or
     report subset)."""
     all_scores, all_y = [], []
     for polarity_list, y_val in ((row["positive"], 1), (row["negative"], 0)):
         for src_slug, src_polarity in polarity_list:
-            X_full, y_full, pids_full = load_cell_test(run_dir, test_prompt_ids, src_slug, position, layer,
-                                                         drop_degenerate, cache)
-            X_src, y_src = subset(X_full, y_full, pids_full, prompt_ids)
+            loaded = load_cell_test(cell_caches, src_slug, layer, drop_degenerate, cache)
+            if loaded is None:
+                continue
+            X_src, y_src = subset(*loaded, prompt_ids)
             mask = y_src == POLARITY_LABEL[src_polarity]
             if mask.sum() == 0:
                 continue
-            s = apply_probe(probe, X_src[mask])
-            all_scores.append(s)
+            all_scores.append(apply_probe(probe, X_src[mask]))
             all_y.append(np.full(mask.sum(), y_val))
     if not all_scores:
         return None, None, None
@@ -240,30 +256,35 @@ def row_config_auc(run_dir, row, probe, position, layer, prompt_ids, test_prompt
     return safe_auc(y_row, s_row), s_row, y_row
 
 
-def source_scores_for(run_dir, src_slug, src_polarity, position, layer, prompt_ids, test_prompt_ids,
-                       drop_degenerate, cache, probe):
-    X_full, y_full, pids_full = load_cell_test(run_dir, test_prompt_ids, src_slug, position, layer,
-                                                drop_degenerate, cache)
-    X_src, y_src = subset(X_full, y_full, pids_full, prompt_ids)
+def source_scores_for(src_slug, src_polarity, layer, prompt_ids, cell_caches, drop_degenerate, cache, probe):
+    loaded = load_cell_test(cell_caches, src_slug, layer, drop_degenerate, cache)
+    if loaded is None:
+        return np.array([])
+    X_src, y_src = subset(*loaded, prompt_ids)
     mask = y_src == POLARITY_LABEL[src_polarity]
     if mask.sum() == 0:
         return np.array([])
     return apply_probe(probe, X_src[mask])
 
 
-def run(run_dir: Path, target_tpr: float, n_boot: int, drop_degenerate: bool, out_path: Path) -> dict:
-    summary = load_summary(run_dir)
-    split = json.loads((run_dir / "prompt_split.json").read_text(encoding="utf-8"))
-    test_prompt_ids = set(split["test"])
+def run(probe_paths: dict, cell_caches: dict, target_tpr: float, n_boot: int, drop_degenerate: bool,
+        out_path: Path, C=None) -> dict:
+    test_prompt_ids = set()
+    positions = set()
+    for slug, path in cell_caches.items():
+        test_prompt_ids |= set(core.load_cache(path)["groups"].astype(str).tolist())
+        positions.add(read_meta(path).get("token_position", "unknown"))
+    if len(positions) > 1:
+        raise SystemExit(f"cell caches mix token positions {sorted(positions)}; score one position at a time")
+    position = positions.pop() if positions else "unknown"
     select_prompts, report_prompts = split_prompts(test_prompt_ids, SELECTION_FRAC, SEED)
-    print(f"held-out test prompts: {len(test_prompt_ids)} total -> "
+    print(f"held-out prompts: {len(test_prompt_ids)} total -> "
           f"{len(select_prompts)} selection / {len(report_prompts)} report")
-
-    meta = json.loads((run_dir / "activations" / "meta.json").read_text(encoding="utf-8"))
-    positions, layers = meta["positions"], meta["layers"]
     cache: dict = {}
 
-    report = {"run_name": run_dir.name, "target_tpr": target_tpr, "n_boot": n_boot,
+    report = {"probes": {k: str(v) for k, v in probe_paths.items()},
+              "cell_caches": {k: str(v) for k, v in cell_caches.items()}, "position": position,
+              "target_tpr": target_tpr, "n_boot": n_boot,
               "selection_frac": SELECTION_FRAC, "n_select_prompts": len(select_prompts),
               "n_report_prompts": len(report_prompts), "rows": []}
 
@@ -275,37 +296,34 @@ def run(run_dir: Path, target_tpr: float, n_boot: int, drop_degenerate: bool, ou
                       "benign_note": row["benign_note"], "probes": {}}
 
         for probe_slug in row["probes"]:
-            probes = load_probes(run_dir, probe_slug)
-            if not probes:
-                print(f"  {probe_slug}: no trained probe found, skipping")
+            if probe_slug not in probe_paths:
+                print(f"  {probe_slug}: no probe given, skipping")
                 continue
+            payload = load_probes(probe_paths[probe_slug])
 
-            # Step 1: select (position, layer) by AUC on the row's combined
-            # sources, SELECTION prompts only -- this has real variance,
-            # unlike in-distribution holdout AUC (saturated near 1.0 for
-            # every config; see module docstring).
+            # Step 1: select the layer by AUC on the row's combined sources,
+            # SELECTION prompts only -- this has real variance, unlike
+            # in-distribution holdout AUC (saturated near 1.0 for every
+            # config; see module docstring).
             best = None
-            for position in positions:
-                for layer in layers:
-                    key = ga.act_key(position, layer)
-                    probe = probes.get(key)
-                    if probe is None:
-                        continue
-                    a, _, _ = row_config_auc(run_dir, row, probe, position, layer, select_prompts,
-                                              test_prompt_ids, drop_degenerate, cache)
-                    if a is not None and (best is None or a > best[0]):
-                        best = (a, position, layer)
+            for layer in probe_layers(payload):
+                probe = select_probe(payload, layer, C)
+                a, _, _ = row_config_auc(row, probe, layer, select_prompts, cell_caches, drop_degenerate, cache)
+                if a is not None and (best is None or a > best[0]):
+                    best = (a, layer)
             if best is None:
-                print(f"  {probe_slug}: no scoreable (position, layer), skipping")
+                print(f"  {probe_slug}: no scoreable layer, skipping")
                 continue
-            select_auc, position, layer = best
-            probe = probes[ga.act_key(position, layer)]
+            select_auc, layer = best
+            probe = select_probe(payload, layer, C)
 
             # Step 2: threshold from this probe's own native class, SELECTION
             # prompts only.
-            X_own_full, y_own_full, pids_own_full = load_cell_test(run_dir, test_prompt_ids, probe_slug,
-                                                                     position, layer, drop_degenerate, cache)
-            X_own_sel, y_own_sel = subset(X_own_full, y_own_full, pids_own_full, select_prompts)
+            own = load_cell_test(cell_caches, probe_slug, layer, drop_degenerate, cache)
+            if own is None:
+                print(f"  {probe_slug}: no cache for its own cell, skipping")
+                continue
+            X_own_sel, y_own_sel = subset(*own, select_prompts)
             if len(np.unique(y_own_sel)) < 2:
                 print(f"  {probe_slug}: degenerate own-selection labels, skipping")
                 continue
@@ -315,16 +333,16 @@ def run(run_dir: Path, target_tpr: float, n_boot: int, drop_degenerate: bool, ou
                 continue
 
             # Step 3: everything reported comes from REPORT prompts only.
-            row_auc, s_row, y_row = row_config_auc(run_dir, row, probe, position, layer, report_prompts,
-                                                     test_prompt_ids, drop_degenerate, cache)
+            row_auc, s_row, y_row = row_config_auc(row, probe, layer, report_prompts, cell_caches,
+                                                   drop_degenerate, cache)
             if row_auc is None:
                 print(f"  {probe_slug}: no scoreable report-split rows, skipping")
                 continue
             boot = bootstrap_auc(s_row, y_row, np.arange(len(y_row)), n_boot=n_boot, seed=SEED)
 
             benign_slug, benign_polarity = row["benign_lookalike"]
-            benign_scores = source_scores_for(run_dir, benign_slug, benign_polarity, position, layer,
-                                               report_prompts, test_prompt_ids, drop_degenerate, cache, probe)
+            benign_scores = source_scores_for(benign_slug, benign_polarity, layer, report_prompts, cell_caches,
+                                              drop_degenerate, cache, probe)
             is_native = benign_slug == probe_slug
             if len(benign_scores):
                 fpr = float((benign_scores >= threshold).mean())
@@ -338,7 +356,7 @@ def run(run_dir: Path, target_tpr: float, n_boot: int, drop_degenerate: bool, ou
                 fpr, fpr_lo, fpr_hi = None, None, None
 
             entry = {
-                "position": position, "layer": layer, "selection_auc": round(select_auc, 4),
+                "position": position, "layer": layer, "C": probe["C"], "selection_auc": round(select_auc, 4),
                 "threshold": threshold, "threshold_target_tpr": target_tpr,
                 "threshold_achieved_tpr": achieved_tpr,
                 "row_auc": boot["auc"], "row_auc_ci": [boot["ci_lo"], boot["ci_hi"]],
@@ -366,17 +384,17 @@ def run(run_dir: Path, target_tpr: float, n_boot: int, drop_degenerate: bool, ou
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--run-name", type=str, required=True)
+    parser.add_argument("--probe", nargs="+", required=True, help="slug=pickle per probed cell.")
+    parser.add_argument("--cache", nargs="+", required=True,
+                        help="slug=cache.npz per source cell (held-out rows, cache_activations.py format).")
     parser.add_argument("--target-tpr", type=float, default=0.90)
     parser.add_argument("--n-boot", type=int, default=N_BOOT)
+    parser.add_argument("--C", type=float, default=None, help="Default: each layer's best_C.")
     parser.add_argument("--keep-degenerate", action="store_true")
+    parser.add_argument("--output", type=Path, default=SCORES_DIR / "specificity.json")
     args = parser.parse_args()
-
-    run_dir = common.resolve_run_dir(args.run_name, create=False)
-    if not run_dir.exists():
-        raise SystemExit(f"no such run: {run_dir}")
-    out_dir = run_dir / "analysis"
-    run(run_dir, args.target_tpr, args.n_boot, not args.keep_degenerate, out_dir / "specificity.json")
+    run(parse_named(args.probe, "probe"), parse_named(args.cache, "cache"), args.target_tpr, args.n_boot,
+        not args.keep_degenerate, args.output, args.C)
 
 
 if __name__ == "__main__":

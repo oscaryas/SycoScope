@@ -13,8 +13,8 @@ One label off one extraction pass:
                        is_poor_quality/praised judgement.
 
 Usage:
-    python eval_sypr.py --run-name main --extract-only
-    python eval_sypr.py --run-name main
+    python -m scorer.eval_sypr --cache results/probes/scores/sypr.npz --model <model> --extract-only
+    python -m scorer.eval_sypr --probe weights.pkl --cache results/probes/scores/sypr.npz
 """
 import argparse
 import random
@@ -26,7 +26,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils import common  # noqa: E402
-from analyze_probes import eval_common  # noqa: E402
+from scorer import eval_common  # noqa: E402
 
 SYCOPHANCY_DIR = common.SYCOPHANCY_DIR
 DEFAULT_JUDGED = SYCOPHANCY_DIR / "results" / "generations" / "sypr_praise_llama31_full" / "checkpoint.jsonl"
@@ -63,48 +63,25 @@ def main():
     parser.add_argument("--judged", type=Path, default=DEFAULT_JUDGED)
     args = parser.parse_args()
 
-    run_dir = common.resolve_run_dir(args.run_name, create=False)
-    if not run_dir.exists():
-        raise SystemExit(f"no such run: {run_dir}")
-    out_dir = run_dir / "eval_sypr"
-
-    print("Loading judged SyPR records ...")
-    records = load_judged(args.judged)
-    if not records:
-        raise SystemExit("no judged records loaded")
-    if args.limit:
-        random.Random(args.seed).shuffle(records)
-        records = records[: args.limit]
-    print(f"{len(records)} records across {len(set(r['domain'] for r in records))} domains")
-    pos = sum(r["sycophantic_praise"] for r in records)
-    print(f"  sycophantic_praise pos {pos} / neg {len(records) - pos} (pos rate {pos / len(records):.3f})")
-
-    if args.overwrite or not (out_dir / "activations.npz").exists():
-        eval_common.extract_activations(out_dir, records, LABEL_FIELDS, args)
-    else:
-        print(f"using cached activations at {out_dir / 'activations.npz'} (--overwrite to redo)")
+    paths = eval_common.cache_paths(args.cache, args.positions)
+    if eval_common.needs_extraction(paths, args):
+        print("Loading judged SyPR records ...")
+        records = load_judged(args.judged)
+        if not records:
+            raise SystemExit("no judged records loaded")
+        if args.limit:
+            random.Random(args.seed).shuffle(records)
+            records = records[: args.limit]
+        print(f"{len(records)} records across {len(set(r['domain'] for r in records))} domains")
+        pos = sum(r["sycophantic_praise"] for r in records)
+        print(f"  sycophantic_praise pos {pos} / neg {len(records) - pos} (pos rate {pos / len(records):.3f})")
+        eval_common.build_cache(paths, records, LABEL_FIELDS, (*LABEL_FIELDS, "domain"), args)
     if args.extract_only:
         return
 
-    positions, layers, slugs = eval_common.resolve_eval_targets(run_dir, out_dir, args)
-    index = common.read_jsonl(out_dir / "activations_index.jsonl")
-    selection = eval_common.selection_split(index, args.selection_frac, args.seed)
-    print(f"\nselection split: {len(selection)} rows reserved, {len(index) - len(selection)} for reporting")
-
-    rows = eval_common.score_all(
-        run_dir, out_dir, slugs, positions, layers, LABEL_FIELDS, selection, args.seed
-    )
-    eval_common.report(
-        out_dir,
-        rows,
-        positions,
-        layers,
-        LABEL_FIELDS,
-        slugs,
-        {
-            "n_records": len(index),
-            "selection_frac": args.selection_frac,
-            "seed": args.seed,
+    eval_common.score_and_report(
+        args, paths, "eval_sypr", LABEL_FIELDS,
+        extra={
             "note": "Ground-truth label (SyPR's own is_poor_quality x praised), unlike "
             "ELEPHANT/moral's judge-derived labels. Verifiable-domain sycophancy.",
         },

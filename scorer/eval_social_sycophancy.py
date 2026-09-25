@@ -8,10 +8,10 @@ probe x position x layer x metric combination then scores as a dot product.
 
 Usage:
     # one GPU pass, cached thereafter
-    python eval_social_sycophancy.py --run-name main --extract-only
+    python -m scorer.eval_social_sycophancy --cache results/probes/scores/elephant.npz --model <model> --extract-only
 
     # scoring only, CPU
-    python eval_social_sycophancy.py --run-name main
+    python -m scorer.eval_social_sycophancy --probe weights.pkl --cache results/probes/scores/elephant.npz
 """
 import argparse
 import random
@@ -23,7 +23,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from utils import common  # noqa: E402
-from analyze_probes import eval_common  # noqa: E402
+from scorer import eval_common  # noqa: E402
 
 JUDGED_DIR = common.SYCOPHANCY_DIR / "results" / "generations"
 DEFAULT_JUDGED = [
@@ -79,56 +79,33 @@ def main():
     parser.add_argument("--label-fields", type=str, nargs="+", default=list(LABEL_FIELDS), choices=LABEL_FIELDS)
     args = parser.parse_args()
 
-    run_dir = common.resolve_run_dir(args.run_name, create=False)
-    if not run_dir.exists():
-        raise SystemExit(f"no such run: {run_dir}")
-    out_dir = run_dir / "eval_elephant"
-
-    print("Loading judged ELEPHANT records ...")
-    records = load_judged(list(args.judged))
-    if not records:
-        raise SystemExit("no judged records loaded")
-    if args.limit:
-        # Seeded subsample, not a head: the files concatenate in order, so a
-        # head takes one dataset only.
-        random.Random(args.seed).shuffle(records)
-        records = records[: args.limit]
-    print(f"{len(records)} records across {len(set(r['dataset'] for r in records))} datasets")
-    for f in args.label_fields:
-        pos = sum(r[f] for r in records)
-        print(f"  {f:<13} pos {pos} / neg {len(records) - pos}  (pos rate {pos / len(records):.3f})")
-
-    if args.overwrite or not (out_dir / "activations.npz").exists():
-        eval_common.extract_activations(out_dir, records, LABEL_FIELDS, args)
-    else:
-        print(f"using cached activations at {out_dir / 'activations.npz'} (--overwrite to redo)")
+    paths = eval_common.cache_paths(args.cache, args.positions)
+    if eval_common.needs_extraction(paths, args):
+        print("Loading judged ELEPHANT records ...")
+        records = load_judged(list(args.judged))
+        if not records:
+            raise SystemExit("no judged records loaded")
+        if args.limit:
+            # Seeded subsample, not a head: the files concatenate in order, so a
+            # head takes one dataset only.
+            random.Random(args.seed).shuffle(records)
+            records = records[: args.limit]
+        print(f"{len(records)} records across {len(set(r['dataset'] for r in records))} datasets")
+        for f in args.label_fields:
+            pos = sum(r[f] for r in records)
+            print(f"  {f:<13} pos {pos} / neg {len(records) - pos}  (pos rate {pos / len(records):.3f})")
+        eval_common.build_cache(paths, records, LABEL_FIELDS, LABEL_FIELDS, args)
     if args.extract_only:
         return
 
-    positions, layers, slugs = eval_common.resolve_eval_targets(run_dir, out_dir, args)
-    index = common.read_jsonl(out_dir / "activations_index.jsonl")
-    selection = eval_common.selection_split(index, args.selection_frac, args.seed)
-    print(f"\nselection split: {len(selection)} rows reserved, {len(index) - len(selection)} for reporting")
-
-    rows = eval_common.score_all(
-        run_dir, out_dir, slugs, positions, layers, args.label_fields, selection, args.seed
-    )
-    eval_common.report(
-        out_dir,
-        rows,
-        positions,
-        layers,
-        args.label_fields,
-        slugs,
-        {
-            "n_records": len(index),
-            "selection_frac": args.selection_frac,
-            "seed": args.seed,
+    eval_common.score_and_report(
+        args, paths, "eval_social_sycophancy", args.label_fields,
+        extra={
             "matched_prediction": {k: list(v) for k, v in MATCHED.items()},
             "note": "Judge labels, not ground truth, and 83-90% positive. AUC is base-rate "
             "insensitive but the minority class is small; read n_pos/n_neg alongside.",
         },
-        MATCHED,
+        matched=MATCHED,
     )
 
 
